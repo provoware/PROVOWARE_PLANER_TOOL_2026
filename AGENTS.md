@@ -1,23 +1,38 @@
 # AGENTS.md
 
-## Projektziel
-PROVOWARE Planer 2026 iterativ als offline-first Linux-Desktop-App entwickeln.
+## Steuerung
+Vor jeder Änderung zuerst lesen:
+1. `PROJEKTSTATUS.json`
+2. `DEVELOPMENT_STATUS.json`
+3. `TODO.md`
+4. aktive Registry unter `manifests/traceability/`
+5. `docs/EXPERTEN_ROLLENPROMPT_PRO_2.0.md`
 
-## Harte Regeln
-1. Exakt ein primärer TODO pro Entwicklungsiteration.
-2. Nächster Produkt-TODO: 1.2 Tauri-Minimalapp offline starten.
-3. Keine späteren Features vorziehen.
-4. UI → validierter Tauri Command → Service → Core/OS.
-5. Kein freier Dateisystemzugriff aus der UI.
-6. Keine Runtime-CDNs/ungeprüften Downloads.
-7. Least Privilege.
-8. Erwartbare Fehler müssen in verständliche Fehlerdomänen übersetzt werden.
-9. Quelldatei <1000 Zeilen; Reviewwarnung ab 600.
-10. Bugfix benötigt Regressionstest.
-11. Doku/Status/Changelog/Manifest sind Teil von Done.
-12. Releaseartefakt benötigt Inventar und SHA-256.
-13. Änderungen an Datenformat/Securitygrenze/API benötigen ADR.
-14. Keine 100%-Qualitätsbehauptung ohne reale Evidence.
+## Aktueller Produkt-Scope
+Nur **TODO 1.2 – Tauri-Minimalapp offline starten**.
 
-## Definition of Done
-Implementierung + statische Checks + Funktionstest + Fehlerfall + Retest + Regression + Doku + Status + Artefakt/Evidence.
+Keine späteren Fachmodule, SQLite-Produktpersistenz, Plugins, Updates, Backupengine oder vollständiges Dashboard vorziehen.
+
+## Traceability
+Jeder aktive TODO benötigt `REQ → TEST → EVD`.
+Geplante Tests/Evidence niemals als bestanden oder verifiziert darstellen.
+
+## Backup
+Vor Veränderung vorherige Datei nach `Backup/<vorherige-version>/` sichern.
+
+## Architektur
+`UI → validierter Tauri Command → Service → Core/OS`.
+Kein freier System-/Dateisystemzugriff aus der UI.
+
+## Qualität
+- Quelldatei <1000 Zeilen; Warnung ab 600.
+- Bugfix → Regressionstest.
+- Doku/Status/Manifest/Changelog sind Teil von Done.
+- ZIP + Inventar + SHA-256 je Iteration.
+- Keine 100-%-Behauptung ohne reale Evidence.
+
+## Plan-Consistency-Gate
+Nur Spezifikation vorhanden. Implementierung erst TODO 1.9 nach 1.7 und 1.8.
+
+## Vollständiger Ausführungsvertrag
+Siehe `docs/EXPERTEN_ROLLENPROMPT_PRO_2.0.md`.
