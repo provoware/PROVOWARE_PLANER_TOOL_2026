@@ -33,6 +33,17 @@ def fail(message: str) -> None:
     raise AssertionError(message)
 
 
+def source_files() -> list[Path]:
+    files: list[Path] = []
+    for base in (UI, TAURI / "src", ROOT / "tests"):
+        if base.exists():
+            files.extend(path for path in base.rglob("*") if path.is_file())
+    for path in (TAURI / "build.rs", TAURI / "Cargo.toml", TAURI / "tauri.conf.json"):
+        if path.is_file():
+            files.append(path)
+    return files
+
+
 def main() -> int:
     config = json.loads((TAURI / "tauri.conf.json").read_text(encoding="utf-8"))
     if config["version"] != EXPECTED_VERSION:
@@ -65,6 +76,12 @@ def main() -> int:
             if re.search(r"https?://|//[A-Za-z0-9]", text):
                 fail(f"Remote-Referenz in UI-Asset: {path.relative_to(ROOT)}")
 
+    icon = TAURI / "icons" / "icon.png"
+    if not icon.is_file():
+        fail("Tauri-Runtime-Icon fehlt: src-tauri/icons/icon.png")
+    if not icon.read_bytes().startswith(b"\x89PNG\r\n\x1a\n"):
+        fail("Tauri-Runtime-Icon ist keine gültige PNG-Datei.")
+
     cargo = (TAURI / "Cargo.toml").read_text(encoding="utf-8")
     if f'version = "{EXPECTED_VERSION}"' not in cargo:
         fail("Cargo-Paketversion stimmt nicht.")
@@ -73,11 +90,14 @@ def main() -> int:
     if 'tauri-build = { version = "=2.6.2"' not in cargo:
         fail("tauri-build ist nicht exakt auf 2.6.2 gepinnt.")
 
-    for path in ROOT.rglob("*"):
-        if path.is_file() and path.suffix in {".rs", ".html", ".css", ".py"}:
-            lines = path.read_text(encoding="utf-8").count("\n") + 1
-            if lines > 1000:
-                fail(f"Datei überschreitet 1000 Zeilen: {path.relative_to(ROOT)} ({lines})")
+    checked: set[Path] = set()
+    for path in source_files():
+        if path in checked or path.suffix not in {".rs", ".html", ".css", ".py"}:
+            continue
+        checked.add(path)
+        lines = path.read_text(encoding="utf-8").count("\n") + 1
+        if lines > 1000:
+            fail(f"Datei überschreitet 1000 Zeilen: {path.relative_to(ROOT)} ({lines})")
 
     registry = json.loads((ROOT / "manifests/traceability/TODO_1_2.registry.json").read_text(encoding="utf-8"))
     if registry["todo_id"] != "TODO-1.2":
