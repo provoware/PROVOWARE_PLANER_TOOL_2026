@@ -1,0 +1,23 @@
+{
+  "project": "PROVOWARE_PLANER_TOOL_2026",
+  "plan_version": "0.3.1-plan",
+  "date": "2026-08-09",
+  "phase": "Planungsbaseline / Traceability-Vorbereitung",
+  "current_product_todo": "1.2 Tauri-Minimalapp offline starten",
+  "current_product_todo_status": "bereit",
+  "traceability_registry": "manifests/traceability/TODO_1_2.registry.json",
+  "consistency_gate": {
+    "status": "spezifiziert",
+    "implementation_todo": "1.9",
+    "not_before": ["1.7", "1.8"]
+  },
+  "progress": {
+    "planning_percent": 98,
+    "implementation_percent": 0,
+    "verification_percent": 0,
+    "security_qualification_percent": 0,
+    "documentation_percent": 98,
+    "release_readiness_percent": 0
+  },
+  "scope_guard": "Keine Produktfunktion außer TODO 1.2 als nächster Implementierungsschritt."
+}

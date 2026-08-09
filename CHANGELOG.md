@@ -2,37 +2,28 @@
 
 ## [Unreleased]
 
-## [0.3.1-plan] - 2026-08-09
+## [0.4.0-dev.1] - 2026-08-09
 
 ### Added
-- ausführbarer Rollenprompt „ProvoWare Release Architect & Orchestrator PRO“ Version 2.0.
-- `PROJEKTSTATUS.json` als zentrale maschinenlesbare Projektidentität.
-- JSON-Schemas für Anforderungen, Tests, Evidence und Traceability Registry.
-- erste maschinenlesbare Registry für `TODO-1.2`.
-- Spezifikation des späteren Plan-Consistency-Gates.
-- Prompt-Ausführungsbericht.
-
-### Changed
-- Entwicklungsprozess fordert jetzt Definition of Ready vor Produktimplementierung.
-- Scope-Guard und Stopregel wurden verschärft.
-- TODO 1.9 für Consistency-Gate nach Testgrundgerüst/Statusvertrag aufgenommen.
-- Planversion auf 0.3.1-plan erhöht.
+- erster realer Tauri-2/Rust-Walking-Skeleton.
+- vollständig lokale HTML/CSS-Startoberfläche.
+- restriktive CSP mit `connect-src 'none'`.
+- minimale Tauri-Capability für das Hauptfenster.
+- lokale Tauri-Runtime-Iconressource.
+- statischer TODO-1.2-Validator.
+- Ubuntu-22.04-/WebKitGTK-4.1-Qualifikationsworkflow.
+- echter Offline-Fensterstart/Restart in isoliertem Netzwerk-Namespace.
+- maschinen- und menschenlesbarer Qualifikationsnachweis.
 
 ### Fixed
-- „geplant“, „implementiert“, „verifiziert“ und „releasebereit“ sind in der Steuerung explizit getrennt.
+- fehlendes Tauri-Runtime-Icon, das `generate_context!()` blockierte.
+- wirkungsloser erster Icon-Workaround durch reale PNG-Ressource ersetzt.
+- shell-fehleranfälliges Remote-Asset-Grep-Gate durch Python-Validator ersetzt.
 
 ### Security
-- Evidence darf keine erfundenen Hashes/Commit-SHAs/Testresultate enthalten.
+- keine Remote-Runtime-Assets im Walking Skeleton.
+- keine JavaScript-Runtime-Abhängigkeit in TODO 1.2.
+- minimale Capability und restriktive CSP.
 
-## [0.3.0-plan] - 2026-08-09
-
-### Added
-- PRO-Softwareentwicklungs-Masterplan.
-- Traceability von Anforderung bis Release-Evidence.
-- getrennte Fortschrittswerte für Umsetzung, Verifikation, Sicherheit, Dokumentation und Releasebereitschaft.
-- Quellen-/Standardmatrix und Release-Checkliste.
-- Failure-Injection-, SBOM-, Provenance- und Reproduzierbarkeitsplanung.
-- präziser Vertrag für TODO 1.2.
-
-### Changed
-- Planungsmodell auf Software-Engineering-Governance für ein privates Offline-Tool fokussiert.
+## [0.3.1-plan] - 2026-08-09
+- PRO-Planungsbaseline, Rollenprompt 2.0 und REQ/TEST/EVD-Traceability eingeführt.

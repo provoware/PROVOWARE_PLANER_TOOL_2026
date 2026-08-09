@@ -1,16 +1,20 @@
 {
   "kanonischer_projektname": "PROVOWARE_PLANER_TOOL_2026",
   "aliasnamen": ["PROVOWARE Planer 2026", "ProvoWare Planer 2026"],
-  "version": "0.3.1-plan",
+  "version": "0.4.0-dev.1",
+  "plan_version": "0.3.1-plan",
   "repository": "https://github.com/provoware/PROVOWARE_PLANER_TOOL_2026",
-  "hauptdatei": "docs/PROVOWARE_PLANER_2026_MASTERPLAN_PRO_0.3.1.md",
-  "status": "Planungsbaseline qualifiziert; Produktimplementierung ausstehend",
-  "aktueller_todo": "1.2 Tauri-Minimalapp offline starten",
-  "naechster_erlaubter_implementierungsschritt": "TODO-1.2",
+  "hauptdatei": "src-tauri/src/main.rs",
+  "status": "TODO 1.2 qualifiziert abgeschlossen; Gesamtprodukt in Entwicklung",
+  "abgeschlossener_todo": "1.2 Tauri-Minimalapp offline starten",
+  "naechster_erlaubter_implementierungsschritt": "TODO-1.3",
+  "naechster_status": "nicht begonnen",
   "letztes_validiertes_release": {
-    "typ": "Planungsartefakt",
-    "version": "0.3.1-plan",
-    "artefakt": "PROVOWARE_PLANER_2026_PRO_PLAN_0.3.1.zip",
-    "validierung": "JSON/Traceability/ZIP-Struktur und Inventar in Planungsiteration 0.3.1 geprüft"
+    "typ": "Entwicklungsstand",
+    "version": "0.4.0-dev.1",
+    "artefakt": "PROVOWARE_PLANER_2026_0.4.0-dev.1_TODO_1_2_QUALIFIZIERT.zip",
+    "sha256_sidecar": "PROVOWARE_PLANER_2026_0.4.0-dev.1_TODO_1_2_QUALIFIZIERT.zip.sha256",
+    "qualifikation_run_id": 31294082046,
+    "tested_commit": "5a8f03223f5c22168cf4a4171d45df391280ae14"
   }
 }

@@ -1,0 +1,162 @@
+[
+  {
+    "pfad": "AGENTS.md",
+    "bytes": 1205,
+    "sha256": "a54baa30e441bd4920f6cbdf36bdff1626ea3bd8de396b5038a14ec307fc1c71"
+  },
+  {
+    "pfad": "Backup/0.3.0-plan/AGENTS.md",
+    "bytes": 1001,
+    "sha256": "9bd7174fb14065f88199524f0bffcbad7da02e90a78f45929a06d7ec3504921f"
+  },
+  {
+    "pfad": "Backup/0.3.0-plan/CHANGELOG.md",
+    "bytes": 668,
+    "sha256": "03b458c7db6f99100904fd2c2ae94419d853a17d9f4fb1c60d15f49ed88bbd14"
+  },
+  {
+    "pfad": "Backup/0.3.0-plan/DEVELOPMENT_STATUS.json",
+    "bytes": 730,
+    "sha256": "134eaacc813247fb5832fcfffa735ae9d7116fc244a7ad96bec21ccadcc69c4a"
+  },
+  {
+    "pfad": "Backup/0.3.0-plan/PROVOWARE_PLANER_2026_MASTERPLAN_PRO_0.3.0.txt",
+    "bytes": 45970,
+    "sha256": "d798a725cfbba53222796b6f1778f5ca74fcb4b3634490c581c7cd4e4f27e0ed"
+  },
+  {
+    "pfad": "Backup/0.3.0-plan/README.md",
+    "bytes": 775,
+    "sha256": "40882e71d999064d65382ec752df6364285804f65a41f38fd6f1078a1637868e"
+  },
+  {
+    "pfad": "Backup/0.3.0-plan/TODO.md",
+    "bytes": 716,
+    "sha256": "8edb0ea80f700d12ab4ada4ebdbb905700e5f6e17ee0530b0cb724ad991a6bc3"
+  },
+  {
+    "pfad": "Backup/0.3.0-plan/docs/PROVOWARE_PLANER_2026_MASTERPLAN_PRO_0.3.0.md",
+    "bytes": 45970,
+    "sha256": "d798a725cfbba53222796b6f1778f5ca74fcb4b3634490c581c7cd4e4f27e0ed"
+  },
+  {
+    "pfad": "Backup/0.3.0-plan/docs/PROVOWARE_PLANER_2026_QUELLEN_STANDARDMATRIX_0.3.0.md",
+    "bytes": 5136,
+    "sha256": "8eb6926704bfbea1c1549422ca2c2cbe5593ed787f0efd6b9b0643b1413fc1f3"
+  },
+  {
+    "pfad": "Backup/0.3.0-plan/docs/PROVOWARE_PLANER_2026_RELEASE_CHECKLISTE_0.3.0.md",
+    "bytes": 1213,
+    "sha256": "e2267c217addc345e8001cae88b7234c36d19085ade38858d3019c0e5ff219e2"
+  },
+  {
+    "pfad": "Backup/0.3.0-plan/manifest.json",
+    "bytes": 603,
+    "sha256": "5bc88567eca537a0612cc7a49760f305dd03c0b1011ff295c850bd0e25b7d200"
+  },
+  {
+    "pfad": "CHANGELOG.md",
+    "bytes": 938,
+    "sha256": "4409402c4e5028c2e508f0a57b3d45cba21ada74af894775fbcd29a8776071ae"
+  },
+  {
+    "pfad": "DEVELOPMENT_STATUS.json",
+    "bytes": 809,
+    "sha256": "e65f8c88557799329ecb1f53d200a434538c4c7930ddd7cec9889093935d4cdc"
+  },
+  {
+    "pfad": "PROJEKTSTATUS.json",
+    "bytes": 776,
+    "sha256": "14818152d061325aa82225c97cc4b09558fb44e278e2c06f9d8a40e211f2429d"
+  },
+  {
+    "pfad": "PROVOWARE_PLANER_2026_MASTERPLAN_PRO_0.3.1_VOLLSTAND.txt",
+    "bytes": 47439,
+    "sha256": "7c2a68195307d51b97d798ae43092c51c4093e1b1efa2fd41437c2840b3c1dd5"
+  },
+  {
+    "pfad": "README.md",
+    "bytes": 968,
+    "sha256": "d359ac6684db65e6eea62abc94f5f51a9a896d6aed7f843f0ca3e912fb4b38ae"
+  },
+  {
+    "pfad": "TODO.md",
+    "bytes": 1189,
+    "sha256": "12a4482e08bf4d7f76a9d994e1e1bc1b4161baab4c98ce47ba177457e4c41fe8"
+  },
+  {
+    "pfad": "docs/EXPERTEN_ROLLENPROMPT_PRO_2.0.md",
+    "bytes": 10199,
+    "sha256": "e27ea701443b45ee42950b15b4386fee9019a3ae981da5eb12e340a8263caaaa"
+  },
+  {
+    "pfad": "docs/PLAN_CONSISTENCY_GATE_SPEZIFIKATION_0.1.md",
+    "bytes": 1236,
+    "sha256": "473eb3b065836c20f75b6f8262b3ebcd5ec12973f256ebd4097bd33fb67557d4"
+  },
+  {
+    "pfad": "docs/PROMPT_AUSFUEHRUNGSBERICHT_0.3.1.md",
+    "bytes": 1153,
+    "sha256": "3bcba7c1d512ea2e8f659bb8900296d13f60c086c8a83c562fefacdca438a4dc"
+  },
+  {
+    "pfad": "docs/PROVOWARE_PLANER_2026_MASTERPLAN_PRO_0.3.1.md",
+    "bytes": 3926,
+    "sha256": "aa56c2058609c7a5cf2437bc293a854e34d22e7f4f1e7bab70a7124b97600022"
+  },
+  {
+    "pfad": "docs/PROVOWARE_PLANER_2026_MASTERPLAN_PRO_0.3.1_VOLLSTAND.md",
+    "bytes": 47439,
+    "sha256": "7c2a68195307d51b97d798ae43092c51c4093e1b1efa2fd41437c2840b3c1dd5"
+  },
+  {
+    "pfad": "docs/PROVOWARE_PLANER_2026_QUELLEN_STANDARDMATRIX_0.3.1.md",
+    "bytes": 5136,
+    "sha256": "24e351dbf61f6689f8fff5e236cf7215c1eea6a356151abe63d04540911ccf01"
+  },
+  {
+    "pfad": "docs/PROVOWARE_PLANER_2026_RELEASE_CHECKLISTE_0.3.1.md",
+    "bytes": 1213,
+    "sha256": "e2267c217addc345e8001cae88b7234c36d19085ade38858d3019c0e5ff219e2"
+  },
+  {
+    "pfad": "docs/TRACEABILITY_REGISTRY_SPEZIFIKATION_0.1.md",
+    "bytes": 862,
+    "sha256": "99c88e9240295dab20fcc42af50f15d8bd30f20ab54fd725ef6445477c7523da"
+  },
+  {
+    "pfad": "docs/pro-plan/05_TRACEABILITY_REQUIREMENTS_EVIDENCE.md",
+    "bytes": 651,
+    "sha256": "71d37dba402f6b8befe6b8c5cdc15dabbf8b0f2f02b68212d7c1c9b9dd391451"
+  },
+  {
+    "pfad": "manifest.json",
+    "bytes": 1141,
+    "sha256": "795f2077d53c6a02cb99d43b02887c969d1c09e344c111faefb9e2a4a04ff49e"
+  },
+  {
+    "pfad": "manifests/schemas/anforderung.schema.json",
+    "bytes": 2006,
+    "sha256": "df82ba459beafe6c59831288e2545d6e7bc5f2a7bd10a6e582da097bab225fb9"
+  },
+  {
+    "pfad": "manifests/schemas/evidenz.schema.json",
+    "bytes": 1641,
+    "sha256": "53646c5680613ee1ebf61e07c54ea14c0163e4821ee027aac1c343ae1a3cef82"
+  },
+  {
+    "pfad": "manifests/schemas/test.schema.json",
+    "bytes": 1482,
+    "sha256": "ee0041419c3b204a5b3c03746c09027a77fc3256645474e3bac9904c570fed4d"
+  },
+  {
+    "pfad": "manifests/schemas/traceability-registry.schema.json",
+    "bytes": 1204,
+    "sha256": "9d8986f939a720535950ca102957464a02431dae54f822707f0e7ebb3a7bbee8"
+  },
+  {
+    "pfad": "manifests/traceability/TODO_1_2.registry.json",
+    "bytes": 7756,
+    "sha256": "b7ad748d41fe2cc042311985005c829c0b5cda9289632a8fb63ce13004259a11"
+  }
+]
