@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://provoware.local/schemas/traceability-registry.schema.json",
+  "title": "PROVOWARE Traceability Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "projekt", "plan_version", "todo_id", "status", "anforderungen", "tests", "evidenz", "gate_regeln"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "projekt": {"type": "string", "const": "PROVOWARE_PLANER_TOOL_2026"},
+    "plan_version": {"type": "string"},
+    "todo_id": {"type": "string", "pattern": "^TODO-[A-Z0-9][A-Z0-9._-]*$"},
+    "status": {"enum": ["geplant", "bereit", "in_arbeit", "qualifiziert", "blockiert"]},
+    "anforderungen": {"type": "array", "minItems": 1},
+    "tests": {"type": "array", "minItems": 1},
+    "evidenz": {"type": "array", "minItems": 1},
+    "gate_regeln": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+  }
+}
