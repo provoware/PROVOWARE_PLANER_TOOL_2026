@@ -1,0 +1,180 @@
+{
+  "schema_version": "1.0",
+  "projekt": "PROVOWARE_PLANER_TOOL_2026",
+  "plan_version": "0.3.1-plan",
+  "todo_id": "TODO-1.2",
+  "status": "bereit",
+  "anforderungen": [
+    {
+      "id": "REQ-1.2-001",
+      "titel": "Tauri-Minimalapp lokal startbar",
+      "beschreibung": "Die minimale Tauri-2-Anwendung muss auf dem Linux-Zielsystem ein lokales Fenster öffnen, ohne Fachfunktionen vorwegzunehmen.",
+      "prioritaet": "P0",
+      "status": "bereit",
+      "todo_id": "TODO-1.2",
+      "quelle": "Masterplan Abschnitt 29",
+      "risiko": "hoch",
+      "akzeptanzkriterien": [
+        {"id": "AC-1.2-001", "text": "Tauri 2 kompiliert ohne Blocker."},
+        {"id": "AC-1.2-002", "text": "Ein lokales Anwendungsfenster öffnet reproduzierbar."}
+      ],
+      "test_ids": ["TEST-1.2-001", "TEST-1.2-002"],
+      "evidenz_ids": ["EVD-1.2-001", "EVD-1.2-002"]
+    },
+    {
+      "id": "REQ-1.2-002",
+      "titel": "Offline- und Local-Asset-Start",
+      "beschreibung": "Der Kernstart darf keine externen Runtime-Ressourcen, CDNs oder erforderlichen Netzwerkzugriffe benötigen.",
+      "prioritaet": "P0",
+      "status": "bereit",
+      "todo_id": "TODO-1.2",
+      "quelle": "Offline-first Produktvertrag",
+      "risiko": "hoch",
+      "akzeptanzkriterien": [
+        {"id": "AC-1.2-003", "text": "Start funktioniert bei blockiertem Netzwerk."},
+        {"id": "AC-1.2-004", "text": "Runtime-Assets enthalten keine erforderlichen externen CDN- oder Remote-Quellen."}
+      ],
+      "test_ids": ["TEST-1.2-003", "TEST-1.2-004"],
+      "evidenz_ids": ["EVD-1.2-002"]
+    },
+    {
+      "id": "REQ-1.2-003",
+      "titel": "Sauberer Exit und Restart",
+      "beschreibung": "Die minimale Anwendung muss regulär beendet und direkt erneut gestartet werden können, ohne einen reproduzierbaren Startfehler zu hinterlassen.",
+      "prioritaet": "P1",
+      "status": "bereit",
+      "todo_id": "TODO-1.2",
+      "quelle": "Masterplan Abschnitt 29",
+      "risiko": "mittel",
+      "akzeptanzkriterien": [
+        {"id": "AC-1.2-005", "text": "Normaler Programmabschluss bleibt ohne Fehlerzustand."},
+        {"id": "AC-1.2-006", "text": "Direkter Wiederholungsstart öffnet das Fenster erneut."}
+      ],
+      "test_ids": ["TEST-1.2-005"],
+      "evidenz_ids": ["EVD-1.2-002"]
+    },
+    {
+      "id": "REQ-1.2-004",
+      "titel": "Artefakt und Nachweis eindeutig bindbar",
+      "beschreibung": "Das Entwicklungsartefakt für TODO 1.2 muss über Inventar und SHA-256 eindeutig identifizierbar und später mit Commit und Evidence verknüpfbar sein.",
+      "prioritaet": "P1",
+      "status": "bereit",
+      "todo_id": "TODO-1.2",
+      "quelle": "Release-/Evidence-Vertrag",
+      "risiko": "mittel",
+      "akzeptanzkriterien": [
+        {"id": "AC-1.2-007", "text": "ZIP-Inventar ist vollständig und maschinenlesbar."},
+        {"id": "AC-1.2-008", "text": "Für das erzeugte ZIP liegt eine SHA-256-Prüfsumme vor."}
+      ],
+      "test_ids": ["TEST-1.2-006"],
+      "evidenz_ids": ["EVD-1.2-003"]
+    }
+  ],
+  "tests": [
+    {
+      "id": "TEST-1.2-001",
+      "titel": "Rust/Tauri Compile Check",
+      "typ": "build",
+      "status": "geplant",
+      "anforderung_ids": ["REQ-1.2-001"],
+      "erwartung": "Cargo/Tauri-Check beendet sich erfolgreich.",
+      "befehl_oder_methode": "cargo check sowie passende Tauri-Buildprüfung",
+      "evidenz_ids": ["EVD-1.2-001"]
+    },
+    {
+      "id": "TEST-1.2-002",
+      "titel": "Lokaler Fenster-Start-Smoke",
+      "typ": "smoke",
+      "status": "geplant",
+      "anforderung_ids": ["REQ-1.2-001"],
+      "erwartung": "Das minimale lokale Fenster öffnet ohne Fachfunktion.",
+      "befehl_oder_methode": "Tauri lokal starten; Fenster sichtbar prüfen",
+      "evidenz_ids": ["EVD-1.2-002"]
+    },
+    {
+      "id": "TEST-1.2-003",
+      "titel": "Offline-Start-Smoke",
+      "typ": "offline",
+      "status": "geplant",
+      "anforderung_ids": ["REQ-1.2-002"],
+      "erwartung": "Die App startet trotz blockiertem Netzwerk.",
+      "befehl_oder_methode": "Netzwerkzugriff blockieren/deaktivieren und Start wiederholen",
+      "evidenz_ids": ["EVD-1.2-002"]
+    },
+    {
+      "id": "TEST-1.2-004",
+      "titel": "Remote-Ressourcen-Prüfung",
+      "typ": "security",
+      "status": "geplant",
+      "anforderung_ids": ["REQ-1.2-002"],
+      "erwartung": "Keine erforderlichen Remote-CDN-/Runtime-Ressourcen im Startpfad.",
+      "befehl_oder_methode": "Runtime-Assets/CSP auf Remote-Referenzen prüfen",
+      "evidenz_ids": ["EVD-1.2-002"]
+    },
+    {
+      "id": "TEST-1.2-005",
+      "titel": "Exit-und-Restart-Smoke",
+      "typ": "restart",
+      "status": "geplant",
+      "anforderung_ids": ["REQ-1.2-003"],
+      "erwartung": "Normal beenden und unmittelbar erneut starten funktioniert.",
+      "befehl_oder_methode": "Start → normal beenden → erneuter Start",
+      "evidenz_ids": ["EVD-1.2-002"]
+    },
+    {
+      "id": "TEST-1.2-006",
+      "titel": "Paketinventar-und-Hash-Prüfung",
+      "typ": "paket",
+      "status": "geplant",
+      "anforderung_ids": ["REQ-1.2-004"],
+      "erwartung": "ZIP ist lesbar, Inventar vollständig und SHA-256 vorhanden.",
+      "befehl_oder_methode": "ZIP-Test, Inventarvergleich, SHA-256 berechnen",
+      "evidenz_ids": ["EVD-1.2-003"]
+    }
+  ],
+  "evidenz": [
+    {
+      "id": "EVD-1.2-001",
+      "titel": "Toolchain- und Buildprüfbericht",
+      "status": "geplant",
+      "test_ids": ["TEST-1.2-001"],
+      "anforderung_ids": ["REQ-1.2-001"],
+      "artefakt_typ": "buildbericht",
+      "pfad": null,
+      "sha256": null,
+      "commit_sha": null,
+      "hinweis": "Erst bei realer 1.2-Ausführung erzeugen; keine geplanten Werte als bestanden markieren."
+    },
+    {
+      "id": "EVD-1.2-002",
+      "titel": "Start-, Offline- und Restart-Nachweis",
+      "status": "geplant",
+      "test_ids": ["TEST-1.2-002", "TEST-1.2-003", "TEST-1.2-004", "TEST-1.2-005"],
+      "anforderung_ids": ["REQ-1.2-001", "REQ-1.2-002", "REQ-1.2-003"],
+      "artefakt_typ": "startnachweis",
+      "pfad": null,
+      "sha256": null,
+      "commit_sha": null,
+      "hinweis": "Wird erst nach realer Fenster-/Offline-/Restart-Prüfung erzeugt."
+    },
+    {
+      "id": "EVD-1.2-003",
+      "titel": "Paketinventar und SHA-256",
+      "status": "geplant",
+      "test_ids": ["TEST-1.2-006"],
+      "anforderung_ids": ["REQ-1.2-004"],
+      "artefakt_typ": "inventar",
+      "pfad": null,
+      "sha256": null,
+      "commit_sha": null,
+      "hinweis": "Wird an das konkrete TODO-1.2-Entwicklungsartefakt gebunden."
+    }
+  ],
+  "gate_regeln": [
+    "Alle TEST-IDs müssen mindestens eine vorhandene REQ-ID referenzieren.",
+    "Alle EVD-IDs müssen mindestens eine vorhandene TEST-ID und REQ-ID referenzieren.",
+    "TODO-1.2 darf erst abgeschlossen werden, wenn alle erforderlichen Tests bestanden und alle erforderlichen Evidence-Objekte verifiziert sind.",
+    "Geplante Evidence darf keine erfundenen Hashes, Commit-SHAs oder Pfade enthalten.",
+    "Release-/Entwicklungs-ZIP benötigt Inventar und SHA-256."
+  ]
+}
