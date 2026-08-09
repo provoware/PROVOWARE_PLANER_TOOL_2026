@@ -93,9 +93,4 @@ jobs:
           kill "$XVFB_PID" || true
 
       - name: Keine Remote-Runtime-Assets
-        run: |
-          set -euxo pipefail
-          if grep -RInE 'https?://|src=["'"']//|href=["'"']//' ui; then
-            echo "Remote-Runtime-Referenz gefunden." >&2
-            exit 1
-          fi
+        run: python3 tests/smoke/todo_1_2_static.py
