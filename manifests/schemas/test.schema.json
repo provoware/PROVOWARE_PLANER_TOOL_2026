@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://provoware.local/schemas/test.schema.json",
+  "title": "PROVOWARE Test",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "titel", "typ", "status", "anforderung_ids", "erwartung", "evidenz_ids"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^TEST-[A-Z0-9][A-Z0-9._-]*$"},
+    "titel": {"type": "string", "minLength": 3},
+    "typ": {"enum": ["statisch", "build", "smoke", "offline", "restart", "paket", "security", "integration", "unit", "e2e", "accessibility", "failure_injection"]},
+    "status": {"enum": ["geplant", "bereit", "bestanden", "fehlgeschlagen", "blockiert", "nicht_ausgefuehrt"]},
+    "anforderung_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^REQ-[A-Z0-9][A-Z0-9._-]*$"}, "uniqueItems": true},
+    "erwartung": {"type": "string", "minLength": 5},
+    "befehl_oder_methode": {"type": "string"},
+    "evidenz_ids": {"type": "array", "items": {"type": "string", "pattern": "^EVD-[A-Z0-9][A-Z0-9._-]*$"}, "uniqueItems": true}
+  }
+}
