@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://provoware.local/schemas/evidenz.schema.json",
+  "title": "PROVOWARE Evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "titel", "status", "test_ids", "anforderung_ids", "artefakt_typ"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^EVD-[A-Z0-9][A-Z0-9._-]*$"},
+    "titel": {"type": "string", "minLength": 3},
+    "status": {"enum": ["geplant", "erzeugt", "verifiziert", "ungueltig"]},
+    "test_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^TEST-[A-Z0-9][A-Z0-9._-]*$"}, "uniqueItems": true},
+    "anforderung_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^REQ-[A-Z0-9][A-Z0-9._-]*$"}, "uniqueItems": true},
+    "artefakt_typ": {"enum": ["testbericht", "log", "startnachweis", "offline_nachweis", "inventar", "sha256", "buildbericht", "screenshot", "sonstiges"]},
+    "pfad": {"type": ["string", "null"]},
+    "sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+    "commit_sha": {"type": ["string", "null"], "pattern": "^[a-f0-9]{40}$"},
+    "hinweis": {"type": "string"}
+  }
+}
