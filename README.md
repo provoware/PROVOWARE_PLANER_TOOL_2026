@@ -148,3 +148,14 @@ I000 und I001 sind als maschinenlesbares Fundament angelegt. Der unabhängige St
 ## 18. Weiterführende Verbesserung
 
 Den Repository-Vollständigkeitsvertrag um eine zweite unabhängige Remote-Tree-Prüfung erweitern, die Commit, Tree, Pfade, Dateimodi und Hashes gegen das lokale Soll-Inventar verifiziert. Dadurch prüft nicht derselbe Mechanismus ausschließlich seine eigene Ausgabe.
+
+## I002 — Manifest + Evidence Hardening
+- Version: `0.2.0-dev.1`
+- vollständiges SHA-256-Dateiinventar
+- Source-, Build-, Release- und Evidence-Manifeste
+- Remote-Tree-Prüfung mit Pfad, Blob-SHA, Modus und Größe
+- zentraler Fehlerkatalog mit klaren Nutzerhinweisen
+- vollständige Repositoryprüfung in jeder Iteration
+
+### Nächster logischer Schritt
+I003: Klick-&-Start-Orchestrator als testbare Zustandsmaschine mit Vorprüfung, Aktion, Nachprüfung, Recovery und detailliertem Nutzerfeedback.

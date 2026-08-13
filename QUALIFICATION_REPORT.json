@@ -1,5 +1,19 @@
 {
   "schema_version": 1,
-  "state": "PENDING_REMOTE_QUALIFICATION",
-  "result": "NOT_RUN"
+  "state": "QUALIFIED",
+  "result": "PASS",
+  "subject_commit": "c39cbfb292fa3cc0d180f1026f4424ad79cc7c16",
+  "subject_tree": "c8be3679b701617954ab2d5438b465aa790cf4d8",
+  "workflow_run_id": 31754126603,
+  "gates": [
+    "stored_receipt_validation",
+    "repository_inventory",
+    "sha256_inventory",
+    "manifest_chain",
+    "i002_validator",
+    "remote_tree_paths_modes",
+    "unit_tests",
+    "foundation_validator",
+    "autopilot"
+  ]
 }

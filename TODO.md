@@ -83,3 +83,16 @@
 
 ## Nächster logischer Schritt
 I002: Manifest-/Evidence-Kette, kryptografisches Repository-Inventar und Remote-Tree-Receipt ergänzen; danach I003 Start-Orchestrator beginnen.
+
+## I002 — Manifest + Evidence Hardening
+- [x] Manifest-Builder
+- [x] SHA-256-Inventar
+- [x] Remote-Tree-Validator
+- [x] Fehlerstandard und Fehlerkatalog
+- [x] vollständige Repository-Dateiliste
+- [x] Remote-Qualifikation und Receipt-Kette
+
+## I003 — Nächster logischer Schritt
+- [ ] Klick-&-Start-Orchestrator als Zustandsmaschine
+- [ ] Fault-Injection und Recovery
+- [ ] detailliertes laienverständliches Live-Feedback

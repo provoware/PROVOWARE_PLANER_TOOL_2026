@@ -16,7 +16,12 @@
     "language_target": "python-3.12+",
     "gui_target": "pyside6-qt6",
     "database_target": "sqlite",
-    "dependency_direction": ["ui", "application", "domain", "infrastructure"],
+    "dependency_direction": [
+      "ui",
+      "application",
+      "domain",
+      "infrastructure"
+    ],
     "cross_module_internal_imports_allowed": false
   },
   "autonomy": {
@@ -33,7 +38,10 @@
     "target_tests_before_regression": true,
     "full_repository_inventory_each_iteration": true,
     "documentation_sync_required": true,
-    "machine_readable_evidence_required_for_release": true
+    "machine_readable_evidence_required_for_release": true,
+    "manifest_chain_required": true,
+    "sha256_inventory_required": true,
+    "error_catalog_required": true
   },
   "definition_of_ready": [
     "ziel_eindeutig",
@@ -52,8 +60,8 @@
     "remote_verifikation_pass"
   ],
   "foundation": {
-    "current_iteration": "I001",
-    "current_checkpoint": "C001-GLOBAL-STANDARDS",
-    "version": "0.1.0-dev.1"
+    "current_iteration": "I002",
+    "current_checkpoint": "C002-MANIFEST-EVIDENCE-HARDENING",
+    "version": "0.2.0-dev.1"
   }
 }

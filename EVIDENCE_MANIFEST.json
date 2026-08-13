@@ -1,7 +1,41 @@
 {
   "schema_version": 1,
   "manifest_type": "EVIDENCE",
-  "state": "PENDING_GENERATION",
-  "entries": [],
-  "count": 0
+  "version": "0.2.0-dev.1",
+  "attestation_model": "subject_commit_plus_evidence_overlay",
+  "entries": [
+    {
+      "path": "errors/FEHLERKATALOG.json",
+      "sha256": "c1575628841aec2f3054fdc82072cf69dd4cfa7d3201eee44645ef952dd3ff43",
+      "size": 2090,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_error_handling.py",
+      "sha256": "4ead233a5689c576e181db1b58c528591895034fd81f768871c57028c3d5205d",
+      "size": 651,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_manifest_builder.py",
+      "sha256": "6ca11491249f577e370ad416ff3a8505e863bc74a5a29b6420a76c8d9a3d4596",
+      "size": 567,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_remote_tree_validator.py",
+      "sha256": "72a1c9681bef1365efebbcdee000993092cc62c94e118580b4509f9749a3f909",
+      "size": 271,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_standard_validator.py",
+      "sha256": "e16e245c1ad48b10389e5db79d849c4529705c53159707043b725adeb06d47b7",
+      "size": 986,
+      "status": "PASS"
+    }
+  ],
+  "count": 5,
+  "remote_receipt": "REMOTE_TREE_RECEIPT.json",
+  "qualification_report": "QUALIFICATION_REPORT.json"
 }
