@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "state": "ATTESTED",
-  "subject_commit": "de36c02d3cdd081cf43548be57210a25de8de540",
-  "subject_tree": "4c70ae544088bf34384c3537caa9df79445139a9",
+  "subject_commit": "6512a0e01ecd57c5de7b9283786e2d080fca4472",
+  "subject_tree": "a508523a8758338d8c2069888bb6d7da16a1495f",
   "entry_count": 45,
   "subject_tree_entries": [
     {
@@ -42,7 +42,7 @@
     },
     {
       "path": "MANIFEST_INDEX.json",
-      "blob_sha": "81725927979c0f3f72dba096a4d0b381f24c2353",
+      "blob_sha": "c8729633262d23d35ead21f8a51cb1ca9f21209b",
       "mode": "100644",
       "size": 788,
       "status": "PASS"
@@ -63,7 +63,7 @@
     },
     {
       "path": "QUALIFICATION_REPORT.json",
-      "blob_sha": "1a96ebec908290fa0498661c1bf482e97057bf44",
+      "blob_sha": "d3b8919994d17e04b17367734fdf06241538de2f",
       "mode": "100644",
       "size": 470,
       "status": "PASS"
@@ -84,9 +84,9 @@
     },
     {
       "path": "REMOTE_TREE_RECEIPT.json",
-      "blob_sha": "b14539754b2c5caf95836d7fdfd60beb1cd20d35",
+      "blob_sha": "b85fe8b8093a967a98feeb9b56f80e82ed0b2797",
       "mode": "100644",
-      "size": 8644,
+      "size": 8655,
       "status": "PASS"
     },
     {
@@ -98,14 +98,14 @@
     },
     {
       "path": "SHA256_DATEI_INVENTAR.json",
-      "blob_sha": "fac200d33652645ff56819fd61aa8f6431141408",
+      "blob_sha": "dfbd2554e72c8930b85ae5de663e670f0d70dec0",
       "mode": "100644",
-      "size": 8065,
+      "size": 6257,
       "status": "PASS"
     },
     {
       "path": "SOURCE_MANIFEST.json",
-      "blob_sha": "0bdb446e74b3ce88abd6b593b05cfada6e896a83",
+      "blob_sha": "9732e8e7b9348d3b3960a60627b93c4a2d842051",
       "mode": "100644",
       "size": 6613,
       "status": "PASS"
@@ -115,7 +115,7 @@
       "blob_sha": "def3fd39a8b1ce5408bd5f760090a58c06d36bb0",
       "mode": "100644",
       "size": 3543,
-        "status": "PASS"
+      "status": "PASS"
     },
     {
       "path": "VERSION.json",
