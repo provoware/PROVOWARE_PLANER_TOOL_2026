@@ -5,6 +5,8 @@
   "subject_commit": "6512a0e01ecd57c5de7b9283786e2d080fca4472",
   "subject_tree": "a508523a8758338d8c2069888bb6d7da16a1495f",
   "workflow_run_id": 31754874318,
+  "closure_commit": "01b02bed5ac9292ef2e95ba79c0c00f6c31118ef",
+  "closure_tree": "85b35af0d7399b22ae962a8eac0a55bbaf57a517",
   "gates": [
     "stored_receipt_validation",
     "repository_inventory",
