@@ -23,6 +23,39 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Gespeicherten Remote-Receipt unabhängig prüfen
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          receipt = json.loads(Path('REMOTE_TREE_RECEIPT.json').read_text(encoding='utf-8'))
+          report = json.loads(Path('QUALIFICATION_REPORT.json').read_text(encoding='utf-8'))
+          if receipt.get('state') != 'ATTESTED':
+              print('GESPEICHERTER_RECEIPT=PENDING')
+              raise SystemExit(0)
+          subject = receipt['subject_commit']
+          actual_tree = subprocess.check_output(['git','rev-parse',f'{subject}^{{tree}}'], text=True).strip()
+          if actual_tree != receipt.get('subject_tree'):
+              raise SystemExit('REMOTE-TREE-001: Subject-Tree stimmt nicht')
+          output = subprocess.check_output(['git','ls-tree','-r','-l',subject], text=True)
+          actual = {}
+          for line in output.splitlines():
+              meta, path = line.split('\t', 1)
+              mode, _kind, blob_sha, size = meta.split()
+              actual[path] = (mode, blob_sha, int(size))
+          expected = {
+              item['path']: (item['mode'], item['blob_sha'], item['size'])
+              for item in receipt.get('subject_tree_entries', [])
+          }
+          if actual != expected or len(expected) != receipt.get('entry_count'):
+              raise SystemExit('REMOTE-TREE-001: gespeicherter Receipt weicht vom Subject ab')
+          if report.get('state') == 'QUALIFIED':
+              if report.get('result') != 'PASS' or report.get('subject_commit') != subject or report.get('subject_tree') != actual_tree:
+                  raise SystemExit('QUALIFICATION-001: Bericht passt nicht zum Receipt')
+          print(f'GESPEICHERTER_RECEIPT=PASS files={len(actual)} subject={subject}')
+          PY
+
       - name: Repository-Soll aus realem Arbeitsbaum ableiten
         shell: bash
         run: |
@@ -114,6 +147,7 @@ jobs:
               'subject_tree': tree,
               'workflow_run_id': run_id,
               'gates': [
+                  'stored_receipt_validation',
                   'repository_inventory',
                   'sha256_inventory',
                   'manifest_chain',
