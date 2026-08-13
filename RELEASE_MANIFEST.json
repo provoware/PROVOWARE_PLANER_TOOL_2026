@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "manifest_type": "RELEASE",
+  "state": "NOT_BUILT",
+  "reason": "I002 ist Foundation; ein ausführbares Releasepaket existiert noch nicht."
+}
