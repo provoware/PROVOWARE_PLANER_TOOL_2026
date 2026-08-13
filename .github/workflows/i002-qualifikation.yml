@@ -39,6 +39,10 @@ jobs:
           )
           path = root / 'REPOSITORY_MANIFEST.json'
           data = json.loads(path.read_text(encoding='utf-8'))
+          data['project_id'] = 'PROVOWARE-PLANER-2026'
+          data['version'] = '0.1.0-dev.1'
+          data['iteration'] = 'I001'
+          data['ignored_path_parts'] = ['.git', '__pycache__', '.pytest_cache']
           data['expected_file_count'] = len(files)
           data['files'] = files
           data['expected_paths'] = files
