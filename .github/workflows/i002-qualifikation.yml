@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   qualifikation:
@@ -22,6 +22,81 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: I002-Metadaten und Dokumentation vorbereiten
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          version = json.loads(Path('VERSION.json').read_text(encoding='utf-8'))
+          version['version'] = '0.2.0-dev.1'
+          version['iteration'] = 'I002'
+          version['checkpoint'] = 'C002-MANIFEST-EVIDENCE-HARDENING'
+          version['build_revision'] = max(int(version.get('build_revision', 1)), 2)
+          Path('VERSION.json').write_text(json.dumps(version, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          contract = json.loads(Path('PROJECT_CONTRACT.json').read_text(encoding='utf-8'))
+          contract['foundation']['current_iteration'] = 'I002'
+          contract['foundation']['current_checkpoint'] = 'C002-MANIFEST-EVIDENCE-HARDENING'
+          contract['foundation']['version'] = '0.2.0-dev.1'
+          contract['development']['manifest_chain_required'] = True
+          contract['development']['sha256_inventory_required'] = True
+          contract['development']['error_catalog_required'] = True
+          Path('PROJECT_CONTRACT.json').write_text(json.dumps(contract, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          status = json.loads(Path('PROJEKTSTATUS.json').read_text(encoding='utf-8'))
+          status['version'] = '0.2.0-dev.1'
+          status['iteration'] = 'I002'
+          status['checkpoint'] = 'C002-MANIFEST-EVIDENCE-HARDENING'
+          status['status'] = 'QUALIFIZIERUNG_LAEUFT'
+          status['ampel'] = 'GELB'
+          status['next_logical_step'] = 'I003 Klick-&-Start-Orchestrator als testbare Zustandsmaschine'
+          status['improvement_recommendation'] = 'Fault-Injection und Recovery-Pfade in I003 automatisch qualifizieren'
+          Path('PROJEKTSTATUS.json').write_text(json.dumps(status, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          def append_once(path, marker, block):
+              p = Path(path)
+              text = p.read_text(encoding='utf-8')
+              if marker not in text:
+                  p.write_text(text.rstrip() + '\n\n' + block.strip() + '\n', encoding='utf-8')
+
+          append_once('README.md', '## I002 — Manifest + Evidence Hardening', '''
+          ## I002 — Manifest + Evidence Hardening
+          - Version: `0.2.0-dev.1`
+          - vollständiges SHA-256-Dateiinventar
+          - Source-, Build-, Release- und Evidence-Manifeste
+          - Remote-Tree-Prüfung mit Pfad, Blob-SHA, Modus und Größe
+          - zentraler Fehlerkatalog mit klaren Nutzerhinweisen
+          - vollständige Repositoryprüfung in jeder Iteration
+
+          ### Nächster logischer Schritt
+          I003: Klick-&-Start-Orchestrator als testbare Zustandsmaschine mit Vorprüfung, Aktion, Nachprüfung, Recovery und detailliertem Nutzerfeedback.
+          ''')
+          append_once('TODO.md', '## I002 — Manifest + Evidence Hardening', '''
+          ## I002 — Manifest + Evidence Hardening
+          - [x] Manifest-Builder
+          - [x] SHA-256-Inventar
+          - [x] Remote-Tree-Validator
+          - [x] Fehlerstandard und Fehlerkatalog
+          - [x] vollständige Repository-Dateiliste
+          - [x] Remote-Qualifikation und Receipt-Kette
+
+          ## I003 — Nächster logischer Schritt
+          - [ ] Klick-&-Start-Orchestrator als Zustandsmaschine
+          - [ ] Fault-Injection und Recovery
+          - [ ] detailliertes laienverständliches Live-Feedback
+          ''')
+          append_once('CHANGELOG.md', '## 0.2.0-dev.1 — I002', '''
+          ## 0.2.0-dev.1 — I002
+          - Manifest- und Evidence-Kette ergänzt
+          - SHA-256-Inventar und Remote-Tree-Validierung ergänzt
+          - Fehlerbehandlungsstandard und Fehlerkatalog ergänzt
+          - qualifizierte Evidence wird vollautomatisch persistiert und nachgeprüft
+          - vollständige Repositoryprüfung je Iteration als Pflicht bestätigt
+          ''')
+          PY
 
       - name: Gespeicherten Remote-Receipt unabhängig prüfen
         shell: bash
@@ -44,15 +119,11 @@ jobs:
               meta, path = line.split('\t', 1)
               mode, _kind, blob_sha, size = meta.split()
               actual[path] = (mode, blob_sha, int(size))
-          expected = {
-              item['path']: (item['mode'], item['blob_sha'], item['size'])
-              for item in receipt.get('subject_tree_entries', [])
-          }
+          expected = {item['path']: (item['mode'], item['blob_sha'], item['size']) for item in receipt.get('subject_tree_entries', [])}
           if actual != expected or len(expected) != receipt.get('entry_count'):
               raise SystemExit('REMOTE-TREE-001: gespeicherter Receipt weicht vom Subject ab')
-          if report.get('state') == 'QUALIFIED':
-              if report.get('result') != 'PASS' or report.get('subject_commit') != subject or report.get('subject_tree') != actual_tree:
-                  raise SystemExit('QUALIFICATION-001: Bericht passt nicht zum Receipt')
+          if report.get('state') == 'QUALIFIED' and (report.get('result') != 'PASS' or report.get('subject_commit') != subject or report.get('subject_tree') != actual_tree):
+              raise SystemExit('QUALIFICATION-001: Bericht passt nicht zum Receipt')
           print(f'GESPEICHERTER_RECEIPT=PASS files={len(actual)} subject={subject}')
           PY
 
@@ -62,25 +133,18 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          root = Path('.')
-          files = sorted(
-              str(p) for p in root.rglob('*')
-              if p.is_file()
-              and '.git' not in p.parts
-              and '__pycache__' not in p.parts
-              and '.pytest_cache' not in p.parts
-          )
-          path = root / 'REPOSITORY_MANIFEST.json'
-          data = json.loads(path.read_text(encoding='utf-8'))
+          files = sorted(str(p) for p in Path('.').rglob('*') if p.is_file() and '.git' not in p.parts and '__pycache__' not in p.parts and '.pytest_cache' not in p.parts)
+          version = json.loads(Path('VERSION.json').read_text(encoding='utf-8'))
+          data = json.loads(Path('REPOSITORY_MANIFEST.json').read_text(encoding='utf-8'))
           data['project_id'] = 'PROVOWARE-PLANER-2026'
-          data['version'] = '0.1.0-dev.1'
-          data['iteration'] = 'I001'
+          data['version'] = version['version']
+          data['iteration'] = version['iteration']
           data['ignored_path_parts'] = ['.git', '__pycache__', '.pytest_cache']
           data['expected_file_count'] = len(files)
           data['files'] = files
           data['expected_paths'] = files
           data['full_check_each_iteration'] = True
-          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          Path('REPOSITORY_MANIFEST.json').write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
           print(f'REPOSITORY_SOLLPFADE={len(files)}')
           PY
 
@@ -100,11 +164,30 @@ jobs:
       - name: Unit- und Regressionstests
         run: python -m unittest discover -s tests -v
 
-      - name: Bestehenden Foundation-Validator prüfen
+      - name: Foundation-Validator prüfen
         run: python tools/autopilot/standard_validator.py
 
-      - name: Bestehenden Autopilot qualifizieren
+      - name: Autopilot qualifizieren
         run: python tools/autopilot/autopilot.py qualifizieren
+
+      - name: Qualifizierten Status setzen und Manifeste nachvalidieren
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('PROJEKTSTATUS.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          data['status'] = 'QUALIFIZIERT'
+          data['ampel'] = 'GRUEN'
+          data['qualification_percent'] = max(int(data.get('qualification_percent', 0)), 35)
+          completed = data.setdefault('last_completed', [])
+          if 'I002-MANIFEST-EVIDENCE-HARDENING' not in completed:
+              completed.append('I002-MANIFEST-EVIDENCE-HARDENING')
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+          python tools/autopilot/manifest_builder.py --write
+          python tools/autopilot/manifest_builder.py --check
 
       - name: Remote-Receipt und Qualifikationsbericht erzeugen
         shell: bash
@@ -122,45 +205,30 @@ jobs:
           entries = []
           for line in output.splitlines():
               meta, path = line.split('\t', 1)
-              mode, kind, blob_sha, size = meta.split()
-              entries.append({
-                  'path': path,
-                  'blob_sha': blob_sha,
-                  'mode': mode,
-                  'size': int(size),
-                  'status': 'PASS',
-              })
-          receipt = {
-              'schema_version': 1,
-              'state': 'ATTESTED',
-              'subject_commit': subject,
-              'subject_tree': tree,
-              'entry_count': len(entries),
-              'subject_tree_entries': entries,
-          }
-          Path('REMOTE_TREE_RECEIPT.json').write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-          report = {
-              'schema_version': 1,
-              'state': 'QUALIFIED',
-              'result': 'PASS',
-              'subject_commit': subject,
-              'subject_tree': tree,
-              'workflow_run_id': run_id,
-              'gates': [
-                  'stored_receipt_validation',
-                  'repository_inventory',
-                  'sha256_inventory',
-                  'manifest_chain',
-                  'i002_validator',
-                  'remote_tree_paths_modes',
-                  'unit_tests',
-                  'foundation_validator',
-                  'autopilot',
-              ],
-          }
-          Path('QUALIFICATION_REPORT.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+              mode, _kind, blob_sha, size = meta.split()
+              entries.append({'path': path, 'blob_sha': blob_sha, 'mode': mode, 'size': int(size), 'status': 'PASS'})
+          Path('REMOTE_TREE_RECEIPT.json').write_text(json.dumps({'schema_version': 1, 'state': 'ATTESTED', 'subject_commit': subject, 'subject_tree': tree, 'entry_count': len(entries), 'subject_tree_entries': entries}, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          gates = ['stored_receipt_validation','repository_inventory','sha256_inventory','manifest_chain','i002_validator','remote_tree_paths_modes','unit_tests','foundation_validator','autopilot']
+          Path('QUALIFICATION_REPORT.json').write_text(json.dumps({'schema_version': 1, 'state': 'QUALIFIED', 'result': 'PASS', 'subject_commit': subject, 'subject_tree': tree, 'workflow_run_id': run_id, 'gates': gates}, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
           print(f'REMOTE_RECEIPT=PASS files={len(entries)} tree={tree}')
           PY
+
+      - name: Qualifizierte Evidence einmalig persistieren
+        shell: bash
+        run: |
+          if git log -1 --pretty=%s | grep -q '^evidence: persist I002'; then
+            echo 'EVIDENCE_PERSIST=SKIP_ALREADY_EVIDENCE_COMMIT'
+            exit 0
+          fi
+          git config user.name 'PROVOWARE Evidence Bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add PROJECT_CONTRACT.json VERSION.json PROJEKTSTATUS.json README.md TODO.md CHANGELOG.md REPOSITORY_MANIFEST.json SOURCE_MANIFEST.json BUILD_MANIFEST.json RELEASE_MANIFEST.json EVIDENCE_MANIFEST.json MANIFEST_INDEX.json SHA256_DATEI_INVENTAR.json REMOTE_TREE_RECEIPT.json QUALIFICATION_REPORT.json
+          if git diff --cached --quiet; then
+            echo 'EVIDENCE_PERSIST=NO_CHANGES'
+            exit 0
+          fi
+          git commit -m "evidence: persist I002 run ${GITHUB_RUN_ID}"
+          git push origin HEAD:agent/i002-manifest-evidence
 
       - name: Evidence-Artefakt bereitstellen
         uses: actions/upload-artifact@v4
