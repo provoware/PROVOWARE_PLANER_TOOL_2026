@@ -1,0 +1,28 @@
+{
+  "standard_id": "ERROR_HANDLING",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "principles": [
+    "bekannte Fehler klassifizieren",
+    "kritische Fehler nicht verschlucken",
+    "nur idempotente sichere Aktionen automatisch wiederholen",
+    "Nutzerdaten niemals als Reparaturmaßnahme löschen",
+    "jede automatische Behandlung protokollieren",
+    "technische Details ausklappbar"
+  ],
+  "severities": [
+    "INFO",
+    "HINWEIS",
+    "WARNUNG",
+    "FEHLER",
+    "KRITISCH"
+  ],
+  "actions": [
+    "WEITER",
+    "WIEDERHOLEN",
+    "DEGRADIERT_WEITER",
+    "RECOVERY",
+    "BLOCKIEREN"
+  ],
+  "max_safe_retries": 2
+}
