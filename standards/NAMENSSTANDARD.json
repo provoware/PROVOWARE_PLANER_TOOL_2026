@@ -1,0 +1,16 @@
+{
+  "standard_id": "PROVOWARE-NAMING",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "visible_language": "de",
+  "machine_ids_language": "en-or-stable-code",
+  "canonical_status": {
+    "READY": "BEREIT",
+    "DEGRADED": "EINGESCHRÄNKT",
+    "FAILED": "FEHLER",
+    "BLOCKED": "BLOCKIERT",
+    "DISABLED": "DEAKTIVIERT"
+  },
+  "duplicate_visible_terms_for_same_state_forbidden": true,
+  "error_code_pattern": "^[A-Z]+-[A-Z]+-[0-9]{3}$"
+}

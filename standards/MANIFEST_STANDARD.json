@@ -1,0 +1,11 @@
+{
+  "standard_id": "PROVOWARE-MANIFEST",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "repository_inventory_required_each_iteration": true,
+  "exact_file_inventory_required": true,
+  "planned_release_chain": ["SOURCE_MANIFEST.json", "BUILD_MANIFEST.json", "RELEASE_MANIFEST.json", "EVIDENCE_MANIFEST.json"],
+  "cryptographic_hash": "SHA-256",
+  "remote_tree_verification_required_for_release": true,
+  "generator_must_not_be_only_validator": true
+}

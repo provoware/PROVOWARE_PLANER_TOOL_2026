@@ -1,0 +1,12 @@
+{
+  "standard_id": "PROVOWARE-LOGGING",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "machine_format": "JSONL",
+  "human_language": "de",
+  "severity": ["INFO", "HINWEIS", "WARNUNG", "FEHLER", "KRITISCH"],
+  "required_fields": ["event_id", "timestamp", "severity", "component", "operation", "message", "trace_id", "version"],
+  "user_explanation_fields": ["was", "wann", "wo", "wie", "wodurch", "auswirkung", "was_tun"],
+  "private_content_in_logs_by_default": false,
+  "stable_error_codes_required": true
+}

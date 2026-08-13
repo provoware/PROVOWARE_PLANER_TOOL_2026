@@ -1,0 +1,27 @@
+name: Foundation-Qualifikation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  foundation:
+    name: Standards, Inventar und Autopilot
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+      - name: Python 3.12 bereitstellen
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Unabhängigen Standard-Validator ausführen
+        run: python tools/autopilot/standard_validator.py
+      - name: Validator-Tests ausführen
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Autopilot-Qualifikation ausführen
+        run: python tools/autopilot/autopilot.py qualifizieren

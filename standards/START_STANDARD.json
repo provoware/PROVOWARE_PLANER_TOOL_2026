@@ -1,0 +1,12 @@
+{
+  "standard_id": "PROVOWARE-START",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "sequence_principle": "PRECHECK-AKTION-POSTCHECK",
+  "administrator_rights_by_default": false,
+  "start_only_required_components": true,
+  "planned_checks": [
+    "os", "architecture", "runtime", "program_manifest", "configuration", "workspace_identity", "real_read_write", "database", "schema", "backup", "recovery", "modules", "logging", "event_bus", "gui", "post_start"
+  ],
+  "safe_repair_requires": ["reversible", "local", "deterministic", "validated", "logged"]
+}

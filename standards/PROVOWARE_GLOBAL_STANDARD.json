@@ -1,0 +1,24 @@
+{
+  "standard_id": "PROVOWARE-GLOBAL",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "project_language": "de",
+  "principles": [
+    "offline_first",
+    "portable",
+    "linux_only",
+    "single_user",
+    "minimal_dependencies",
+    "small_local_patches",
+    "automatic_pre_and_post_validation",
+    "no_manual_technical_user_acceptance",
+    "full_repository_verification_each_iteration"
+  ],
+  "authority_order": [
+    "PROVOWARE_GLOBAL_STANDARD",
+    "PROJECT_CONTRACT",
+    "MODULE_CONTRACT",
+    "LOCAL_CONFIGURATION"
+  ],
+  "undocumented_override_allowed": false
+}

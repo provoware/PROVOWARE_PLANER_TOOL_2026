@@ -1,0 +1,14 @@
+{
+  "standard_id": "PROVOWARE-QUALITY",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "mandatory_gate_states": ["PASS", "FAIL", "NOT_RUN"],
+  "release_blocking_states": ["FAIL", "NOT_RUN"],
+  "flaky_test_is_failure": true,
+  "baseline_required_before_change": true,
+  "target_tests_required": true,
+  "regression_required": true,
+  "documentation_consistency_required": true,
+  "repository_inventory_required": true,
+  "absolute_error_free_claim_forbidden": true
+}

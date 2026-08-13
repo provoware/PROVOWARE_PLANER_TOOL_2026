@@ -1,0 +1,18 @@
+{
+  "standard_id": "PROVOWARE-UI",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "spacing_grid_px": 4,
+  "spacing_tokens_px": {"XXS": 4, "XS": 8, "S": 12, "M": 16, "L": 24, "XL": 32, "XXL": 48},
+  "font_roles": ["SEITENTITEL", "ABSCHNITTSTITEL", "KARTENTITEL", "NORMALTEXT", "HILFETEXT", "STATUS", "BUTTON", "TAB", "TABELLENKOPF"],
+  "font_scale_percent": [90, 100, 110, 125, 150, 175, 200],
+  "system_font_first": true,
+  "absolute_main_layout_positioning_forbidden": true,
+  "details_should_be_expandable": true,
+  "status_lights": {
+    "GREEN": {"symbol": "circle", "text": "GRUEN - BEREIT"},
+    "YELLOW": {"symbol": "triangle", "text": "GELB - EINGESCHRAENKT"},
+    "RED": {"symbol": "circle", "text": "ROT - BLOCKIERT"}
+  },
+  "color_alone_forbidden": true
+}

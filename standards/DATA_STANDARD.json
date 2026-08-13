@@ -1,0 +1,15 @@
+{
+  "standard_id": "PROVOWARE-DATA",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "encoding": "UTF-8",
+  "technical_timestamp_format": "ISO-8601",
+  "technical_timestamp_zone": "UTC",
+  "calendar_semantics": "local_timezone_explicit",
+  "database_target": "SQLite",
+  "foreign_keys_required": true,
+  "transactional_writes_required": true,
+  "migration_requires_backup": true,
+  "migration_requires_post_validation": true,
+  "user_data_must_be_separated_from_program": true
+}

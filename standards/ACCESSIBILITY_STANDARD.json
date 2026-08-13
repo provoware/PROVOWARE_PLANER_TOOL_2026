@@ -1,0 +1,16 @@
+{
+  "standard_id": "PROVOWARE-ACCESSIBILITY",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "rules": {
+    "keyboard_access_required": true,
+    "visible_focus_required": true,
+    "accessible_names_required": true,
+    "color_only_information_forbidden": true,
+    "font_scaling_required": true,
+    "minimum_font_scale_percent": 90,
+    "maximum_tested_font_scale_percent": 200,
+    "status_requires_text_and_symbol": true,
+    "compact_base_with_expandable_details": true
+  }
+}

@@ -1,240 +1,150 @@
 # PROVOWARE PLANER TOOL 2026
 
-Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungswerkzeug für Linux.
+Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungswerkzeug für Linux. Das Projekt wird als maximal wartbarer modularer Monolith entwickelt und soll ohne technische Nutzerabnahme autonom qualifiziert werden.
 
 ## 1. Projektstatus
 
-- **Phase:** Neuaufbau / Foundation
+- **Version:** `0.1.0-dev.1`
+- **Phase:** FOUNDATION
+- **Iteration:** I001
+- **Checkpoint:** C001-GLOBAL-STANDARDS
+- **Ampel:** 🟢 GRÜN – Foundation konsistent angelegt
 - **Zielplattform:** Linux, insbesondere Ubuntu-/Kubuntu-Derivate
 - **Betrieb:** lokal, offline-first, ohne Cloud-Zwang
-- **Architekturziel:** maximal wartbarer modularer Monolith
-- **Bedienprinzip:** Klick & Start mit automatischer Vor- und Nachvalidierung
-- **Technische Nutzerabnahme:** soll nicht erforderlich sein
+- **Technische Nutzerabnahme:** nicht Bestandteil der Freigabekette
 - **Releaseziel:** reproduzierbares Linux-Paket plus qualifiziertes ZIP
 
-## 2. Ziel
+Die Ampel ist nur eine Zusatzinformation. Ein Status wird immer zusätzlich als Text ausgegeben.
 
-PROVOWARE PLANER soll Kalender, Aufgabenplanung, Dashboard, Diagnose und spätere Zusatzmodule in einer einheitlichen, modernen und leicht verständlichen Oberfläche verbinden. Die Nutzerdaten bleiben lokal. Beim ersten Start wird ein Arbeitsordner ausgewählt, real auf Lese- und Schreibfähigkeit geprüft und über eine eindeutige Workspace-ID dauerhaft zugeordnet.
+## 2. Was ist das Tool?
+
+PROVOWARE PLANER verbindet Kalender, Aufgabenplanung, Dashboard, Diagnose und spätere Zusatzmodule in einer einheitlichen Oberfläche. Nutzerdaten bleiben lokal. Beim ersten Start wird ein Arbeitsordner gewählt, real auf Lesen und Schreiben geprüft und über eine eindeutige Workspace-ID dauerhaft zugeordnet.
 
 ## 3. Kernmodule
 
 ### Kalender
-- Jahres-, Monats-, Wochen- und Tagesansicht
-- Termine und ganztägige Einträge
-- fünf frei benennbare Farbmarkierungen
-- Markierungen zusätzlich mit Text oder Symbol, damit Farbe nie alleinige Information ist
-- Vorbereitung für Suche, Wiederholungen und offene Austauschformate
+Jahres-, Monats-, Wochen- und Tagesansicht, Termine, ganztägige Einträge sowie fünf frei benennbare Markierungen. Markierungen verwenden Farbe plus Text oder Symbol, damit Farbe nie alleinige Information ist.
 
 ### Todo
-- Aufgaben, Status, Priorität und Fälligkeit
-- Unteraufgaben und Fortschritt
-- Filter, Suche und Favoriten
-- definierte Verknüpfung mit Kalenderdaten
-- keine versteckten Datenlöschungen bei gelösten Verknüpfungen
+Aufgaben mit Status, Priorität, Fälligkeit, Unteraufgaben, Fortschritt, Filter, Suche und definierter Kalenderkopplung.
 
 ### Dashboard
-- heutige Informationen
-- nächste Termine
-- fällige und überfällige Aufgaben
-- Sicherungsstatus
-- Modul- und Systemstatus
-- Schnellaktionen
+Heute, nächste Termine, fällige und überfällige Aufgaben, Sicherungszustand, Modulstatus, Systemstatus und Schnellaktionen.
 
 ### Diagnose und Logging
-Probleme sollen eindeutig beschreiben:
-- Was ist passiert?
-- Wann?
-- Wo?
-- Wie?
-- Wodurch vermutlich?
-- Welche Auswirkung besteht?
-- Was kann automatisch getan werden?
-- Was kann der Nutzer tun?
+Jedes relevante Problem soll eindeutig beantworten: Was? Wann? Wo? Wie? Wodurch? Welche Auswirkung? Was kann automatisch getan werden? Was kann der Nutzer tun? Technische Ereignisse erhalten stabile IDs und maschinenlesbare Daten.
 
-Technische Ereignisse erhalten stabile IDs und maschinenlesbare Daten. Die Oberfläche zeigt dazu einfache deutsche Erklärungen.
+## 4. Oberfläche und globale Gestaltung
 
-## 4. Oberfläche
+Alle Module verwenden zentrale Designregeln. Einzelne Module dürfen Abstände, Typografie, Fokusdarstellung oder Statusfarben nicht frei neu erfinden.
+
+Das globale Abstandssystem basiert auf einem 4-Pixel-Raster: 4, 8, 12, 16, 24, 32 und 48 Pixel. Schrift wird über semantische Rollen geführt und global skalierbar gehalten. Freigegebene Stufen sind 90 %, 100 %, 110 %, 125 %, 150 %, 175 % und 200 %.
 
 Geplanter Grundaufbau:
 1. Menüleiste
-2. kompakte Schnellstart- und Favoritenleiste mit kleinen Kacheln
+2. kompakte Schnellstart- und Favoritenleiste
 3. modulare Tabs
 4. aktiver Arbeitsbereich
 5. Statusbereich mit Sicherung, Diagnose und Version
 
-Die Bereiche sollen sich automatisch an Fenstergröße und Schriftskalierung anpassen. Hauptlayouts verwenden keine starre absolute Positionierung.
+## 5. Ampelsystem
 
-## 5. Globale UI-Standards
+- 🟢 **GRÜN – BEREIT:** alle für den Zustand erforderlichen Prüfungen bestanden
+- 🟡 **GELB – EINGESCHRÄNKT:** nutzbar, aber mindestens ein nichtkritischer Hinweis besteht
+- 🔴 **ROT – BLOCKIERT:** sichere Weiterarbeit oder Freigabe nicht zulässig
 
-Gestaltungswerte werden zentral geführt. Einzelne Module dürfen Abstände, Schriftgrößen oder Statusfarben nicht frei neu erfinden.
+Ein kritischer roter Teilstatus macht den Gesamtstatus rot. Ohne Rot, aber mit mindestens einem gelben Teilstatus, wird der Gesamtstatus gelb. Farbe wird nie ohne Symbol und Text verwendet.
 
-Geplant sind globale Design-Tokens für:
-- Abstände auf Basis eines 4-Pixel-Rasters
-- Typografie-Rollen
-- flexible Schriftskalierung
-- Farben und Kontraste
-- Fokusdarstellung
-- Karten, Buttons und Statusanzeigen
-- Barrierefreiheitsregeln
+## 6. Klick-&-Start-Ziel
 
-Vorgesehene Schriftskalierung: 90 %, 100 %, 110 %, 125 %, 150 %, 175 % und 200 %.
+Der spätere Start-Orchestrator prüft transparent Betriebssystem, Architektur, Runtime, Programmdateien, Manifeste, Konfiguration, Workspace-ID, reale Lese-/Schreibfähigkeit, Datenbank, Schema, Sicherung, Recovery, Module, Logging, Ereignissystem und GUI. Jede relevante Aktion folgt `PRECHECK → AKTION → POSTCHECK`.
 
-## 6. Ampelsystem
+Es werden nur notwendige lokale Komponenten gestartet. Kein eigener Webserver, Broker oder Hintergrunddienst wird ohne zwingenden Grund eingeführt.
 
-Die Ampel ist nur eine unterstützende Statusdarstellung. Farbe wird immer durch Text und Symbol ergänzt.
+## 7. Daten und Sicherheit
 
-- **GRÜN – BEREIT:** definierte Prüfungen bestanden
-- **GELB – EINGESCHRÄNKT:** Programm nutzbar, aber ein Hinweis oder nichtkritisches Problem besteht
-- **ROT – BLOCKIERT:** sichere Weiterarbeit aktuell nicht zulässig
+Programm, Nutzerdaten, Laufzeitdaten, Konfiguration, Sicherungen und Logs werden strikt getrennt. Für lokale Daten ist SQLite vorgesehen. Schreibvorgänge sollen transaktional erfolgen. Schemaänderungen benötigen Sicherung, Migration und Nachvalidierung. Administratorrechte sind im Normalbetrieb nicht vorgesehen.
 
-Der Gesamtstatus wird zentral aus den Zuständen von Arbeitsordner, Datenbank, Modulen, Sicherung und Diagnose abgeleitet.
+## 8. Globale Standards
 
-## 7. Klick-&-Start-Prinzip
+Die verbindlichen Standards liegen unter `standards/` und werden über `standards/STANDARD_INDEX.json` registriert. Der zentrale Vorrang lautet:
 
-Der Start-Orchestrator soll automatisch und transparent prüfen:
-1. Betriebssystem und Architektur
-2. Runtime und Programmdateien
-3. Manifeste
-4. Konfiguration
-5. Arbeitsordner und Workspace-ID
-6. reale Lese-/Schreibfähigkeit
-7. Datenbank und Schema
-8. Sicherungs- und Wiederherstellungszustand
-9. aktivierte Module
-10. Logging und internes Ereignissystem
-11. GUI
-12. Nachstartprüfung
+`PROVOWARE_GLOBAL_STANDARD → PROJECT_CONTRACT → Modulvertrag → konkrete Konfiguration`
 
-Es werden nur tatsächlich notwendige lokale Komponenten gestartet. Unnötige Server, Hintergrunddienste oder Cloud-Abhängigkeiten sind nicht vorgesehen.
+Aktuell registriert sind Benennung, UI, Barrierefreiheit, Daten, Logging, Tests, Start, Manifeste, Release, Qualität und Dokumentation.
 
-## 8. Datenprinzip
+## 9. Repository-Vollständigkeit
 
-Strikte Trennung von:
-- Programm
-- Nutzerdaten
-- Laufzeitdaten
-- Konfiguration
-- Sicherungen
-- Logs
+`REPOSITORY_MANIFEST.json` ist das Soll-Inventar des gesamten Projektbaums. Jede Iteration muss prüfen:
+- fehlt eine erwartete Datei?
+- existiert eine unerwartete Datei?
+- stimmen Projekt, Version, Iteration und Standards überein?
+- sind README, TODO und Statusdateien synchron?
 
-Für die lokale Datenhaltung ist SQLite vorgesehen. Schreibvorgänge sollen transaktional erfolgen. Schemaänderungen erhalten Vorprüfung, Sicherung und Nachvalidierung.
+Die Prüfung erfolgt lokal durch den unabhängigen Validator und remote erneut durch GitHub Actions.
 
-## 9. Globale Standards
+## 10. Autonomer Entwicklungs- und Prüfautopilot
 
-Das Projekt soll maschinenlesbare Standards führen für:
-- Projekt- und Architekturvertrag
-- Benennungen
-- UI und Barrierefreiheit
-- Datenformate
-- Startlogik
-- Logging und Fehlercodes
-- Tests und Qualitäts-Gates
-- Manifeste und Nachweise
-- Versionierung und Releases
-- Dokumentationsstruktur
+Der Einstieg liegt unter `tools/autopilot/`.
 
-Eine niedrigere Ebene darf einen globalen Standard nur durch eine dokumentierte Ausnahme überschreiben.
+- `standard_validator.py` prüft Standards, Verträge, Status, Dokumentation und Repository-Inventar unabhängig vom Erzeuger.
+- `autopilot.py pruefen` führt die Foundation-Prüfung aus.
+- `autopilot.py qualifizieren` ist der kanonische Qualifikations-Einstieg für die aktuelle Entwicklungsstufe.
 
-## 10. Manifest- und Nachweiskette
+Der Validator verwendet in der Foundation ausschließlich die Python-Standardbibliothek und erzeugt klare deutsche Fehlertexte sowie maschinenlesbare Ergebnisse.
 
-Geplant ist eine nachvollziehbare Kette:
+## 11. Automatische Qualitätssicherung
 
-`SOURCE_MANIFEST.json` → `BUILD_MANIFEST.json` → `RELEASE_MANIFEST.json` → `EVIDENCE_MANIFEST.json`
+Die endgültige Prüfkette wächst stufenweise zu Syntax, statischer Analyse, Typprüfung, Architekturgrenzen, Unit-, Contract- und Property-Tests, Datenbank, Migration, Integration, GUI, Tastatur, Barrierefreiheit, Recovery, Persistenz, Performance, Portabilität, Packaging und reproduzierbarem Release.
 
-Ein `MANIFEST_INDEX.json` dient als zentraler Einstieg. Kritische Dateien und Berichte werden über SHA-256, Version, Commit und Lineage nachvollziehbar verbunden.
+Eine Pflichtprüfung kennt nur `PASS`, `FAIL` oder `NOT_RUN`. `FAIL` und `NOT_RUN` blockieren Release. Absolute Fehlerfreiheit wird nicht behauptet; freigegeben wird nur auf Basis nachweisbarer Gates.
 
-## 11. Entwicklungsprinzip
+## 12. Manifest- und Nachweiskette
 
-Entwicklung erfolgt in kleinen, klar begrenzten Schritten:
+Geplant ist die Kette:
 
-Anforderung → Risikoanalyse → Testdesign → Baseline → Minimalpatch → Zieltests → Regression → Wartbarkeitsprüfung → Nachweis → Commit → Remote-Prüfung → Checkpoint
+`SOURCE_MANIFEST.json → BUILD_MANIFEST.json → RELEASE_MANIFEST.json → EVIDENCE_MANIFEST.json`
 
-Wichtige Regeln:
-- keine technische Nutzerabnahme als Pflicht
-- keine Freigabe bei nicht bestandener Pflichtprüfung
-- keine unkontrollierten Abhängigkeitsänderungen
-- keine Vermischung großer Funktionsentwicklung mit unnötigem Refactoring
-- relevante Fehlerbehebungen erhalten dauerhafte Regressionstests
-- Standards, Manifeste und Statusdaten werden automatisch auf Widersprüche geprüft
+`REPOSITORY_MANIFEST.json` sichert bereits ab I001 die Vollständigkeit des Entwicklungsbaums. In I002 werden kryptografische Datei-Hashes, Evidence-Schemata und Remote-Tree-Receipts ergänzt.
 
-## 12. Automatische Qualitätssicherung
+## 13. Entwicklung
 
-Geplant sind automatische Prüfungen für:
-- Syntax und statische Analyse
-- Typprüfung
-- Architekturgrenzen
-- Unit-, Contract- und Property-Tests
-- Datenbank und Migrationen
-- Module und Integrationen
-- GUI und Tastaturbedienung
-- Barrierefreiheit
-- Wiederherstellung und Persistenz
-- Performance und Ressourcen
-- Portabilität
-- Packaging
-- reproduzierbare Builds
-- Prüfung des tatsächlich erzeugten Releasepakets
+Kanonischer Ablauf:
 
-Absolute Fehlerfreiheit wird nicht behauptet. Freigaben basieren auf nachweisbaren Prüf-Gates und einer transparenten technischen Konfidenzbewertung.
+`Anforderung → Risikoanalyse → Testdesign → Baseline → Minimalpatch → Zieltests → Regression → Wartbarkeitsprüfung → Evidence → Commit → Remote-Prüfung → Checkpoint`
 
-## 13. Technische Zielrichtung
+Große Features, Refactoring und Dependency-Updates werden möglichst getrennt. Jeder relevante behobene Fehler erhält später einen dauerhaften Regressionstest.
 
-Aktuell vorgesehen:
-- Python 3.12+
-- PySide6 / Qt 6
-- SQLite
-- pytest
-- Ruff
-- Pyright oder MyPy
-- Bandit
-- Dependency-Prüfung
-- GitHub Actions
+## 14. Aktuelle Repository-Struktur
 
-Die endgültige Auswahl wird im Foundation-Vertrag fixiert und danach versionsgebunden geführt.
+```text
+.github/workflows/          Remote-Foundation-Prüfung
+standards/                  globale maschinenlesbare Standards
+tools/autopilot/            autonomer Prüf- und Entwicklungs-Einstieg
+tests/                      automatische Validator-Tests
+PROJECT_CONTRACT.json       zentraler Projektvertrag
+VERSION.json                kanonische Version
+PROJEKTSTATUS.json          maschinenlesbarer Entwicklungsstand
+REPOSITORY_MANIFEST.json    vollständiges Soll-Inventar
+CHANGELOG.md                nachvollziehbare Änderungen
+README.md                   menschliche Projektzentrale
+TODO.md                     Roadmap und Checkpoints
+```
 
-## 14. Dokumentation
+## 15. Dokumentation
 
-Vorgesehene Kernunterlagen:
-- `README.md`
-- `TODO.md`
-- `CHANGELOG.md`
-- `ARCHITEKTUR.md`
-- `DATENMODELL.md`
-- `MODULSTANDARD.md`
-- `TESTKONZEPT.md`
-- `RELEASEVERTRAG.md`
-- `LAIENANLEITUNG.md`
-- `PROJEKTSTATUS.json`
-- `VERSION.json`
-
-README, Statusdateien und Manifeste sollen später automatisch auf Konsistenz geprüft werden.
-
-## 15. Entwicklungsphasen
-
-1. I000 Produkt- und Foundation-Vertrag
-2. I001 globale Standards
-3. I002 Manifest- und Nachweisstandard
-4. I003 Repositorystruktur
-5. I004 Entwicklungsautopilot
-6. I005 Testfundament
-7. I006 Start-Orchestrator
-8. I007 Workspace und Rechte
-9. I008 Datenbank, Migration und Wiederherstellung
-10. I009 Modulsystem
-11. I010 Designsystem
-12. I011 GUI-Shell
-13. danach Kalender, Todo, Kopplung, Dashboard und Härtung
+README ist der Einstieg für Nutzer und Entwickler. Maschinenlesbare Wahrheit liegt in den JSON-Verträgen. README, TODO, Version, Projektstatus, Standardindex und Repository-Manifest werden automatisch auf Konsistenz geprüft, damit Dokumentation nicht unbemerkt vom Projektstand abweicht.
 
 ## 16. Aktueller Checkpoint
 
-**C000 – REPOSITORY RESET / NEUAUFBAU**
+**C001 – GLOBALE STANDARDS / FOUNDATION**
 
-Der bisherige Arbeitsbaum wurde für den neuen Projektansatz ersetzt. `README.md` und `TODO.md` bilden die neue kanonische Ausgangsbasis. Die weitere Entwicklung beginnt beim Foundation-Vertrag und nicht bei vorzeitigem Fachcode.
+I000 und I001 sind als maschinenlesbares Fundament angelegt. Der unabhängige Standard-Validator und die Remote-Foundation-Qualifikation wurden bewusst vor dem ersten Fachmodul eingeführt.
 
 ## 17. Nächster logischer Schritt
 
-**I000/I001:** `PROJECT_CONTRACT.json` und die globalen Standards vollständig definieren, bevor die erste Fachfunktion implementiert wird.
+**I002:** Manifest- und Evidence-Vertrag vervollständigen, kryptografische Datei-Hashes und einen Remote-Tree-Receipt einführen und danach das Start-Orchestrator-Grundgerüst beginnen.
 
 ## 18. Weiterführende Verbesserung
 
-Direkt danach soll ein unabhängiger Standard- und Manifest-Validator entstehen. Er prüft die zentralen Verträge getrennt vom späteren Erzeuger und verhindert, dass sich ein Generator ausschließlich selbst bestätigt.
+Den Repository-Vollständigkeitsvertrag um eine zweite unabhängige Remote-Tree-Prüfung erweitern, die Commit, Tree, Pfade, Dateimodi und Hashes gegen das lokale Soll-Inventar verifiziert. Dadurch prüft nicht derselbe Mechanismus ausschließlich seine eigene Ausgabe.

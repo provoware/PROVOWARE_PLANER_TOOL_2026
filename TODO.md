@@ -7,39 +7,52 @@
 - [ ] Repository-Sichtbarkeit auf privat stellen
 
 ## I000 — Foundation
-- [ ] PROJECT_CONTRACT.json
-- [ ] Produkt- und Architekturvertrag
-- [ ] Definition of Ready / Done
-- [ ] Risiko- und Qualitätsmodell
+- [x] `PROJECT_CONTRACT.json`
+- [x] Produkt- und Architekturvertrag
+- [x] Definition of Ready / Done
+- [x] autonomer Freigabe- und Repository-Prüfvertrag
 
 ## I001 — Globale Standards
-- [ ] Standardindex
-- [ ] Namensstandard
-- [ ] UI- und Barrierefreiheitsstandard
-- [ ] Daten-, Logging-, Test-, Start-, Manifest- und Releasestandard
-- [ ] einheitliche Abstände und Design-Tokens
-- [ ] flexible Schriftgrößen
-- [ ] Ampelstatus mit Text und Symbol
+- [x] Standardindex
+- [x] Namensstandard
+- [x] UI- und Barrierefreiheitsstandard
+- [x] Daten-, Logging-, Test-, Start-, Manifest- und Releasestandard
+- [x] Qualitäts- und Dokumentationsstandard
+- [x] einheitliche Abstände und Design-Tokens
+- [x] flexible Schriftgrößen
+- [x] Ampelstatus mit Farbe, Symbol und Text
+- [x] `VERSION.json` und `PROJEKTSTATUS.json`
 
-## I002 — Entwicklungsfundament
-- [ ] Repositorystruktur
-- [ ] Entwicklungsautopilot
-- [ ] automatisches Testfundament
-- [ ] Manifest- und Nachweiskette
-- [ ] Dokumentationsprüfung
+## Vorgezogene Foundation-Härtung
+- [x] vollständiges `REPOSITORY_MANIFEST.json`
+- [x] unabhängigen `standard_validator` anlegen
+- [x] Validator-Unit-Tests anlegen
+- [x] Autopilot-Grundstruktur anlegen
+- [x] GitHub-Actions-Foundation-Qualifikation anlegen
+- [x] README/TODO/Status-Konsistenz automatisch prüfen
+- [x] vollständige Repository-Dateiliste in jeder Iteration prüfen
+
+## I002 — Manifest und Evidence
+- [ ] Source-/Build-/Release-/Evidence-Manifest-Schemata
+- [ ] SHA-256-Inventar für Release-relevante Dateien
+- [ ] Remote-Tree-Receipt mit Commit, Tree, Pfaden, Modi und Hashes
+- [ ] unabhängigen Manifest-Validator ergänzen
+- [ ] maschinenlesbare Qualification Reports
 
 ## I003 — Start und Daten
 - [ ] Klick-&-Start-Orchestrator
 - [ ] Arbeitsordner mit persistenter Workspace-ID
+- [ ] reale Rechteprüfung mit Schreib-/Lese-/Umbenenn-/Löschtest
 - [ ] Vor-/Nachvalidierung
 - [ ] SQLite, Migration, Backup und Wiederherstellung
 
 ## I004 — Modulsystem und GUI
 - [ ] Modulvertrag und Ereignissystem
+- [ ] Design-Tokens in Qt-Komponenten umsetzen
 - [ ] Menüleiste
 - [ ] Schnellstart-/Favoritenleiste
 - [ ] Tabs
-- [ ] Statusbereich
+- [ ] Statusbereich mit Ampelunterstützung
 - [ ] responsive und skalierbare Oberfläche
 
 ## I005 — Fachmodule
@@ -61,10 +74,12 @@
 - [ ] Stable 1.0
 
 ## Permanente Regeln
-- [ ] keine technische Nutzerabnahme als Pflicht
-- [ ] kein Release bei nicht bestandenen Pflichtprüfungen
-- [ ] kleine, klar begrenzte Patches
-- [ ] Status, Fortschritt, nächster Schritt und Verbesserungsempfehlung pflegen
+- [x] keine technische Nutzerabnahme als Pflicht
+- [x] kein Release bei nicht bestandenen oder nicht ausgeführten Pflichtprüfungen
+- [x] kleine, klar begrenzte Patches
+- [x] Status, Fortschritt, nächster Schritt und Verbesserungsempfehlung pflegen
+- [x] kompletten Repository-Inhalt nach jeder Iteration gegen Soll-Inventar prüfen
+- [x] lokale und Remote-Prüfung voneinander trennen
 
 ## Nächster logischer Schritt
-I000/I001: Foundation-Vertrag und globale Standards maschinenlesbar festschreiben.
+I002: Manifest-/Evidence-Kette, kryptografisches Repository-Inventar und Remote-Tree-Receipt ergänzen; danach I003 Start-Orchestrator beginnen.

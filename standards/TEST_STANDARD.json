@@ -1,0 +1,13 @@
+{
+  "standard_id": "PROVOWARE-TEST",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "manual_user_technical_test_required": false,
+  "levels": ["FAST", "STANDARD", "FULL", "RELEASE"],
+  "planned_test_types": [
+    "unit", "contract", "property", "database", "integration", "gui", "accessibility", "fault_injection", "recovery", "persistence", "performance", "portability", "release"
+  ],
+  "tests_for_fixed_regressions_are_permanent": true,
+  "flaky_tests_allowed": false,
+  "independent_remote_recheck_required": true
+}

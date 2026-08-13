@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "contract_id": "PROVOWARE-PLANER-2026",
+  "project_name": "PROVOWARE PLANER TOOL 2026",
+  "repository": "provoware/PROVOWARE_PLANER_TOOL_2026",
+  "platform": {
+    "operating_system": "linux",
+    "primary_family": "ubuntu-kubuntu",
+    "offline_first": true,
+    "portable": true,
+    "single_user": true,
+    "cloud_required": false
+  },
+  "architecture": {
+    "style": "modularer_monolith",
+    "language_target": "python-3.12+",
+    "gui_target": "pyside6-qt6",
+    "database_target": "sqlite",
+    "dependency_direction": ["ui", "application", "domain", "infrastructure"],
+    "cross_module_internal_imports_allowed": false
+  },
+  "autonomy": {
+    "manual_technical_user_acceptance_required": false,
+    "mandatory_pre_validation": true,
+    "mandatory_post_validation": true,
+    "mandatory_remote_repository_validation": true,
+    "release_on_failed_gate": false,
+    "release_on_not_run_gate": false
+  },
+  "development": {
+    "strategy": "small_local_patches",
+    "baseline_required": true,
+    "target_tests_before_regression": true,
+    "full_repository_inventory_each_iteration": true,
+    "documentation_sync_required": true,
+    "machine_readable_evidence_required_for_release": true
+  },
+  "definition_of_ready": [
+    "ziel_eindeutig",
+    "risiko_bewertet",
+    "schnittstellen_bekannt",
+    "tests_geplant",
+    "baseline_pass"
+  ],
+  "definition_of_done": [
+    "implementierung_pass",
+    "zieltests_pass",
+    "regression_pass",
+    "standards_pass",
+    "repository_inventar_pass",
+    "dokumentation_pass",
+    "remote_verifikation_pass"
+  ],
+  "foundation": {
+    "current_iteration": "I001",
+    "current_checkpoint": "C001-GLOBAL-STANDARDS",
+    "version": "0.1.0-dev.1"
+  }
+}

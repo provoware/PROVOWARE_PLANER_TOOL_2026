@@ -1,0 +1,21 @@
+{
+  "standard_id": "PROVOWARE-DOCUMENTATION",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "language": "de",
+  "readme_is_human_entrypoint": true,
+  "machine_readable_contracts_are_authoritative": true,
+  "required_root_documents": ["README.md", "TODO.md", "CHANGELOG.md"],
+  "readme_required_headings": [
+    "## 1. Projektstatus",
+    "## 2. Was ist das Tool?",
+    "## 8. Globale Standards",
+    "## 9. Repository-Vollständigkeit",
+    "## 10. Autonomer Entwicklungs- und Prüfautopilot",
+    "## 16. Aktueller Checkpoint",
+    "## 17. Nächster logischer Schritt",
+    "## 18. Weiterführende Verbesserung"
+  ],
+  "status_sync_required": true,
+  "broken_internal_references_forbidden": true
+}

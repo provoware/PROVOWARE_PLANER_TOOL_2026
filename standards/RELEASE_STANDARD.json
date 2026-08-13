@@ -1,0 +1,13 @@
+{
+  "standard_id": "PROVOWARE-RELEASE",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "stages": ["DEVELOPMENT", "QUALIFIED", "RC", "STABLE"],
+  "mandatory_all_gates_pass": true,
+  "not_run_blocks_release": true,
+  "fresh_artifact_test_required": true,
+  "reproducible_build_target": true,
+  "release_receipt_required": true,
+  "lineage_required": true,
+  "user_data_must_not_be_packaged": true
+}
