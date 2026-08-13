@@ -19,3 +19,4 @@
 - Fehlerbehandlungsstandard und Fehlerkatalog ergänzt
 - qualifizierte Evidence wird vollautomatisch persistiert und nachgeprüft
 - vollständige Repositoryprüfung je Iteration als Pflicht bestätigt
+- gespeicherter Evidence-Stand erhält eine abschließende unabhängige Remote-Nachqualifikation ohne weitere automatische Repository-Änderung
