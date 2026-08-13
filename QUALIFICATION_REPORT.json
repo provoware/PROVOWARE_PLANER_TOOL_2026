@@ -2,9 +2,9 @@
   "schema_version": 1,
   "state": "QUALIFIED",
   "result": "PASS",
-  "subject_commit": "c39cbfb292fa3cc0d180f1026f4424ad79cc7c16",
-  "subject_tree": "c8be3679b701617954ab2d5438b465aa790cf4d8",
-  "workflow_run_id": 31754126603,
+  "subject_commit": "de36c02d3cdd081cf43548be57210a25de8de540",
+  "subject_tree": "4c70ae544088bf34384c3537caa9df79445139a9",
+  "workflow_run_id": 31754217951,
   "gates": [
     "stored_receipt_validation",
     "repository_inventory",
