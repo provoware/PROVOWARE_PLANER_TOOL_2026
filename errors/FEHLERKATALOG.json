@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "catalog_version": "1.0.0",
+  "project_id": "provoware-planer-tool-2026",
+  "errors": [
+    {
+      "code": "VAL-JSON-001",
+      "severity": "FEHLER",
+      "component": "validator",
+      "title": "Projektdatei kann nicht gelesen werden",
+      "what": "Eine maschinenlesbare Projektdatei ist ungültig.",
+      "effect": "Die Konsistenz kann nicht bestätigt werden.",
+      "automatic_action": "BLOCKIEREN",
+      "user_action": "Keine Nutzeraktion erforderlich; der Entwicklungsautopilot muss die Datei korrigieren.",
+      "retryable": false,
+      "blocking": true
+    },
+    {
+      "code": "VAL-INVENTORY-001",
+      "severity": "FEHLER",
+      "component": "validator",
+      "title": "Repository-Inventar stimmt nicht",
+      "what": "Dateien fehlen, sind unerwartet oder besitzen einen falschen Hash.",
+      "effect": "Die Iteration ist nicht qualifizierbar.",
+      "automatic_action": "BLOCKIEREN",
+      "user_action": "Keine Nutzeraktion erforderlich; Soll und Ist werden im Entwicklungsprozess abgeglichen.",
+      "retryable": false,
+      "blocking": true
+    },
+    {
+      "code": "REMOTE-TREE-001",
+      "severity": "KRITISCH",
+      "component": "remote_tree",
+      "title": "Remote-Tree weicht vom Soll ab",
+      "what": "Git-Tree, Blob-SHA, Modus oder Größe stimmen nicht.",
+      "effect": "Der Remote-Stand darf nicht freigegeben werden.",
+      "automatic_action": "BLOCKIEREN",
+      "user_action": "Keine Nutzeraktion erforderlich; die Übertragung wird erneut geprüft.",
+      "retryable": true,
+      "blocking": true
+    },
+    {
+      "code": "AUTO-STEP-001",
+      "severity": "FEHLER",
+      "component": "autopilot",
+      "title": "Autopilot-Schritt fehlgeschlagen",
+      "what": "Ein Pflichtschritt wurde nicht erfolgreich beendet.",
+      "effect": "Nachfolgende riskante Schritte werden nicht ausgeführt.",
+      "automatic_action": "BLOCKIEREN",
+      "user_action": "Keine Nutzeraktion erforderlich; die Ursache wird protokolliert und ausgewertet.",
+      "retryable": false,
+      "blocking": true
+    }
+  ]
+}
