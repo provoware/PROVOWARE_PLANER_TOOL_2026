@@ -1,0 +1,27 @@
+# Python / Tests
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Lokale Arbeitsbereiche und Nutzdaten
+workspace/
+Arbeitsbereich/
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+LETZTER_STARTBERICHT.json
+
+# Sicherungen / Restore-Zwischenstände
+backups/
+Sicherungen/
+*.pre-restore
+*.restore-candidate
+
+# Lokale Laufzeit-/Build-Ausgaben
+*.tmp
+*.log
+dist/
+dist_transport/
