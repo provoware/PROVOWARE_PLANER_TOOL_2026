@@ -3,9 +3,10 @@
 Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungswerkzeug für Linux. Das Projekt wird als wartbarer modularer Monolith entwickelt und autonom qualifiziert.
 
 ## 1. Projektstatus
-- **Version:** `0.6.0-dev.1`
-- **Iteration:** `I006`
-- **Checkpoint:** `C006-TODO-DOMAIN-LINK`
+- **Version:** `0.7.0-dev.1`
+- **Iteration:** `I007`
+- **Checkpoint:** `C007-TODO-GUI-VIEWMODEL`
+- **Status:** `IN_ARBEIT / GELB` bis zur vollständigen Remote-Qualifikation
 - **Zielplattform:** Linux, insbesondere Ubuntu-/Kubuntu-Derivate
 - **Betrieb:** lokal und offline-first
 - **Technische Nutzerabnahme:** nicht Bestandteil der Pflicht-Freigabekette
@@ -20,7 +21,7 @@ PROVOWARE PLANER verbindet Kalender, Aufgabenplanung, Dashboard, Diagnose und sp
 Tag, Woche, Monat und Jahr; Termine und fünf editierbare Markierungen. Markierungen verwenden Farbe plus Text oder Symbol.
 
 ### Todo
-Aufgaben mit Status, Priorität, Fälligkeit, Unteraufgaben und Fortschritt. Todo und Termin bleiben eigenständige Datenobjekte; ihre Kopplung besitzt eine eigene Identität.
+Aufgaben mit Status, Priorität, Fälligkeit, Unteraufgaben und Fortschritt. I007 ergänzt die fünf Ansichten **Heute**, **Diese Woche**, **Überfällig**, **Ohne Datum** und **Erledigt**. Todo und Termin bleiben eigenständige Datenobjekte; ihre Kopplung besitzt eine eigene Identität.
 
 ### Dashboard
 Heute, nächste Termine, fällige/überfällige Aufgaben sowie Sicherungs-, Modul- und Systemstatus.
@@ -29,7 +30,7 @@ Heute, nächste Termine, fällige/überfällige Aufgaben sowie Sicherungs-, Modu
 Probleme erhalten stabile IDs, maschinenlesbare Daten und laienverständliche Hinweise zu Ursache, Auswirkung und nächstem Schritt.
 
 ## 4. Oberfläche und globale Gestaltung
-Alle Module verwenden zentrale Designregeln. Abstände basieren auf dem 4-Pixel-Raster; Schrift ist global in 90, 100, 110, 125, 150, 175 und 200 Prozent skalierbar.
+Alle Module verwenden zentrale Designregeln. Abstände basieren auf dem 4-Pixel-Raster; Schrift ist global in 90, 100, 110, 125, 150, 175 und 200 Prozent skalierbar. Die Todo-GUI verwendet dasselbe Designsystem wie der Kalender.
 
 ## 5. Ampelsystem
 - 🟢 **GRÜN – BEREIT**
@@ -39,10 +40,10 @@ Alle Module verwenden zentrale Designregeln. Abstände basieren auf dem 4-Pixel-
 Farbe wird nie ohne Symbol und Klartext verwendet.
 
 ## 6. Klick-&-Start
-Der Start-Orchestrator prüft Betriebssystem, Runtime, Programmdateien, Manifeste, Konfiguration, Workspace, Datenbank, Schema, Recovery, Module und GUI. Relevante Aktionen folgen `PRECHECK → AKTION → POSTCHECK`.
+Der Start-Orchestrator prüft Betriebssystem, Runtime, Programmdateien, Manifeste, Konfiguration, Workspace, Datenbank, Schema, Recovery, Module und GUI. Relevante Aktionen folgen `PRECHECK → AKTION → POSTCHECK`. Das Aufgabenmodul wird über **Module → Aufgaben öffnen** aus dem vorhandenen Kalenderfenster gestartet und nutzt dieselben Planner-Services.
 
 ## 7. Daten und Sicherheit
-SQLite arbeitet mit Foreign Keys, WAL, Transaktionen, hashgebundenen Migrationen und Vor-Migrations-Sicherungen. Fachliches Löschen erfolgt als Soft Delete. Todo↔Termin verwendet keine kaskadierenden Löschungen.
+SQLite arbeitet mit Foreign Keys, WAL, Transaktionen, hashgebundenen Migrationen und Vor-Migrations-Sicherungen. Fachliches Löschen erfolgt als Soft Delete. Todo↔Termin verwendet keine kaskadierenden Löschungen. I007 benötigt keine neue Migration; Schema-Version 2 bleibt maßgeblich.
 
 ## 8. Globale Standards
 Verbindliche Standards liegen unter `standards/` und sind über `standards/STANDARD_INDEX.json` registriert. Der Vorrang lautet `PROVOWARE_GLOBAL_STANDARD → PROJECT_CONTRACT → Modulvertrag → konkrete Konfiguration`.
@@ -58,6 +59,7 @@ Verbindliche Standards liegen unter `standards/` und sind über `standards/STAND
 - **I003:** Klick-&-Start-Orchestrator, Workspace-Prüfung, Recovery und Fault-Injection.
 - **I004:** Kalender-Domainkern, Migration 0001, Optimistic Locking, Soft Delete, Backup/Restore.
 - **I005:** Kalender-GUI + ViewModel, vier Ansichten, sieben Schriftstufen und 112 Offscreen-Konfigurationen.
+- **I006:** Todo-Domainkern, Migration 0002, Unteraufgaben, Soft-Link und konfliktrobuste Kalenderkopplung.
 
 ## 12. I006 — Todo-Domainkern
 `TodoItem` unterstützt Status, Priorität, Fortschritt, Start, Fälligkeit und Unteraufgaben. Eine erledigte Aufgabe besitzt 100 Prozent Fortschritt. Änderungen verwenden Optimistic Locking; fachliches Löschen ist Soft Delete.
@@ -65,19 +67,21 @@ Verbindliche Standards liegen unter `standards/` und sind über `standards/STAND
 ## 13. Kalender↔Todo-Kopplungsvertrag
 `todo_calendar_links` ist ein eigenes versioniertes Soft-Link-Objekt mit `link_id`, Todo-/Termin-ID, Synchronisationsrichtung und Versions-Snapshots. Konfliktzustände sind `CLEAN`, `TODO_CHANGED`, `CALENDAR_CHANGED`, `BOTH_CHANGED` und `DETACHED`.
 
-`ON DELETE CASCADE` zwischen Todo, Termin und Link ist verboten. Link-Endpunkte verwenden `ON DELETE RESTRICT`. Ein explizites Entkoppeln löscht nur den Link weich. Automatische Inhalts-Synchronisation ist in I006 ausdrücklich deaktiviert.
+`ON DELETE CASCADE` zwischen Todo, Termin und Link ist verboten. Ein explizites Entkoppeln löscht nur den Link weich. I007 zeigt Konflikte über eine reine Vorschau an und führt weder automatische Inhalts-Synchronisation noch automatische Konfliktauflösung aus.
 
-## 14. Crash- und Rollback-Prüfung
-I006 simuliert kontrollierte Schreibabbrüche vor Commit und zusätzlich einen echten separaten Prozess, der während einer offenen SQLite-Transaktion per `os._exit()` endet. Danach müssen Rollback, Wiederöffnung und `quick_check` bestehen.
+## 14. I007 — Todo-GUI + Todo-ViewModel
+Die neue Schichtfolge lautet `TodoService → TodoQueryService → TodoViewModel → Darstellungsmodelle → PySide6/Qt`. Die GUI und das ViewModel importieren weder Repository-Code noch SQLite und führen kein SQL aus.
+
+Bedienbar sind Erstellen, Bearbeiten, Status, Priorität, Fortschritt, Unteraufgaben, Kalender-Verknüpfung, Entkoppeln und Soft Delete. Konflikte werden mit Symbol, Klartext und Erklärung sichtbar gemacht.
 
 ## 15. Evidence-Kette
-Die historische Pflichtkette lautet `I002 → I003 → I004 → I005 → I006`. Der qualifizierte Evidence-Commit wird in einem zweiten Remote-Pass anhand einer exakten Commit-SHA erneut geprüft.
+Die Pflichtkette lautet für I007 `I002 → I003 → I004 → I005 → I006 → I007`. Dazu kommen 140 Todo-GUI-Offscreen-Konfigurationen, die bestehende 112er Kalender-GUI-Matrix, Neustartpersistenz, I006-Crash-/Rollback-Regression und ein exakter Evidence-SHA-Zweitpass.
 
 ## 16. Aktueller Checkpoint
-**C006 — TODO-DOMAIN-LINK.** Implementierung ist angelegt; die Remote-Qualifikation entscheidet verbindlich über die Promotion nach `main`.
+**C007 — TODO-GUI-VIEWMODEL.** Implementierung und Verträge sind angelegt. `IN_ARBEIT / GELB` bleibt verbindlich, bis Zieltests, Vollregression, GUI-Matrizen, Autopilot, Remote-Tree und exakter SHA-Zweitpass vollständig bestanden sind.
 
 ## 17. Nächster logischer Schritt
-**I007 — Todo-GUI + Todo-ViewModel.** Die sichtbare Oberfläche darf ausschließlich `TodoService` und `TodoCalendarLinkService` verwenden. Konfliktzustände werden zunächst angezeigt; automatische Konfliktauflösung bleibt gesperrt, bis ein eigener Vertrag sie qualifiziert.
+Nach erfolgreicher I007-Qualifikation: **I008 — Kalender↔Todo-Synchronisations- und Konfliktauflösungsvertrag.** Erst dort werden erlaubte Feldzuordnungen, Synchronisationsrichtungen und eine verlustfreie Behandlung von `BOTH_CHANGED` festgelegt.
 
 ## 18. Weiterführende Verbesserung
-Für I007 den TodoQueryService als reine Leseschicht zwischen Service und ViewModel einführen. So bleiben Filter wie Heute, Diese Woche, Überfällig und Ohne Datum von Qt entkoppelt und können unabhängig getestet werden.
+I008 sollte zunächst eine **Vorschau/Simulation jeder Synchronisation** erzeugen: Quelle, Ziel, betroffene Felder, alte/neue Werte, Konfliktgrund und erwartete Version. Erst nach bestandenem Precheck darf eine atomare Änderung erfolgen; `BOTH_CHANGED` bleibt ohne explizite qualifizierte Regel blockiert.
