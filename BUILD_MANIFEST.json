@@ -6,8 +6,8 @@
   "entries": [
     {
       "path": ".github/workflows/foundation-qualifikation.yml",
-      "sha256": "717aa553c6a59e1d49f5aea27a3013a151b048ca15566b0e2bcdd21934a39ee3",
-      "size": 5375,
+      "sha256": "caf56820c4ad862d2dae497daeadd9cf591f2caa91719830705020ab84989a67",
+      "size": 10909,
       "status": "PASS"
     },
     {

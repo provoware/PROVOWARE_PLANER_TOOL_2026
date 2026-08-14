@@ -2,15 +2,15 @@
   "schema_version": 1,
   "state": "ATTESTED",
   "attestation_role": "QUALIFICATION_SUBJECT_TREE",
-  "subject_commit": "4d57b4e6603969a262cb70d256bf2d2dc4c55271",
-  "subject_tree": "9f8a50ec1ea8d290846acb51b2c7ab3b200bf587",
+  "subject_commit": "1bb2e9c28b2d01b0be55bed498a46efa84ad523e",
+  "subject_tree": "83cc94ef04a8af0664d7e9e9a24306a71dd1ba4d",
   "entry_count": 248,
   "subject_tree_entries": [
     {
       "path": ".github/workflows/foundation-qualifikation.yml",
-      "blob_sha": "e9202311b5a9476160d05e1f476e5ffd22e88f6c",
+      "blob_sha": "602c7f0b20b103d013ebd36048c65d55cfcf1899",
       "mode": "100644",
-      "size": 5375,
+      "size": 10909,
       "status": "PASS"
     },
     {
@@ -127,7 +127,7 @@
     },
     {
       "path": "BUILD_MANIFEST.json",
-      "blob_sha": "0d73ec292e13c4d545b2ad13fba6ad8e0517919e",
+      "blob_sha": "99ddb6ef39d75ce48623da3a44648d914a056e16",
       "mode": "100644",
       "size": 9154,
       "status": "PASS"
@@ -155,7 +155,7 @@
     },
     {
       "path": "MANIFEST_INDEX.json",
-      "blob_sha": "ade2095e9008846a659736591edb6e43a4c2e17a",
+      "blob_sha": "43b19a6dd63af8104beb0a88786971e9a9805add",
       "mode": "100644",
       "size": 814,
       "status": "PASS"
@@ -190,7 +190,7 @@
     },
     {
       "path": "QUALIFICATION_REPORT.json",
-      "blob_sha": "3a8422a9bd6e5eeee4ba249e259d1601b0ba6dcd",
+      "blob_sha": "3d6f89a3fa9243e95121bcae776e7388d9507a40",
       "mode": "100644",
       "size": 757,
       "status": "PASS"
@@ -211,7 +211,7 @@
     },
     {
       "path": "REMOTE_TREE_RECEIPT.json",
-      "blob_sha": "7a11d59d6dd434eb77b09609daa280d7334b43b2",
+      "blob_sha": "4f4fb1fa300ad9d3e8c6d9121d0f6b94e3708658",
       "mode": "100644",
       "size": 47418,
       "status": "PASS"
@@ -225,7 +225,7 @@
     },
     {
       "path": "SHA256_DATEI_INVENTAR.json",
-      "blob_sha": "fdd99566937794df320956b0e3454e2029040049",
+      "blob_sha": "d6c76defe15990154821d0b9f749f4bc0557abc2",
       "mode": "100644",
       "size": 46370,
       "status": "PASS"
