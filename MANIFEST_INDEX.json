@@ -5,13 +5,13 @@
   "manifests": [
     {
       "path": "SOURCE_MANIFEST.json",
-      "sha256": "1cf48a77aba64d3c919035655b63f0b2ba21781bbe0f195af83abc81853a6130",
+      "sha256": "55aa9c2b291ace9140c9643ca1d58dbf80dab207a920624ad47534ce44a022b3",
       "size": 15645,
       "status": "PASS"
     },
     {
       "path": "BUILD_MANIFEST.json",
-      "sha256": "6d0541e3290eade91e6ffaf0670047b3f0f1bf2b25483570d55bec9cadac110f",
+      "sha256": "f677da8ad65595a5e2a764bbdff6a5732301565a567ba84464ea16f597d97fe0",
       "size": 4115,
       "status": "PASS"
     },

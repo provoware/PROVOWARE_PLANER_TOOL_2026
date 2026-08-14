@@ -34,20 +34,20 @@
     },
     {
       "path": ".github/workflows/i005-qualifikation.yml",
-      "sha256": "29e0bc9cc9ab2d09bdf8d45c86fcaa717ee3f5c4b989859330293bfe17b24d9b",
-      "size": 15245,
+      "sha256": "008c64728c388ad310f82fffda0c962dd41c4403304a41b30ebe8a9ada2941f9",
+      "size": 12280,
       "status": "PASS"
     },
     {
       "path": "BUILD_MANIFEST.json",
-      "sha256": "6d0541e3290eade91e6ffaf0670047b3f0f1bf2b25483570d55bec9cadac110f",
+      "sha256": "f677da8ad65595a5e2a764bbdff6a5732301565a567ba84464ea16f597d97fe0",
       "size": 4115,
       "status": "PASS"
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "bbba808dc2e048420b71c49907eaf2e8506697945ee8fd19591101c8f8d39cff",
-      "size": 3034,
+      "sha256": "3377b1f408220f896a401722d663476d28c999e0c93cbe5ddd7c10434e811450",
+      "size": 3390,
       "status": "PASS"
     },
     {
@@ -58,7 +58,7 @@
     },
     {
       "path": "MANIFEST_INDEX.json",
-      "sha256": "73c69c398a7a03fa9ef49c133ea935d2b082757a0a2c0b884c2d873bff7449a1",
+      "sha256": "a56b4be2504b97cb64c2a34efc0c921c1e760855db682daf619a312d833b1f82",
       "size": 812,
       "status": "PASS"
     },
@@ -94,7 +94,7 @@
     },
     {
       "path": "SOURCE_MANIFEST.json",
-      "sha256": "1cf48a77aba64d3c919035655b63f0b2ba21781bbe0f195af83abc81853a6130",
+      "sha256": "55aa9c2b291ace9140c9643ca1d58dbf80dab207a920624ad47534ce44a022b3",
       "size": 15645,
       "status": "PASS"
     },
@@ -136,8 +136,8 @@
     },
     {
       "path": "contracts/CALENDAR_GUI_CONTRACT.json",
-      "sha256": "136194a048fa1b6242dd25f12830de3972d924d1a4de9628c4b9522adff31f69",
-      "size": 1338,
+      "sha256": "a18d47925a0da35122eb9c2070e1c34f582193fdd67d5749ba473795396497af",
+      "size": 1262,
       "status": "PASS"
     },
     {
@@ -166,8 +166,8 @@
     },
     {
       "path": "docs/I005_KALENDER_GUI_VIEWMODEL.md",
-      "sha256": "8dea2e3f2f3a25189ad49c9f41a97c43b6a9eae9f51243e95f354559a9758ed4",
-      "size": 2480,
+      "sha256": "0565dd324459cdc5dc8947d598b27a2e3b99d54a7376d82d9ac6878c15604882",
+      "size": 3124,
       "status": "PASS"
     },
     {
@@ -484,8 +484,8 @@
     },
     {
       "path": "tools/autopilot/i005_validator.py",
-      "sha256": "78ffc67c576f923ce6d382a86f6170460147343c4170d3c073ae6628e67576da",
-      "size": 9750,
+      "sha256": "ecb851fc3f08d7790f81d7add30530e57c49082caf9a3c10f39ad2d1d9679ab6",
+      "size": 9860,
       "status": "PASS"
     },
     {

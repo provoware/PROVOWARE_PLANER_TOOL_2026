@@ -30,8 +30,8 @@
     },
     {
       "path": ".github/workflows/i005-qualifikation.yml",
-      "sha256": "29e0bc9cc9ab2d09bdf8d45c86fcaa717ee3f5c4b989859330293bfe17b24d9b",
-      "size": 15245,
+      "sha256": "008c64728c388ad310f82fffda0c962dd41c4403304a41b30ebe8a9ada2941f9",
+      "size": 12280,
       "status": "PASS"
     },
     {
@@ -102,8 +102,8 @@
     },
     {
       "path": "tools/autopilot/i005_validator.py",
-      "sha256": "78ffc67c576f923ce6d382a86f6170460147343c4170d3c073ae6628e67576da",
-      "size": 9750,
+      "sha256": "ecb851fc3f08d7790f81d7add30530e57c49082caf9a3c10f39ad2d1d9679ab6",
+      "size": 9860,
       "status": "PASS"
     },
     {
