@@ -1,49 +1,49 @@
 {
   "schema_version": 1,
   "manifest_type": "SOURCE",
-  "version": "0.8.0-dev.1",
-  "iteration": "I008",
+  "version": "0.9.0-dev.1",
+  "iteration": "I009",
   "entries": [
     {
       "path": "CHANGELOG.md",
-      "sha256": "20dd798fc4936e3b5518f67cf9104c698f051ff68b696a158c23e94b6c2dc6d3",
-      "size": 4855,
+      "sha256": "11a4cd078e7033f53783bc97090daf110bad72a59b9a2e63d331a3a91310524c",
+      "size": 3795,
       "status": "PASS"
     },
     {
       "path": "PROJECT_CONTRACT.json",
-      "sha256": "fd85b93039c606bc683062a2dda548cfbf96152f2fc4075186fdf4df093afdc3",
-      "size": 3261,
+      "sha256": "571232146cc20b133138d49919cd3fece8fa65dab49f3ec08f8fac0ad44d32d7",
+      "size": 3717,
       "status": "PASS"
     },
     {
       "path": "PROJEKTSTATUS.json",
-      "sha256": "758e4ef100be5aec6c8c7a126b9e85b2863476eea49eb135fb1f286f97039703",
-      "size": 1156,
+      "sha256": "32fae0a32aebbbaf4e39383096a76de682274544f8ac9f8574d09958e47b60f2",
+      "size": 1222,
       "status": "PASS"
     },
     {
       "path": "README.md",
-      "sha256": "1cc138929555928c199880feaf46fa48b8400708ce135650fbe10fe4baf6be99",
-      "size": 7117,
+      "sha256": "987dc4a59ae53c0069b46077b0af2652394b60311257beb67c154fae30c90124",
+      "size": 8433,
       "status": "PASS"
     },
     {
       "path": "REPOSITORY_MANIFEST.json",
-      "sha256": "278bd6108e813080df63409364c6cc59a0804040e8733c996454ab03759d7ae4",
-      "size": 10390,
+      "sha256": "9cae5a9ded82dd8ed95d636ecc1ff7a50778852b50fc1e0aebdaadca92a07010",
+      "size": 11618,
       "status": "PASS"
     },
     {
       "path": "TODO.md",
-      "sha256": "0aa454855d86b4ddaccb2ba379b37ef1024bb8e04f8463631689d49131fa47d9",
-      "size": 4369,
+      "sha256": "58a4202298ad9b7fba27944171b1a9fc4f7685f7f6b9f6d8ebd165f3a3c4bbcc",
+      "size": 4844,
       "status": "PASS"
     },
     {
       "path": "VERSION.json",
-      "sha256": "c102a5d0dcc420ec0de191d7b9841a79afd731a35ed988f8cb2cf1e26e4a53c8",
-      "size": 349,
+      "sha256": "58172652fc8579a9aa7e7a4f66e99cb2286227e97a80da9263017aecfad5b8bf",
+      "size": 361,
       "status": "PASS"
     },
     {
@@ -86,6 +86,12 @@
       "path": "contracts/SYNC_CONFLICT_CONTRACT.json",
       "sha256": "d5f5aa8a3aa410a74caf0ad31d708e93fa1ea32b574c884591b18e609394f83f",
       "size": 2823,
+      "status": "PASS"
+    },
+    {
+      "path": "contracts/SYNC_EXECUTION_CONTRACT.json",
+      "sha256": "627642d445380f54c23feaeee40368f20af4703f222d496a8fafe7386158bd56",
+      "size": 3178,
       "status": "PASS"
     },
     {
@@ -143,6 +149,12 @@
       "status": "PASS"
     },
     {
+      "path": "docs/I009_FELD_BASELINE_TRANSAKTIONALER_SYNC.md",
+      "sha256": "c67e398727e1ada0e618730209c2f3e3aa9370f386b7d8f02e2b0f0f041d01ef",
+      "size": 3709,
+      "status": "PASS"
+    },
+    {
       "path": "errors/FEHLERKATALOG.json",
       "sha256": "f98d5700ba48326891735e17accb0532463ebb0af13744394d6800e331d7bdf6",
       "size": 9500,
@@ -164,6 +176,12 @@
       "path": "errors/KALENDER_GUI_FEHLERKATALOG.json",
       "sha256": "3ba9db31fdc57167b6e37901d96d2e64efe6f17f2dcf85a89f4255c16abc7301",
       "size": 3270,
+      "status": "PASS"
+    },
+    {
+      "path": "errors/SYNC_EXECUTION_FEHLERKATALOG.json",
+      "sha256": "fadd570558d7cec6983fead48715c7e4d8b2bc3870c3c31653e4e356fb69ec21",
+      "size": 4063,
       "status": "PASS"
     },
     {
@@ -194,6 +212,12 @@
       "path": "migrations/0002_todo_domain_links.sql",
       "sha256": "3e5f141638e5f6abaa0d880478e0591fce182ead93b6f5604500a1d62c5f2fd8",
       "size": 2553,
+      "status": "PASS"
+    },
+    {
+      "path": "migrations/0003_sync_field_baseline.sql",
+      "sha256": "3393ee08b09a6e4f69771bc816b6b1a2c980ac7176801593b4c9d06b63c02acb",
+      "size": 1974,
       "status": "PASS"
     },
     {
@@ -246,14 +270,20 @@
     },
     {
       "path": "services/factory.py",
-      "sha256": "9ec30aaba9a34d02f4a28dd908c54f9d01b3afd3a2925ae435dedf8b4aea845f",
-      "size": 2189,
+      "sha256": "7a3f996c2b61adfa87b3f19a2046a282910733467dba96805727836bbb5843f5",
+      "size": 2393,
       "status": "PASS"
     },
     {
       "path": "services/sync_preview_service.py",
       "sha256": "4cd9536431932db28ea3614798fc0561593399b5ca296baa330c277106e0b26a",
       "size": 7772,
+      "status": "PASS"
+    },
+    {
+      "path": "services/sync_service.py",
+      "sha256": "6e725a9675c3a048b650d61dcef94d2d2139bd9f23cea97f77f926983c56398d",
+      "size": 9482,
       "status": "PASS"
     },
     {
@@ -377,6 +407,12 @@
       "status": "PASS"
     },
     {
+      "path": "storage/sync_repository.py",
+      "sha256": "30044bf442b0deba58421089ded4a0c9e1da9bf22538b6ce80f21f89c93cfd50",
+      "size": 16637,
+      "status": "PASS"
+    },
+    {
       "path": "storage/todo_repository.py",
       "sha256": "be2349fddc665dbc03bb89a2e05cfa1fa6d6c3e80187e10a1383a78fd49fb108",
       "size": 11387,
@@ -389,9 +425,33 @@
       "status": "PASS"
     },
     {
+      "path": "sync_core/canonical.py",
+      "sha256": "2da0b10733287a0b026d6a480a0d84bdd0a08e447d6b27960e8d2a40834c4183",
+      "size": 1391,
+      "status": "PASS"
+    },
+    {
+      "path": "sync_core/errors.py",
+      "sha256": "4bf824129ef580fd4d73842f79e1fc55c3cc27b9fa14ae8e3d639d90f3bd8cc8",
+      "size": 317,
+      "status": "PASS"
+    },
+    {
+      "path": "sync_core/faults.py",
+      "sha256": "231f3ac689b22716dba24dd2d776ebdb4c7c016aa0441b989a17fd8037dd46ae",
+      "size": 657,
+      "status": "PASS"
+    },
+    {
+      "path": "sync_core/fields.py",
+      "sha256": "c9ca8b141e1370f7ee2642fddfb588a9ad7f80a4d8f477bd9d265f18bbb3d012",
+      "size": 707,
+      "status": "PASS"
+    },
+    {
       "path": "sync_core/model.py",
-      "sha256": "82a9a72365e5e7e9dc92033ac76cdbafef6960b0322548f17665a201c080a9ee",
-      "size": 1759,
+      "sha256": "0eff4b3e521100efc7bd4fdae103ecca1b8c24c7a0ea3e6d2ac1a060db85aa07",
+      "size": 4112,
       "status": "PASS"
     },
     {
@@ -462,8 +522,8 @@
     },
     {
       "path": "tests/test_i006_persistence_links.py",
-      "sha256": "f3b482bbeebda27ab4255e86f3046cd6c1efeb8076a93986989db8b159265709",
-      "size": 5032,
+      "sha256": "42d5864218169c4a2c47b0852a9230db974c96e39971ec93a9e792dbb769f9a5",
+      "size": 5449,
       "status": "PASS"
     },
     {
@@ -492,14 +552,32 @@
     },
     {
       "path": "tests/test_i008_contract_guards.py",
-      "sha256": "9fa199ce4a5d1800db1bf93b03cda1aad51d153e440f577e1d1c9f72bfc68684",
-      "size": 1432,
+      "sha256": "447e619eb58f751005db534b8f4b30b4fd0e60ed3f078c417231991e47265c30",
+      "size": 1809,
       "status": "PASS"
     },
     {
       "path": "tests/test_i008_sync_preview.py",
       "sha256": "1e6adce9c7ab720d1220d5c9a884766b26f55922ea27348942dba5ed7912246b",
       "size": 6230,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i009_fault_matrix.py",
+      "sha256": "38fb4652acb940beabed99120a480adc23ee8d148a98069e6ff13b9d664a1b52",
+      "size": 506,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i009_plan_tamper.py",
+      "sha256": "b9cce0adc932b4468ad57f22ae1c3ace5edf6804916f8ae8dac2bf85b4cce6d6",
+      "size": 2089,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i009_three_way_sync.py",
+      "sha256": "6d051afa6e8188cf1a0ebb3689aa938588151c9bc56160a9f906bc92f45b814f",
+      "size": 9044,
       "status": "PASS"
     },
     {
@@ -558,8 +636,8 @@
     },
     {
       "path": "tools/autopilot/autopilot.py",
-      "sha256": "4d5d92d86d3b5ad7f97b7e3cc3046d371a95c2dbbb1c5c62644d2b15d653314a",
-      "size": 2460,
+      "sha256": "e188393569d87d974112d09dd5bcb42b78e5a39664904a91905e8f1235267236",
+      "size": 2606,
       "status": "PASS"
     },
     {
@@ -594,20 +672,26 @@
     },
     {
       "path": "tools/autopilot/i006_validator.py",
-      "sha256": "7c4dd90aa46132e3bc61b88fe54d9f122ea52c7352883e452977ce47e9bc76e6",
-      "size": 8323,
+      "sha256": "6170228e4f8d23e298158f61f6dd23228733824a4c75f2ff90db99802575b34e",
+      "size": 8457,
       "status": "PASS"
     },
     {
       "path": "tools/autopilot/i007_validator.py",
-      "sha256": "dc932b4a2b181d85946ce0623ce770eff1e073bfebe68fcd921d525e82043f0f",
-      "size": 11248,
+      "sha256": "5e7913007bca7f201f60de05bab1427637598b364ce571288ecb45a908cf501d",
+      "size": 11374,
       "status": "PASS"
     },
     {
       "path": "tools/autopilot/i008_validator.py",
-      "sha256": "f05cffed4f8a6dc4a1b8f5a5a1cfba36f92fc7ef31bec7f778d71d48a21acb78",
-      "size": 7426,
+      "sha256": "dabffb28efa753ef83d33bf0941c496b28a148d0c5ce1565924db0210a8c24f3",
+      "size": 6997,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/autopilot/i009_validator.py",
+      "sha256": "ff9a880bd20f1885064f4f8fe230e0c63f107c416fcbe0def933932d3bdb2c1d",
+      "size": 8896,
       "status": "PASS"
     },
     {
@@ -638,6 +722,12 @@
       "path": "tools/i006_fault_matrix.py",
       "sha256": "a7ab318d6c7d909abf8a5327b227eb4a637e0ce9a25ccda6ebd09dbdc2964858",
       "size": 4380,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/i009_fault_matrix.py",
+      "sha256": "e5be6b77b41fc22b03dd5c2809502c5ae29721543b2aacf202538a98674cd936",
+      "size": 5052,
       "status": "PASS"
     },
     {
@@ -737,5 +827,5 @@
       "status": "PASS"
     }
   ],
-  "count": 122
+  "count": 137
 }

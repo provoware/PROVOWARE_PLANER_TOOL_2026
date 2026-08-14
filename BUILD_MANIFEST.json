@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "manifest_type": "BUILD",
-  "version": "0.8.0-dev.1",
-  "iteration": "I008",
+  "version": "0.9.0-dev.1",
+  "iteration": "I009",
   "entries": [
     {
       "path": ".github/workflows/foundation-qualifikation.yml",
@@ -53,6 +53,12 @@
       "status": "PASS"
     },
     {
+      "path": ".github/workflows/i009-qualifikation.yml",
+      "sha256": "4e7dd3b560838bdfe748f035fab599aaf6063218a5aa3431068559e42f4b5ccf",
+      "size": 14559,
+      "status": "PASS"
+    },
+    {
       "path": "runtime/__init__.py",
       "sha256": "d076fad1ed584bed0bb7dbd6ee0c4d40140239e59d7e1826864710f248d75415",
       "size": 43,
@@ -90,8 +96,8 @@
     },
     {
       "path": "tools/autopilot/autopilot.py",
-      "sha256": "4d5d92d86d3b5ad7f97b7e3cc3046d371a95c2dbbb1c5c62644d2b15d653314a",
-      "size": 2460,
+      "sha256": "e188393569d87d974112d09dd5bcb42b78e5a39664904a91905e8f1235267236",
+      "size": 2606,
       "status": "PASS"
     },
     {
@@ -126,20 +132,26 @@
     },
     {
       "path": "tools/autopilot/i006_validator.py",
-      "sha256": "7c4dd90aa46132e3bc61b88fe54d9f122ea52c7352883e452977ce47e9bc76e6",
-      "size": 8323,
+      "sha256": "6170228e4f8d23e298158f61f6dd23228733824a4c75f2ff90db99802575b34e",
+      "size": 8457,
       "status": "PASS"
     },
     {
       "path": "tools/autopilot/i007_validator.py",
-      "sha256": "dc932b4a2b181d85946ce0623ce770eff1e073bfebe68fcd921d525e82043f0f",
-      "size": 11248,
+      "sha256": "5e7913007bca7f201f60de05bab1427637598b364ce571288ecb45a908cf501d",
+      "size": 11374,
       "status": "PASS"
     },
     {
       "path": "tools/autopilot/i008_validator.py",
-      "sha256": "f05cffed4f8a6dc4a1b8f5a5a1cfba36f92fc7ef31bec7f778d71d48a21acb78",
-      "size": 7426,
+      "sha256": "dabffb28efa753ef83d33bf0941c496b28a148d0c5ce1565924db0210a8c24f3",
+      "size": 6997,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/autopilot/i009_validator.py",
+      "sha256": "ff9a880bd20f1885064f4f8fe230e0c63f107c416fcbe0def933932d3bdb2c1d",
+      "size": 8896,
       "status": "PASS"
     },
     {
@@ -167,5 +179,5 @@
       "status": "PASS"
     }
   ],
-  "count": 27
+  "count": 29
 }

@@ -6,7 +6,7 @@ Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungsw
 - **Version:** `0.9.0-dev.1`
 - **Iteration:** `I009`
 - **Checkpoint:** `C009-FIELD-BASELINE-TRANSACTIONAL-SYNC`
-- **Status:** `IN_ARBEIT / GELB` bis zur vollständigen I009-Remotequalifikation
+- **Status:** `QUALIFIZIERT / GRÜN` nach erfolgreicher I009-Remotequalifikation
 - **Zielplattform:** Linux, insbesondere Ubuntu-/Kubuntu-Derivate
 - **Betrieb:** lokal und offline-first
 - **Technische Nutzerabnahme:** nicht Bestandteil der Pflicht-Freigabekette
@@ -104,7 +104,7 @@ Die I009-Fault-Matrix injiziert Fehler nach Nutzdatenwrite, nach Baseline-Write,
 Die historische Pflichtkette lautet `I002 → I003 → I004 → I005 → I006 → I007 → I008 → I009`; die 140er Todo-GUI- und 112er Kalender-GUI-Matrix bleiben Pflichtregressionen.
 
 ## 16. Aktueller Checkpoint
-**C009 — FIELD-BASELINE-TRANSACTIONAL-SYNC.** Migration, Baseline-/Hashmodell, Drei-Wege-Planung, atomare Ausführung, POSTCHECK, Audit-Receipt, Fault-Matrix und Validator sind angelegt. `IN_ARBEIT / GELB` bleibt verbindlich, bis Zieltests, Vollregression, historische Gates, Remote-Tree und exakter Evidence-SHA-Zweitpass vollständig bestanden sind.
+**C009 — FIELD-BASELINE-TRANSACTIONAL-SYNC.** Migration, Baseline-/Hashmodell, Drei-Wege-Planung, atomare Ausführung, POSTCHECK, Audit-Receipt, Fault-Matrix und Validator sind angelegt. Der I009-Evidence-Kandidat ist `GRÜN`; die Promotion nach `main` erfolgt erst nach erfolgreichem exakten Evidence-SHA-Zweitpass.
 
 ## 17. Nächster logischer Schritt
 Nach erfolgreicher I009-Qualifikation: **I010 — Synchronisations-Control-GUI + explizite Konfliktentscheidung.** Die Oberfläche darf ausschließlich qualifizierte `SyncPlan`-Objekte anzeigen und committen; sie darf weder SQL ausführen noch Konfliktlogik duplizieren.

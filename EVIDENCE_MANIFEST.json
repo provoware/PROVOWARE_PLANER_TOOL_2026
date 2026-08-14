@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "manifest_type": "EVIDENCE",
-  "version": "0.8.0-dev.1",
-  "iteration": "I008",
+  "version": "0.9.0-dev.1",
+  "iteration": "I009",
   "attestation_model": "subject_commit_plus_evidence_overlay",
   "entries": [
     {
@@ -33,6 +33,12 @@
       "path": "errors/KALENDER_GUI_FEHLERKATALOG.json",
       "sha256": "3ba9db31fdc57167b6e37901d96d2e64efe6f17f2dcf85a89f4255c16abc7301",
       "size": 3270,
+      "status": "PASS"
+    },
+    {
+      "path": "errors/SYNC_EXECUTION_FEHLERKATALOG.json",
+      "sha256": "fadd570558d7cec6983fead48715c7e4d8b2bc3870c3c31653e4e356fb69ec21",
+      "size": 4063,
       "status": "PASS"
     },
     {
@@ -121,8 +127,8 @@
     },
     {
       "path": "tests/test_i006_persistence_links.py",
-      "sha256": "f3b482bbeebda27ab4255e86f3046cd6c1efeb8076a93986989db8b159265709",
-      "size": 5032,
+      "sha256": "42d5864218169c4a2c47b0852a9230db974c96e39971ec93a9e792dbb769f9a5",
+      "size": 5449,
       "status": "PASS"
     },
     {
@@ -151,14 +157,32 @@
     },
     {
       "path": "tests/test_i008_contract_guards.py",
-      "sha256": "9fa199ce4a5d1800db1bf93b03cda1aad51d153e440f577e1d1c9f72bfc68684",
-      "size": 1432,
+      "sha256": "447e619eb58f751005db534b8f4b30b4fd0e60ed3f078c417231991e47265c30",
+      "size": 1809,
       "status": "PASS"
     },
     {
       "path": "tests/test_i008_sync_preview.py",
       "sha256": "1e6adce9c7ab720d1220d5c9a884766b26f55922ea27348942dba5ed7912246b",
       "size": 6230,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i009_fault_matrix.py",
+      "sha256": "38fb4652acb940beabed99120a480adc23ee8d148a98069e6ff13b9d664a1b52",
+      "size": 506,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i009_plan_tamper.py",
+      "sha256": "b9cce0adc932b4468ad57f22ae1c3ace5edf6804916f8ae8dac2bf85b4cce6d6",
+      "size": 2089,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i009_three_way_sync.py",
+      "sha256": "6d051afa6e8188cf1a0ebb3689aa938588151c9bc56160a9f906bc92f45b814f",
+      "size": 9044,
       "status": "PASS"
     },
     {
@@ -180,7 +204,7 @@
       "status": "PASS"
     }
   ],
-  "count": 29,
+  "count": 33,
   "remote_receipt": "REMOTE_TREE_RECEIPT.json",
   "qualification_report": "QUALIFICATION_REPORT.json"
 }

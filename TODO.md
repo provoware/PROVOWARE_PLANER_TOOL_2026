@@ -80,10 +80,10 @@
 - [x] echter Prozessabbruch innerhalb offener Sync-Transaktion
 - [x] I008-Historienvalidator für Schema 3 vorwärtskompatibel gehärtet
 - [x] I009-Validator und Autopilot-Gate angelegt
-- [ ] I009-Zieltests und Fault-Matrix remote PASS
-- [ ] vollständige Unit-/Regressionstests PASS
-- [ ] 140er Todo-GUI- und 112er Kalender-GUI-Regression PASS
-- [ ] I002 → I003 → I004 → I005 → I006 → I007 → I008 → I009 vollständig PASS
+- [x] I009-Zieltests und Fault-Matrix remote PASS
+- [x] vollständige Unit-/Regressionstests PASS
+- [x] 140er Todo-GUI- und 112er Kalender-GUI-Regression PASS
+- [x] I002 → I003 → I004 → I005 → I006 → I007 → I008 → I009 vollständig PASS
 - [ ] exakter I009-Evidence-SHA-Zweitpass PASS
 - [ ] qualifizierten I009-Evidence-Commit nach `main` promoten
 
