@@ -110,8 +110,10 @@ def validate() -> dict:
     if current == 15:
         if plan.get("base", {}).get("commit") != "1b684cc99d97cd2f00221b49a8ef606686d2453b":
             errors.append("I015_BASELINE_FALSCH")
-        if plan.get("risk_class") != "KRITISCH":
+        if plan.get("risk_class") != "HOCH":
             errors.append("I015_RISIKOKLASSE_FALSCH")
+        if plan.get("safety_critical") is not True:
+            errors.append("I015_SICHERHEITSKRITIKALITAET_FEHLT")
         criteria = {item.get("id") for item in plan.get("acceptance_criteria", [])}
         if criteria != {f"I015-A{number:02d}" for number in range(1, 12)}:
             errors.append("I015_AKZEPTANZKRITERIEN_UNVOLLSTAENDIG")
@@ -140,13 +142,15 @@ def validate() -> dict:
         "schema_version": 4,
         "physical_restore_core": contract.get("physical_restore_core"),
         "acceptance_criteria": len(criteria) if current == 15 else 11,
+        "risk_class": plan.get("risk_class"),
+        "safety_critical": plan.get("safety_critical") is True,
     }
 
 
 def main() -> int:
     result = validate()
     print(f"I015-VALIDATOR: {result['status']}")
-    print(f"Restorekern: {result['physical_restore_core']} | Schema: {result['schema_version']}")
+    print(f"Restorekern: {result['physical_restore_core']} | Schema: {result['schema_version']} | Risiko: {result['risk_class']} / sicherheitskritisch={result['safety_critical']}")
     for error in result["errors"]:
         print(f"FEHLER: {error}")
     print("MASCHINENLESBAR:", json.dumps(result, ensure_ascii=False, sort_keys=True))
