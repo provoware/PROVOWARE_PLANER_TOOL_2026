@@ -6,7 +6,7 @@ Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungsw
 - **Version:** `0.10.0-dev.1`
 - **Iteration:** `I010`
 - **Checkpoint:** `C010-SYNC-CONTROL-GUI-RESOLUTION`
-- **Status:** `IN_ARBEIT / GELB` bis zur vollständigen I010-Remotequalifikation und Evidence-Promotion
+- **Status:** `QUALIFIZIERT / GRÜN`
 - **Zielplattform:** Linux, insbesondere Ubuntu-/Kubuntu-Derivate
 - **Betrieb:** lokal und offline-first
 - **Technische Nutzerabnahme:** nicht Bestandteil der Pflicht-Freigabekette
@@ -103,7 +103,7 @@ Der POSTCHECK prüft noch vor dem SQLite-Commit Endwerte, Baseline-Hashes, Versi
 Die I009-Fault-Matrix injiziert Fehler nach Nutzdatenwrite, nach Baseline-Write, vor Receipt, nach Receipt vor Commit und einen echten Prozessabbruch nach Nutzdatenwrite. Jeder Pfad muss vollständig auf den Vorzustand zurückrollen.
 
 ## 16. Aktueller Checkpoint
-**C010 — SYNC-CONTROL-GUI-RESOLUTION.** Query, ViewModel, Feldtabelle, unveränderlicher ResolutionPlan, Stale-/Manipulationsschutz, Wiederverwendung des atomaren I009-Commitkerns sowie eigene Fault-/Crash- und GUI-Matrizen sind implementiert. Die Promotion nach `main` bleibt bis zum vollständigen I010-Vollpass und exakten Evidence-SHA-Zweitpass blockiert.
+**C010 — SYNC-CONTROL-GUI-RESOLUTION.** Query, ViewModel, Feldtabelle, unveränderlicher ResolutionPlan, Stale-/Manipulationsschutz, Wiederverwendung des atomaren I009-Commitkerns sowie eigene Fault-/Crash- und GUI-Matrizen sind implementiert und qualifiziert.
 
 ### I010 — Synchronisations-Control-GUI und ResolutionPlan
 Die I010-Oberfläche zeigt den qualifizierten `SyncPlan` ausschließlich über `SyncControlQuery` und `SyncControlViewModel`. Die Feldtabelle enthält Baseline, Todo, Kalender, Zustand, geplante Aktion, Grund, Versionsstatus, Hashstatus und Entscheidung. Die ViewModel-Schicht führt kein SQL aus.
@@ -120,12 +120,7 @@ Der Datenwrite selbst nutzt weiterhin den I009-Transaktionskern. Das Audit-Recei
 Die historische Pflichtkette lautet `I002 → I003 → I004 → I005 → I006 → I007 → I008 → I009 → I010`; die 140er Todo-GUI-, 112er Kalender-GUI- und I010-Sync-Control-GUI-Matrix bleiben Pflichtregressionen.
 
 ## 17. Nächster logischer Schritt
-Nach erfolgreicher I010-Qualifikation: **I011 — Synchronisationsjournal + Resolution-Historie + sichere Wiederholungs-/Recovery-Ansicht.** Synchronisations- und Resolution-Receipts sollen unveränderlich als verständliche Vorher-/Nachher-Historie dargestellt werden, ohne alte Entscheidungen still erneut auszuführen.
+**I011 — Synchronisationsjournal + Resolution-Historie + sichere Wiederholungs-/Recovery-Ansicht.** Synchronisations- und Resolution-Receipts sollen unveränderlich als verständliche Vorher-/Nachher-Historie dargestellt werden, ohne alte Entscheidungen still erneut auszuführen.
 
 ## 18. Weiterführende Verbesserung
 Für I011 eine sichere Recovery-Vorschau ergänzen, die auf bestehende Receipt-Hashes und konkrete Datenversionen referenziert. Ein Wiederholungs- oder Wiederherstellungsplan muss erneut immutable, hashgebunden und stale-sicher sein; eine vergangene Konfliktentscheidung darf niemals automatisch auf einen inzwischen veränderten Datenstand übertragen werden.
-
-
-### I010 Synchronisations-Control
-
-I010 zeigt den I009-SyncPlan read-only in einer Feldtabelle. Echte BOTH_DIFFERENT-Konflikte bleiben standardmäßig blockiert und können nur über einen neuen hashgebundenen ResolutionPlan explizit auf Todo-Wert oder Kalender-Wert entschieden werden. Der ursprüngliche SyncPlan wird nie verändert.
