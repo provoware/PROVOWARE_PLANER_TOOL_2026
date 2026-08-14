@@ -32,7 +32,20 @@
 - `ON DELETE CASCADE` zwischen Todo, Termin und Link verboten; physische Endpunktlöschung per `RESTRICT` geschützt.
 - Entkoppeln löscht ausschließlich den Link weich und erhält Todo sowie Termin.
 - automatische Inhalts-Synchronisation in I006 ausdrücklich deaktiviert.
-- deterministische Fault-Injection für Schreibabbruch vor Commit ergänzt.
-- echten Prozessabbruch während offener SQLite-Transaktion und anschließenden Rollback-/Quick-Check-Nachweis ergänzt.
-- I005-Validator als historisches Mindestgate für nachfolgende Iterationen vorwärtskompatibel gehärtet.
+- deterministische Fault-Injection und echten Prozessabbruch während offener SQLite-Transaktion ergänzt.
 - historische Pflichtkette um I006 erweitert.
+
+## 0.7.0-dev.1 — I007
+- `TodoService` um eine kontrollierte Read-API ergänzt; keine neue Datenbankmigration erforderlich.
+- `TodoCalendarLinkService.preview_conflict()` als reine, nicht schreibende Konfliktvorschau eingeführt.
+- `TodoQueryService`, `TodoViewModel` und immutable Darstellungsmodelle eingeführt.
+- fünf Todo-Ansichten umgesetzt: Heute, Diese Woche, Überfällig, Ohne Datum und Erledigt.
+- PySide6/Qt-Todo-Fenster mit Erstellen, Bearbeiten, Status, Priorität, Fortschritt, Unteraufgaben, Kalender-Verknüpfung, Entkoppeln und Soft Delete ergänzt.
+- Todo-Modul über `Module → Aufgaben öffnen` in den vorhandenen Planner-Start integriert und an dieselben Planner-Services gebunden.
+- Konfliktzustände einschließlich `BOTH_CHANGED` sichtbar und laienverständlich erklärt; Anzeige verändert Linkzustand und Versions-Snapshots nicht.
+- automatische Inhalts-Synchronisation und automatische Konfliktauflösung bleiben ausdrücklich deaktiviert.
+- Tastaturreihenfolge, Kurzbefehle, Accessible Names, High-Contrast-Klartexte und sieben Schriftstufen ergänzt.
+- Todo-GUI-Einstellungen sowie Todo-/Link-Daten auf Neustartpersistenz geprüft.
+- 140er Todo-Offscreen-Matrix angelegt; 112er I005-Kalender-Matrix bleibt Pflichtregression.
+- I006-Historienvalidator für nachfolgende Iterationen vorwärtskompatibel gehärtet.
+- I007-Vertrag, Fehlerkatalog, unabhängiger Validator und Autopilot-Gate ergänzt.
