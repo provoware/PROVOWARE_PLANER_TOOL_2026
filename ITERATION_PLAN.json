@@ -1,37 +1,38 @@
 {
   "schema_version": 1,
-  "iteration": "I015",
-  "version": "0.15.0-dev.1",
-  "checkpoint": "C015-BACKUP-RESTOREPLAN",
-  "title": "Immutable Backup-/RestorePlan mit Kandidatenqualifikation",
+  "iteration": "I016",
+  "version": "0.16.0-dev.1",
+  "checkpoint": "C016-RESTORE-EXECUTION-SAFETY",
+  "title": "Persistenter Restore-Intent, exklusive Lease und Crash-Recovery",
   "base": {
     "branch": "main",
-    "commit": "1b684cc99d97cd2f00221b49a8ef606686d2453b",
-    "tree": "9833d48c617a6c87c8dc664c548ca350a9581b17"
+    "commit": "ce66b61444c6014ce543226e4525d5ffc2353b73",
+    "tree": "7cabee7367484321403eff735659ae564e907857"
   },
   "risk_class": "HOCH",
   "safety_critical": true,
-  "risk_reason": "Restore ersetzt die aktive Nutzdatenbank. I015 verändert daher ausschließlich den abgesicherten Restorepfad und keine fachlichen Tabellen oder Datenmodelle.",
-  "objective": "Sicherungskandidaten strikt lesend qualifizieren, einen hashgebundenen unveränderlichen RestorePlan erzeugen und die tatsächliche Wiederherstellung ausschließlich über den bestehenden physischen Restorekern mit exakten Precondition-Prüfungen zulassen.",
+  "risk_reason": "I016 schützt einen destruktiven Restore gegen harte Prozessabbrüche nach dem atomaren Datenbanktausch. Der qualifizierte physische I015-Restorekern wird nicht verändert.",
+  "objective": "Vor jedem Restore einen dauerhaften, hashgebundenen Intent und eine exklusive Lease etablieren, einen verifizierten Vorzustand sichern und beim nächsten Start offene Ausführungen deterministisch verifizieren, schließen oder über denselben physischen Restorekern zurücksetzen.",
   "acceptance_criteria": [
-    {"id": "I015-A01", "text": "Backup-Kandidaten werden ausschließlich read-only gegen Datei, Manifest, SHA-256, Größe, SQLite quick_check und Schema geprüft."},
-    {"id": "I015-A02", "text": "Nur Kandidaten innerhalb des expliziten Workspace-/Backup-Bereichs können einen RestorePlan erhalten."},
-    {"id": "I015-A03", "text": "RestorePlan ist immutable und bindet Backup-Pfad, Backup-Hash, Manifest-Hash, Schema, Zielpfad, Zielzustands-Hash und Plan-Hash."},
-    {"id": "I015-A04", "text": "Manipulierte oder nach Planerstellung veränderte Sicherungen werden vor jedem Schreibzugriff blockiert."},
-    {"id": "I015-A05", "text": "Eine nach Planerstellung veränderte aktive Datenbank blockiert den Restore als stale."},
-    {"id": "I015-A06", "text": "Der einzige physische Restorekern bleibt storage.backup.restore_backup; I015 erzeugt keinen parallelen Dateiaustauschpfad."},
-    {"id": "I015-A07", "text": "Restore folgt PRECHECK → COMMIT → POSTCHECK und validiert das Ergebnis erneut gegen den geplanten Backup-Hash/SQLite-Zustand."},
-    {"id": "I015-A08", "text": "Fehler während Restore oder Postcheck erhalten bzw. stellen den vorherigen Datenbankzustand wieder her; Crash-/Fault-Matrix weist dies nach."},
-    {"id": "I015-A09", "text": "Kein Backup, Restore-Kandidat, Pre-Restore-Abbild oder Nutzdatenbestand gelangt in NUTZER-, ENTWICKLER- oder EVIDENCE-Codepakete."},
-    {"id": "I015-A10", "text": "SQLite-Schema bleibt Version 4; I002→I015, Vollregression und Transport-Fresh-Unpack bleiben PASS."},
-    {"id": "I015-A11", "text": "Exact-SHA-Zweitpass ist read-only, Promotion nur fast-forward bei behind=0, danach unabhängige main-Nachqualifikation."}
+    {"id": "I016-A01", "text": "Restore-Intent ist persistent, hashgebunden und folgt ausschließlich PREPARED → COMMITTING → VERIFIED → CLOSED."},
+    {"id": "I016-A02", "text": "Exklusive Lease wird atomar erzeugt; lebender Besitzer darf niemals übernommen werden."},
+    {"id": "I016-A03", "text": "Neue Planner-Schreibtransaktionen werden während aktiver Restore-Lease blockiert."},
+    {"id": "I016-A04", "text": "Nach Lease-Erwerb bestätigt BEGIN IMMEDIATE/ROLLBACK, dass kein bereits laufender Schreiber aktiv ist."},
+    {"id": "I016-A05", "text": "Vor COMMITTING existiert ein SQLite-konsistenter, SHA-256- und Integritäts-geprüfter Pre-Restore-Snapshot."},
+    {"id": "I016-A06", "text": "Ein realer Prozessabbruch nach dem atomaren Austausch hinterlässt einen recoverbaren COMMITTING-Zustand."},
+    {"id": "I016-A07", "text": "Der nächste Start finalisiert einen eindeutig erfolgreichen Restore automatisch, ohne ihn erneut auszuführen."},
+    {"id": "I016-A08", "text": "Ein eindeutiger unveränderter Vorzustand wird als RECOVERED_NO_CHANGE geschlossen; uneindeutige Zustände verwenden nur den verifizierten Snapshot oder blockieren."},
+    {"id": "I016-A09", "text": "Recovery-Rollback verwendet ausschließlich storage.backup.restore_backup; kein paralleler physischer Restorepfad entsteht."},
+    {"id": "I016-A10", "text": "storage/backup.py bleibt in I016 unverändert; SQLite-Schema bleibt Version 4."},
+    {"id": "I016-A11", "text": "Laufzeit-Intent, Lease und Snapshot sind in allen Transportprofilen ausgeschlossen; deterministischer Fresh-Unpack-Start bleibt PASS."},
+    {"id": "I016-A12", "text": "I002→I016, Vollregression, Fault-/Crash-Matrizen, Exact-SHA-Zweitpass und Main-Nachqualifikation bestehen vollständig."}
   ],
   "validation_profile": {
     "static_preflight": true,
     "target_tests": true,
-    "readonly_candidate_probe": true,
-    "stale_and_tamper_matrix": true,
-    "restore_fault_crash_matrix": true,
+    "hard_process_exit_after_replace": true,
+    "startup_recovery": true,
+    "lease_concurrency": true,
     "transport_regression": true,
     "full_unit_suite": true,
     "historical_chain": true,
@@ -40,18 +41,19 @@
   },
   "repository_delta": {
     "add": [
-      ".github/workflows/i015-qualifikation.yml",
-      "backup_core/__init__.py",
-      "backup_core/model.py",
-      "contracts/BACKUP_RESTORE_PLAN_CONTRACT.json",
-      "docs/I015_BACKUP_RESTOREPLAN.md",
-      "errors/BACKUP_RESTORE_FEHLERKATALOG.json",
-      "services/restore_service.py",
-      "standards/BACKUP_RESTORE_STANDARD.json",
-      "tests/test_i015_restore_faults.py",
-      "tests/test_i015_restore_plan.py",
-      "tools/autopilot/i015_validator.py",
-      "tools/i015_restore_fault_matrix.py"
+      ".github/workflows/i016-qualifikation.yml",
+      "backup_core/execution.py",
+      "contracts/RESTORE_EXECUTION_SAFETY_CONTRACT.json",
+      "docs/I016_RESTORE_EXECUTION_SAFETY.md",
+      "errors/RESTORE_EXECUTION_FEHLERKATALOG.json",
+      "runtime/restore_recovery.py",
+      "services/restore_execution_service.py",
+      "standards/RESTORE_EXECUTION_STANDARD.json",
+      "storage/restore_guard.py",
+      "tests/test_i016_restore_crash_recovery.py",
+      "tests/test_i016_restore_execution.py",
+      "tools/autopilot/i016_validator.py",
+      "tools/i016_restore_crash_matrix.py"
     ],
     "modify": [
       "BUILD_MANIFEST.json",
@@ -72,11 +74,12 @@
       "VERSION.json",
       "contracts/TRANSPORT_PROFILE_CONTRACT.json",
       "standards/STANDARD_INDEX.json",
-      "storage/backup.py",
+      "storage/database.py",
       "tools/autopilot/autopilot.py",
-      "tools/autopilot/i014_validator.py"
+      "tools/start_gui.py",
+      "tools/start_orchestrator.py"
     ],
     "delete": []
   },
-  "next_after_success": "I016 Restore-Control-GUI mit expliziter Vorschau, Bestätigung und verständlicher Risikoanzeige"
+  "next_after_success": "I017 Restore-Control-GUI ausschließlich über RestoreExecutionService mit Vorschau, Risikoanzeige und expliziter Bestätigung"
 }
