@@ -14,6 +14,7 @@ if str(ROOT) not in sys.path:
 from runtime.faults import RuntimeContext
 from runtime.model import RuntimeState
 from runtime.orchestrator import StartOrchestrator
+from runtime.restore_recovery import restore_recovery_preflight
 
 
 def _check_native_gui_runtime() -> tuple[bool, str]:
@@ -53,7 +54,17 @@ def main() -> int:
     workspace = args.workspace.expanduser().resolve()
     workspace.mkdir(parents=True, exist_ok=True)
 
-    report = StartOrchestrator(RuntimeContext(ROOT, workspace)).run()
+    try:
+        restore_actions = restore_recovery_preflight(workspace)
+    except Exception as exc:
+        print("RESTORE-START-RECOVERY-001: Ein vorheriger Restore ist nicht eindeutig abgeschlossen.")
+        print(f"DETAIL: {exc}")
+        print("AKTION: Start sicher blockiert; Restore-Recovery prüfen, keine Datenbankänderung erzwingen.")
+        return 4
+
+    ctx = RuntimeContext(ROOT, workspace)
+    ctx.recovery_actions.extend(restore_actions)
+    report = StartOrchestrator(ctx).run()
     payload = report.to_dict()
     report_path = args.start_report or (workspace / "LETZTER_STARTBERICHT.json")
     _write_start_report(report_path, payload)
