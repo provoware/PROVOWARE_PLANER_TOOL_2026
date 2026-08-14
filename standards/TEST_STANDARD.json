@@ -1,13 +1,22 @@
 {
   "standard_id": "PROVOWARE-TEST",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "VERBINDLICH",
   "manual_user_technical_test_required": false,
   "levels": ["FAST", "STANDARD", "FULL", "RELEASE"],
+  "execution_order": ["P0_STATIC", "P1_TARGET", "P2_RUNTIME_TARGET", "P3_REGRESSION", "P4_EVIDENCE"],
   "planned_test_types": [
     "unit", "contract", "property", "database", "integration", "gui", "accessibility", "fault_injection", "recovery", "persistence", "performance", "portability", "release"
   ],
+  "static_preflight_before_runtime_dependencies": true,
+  "target_tests_before_full_regression": true,
+  "full_regression_once_per_pass": true,
+  "historical_gate_chain_once_per_pass": true,
+  "duplicate_gate_execution_within_pass_forbidden": true,
+  "change_impact_plan_required": true,
+  "timing_evidence_required": true,
   "tests_for_fixed_regressions_are_permanent": true,
   "flaky_tests_allowed": false,
-  "independent_remote_recheck_required": true
+  "independent_remote_recheck_required": true,
+  "exact_sha_remote_recheck_required_for_qualification": true
 }
