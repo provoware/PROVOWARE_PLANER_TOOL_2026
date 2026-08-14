@@ -59,8 +59,8 @@ class CalendarService:
             deleted_at=datetime.now(timezone.utc),
         )
 
-    def get_event(self, event_id: str) -> CalendarEvent:
-        return self.repository.get(event_id)
+    def get_event(self, event_id: str, *, include_deleted: bool = False) -> CalendarEvent:
+        return self.repository.get(event_id, include_deleted=include_deleted)
 
     def list_events(self, start: datetime, end: datetime) -> list[CalendarEvent]:
         return self.repository.list_between(start, end)
