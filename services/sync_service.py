@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 
 from storage.sync_repository import SyncRepository, SyncSnapshot
 from sync_core.canonical import canonical_hash, payload_hash
+from sync_core.errors import SyncStalePlanError
 from sync_core.fields import SYNC_FIELD_SPECS, SyncFieldSpec
 from sync_core.model import (
     FieldChangeState,
@@ -165,6 +166,11 @@ class SynchronizationService:
         )
 
     def commit(self, plan: SyncPlan) -> SyncAuditReceipt:
+        authoritative = self.plan(plan.link_id)
+        if authoritative != plan:
+            raise SyncStalePlanError(
+                "SYNC-STALE-006: Übergebener SyncPlan entspricht nicht mehr dem autoritativen PRECHECK-Plan"
+            )
         receipt = self.repository.commit(plan, now=datetime.now(timezone.utc))
         self.repository.database.quick_check()
         return receipt
