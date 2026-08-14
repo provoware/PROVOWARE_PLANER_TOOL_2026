@@ -71,6 +71,12 @@ def _manifest_path(backup: Path) -> Path:
 
 
 def _readonly_sqlite_probe(path: Path) -> tuple[str, int]:
+    """Prüft Integrität und die bereits kanonische Migrationsversion read-only.
+
+    Die Anwendung verwendet seit I004 `schema_migrations` als autoritative
+    Schemahistorie; `Database.schema_version()` liefert ebenfalls MAX(version) daraus.
+    I015 führt daher bewusst kein paralleles `PRAGMA user_version`-Signal ein.
+    """
     resolved = path.resolve(strict=True)
     uri = f"file:{quote(str(resolved), safe='/')}?mode=ro&immutable=1"
     try:
@@ -78,11 +84,16 @@ def _readonly_sqlite_probe(path: Path) -> tuple[str, int]:
         try:
             connection.execute("PRAGMA query_only=ON")
             quick_check = str(connection.execute("PRAGMA quick_check").fetchone()[0])
-            schema_version = int(connection.execute("PRAGMA user_version").fetchone()[0])
+            schema_row = connection.execute(
+                "SELECT COALESCE(MAX(version), 0) FROM schema_migrations"
+            ).fetchone()
+            schema_version = int(schema_row[0])
         finally:
             connection.close()
     except (OSError, sqlite3.DatabaseError) as exc:
-        raise RestoreRejectedError("RESTORE-CANDIDATE-004: Sicherung ist nicht lesbar oder keine gültige SQLite-Datenbank") from exc
+        raise RestoreRejectedError(
+            "RESTORE-CANDIDATE-004: Sicherung ist nicht lesbar, keine gültige Planner-Datenbank oder besitzt keine gültige Migrationshistorie"
+        ) from exc
     return quick_check, schema_version
 
 
