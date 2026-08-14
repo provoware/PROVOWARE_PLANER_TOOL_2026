@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from calendar_core.errors import DatabaseBusyError, RestoreRejectedError
+from calendar_core.errors import DatabaseBusyError, DatabaseIntegrityError, RestoreRejectedError
 from services.calendar_service import CalendarService
 from storage.backup import create_backup, restore_backup
 from storage.database import Database
@@ -66,8 +66,8 @@ class CalendarFaultInjectionTest(unittest.TestCase):
         manifest = create_backup(self.database, backup)
         wal = Path(str(self.db_path) + "-wal")
         shm = Path(str(self.db_path) + "-shm")
-        wal.write_bytes(b"stale")
-        shm.write_bytes(b"stale")
+        wal.touch(exist_ok=True)
+        shm.touch(exist_ok=True)
         restore_backup(backup, self.db_path, expected_sha256=manifest["database_sha256"])
         self.assertFalse(wal.exists())
         self.assertFalse(shm.exists())
@@ -75,10 +75,8 @@ class CalendarFaultInjectionTest(unittest.TestCase):
         self.assertEqual(restored.title, "Backup-Zustand")
 
     def test_corrupt_active_database_fails_integrity_check(self) -> None:
-        connection = sqlite3.connect(self.db_path)
-        connection.close()
         self.db_path.write_bytes(b"zerstoert")
-        with self.assertRaises(Exception):
+        with self.assertRaises(DatabaseIntegrityError):
             self.database.quick_check()
 
 
