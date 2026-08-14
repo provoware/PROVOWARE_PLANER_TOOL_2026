@@ -1,6 +1,6 @@
 {
   "standard_id": "PROVOWARE-RELEASE",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "VERBINDLICH",
   "stages": ["DEVELOPMENT", "QUALIFIED", "RC", "STABLE"],
   "mandatory_all_gates_pass": true,
@@ -9,5 +9,13 @@
   "reproducible_build_target": true,
   "release_receipt_required": true,
   "lineage_required": true,
+  "qualification_subject_sha_must_be_explicit": true,
+  "evidence_overlay_semantics_must_be_explicit": true,
+  "exact_sha_second_pass_required": true,
+  "second_pass_repository_write_forbidden": true,
+  "fast_forward_promotion_required": true,
+  "force_promotion_forbidden": true,
+  "behind_zero_required_before_promotion": true,
+  "post_promotion_independent_check_required": true,
   "user_data_must_not_be_packaged": true
 }
