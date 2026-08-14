@@ -14,8 +14,8 @@
     {"id": "PROVOWARE-ERROR-HANDLING", "version": "1.1.0", "file": "standards/ERROR_HANDLING_STANDARD.json"},
     {"id": "PROVOWARE-TEST", "version": "1.1.0", "file": "standards/TEST_STANDARD.json"},
     {"id": "PROVOWARE-START", "version": "1.1.0", "file": "standards/START_STANDARD.json"},
-    {"id": "PROVOWARE-MANIFEST", "version": "1.1.0", "file": "standards/MANIFEST_STANDARD.json"},
-    {"id": "PROVOWARE-RELEASE", "version": "1.1.0", "file": "standards/RELEASE_STANDARD.json"},
+    {"id": "PROVOWARE-MANIFEST", "version": "1.2.0", "file": "standards/MANIFEST_STANDARD.json"},
+    {"id": "PROVOWARE-RELEASE", "version": "1.2.0", "file": "standards/RELEASE_STANDARD.json"},
     {"id": "PROVOWARE-QUALITY", "version": "1.1.0", "file": "standards/QUALITY_STANDARD.json"},
     {"id": "PROVOWARE-DOCUMENTATION", "version": "1.1.0", "file": "standards/DOKUMENTATIONS_STANDARD.json"}
   ]
