@@ -94,7 +94,7 @@
     },
     {
       "path": "MANIFEST_INDEX.json",
-      "sha256": "1432229b2fd1ee374be56e0d7ad15803d2e7d99598dee20a379e14e7830aa73c",
+      "sha256": "90bc7fe530ab816ec509273e0496b043ba924ff10ec66e68357059a57be99dd7",
       "size": 813,
       "status": "PASS"
     },
@@ -130,14 +130,14 @@
     },
     {
       "path": "SOURCE_MANIFEST.json",
-      "sha256": "5c70f06c6b10fbefcbe8f54c0fe5a7609613c723a8c9f59dc7643e05b46c9834",
+      "sha256": "098b7cf9786ad8f9f1e2be2127ca3d54f6ef8b075648ffc28f9c3c26c916d00b",
       "size": 31682,
       "status": "PASS"
     },
     {
       "path": "TODO.md",
-      "sha256": "52e5425291d33613d625296ac40831db64c9183a6b88baea3dfeaae9e97ab576",
-      "size": 2730,
+      "sha256": "b4f364ea1990c1b69d19cbf3ecabbcb9ffc8299921b55cd92cfb83d6126dd15a",
+      "size": 2791,
       "status": "PASS"
     },
     {
