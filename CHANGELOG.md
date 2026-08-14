@@ -51,3 +51,13 @@
 - StartOrchestrator-Bericht wird standardmäßig atomar als `LETZTER_STARTBERICHT.json` im Arbeitsbereich gespeichert.
 - I012-Service-/GUI-Zieltests, Autopilot-Gate und 35er Offscreen-Diagnosematrix ergänzt.
 - Keine neue Datenbankmigration; Schema bleibt Version 4.
+
+## 0.13.0-dev.1 — I013
+- Entwicklungsarbeit anhand der realen I012-Qualifikation auf Effizienz, Präzision und unnötige Remote-Schleifen auditiert.
+- Verbindlichen `PROVOWARE-DEVELOPMENT 2.0.0` mit `Ermittlung → Planung → P0 Static → Zielprüfung → Runtime → Regression → Evidence → Promotion → Optimierung` eingeführt.
+- `ITERATION_PLAN.json` bindet Baseline-Commit/-Tree, Risikoklasse, acht Akzeptanzkriterien und explizite `add`/`modify`/`delete`-Differenz.
+- Kandidateninventar berechnet das Repository-Soll aus qualifizierter Baseline plus deklarierter Differenz; ungeplante Pfade blockieren.
+- P0-Preflight prüft JSON, Python-Syntax, Metadaten, Standardindex, Dokumentationsmarker, Pipelinevertrag und Dateidifferenz vor apt/pip/Qt.
+- Dokumentationsstandard auf stabile semantische README-Marker umgestellt; exakter Überschriftentext ist nicht mehr Maschinenvertrag.
+- Autopilot führt historische Gates pro Pass genau einmal aus und schreibt optionale Laufzeit-Evidence.
+- CI-Referenzpipeline erhält Concurrency-Abbruch für veraltete Läufe, Lockdatei-gebundenen pip-Cache und Static-first-Reihenfolge.
