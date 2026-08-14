@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 
+from services.resolution_service import list_active_link_ids
 from services.sync_service import SynchronizationService
 from sync_core.model import FieldChangeState, SyncPlan
 
@@ -52,12 +53,7 @@ class SyncControlQuery:
         self.sync_service = sync_service
 
     def link_ids(self) -> tuple[str, ...]:
-        # Read-only Projektion; keine Konfliktbewertung und kein Schreibzugriff.
-        with self.sync_service.repository.database.session() as connection:
-            rows = connection.execute(
-                "SELECT link_id FROM todo_calendar_links WHERE deleted_at IS NULL ORDER BY created_at, link_id"
-            ).fetchall()
-        return tuple(row["link_id"] for row in rows)
+        return list_active_link_ids(self.sync_service)
 
     def load(self, link_id: str) -> SyncControlSnapshot:
         plan = self.sync_service.plan(link_id)
