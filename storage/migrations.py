@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -23,6 +24,21 @@ class MigrationRunner:
         if not prefix.isdigit():
             raise MigrationError(f"CAL-MIGRATION-001: ungültiger Migrationsname {path.name}")
         return int(prefix)
+
+    @staticmethod
+    def _statements(script: str) -> list[str]:
+        statements: list[str] = []
+        buffer = ""
+        for line in script.splitlines(keepends=True):
+            buffer += line
+            if sqlite3.complete_statement(buffer):
+                statement = buffer.strip()
+                if statement:
+                    statements.append(statement)
+                buffer = ""
+        if buffer.strip():
+            raise MigrationError("CAL-MIGRATION-001: unvollständige SQL-Anweisung")
+        return statements
 
     def _files(self) -> list[Path]:
         files = sorted(self.migrations_dir.glob("*.sql"))
@@ -61,7 +77,8 @@ class MigrationRunner:
                     continue
                 try:
                     connection.execute("BEGIN IMMEDIATE")
-                    connection.executescript(path.read_text(encoding="utf-8"))
+                    for statement in self._statements(path.read_text(encoding="utf-8")):
+                        connection.execute(statement)
                     connection.execute(
                         "INSERT INTO schema_migrations(version, name, sha256, applied_at) VALUES (?, ?, ?, ?)",
                         (version, path.name, digest, datetime.now(timezone.utc).isoformat()),
