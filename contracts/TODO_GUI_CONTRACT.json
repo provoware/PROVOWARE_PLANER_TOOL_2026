@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "contract_id": "PROVOWARE-TODO-GUI-I007",
+  "status": "VERBINDLICH",
+  "iteration": "I007",
+  "architecture": {
+    "required_chain": [
+      "TodoService",
+      "TodoQueryService",
+      "TodoViewModel",
+      "Darstellungsmodelle",
+      "PySide6_Qt"
+    ],
+    "ui_may_import_repository": false,
+    "ui_may_execute_sql": false,
+    "viewmodel_may_import_repository": false,
+    "query_uses_service_api_only": true
+  },
+  "required_views": [
+    "HEUTE",
+    "DIESE_WOCHE",
+    "UEBERFAELLIG",
+    "OHNE_DATUM",
+    "ERLEDIGT"
+  ],
+  "required_actions": [
+    "ERSTELLEN",
+    "BEARBEITEN",
+    "STATUS",
+    "PRIORITAET",
+    "FORTSCHRITT",
+    "UNTERAUFGABE",
+    "KALENDER_VERKNUEPFEN",
+    "VERKNUEPFUNG_LOESEN",
+    "SOFT_DELETE"
+  ],
+  "calendar_link": {
+    "conflict_status_visible": true,
+    "conflict_explanation_visible": true,
+    "automatic_conflict_resolution_in_i007": false,
+    "automatic_payload_sync_in_i007": false,
+    "unlink_must_not_delete_entities": true,
+    "todo_delete_must_not_delete_event": true,
+    "query_conflict_preview_must_not_write": true
+  },
+  "accessibility": {
+    "keyboard_navigation_required": true,
+    "accessible_names_required": true,
+    "high_contrast_semantics_required": true,
+    "status_not_color_only": true,
+    "font_scale_percent": [90, 100, 110, 125, 150, 175, 200]
+  },
+  "persistence": {
+    "todo_restart_persistence_required": true,
+    "gui_settings_restart_persistence_required": true,
+    "calendar_and_todo_share_planner_database": true
+  },
+  "qualification": {
+    "offscreen_matrix_required": true,
+    "offscreen_matrix_min_configurations": 140,
+    "historical_gate_chain": ["I002", "I003", "I004", "I005", "I006", "I007"]
+  }
+}
