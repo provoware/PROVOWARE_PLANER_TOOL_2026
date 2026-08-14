@@ -50,7 +50,7 @@
 - [x] Fault-/echte Crash-Matrix für Snapshotphase
 - [x] 35er Offscreen-Journal-GUI-Matrix
 - [x] zweistufige Remotequalifikation PASS
-- [ ] finalen Evidence-Commit nach `main` fast-forward promoten
+- [x] I011-Stand nach zweistufiger Evidence-Prüfung per Fast-Forward nach `main` promoviert und auf `main` nachqualifiziert
 
 ## I012 — nach I011
 - [ ] Dashboard + Diagnose-/Recovery-Zentrale
