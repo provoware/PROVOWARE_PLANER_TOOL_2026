@@ -1,0 +1,21 @@
+{
+  "standard_id": "PROVOWARE-BACKUP-RESTORE",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "language": "de",
+  "backup_workspace_separation_required": true,
+  "candidate_read_only_probe_required": true,
+  "candidate_manifest_required": true,
+  "candidate_sha256_required": true,
+  "candidate_schema_compatibility_required": true,
+  "restore_plan_immutable_required": true,
+  "restore_plan_hash_required": true,
+  "restore_target_precondition_required": true,
+  "restore_stale_plan_blocks_before_write": true,
+  "single_physical_restore_core_required": true,
+  "restore_protocol": ["PRECHECK", "COMMIT", "POSTCHECK"],
+  "postcheck_rollback_required": true,
+  "backup_or_workspace_data_in_code_transport_forbidden": true,
+  "restore_gui_must_use_restore_service": true,
+  "automatic_restore_without_explicit_plan_forbidden": true
+}
