@@ -14,52 +14,35 @@
 
 ## 0.5.0-dev.1 — I005
 - CalendarQueryService und CalendarViewModel eingeführt.
-- PySide6/Qt-Kalenderoberfläche mit Tag/Woche/Monat/Jahr ergänzt.
-- fünf editierbare Markierungen mit atomarer Batch-Speicherung ergänzt.
-- Design-Tokens, Schriftskalierung, Ampelstatus, Tastatur und Accessible Names ergänzt.
-- native GUI-Abhängigkeiten vor Qt-Import geprüft.
-- 112er Offscreen-Matrix, Screenshots und Neustartpersistenz ergänzt.
-- Aktionsbuttons werden bei jeder Schriftstufe zentral neu vermessen; Schriftbasis kann sich nicht aufschaukeln.
-- zweiter Evidence-Pass an exakte `verify_sha` gebunden.
+- PySide6/Qt-Kalenderoberfläche mit Tag/Woche/Monat/Jahr, Design-Tokens, Barrierefreiheit und 112er Offscreen-Matrix ergänzt.
 
 ## 0.6.0-dev.1 — I006
-- GUI-unabhängigen Todo-Domainkern mit Status, Priorität, Fortschritt, Start, Fälligkeit und Unteraufgaben eingeführt.
-- Migration `0002_todo_domain_links.sql` mit `todos` und `todo_calendar_links` ergänzt.
-- TodoRepository, TodoService und TodoCalendarLinkService eingeführt.
-- Todo und Termin als unabhängige Entitäten mit Soft Delete und Optimistic Locking abgesichert.
-- Kalender↔Todo-Kopplung als eigenes versioniertes Soft-Link-Objekt mit Synchronisationsrichtung eingeführt.
-- Konfliktzustände für einseitige, beidseitige und getrennte Änderungen ergänzt.
-- `ON DELETE CASCADE` zwischen Todo, Termin und Link verboten; physische Endpunktlöschung per `RESTRICT` geschützt.
-- Entkoppeln löscht ausschließlich den Link weich und erhält Todo sowie Termin.
-- automatische Inhalts-Synchronisation in I006 ausdrücklich deaktiviert.
-- deterministische Fault-Injection und echten Prozessabbruch während offener SQLite-Transaktion ergänzt.
-- historische Pflichtkette um I006 erweitert.
+- Todo-Domainkern, Migration 0002, TodoRepository/TodoService und eigenständigen Todo↔Kalender-Soft-Link ergänzt.
+- Optimistic Locking, Soft Delete, Konfliktzustände, Löschschutz und Crash-/Rollback-Matrix eingeführt.
 
 ## 0.7.0-dev.1 — I007
-- `TodoService` um eine kontrollierte Read-API ergänzt; keine neue Datenbankmigration erforderlich.
-- `TodoCalendarLinkService.preview_conflict()` als reine, nicht schreibende Konfliktvorschau eingeführt.
-- `TodoQueryService`, `TodoViewModel` und immutable Darstellungsmodelle eingeführt.
-- fünf Todo-Ansichten umgesetzt: Heute, Diese Woche, Überfällig, Ohne Datum und Erledigt.
-- PySide6/Qt-Todo-Fenster mit Erstellen, Bearbeiten, Status, Priorität, Fortschritt, Unteraufgaben, Kalender-Verknüpfung, Entkoppeln und Soft Delete ergänzt.
-- Todo-Modul über `Module → Aufgaben öffnen` in den vorhandenen Planner-Start integriert und an dieselben Planner-Services gebunden.
-- Konfliktzustände einschließlich `BOTH_CHANGED` sichtbar und laienverständlich erklärt; Anzeige verändert Linkzustand und Versions-Snapshots nicht.
-- automatische Inhalts-Synchronisation und automatische Konfliktauflösung bleiben ausdrücklich deaktiviert.
-- Tastaturreihenfolge, Kurzbefehle, Accessible Names, High-Contrast-Klartexte und sieben Schriftstufen ergänzt.
-- Todo-GUI-Einstellungen sowie Todo-/Link-Daten auf Neustartpersistenz geprüft.
-- 140er Todo-Offscreen-Matrix angelegt; 112er I005-Kalender-Matrix bleibt Pflichtregression.
-- I006-Historienvalidator für nachfolgende Iterationen vorwärtskompatibel gehärtet.
-- I007-Vertrag, Fehlerkatalog, unabhängiger Validator und Autopilot-Gate ergänzt.
+- TodoQueryService, TodoViewModel und fünf Todo-Ansichten ergänzt.
+- Todo-GUI mit Bearbeitung, Unteraufgaben, Kalender-Verknüpfung, Konflikterklärung und 140er Offscreen-Matrix eingeführt.
+- automatische Inhalts-Synchronisation und Konfliktauflösung blieben deaktiviert.
 
 ## 0.8.0-dev.1 — I008
 - `SynchronizationPreviewService` als ausschließlich lesende Synchronisationsvorschau eingeführt.
-- immutable `SyncPreview`- und `SyncFieldPreview`-Modelle mit Objekt-/Snapshot-Versionen ergänzt.
-- Feldvertrag für Titel, Beschreibung und Startzeit als spätere gerichtete Übertragungskandidaten definiert.
-- `due_at ↔ end_at` ausdrücklich als semantisch prüfpflichtig und nicht automatisch übertragbar markiert.
-- Status, Priorität, Fortschritt, Elternaufgabe, Terminstatus, Zeitzone, Ganztägigkeit und Markierung von stiller Feldübersetzung ausgeschlossen.
+- immutable `SyncPreview`-/`SyncFieldPreview`-Modelle und Feldvertrag für Titel, Beschreibung, Startzeit sowie manuell prüfpflichtiges `due_at ↔ end_at` ergänzt.
 - `BOTH_CHANGED`, `DETACHED` und abweichende `CLEAN`-Ausgangswerte als harte Blocker festgelegt.
-- Richtung `MANUAL` erzeugt keine automatische Übertragungsempfehlung.
-- I008 enthält absichtlich keine `apply()`, `execute()` oder `synchronize()`-Schreibschnittstelle.
-- `SyncPreview.write_permitted` bleibt in I008 immer `False`.
-- Planner-Service-Fabrik um den read-only Preview-Service ergänzt.
-- keine neue Migration eingeführt; SQLite-Schema bleibt Version 2.
-- Zieltests, Contract-Guards, Sicherheitsfehlerkatalog und I008-Validator ergänzt.
+- I008 besitzt absichtlich keine Schreibschnittstelle; Schema blieb Version 2.
+- Zieltests, Contract-Guards, Fehlerkatalog, Validator, zweistufige Evidence-Prüfung und Main-Nachqualifikation ergänzt.
+
+## 0.9.0-dev.1 — I009
+- Migration `0003_sync_field_baseline.sql` mit `sync_field_baselines` und `sync_audit_receipts` eingeführt; keine Baseline wird für bestehende Links erfunden.
+- typisierte kanonische Feldserialisierung mit UTC-Normalisierung für Zeitwerte und SHA-256-Feld-Hashes ergänzt.
+- Drei-Wege-Zustände `UNCHANGED`, `TODO_ONLY`, `CALENDAR_ONLY`, `BOTH_SAME`, `BOTH_DIFFERENT` und `BASELINE_MISSING` eingeführt.
+- disjunkte Änderungen an Todo und Kalender können trotz Objektzustand `BOTH_CHANGED` feldweise verlustfrei zu einem deterministischen `SyncPlan` zusammengeführt werden.
+- `BOTH_DIFFERENT`, fehlende Baselines, getrennte Endpunkte, falsche Richtung und verletzte Zielinvarianten blockieren fail-closed.
+- `due_at ↔ end_at` bleibt unabhängig von Hash-Eindeutigkeit semantisch manuell prüfpflichtig.
+- `SyncPlan` bindet exakte Todo-/Termin-/Link-Versionen, Richtung, Baseline-/Todo-/Kalender-Hashes, Feldzustände und Aktionen an eine `precondition_sha256` und deterministische Plan-ID.
+- PRECHECK, Nutzdatenwrite, Baseline-Fortschreibung, Link-Snapshot, POSTCHECK und Audit-Receipt laufen in einer `BEGIN IMMEDIATE`-Transaktion; Teilcommits sind verboten.
+- Audit-Receipt enthält Vorher-/Nachher-Versionen, Feldzustände/Aktionen und einen SHA-256 des kanonischen Receipt-Payloads.
+- POSTCHECK prüft Endwertgleichheit, Baseline-Hashes, Versions-Snapshots und Receipt-Hash vor Commit; danach folgt SQLite-`quick_check`.
+- Fault-Injection nach Nutzdatenwrite, Baseline-Write, vor Receipt und nach Receipt sowie echter Prozessabbruch nach Nutzdatenwrite ergänzt.
+- I008-Historienvalidator für legitime spätere Schema-Versionen vorwärtskompatibel gehärtet.
+- I009-Vertrag, Fehlerkatalog, Tests, Fault-Matrix, unabhängiger Validator und Autopilot-Gate ergänzt.
