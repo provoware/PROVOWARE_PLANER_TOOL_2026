@@ -23,6 +23,7 @@ REQUIRED_FILES = {
     "storage/sync_repository.py",
     "services/sync_service.py",
     "tests/test_i009_three_way_sync.py",
+    "tests/test_i009_plan_tamper.py",
     "tests/test_i009_fault_matrix.py",
     "tools/i009_fault_matrix.py",
     "docs/I009_FELD_BASELINE_TRANSAKTIONALER_SYNC.md",
@@ -110,10 +111,22 @@ def validate() -> dict:
     repository_source = (ROOT / "storage/sync_repository.py").read_text(encoding="utf-8")
     for token in (
         "SYNC_AFTER_ENTITY_WRITE", "SYNC_AFTER_BASELINE_WRITE", "SYNC_BEFORE_RECEIPT",
-        "SYNC_AFTER_RECEIPT_BEFORE_COMMIT", "quick_check", "receipt_sha256",
+        "SYNC_AFTER_RECEIPT_BEFORE_COMMIT", "receipt_sha256", "baseline_sha256",
+        "expected_todo_version", "expected_event_version", "expected_link_version",
     ):
         if token not in repository_source:
             errors.append(f"I009_REPOSITORY_HAERTUNG_FEHLT: {token}")
+
+    service_source = (ROOT / "services/sync_service.py").read_text(encoding="utf-8")
+    for token in ("authoritative = self.plan", "authoritative != plan", "SYNC-STALE-006", "quick_check"):
+        if token not in service_source:
+            errors.append(f"I009_SERVICE_HAERTUNG_FEHLT: {token}")
+
+    catalog = load("errors/SYNC_EXECUTION_FEHLERKATALOG.json")
+    catalog_codes = {str(item.get("code")) for item in catalog.get("errors", [])}
+    for code in ("SYNC-STALE-006", "SYNC-POSTCHECK-006", "SYNC-FAULT-001"):
+        if code not in catalog_codes:
+            errors.append(f"I009_FEHLERCODE_NICHT_KATALOGISIERT: {code}")
 
     runtime = "NOT_RUN"
     schema = 0
