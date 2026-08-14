@@ -1,10 +1,18 @@
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from calendar_core.errors import ConcurrentUpdateError, EventNotFoundError
 from calendar_core.model import CalendarEvent, EventStatus, MarkerType
 from storage.database import Database
+
+
+def _utc(value: datetime) -> datetime:
+    return value.astimezone(timezone.utc)
+
+
+def _iso_utc(value: datetime | None) -> str | None:
+    return _utc(value).isoformat() if value else None
 
 
 def _dt(value: str | None) -> datetime | None:
@@ -46,16 +54,16 @@ class CalendarRepository:
                     event.event_id,
                     event.title.strip(),
                     event.description,
-                    event.start_at.isoformat(),
-                    event.end_at.isoformat() if event.end_at else None,
+                    _iso_utc(event.start_at),
+                    _iso_utc(event.end_at),
                     event.timezone,
                     int(event.all_day),
                     event.marker_id,
                     event.status.value,
                     event.version,
-                    event.created_at.isoformat() if event.created_at else event.start_at.isoformat(),
-                    event.updated_at.isoformat() if event.updated_at else event.start_at.isoformat(),
-                    event.deleted_at.isoformat() if event.deleted_at else None,
+                    _iso_utc(event.created_at or event.start_at),
+                    _iso_utc(event.updated_at or event.start_at),
+                    _iso_utc(event.deleted_at),
                 ),
             )
         return event
@@ -82,10 +90,10 @@ class CalendarRepository:
                 WHERE event_id = ? AND version = ? AND deleted_at IS NULL
                 """,
                 (
-                    event.title.strip(), event.description, event.start_at.isoformat(),
-                    event.end_at.isoformat() if event.end_at else None, event.timezone,
+                    event.title.strip(), event.description, _iso_utc(event.start_at),
+                    _iso_utc(event.end_at), event.timezone,
                     int(event.all_day), event.marker_id, event.status.value, new_version,
-                    updated_at.isoformat(), event.event_id, expected_version,
+                    _iso_utc(updated_at), event.event_id, expected_version,
                 ),
             )
             if cursor.rowcount != 1:
@@ -108,7 +116,7 @@ class CalendarRepository:
                 SET deleted_at = ?, updated_at = ?, version = version + 1
                 WHERE event_id = ? AND version = ? AND deleted_at IS NULL
                 """,
-                (deleted_at.isoformat(), deleted_at.isoformat(), event_id, expected_version),
+                (_iso_utc(deleted_at), _iso_utc(deleted_at), event_id, expected_version),
             )
             if cursor.rowcount != 1:
                 row = connection.execute(
@@ -131,7 +139,7 @@ class CalendarRepository:
                   AND COALESCE(end_at, start_at) >= ?
                 ORDER BY start_at, event_id
                 """,
-                (end.isoformat(), start.isoformat()),
+                (_iso_utc(end), _iso_utc(start)),
             ).fetchall()
         return [_event(row) for row in rows]
 
