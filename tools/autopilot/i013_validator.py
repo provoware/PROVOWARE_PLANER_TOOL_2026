@@ -38,6 +38,7 @@ def repository_files() -> set[str]:
         and ".git" not in path.parts
         and "__pycache__" not in path.parts
         and ".pytest_cache" not in path.parts
+        and "dist_transport" not in path.parts
     }
 
 
@@ -91,13 +92,26 @@ def validate() -> dict:
     if stages != ["P0_STATIC", "P1_PLAN_AND_TARGET", "P2_RUNTIME_TARGET", "P3_REGRESSION", "P4_EVIDENCE", "P5_PROMOTION"]:
         errors.append("I013_PIPELINE_STUFEN_FALSCH")
 
-    if plan.get("base", {}).get("commit") != "f2e12bde3f4a6e3d8cd490018fb5e101819d281b":
-        errors.append("I013_BASELINE_FALSCH")
-    if plan.get("risk_class") != "HOCH":
-        errors.append("I013_RISIKOKLASSE_FALSCH")
     criteria = {item.get("id") for item in plan.get("acceptance_criteria", [])}
-    if criteria != {f"I013-A0{number}" for number in range(1, 9)}:
-        errors.append("I013_AKZEPTANZKRITERIEN_UNVOLLSTAENDIG")
+    if current == 13:
+        if plan.get("base", {}).get("commit") != "f2e12bde3f4a6e3d8cd490018fb5e101819d281b":
+            errors.append("I013_BASELINE_FALSCH")
+        if plan.get("risk_class") != "HOCH":
+            errors.append("I013_RISIKOKLASSE_FALSCH")
+        if criteria != {f"I013-A0{number}" for number in range(1, 9)}:
+            errors.append("I013_AKZEPTANZKRITERIEN_UNVOLLSTAENDIG")
+    else:
+        if plan.get("iteration") != version.get("iteration"):
+            errors.append("I013_FOLGEPLAN_ITERATION_WIDERSPRUCH")
+        if plan.get("version") != version.get("version"):
+            errors.append("I013_FOLGEPLAN_VERSION_WIDERSPRUCH")
+        if plan.get("risk_class") not in {"NIEDRIG", "MITTEL", "HOCH"}:
+            errors.append("I013_FOLGEPLAN_RISIKOKLASSE_FEHLT")
+        if not criteria:
+            errors.append("I013_FOLGEPLAN_AKZEPTANZKRITERIEN_FEHLEN")
+        delta = plan.get("repository_delta", {})
+        if not all(key in delta for key in ("add", "modify", "delete")):
+            errors.append("I013_FOLGEPLAN_REPOSITORY_DELTA_FEHLT")
 
     if audit.get("observed_remote_runs", {}).get("failed_before_success") != 2:
         errors.append("I013_AUDIT_FEHLERZAHL_FALSCH")
@@ -140,6 +154,7 @@ def validate() -> dict:
         "acceptance_criteria": len(criteria),
         "risk_class": plan.get("risk_class"),
         "gate_execution_model": "ONE_GATE_ONCE_PER_PASS",
+        "forward_compatible_plan_check": current > 13,
     }
 
 
