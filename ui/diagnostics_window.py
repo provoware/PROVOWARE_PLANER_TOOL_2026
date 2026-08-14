@@ -4,6 +4,7 @@ from pathlib import Path
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
+    QAbstractItemView,
     QApplication,
     QHeaderView,
     QLabel,
@@ -64,13 +65,13 @@ class DiagnosticsWindow(QMainWindow):
 
         self.table = QTableWidget(0, 5, root)
         self.table.setHorizontalHeaderLabels(("Bereich", "Zustand", "Kurzinfo", "Details", "Anzahl"))
-        self.table.setEditTriggers(QTableWidget.NoEditTriggers)
-        self.table.setSelectionBehavior(QTableWidget.SelectRows)
-        self.table.setSelectionMode(QTableWidget.SingleSelection)
+        self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table.setSelectionMode(QAbstractItemView.SingleSelection)
         self.table.setWordWrap(True)
         self.table.setAccessibleName("Diagnoseergebnisse")
         self.table.setAccessibleDescription(
-            "Read-only Übersicht über Startzustand, Datenbank, Journal, Sicherungen und Recovery-Pläne."
+            "Read-only Übersicht über Startzustand, Datenbank, Synchronisationsjournal, Sicherungen und Recovery-Pläne."
         )
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QHeaderView.ResizeToContents)
