@@ -29,10 +29,17 @@ class DesignTokens:
 
 
 class DesignSystem:
+    _BASE_FONT_ATTR = "_provoware_unscaled_base_font"
+
     def __init__(self, app: QApplication, tokens: DesignTokens) -> None:
         self.app = app
         self.tokens = tokens
-        self._base_font = QFont(app.font())
+        stored = getattr(app, self._BASE_FONT_ATTR, None)
+        if isinstance(stored, QFont):
+            self._base_font = QFont(stored)
+        else:
+            self._base_font = QFont(app.font())
+            setattr(app, self._BASE_FONT_ATTR, QFont(self._base_font))
         base_size = self._base_font.pointSizeF()
         self._base_point_size = base_size if base_size > 0 else 10.0
 
