@@ -1,6 +1,6 @@
 {
   "standard_id": "PROVOWARE-RELEASE",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "status": "VERBINDLICH",
   "stages": ["DEVELOPMENT", "QUALIFIED", "RC", "STABLE"],
   "mandatory_all_gates_pass": true,
@@ -17,5 +17,11 @@
   "force_promotion_forbidden": true,
   "behind_zero_required_before_promotion": true,
   "post_promotion_independent_check_required": true,
-  "user_data_must_not_be_packaged": true
+  "user_data_must_not_be_packaged": true,
+  "default_transport_profile": "NUTZER",
+  "normal_user_transport_must_not_be_repository_snapshot": true,
+  "developer_and_evidence_artifacts_must_be_separate": true,
+  "backup_and_workspace_data_must_be_separate_from_code_artifacts": true,
+  "user_package_requires_own_integrity_inventory": true,
+  "fresh_unpacked_user_package_start_required": true
 }
