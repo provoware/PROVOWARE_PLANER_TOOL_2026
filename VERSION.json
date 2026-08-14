@@ -2,11 +2,11 @@
   "schema_version": 1,
   "project_id": "PROVOWARE-PLANER-2026",
   "project_name": "PROVOWARE PLANER TOOL 2026",
-  "version": "0.13.0-dev.1",
+  "version": "0.14.0-dev.1",
   "phase": "foundation",
-  "iteration": "I013",
-  "checkpoint": "C013-ENTWICKLUNGSAUTOPILOT-V2",
-  "build_revision": 13,
+  "iteration": "I014",
+  "checkpoint": "C014-TRANSPORTPROFILE-TRENNUNG",
+  "build_revision": 14,
   "release_channel": "development",
   "lineage_id": "PROVOWARE-PLANER-2026-LINEAGE-001"
 }
