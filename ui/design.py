@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from PySide6.QtGui import QFont
-from PySide6.QtWidgets import QApplication, QLayout, QWidget
+from PySide6.QtWidgets import QAbstractButton, QApplication, QLayout, QWidget
 
 
 @dataclass(frozen=True, slots=True)
@@ -45,12 +45,31 @@ class DesignSystem:
         layout.setSpacing(gap)
         layout.setContentsMargins(margin, margin, margin, margin)
 
+    def fit_text_controls(self, root: QWidget) -> None:
+        """Passt texttragende Bedienelemente nach einer globalen Schriftänderung neu an."""
+        horizontal_padding = 2 * self.spacing("S")
+        vertical_padding = 2 * self.spacing("XS")
+        font = QFont(self.app.font())
+        for button in root.findChildren(QAbstractButton):
+            button.setFont(font)
+            metrics = button.fontMetrics()
+            button.setMinimumWidth(metrics.horizontalAdvance(button.text()) + horizontal_padding + 2)
+            button.setMinimumHeight(metrics.height() + vertical_padding)
+            button.updateGeometry()
+        layout = root.layout()
+        if layout is not None:
+            layout.invalidate()
+            layout.activate()
+        root.updateGeometry()
+
     def apply_font_scale(self, percent: int) -> None:
         if percent not in self.tokens.font_scales:
             raise ValueError(f"Nicht freigegebene Schriftgröße: {percent}%")
         font = QFont(self._base_font)
         font.setPointSizeF(self._base_point_size * percent / 100.0)
         self.app.setFont(font)
+        for window in self.app.topLevelWidgets():
+            self.fit_text_controls(window)
 
     @staticmethod
     def accessible(widget: QWidget, name: str, description: str = "") -> None:

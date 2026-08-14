@@ -97,6 +97,21 @@ class I005GuiOffscreenTest(unittest.TestCase):
                             self.assertGreater(widget.width(), 0)
                             self.assertGreater(widget.height(), 0)
 
+    def test_action_buttons_refit_after_every_font_scale(self) -> None:
+        for scale in (90, 100, 110, 125, 150, 175, 200):
+            index = self.window.font_combo.findData(scale)
+            self.window.font_combo.setCurrentIndex(index)
+            self.app.processEvents()
+            for button in self.window.findChildren(QPushButton):
+                if not button.isVisible():
+                    continue
+                required = button.fontMetrics().horizontalAdvance(button.text()) + 24
+                self.assertGreaterEqual(
+                    button.width(),
+                    required,
+                    f"{button.text()} ist bei {scale}% zu schmal",
+                )
+
     def test_status_is_symbol_plus_text_not_color_only(self) -> None:
         text = self.window.status_label.text()
         self.assertIn("●", text)
