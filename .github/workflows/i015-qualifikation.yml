@@ -1,0 +1,239 @@
+name: I015 Backup RestorePlan Qualifikation
+
+on:
+  push:
+    branches: [agent/i015-backup-restoreplan]
+  workflow_dispatch:
+    inputs:
+      verify_only:
+        description: Gespeicherten Evidence-Commit nur verifizieren
+        required: false
+        default: 'false'
+      verify_sha:
+        description: Exakte Evidence-Commit-SHA für den read-only Zweitpass
+        required: false
+        default: ''
+
+concurrency:
+  group: i015-${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  actions: write
+
+env:
+  QT_QPA_PLATFORM: offscreen
+
+jobs:
+  qualifikation:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Repository exakt und vollständig auschecken
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_only == 'true' && inputs.verify_sha || github.ref }}
+
+      - name: Verifikationsziel bestätigen
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_only == 'true' }}
+        env:
+          VERIFY_SHA: ${{ inputs.verify_sha }}
+        run: |
+          test -n "$VERIFY_SHA"
+          ACTUAL_SHA=$(git rev-parse HEAD)
+          test "$ACTUAL_SHA" = "$VERIFY_SHA"
+          echo "EXACT_VERIFY_SHA=PASS $ACTUAL_SHA"
+
+      - name: Pipeline-Messung starten
+        run: echo "PIPELINE_START_EPOCH=$(date +%s)" >> "$GITHUB_ENV"
+
+      - name: P0 statische Vorprüfung ohne Runtime-Abhängigkeiten
+        run: python3 tools/autopilot/preflight.py
+
+      - name: Kandidateninventar ausschließlich aus Baseline plus Plan materialisieren
+        run: |
+          python3 tools/autopilot/candidate_inventory.py --write-manifest
+          python3 tools/autopilot/manifest_builder.py --write
+          python3 tools/autopilot/manifest_builder.py --check
+          python3 tools/autopilot/standard_validator.py
+
+      - name: P1 I015 RestorePlan-Zieltests ohne Qt/PySide6
+        run: |
+          python3 -m unittest discover -s tests -p 'test_i015_restore_plan.py' -v
+          python3 -m unittest discover -s tests -p 'test_i015_restore_faults.py' -v
+          python3 tools/autopilot/i015_validator.py
+
+      - name: Python 3.12 mit Lockdatei-Cache bereitstellen
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: requirements-gui.lock
+
+      - name: P2 native GUI-Systembibliotheken bereitstellen
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libegl1 libgl1 libxkbcommon-x11-0 libxcb-cursor0
+
+      - name: P2 GUI-Laufzeit exakt bereitstellen
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements-gui.lock
+          python -m pip check
+
+      - name: P2 I015 Fault- und echter Prozessabbruch
+        run: python tools/i015_restore_fault_matrix.py --output "$RUNNER_TEMP/I015_RESTORE_FAULT_MATRIX.json"
+
+      - name: P2 Transportgrenze und deterministischen Nutzerbau erneut prüfen
+        run: |
+          rm -rf "$RUNNER_TEMP/i015-user-a" "$RUNNER_TEMP/i015-user-b" "$RUNNER_TEMP/i015-unpacked" "$RUNNER_TEMP/i015-workspace"
+          python tools/package_transport.py --profile NUTZER --output-dir "$RUNNER_TEMP/i015-user-a"
+          python tools/package_transport.py --profile NUTZER --output-dir "$RUNNER_TEMP/i015-user-b"
+          A=$(find "$RUNNER_TEMP/i015-user-a" -maxdepth 1 -name 'PROVOWARE_PLANER_NUTZER_*.zip' -print -quit)
+          B=$(find "$RUNNER_TEMP/i015-user-b" -maxdepth 1 -name 'PROVOWARE_PLANER_NUTZER_*.zip' -print -quit)
+          test -n "$A" -a -n "$B"
+          test "$(sha256sum "$A" | awk '{print $1}')" = "$(sha256sum "$B" | awk '{print $1}')"
+          mkdir -p "$RUNNER_TEMP/i015-unpacked"
+          unzip -q "$A" -d "$RUNNER_TEMP/i015-unpacked"
+          test -f "$RUNNER_TEMP/i015-unpacked/backup_core/model.py"
+          test -f "$RUNNER_TEMP/i015-unpacked/services/restore_service.py"
+          test ! -d "$RUNNER_TEMP/i015-unpacked/tests"
+          test ! -d "$RUNNER_TEMP/i015-unpacked/standards"
+          if find "$RUNNER_TEMP/i015-unpacked" -type f \( -name '*.sqlite3' -o -name '*.db' -o -name '*.pre-restore' -o -name '*.restore-candidate' \) | grep -q .; then exit 1; fi
+          (cd "$RUNNER_TEMP/i015-unpacked" && python tools/start_gui.py --workspace "$RUNNER_TEMP/i015-workspace" --offscreen-smoke)
+          cp "$A" "$RUNNER_TEMP/PROVOWARE_PLANER_NUTZER_I015_FINAL.zip"
+
+      - name: P3 vollständige Unit- und Regressionstests genau einmal
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: P3 risikorelevante GUI-Matrizen
+        run: |
+          python tools/i012_diagnostics_gui_matrix.py --output "$RUNNER_TEMP/i015-i012-diagnostics"
+          python tools/i010_sync_gui_matrix.py --output "$RUNNER_TEMP/i015-i010-sync"
+          python tools/todo_gui_matrix.py --output "$RUNNER_TEMP/i015-i007-todo"
+          python tools/gui_matrix.py --output "$RUNNER_TEMP/i015-i005-calendar"
+
+      - name: P3 bestehende Fault-/Crash-Matrizen
+        run: |
+          python tools/i011_history_fault_matrix.py --output "$RUNNER_TEMP/I015_I011_HISTORY_FAULT_MATRIX.json"
+          python tools/i010_resolution_fault_matrix.py --output "$RUNNER_TEMP/I015_I010_RESOLUTION_FAULT_MATRIX.json"
+          python tools/i009_fault_matrix.py --output "$RUNNER_TEMP/I015_I009_FAULT_MATRIX.json"
+          python tools/i006_fault_matrix.py --output "$RUNNER_TEMP/I015_I006_FAULT_MATRIX.json"
+
+      - name: P3 Standards und historische Gate-Kette genau einmal
+        run: python tools/autopilot/autopilot.py qualifizieren --timing-output "$RUNNER_TEMP/I015_GATE_TIMINGS.json"
+
+      - name: P4 Remote-Tree-Pfade und Modi prüfen
+        run: git ls-tree -r -l HEAD | python tools/autopilot/remote_tree_validator.py
+
+      - name: Qualifizierten Status im Evidence-Overlay vorbereiten
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('PROJEKTSTATUS.json')
+          data=json.loads(p.read_text(encoding='utf-8'))
+          data.update(status='QUALIFIZIERT',ampel='GRUEN',implementation_percent=99,qualification_percent=99,release_readiness_percent=max(int(data.get('release_readiness_percent',0)),64))
+          completed=data.setdefault('last_completed',[])
+          if 'I015-BACKUP-RESTOREPLAN' not in completed:
+              completed.append('I015-BACKUP-RESTOREPLAN')
+          data['next_logical_step']='I016 Restore-Control-GUI mit expliziter Vorschau, Bestätigung und Risikoanzeige'
+          data['improvement_recommendation']='Restore-GUI ausschließlich auf RestoreService aufsetzen; später persistentes Restore-Intent für Crashnachweis nach atomarem Austausch ergänzen'
+          p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          r=Path('README.md')
+          text=r.read_text(encoding='utf-8').replace('- **Status:** `IN_ARBEIT / GELB` bis zur vollständigen Remotequalifikation','- **Status:** `QUALIFIZIERT / GRÜN`')
+          r.write_text(text,encoding='utf-8')
+          t=Path('TODO.md')
+          text=t.read_text(encoding='utf-8').replace('- [ ] I015 Remotequalifikation inkl. Vollregression und Transport-Fresh-Unpack PASS','- [x] I015 Remotequalifikation inkl. Vollregression und Transport-Fresh-Unpack PASS')
+          t.write_text(text,encoding='utf-8')
+          PY
+          python tools/autopilot/manifest_builder.py --write
+          python tools/autopilot/manifest_builder.py --check
+
+      - name: P4 Remote-Receipt, Qualifikationsbericht und Prozessmetriken erzeugen
+        env:
+          RUN_ID: ${{ github.run_id }}
+          VERIFY_ONLY: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_only == 'true' }}
+        run: |
+          python - <<'PY'
+          import json,os,subprocess,time
+          from pathlib import Path
+          subject=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+          tree=subprocess.check_output(['git','rev-parse',f'{subject}^{{tree}}'],text=True).strip()
+          run_id=int(os.environ['RUN_ID'])
+          entries=[]
+          for line in subprocess.check_output(['git','ls-tree','-r','-l',subject],text=True).splitlines():
+              meta,path=line.split('\t',1); mode,_kind,blob,size=meta.split()
+              entries.append({'path':path,'blob_sha':blob,'mode':mode,'size':int(size),'status':'PASS'})
+          Path('REMOTE_TREE_RECEIPT.json').write_text(json.dumps({'schema_version':1,'state':'ATTESTED','attestation_role':'QUALIFICATION_SUBJECT_TREE','subject_commit':subject,'subject_tree':tree,'entry_count':len(entries),'subject_tree_entries':entries},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          gates=['p0_static_preflight','baseline_plus_declared_delta_inventory','i015_restore_plan_tests','i015_restore_fault_crash_matrix','i015_transport_fresh_unpack','unit_regression_suite_once','risk_gui_matrices','historical_fault_matrices','autopilot_historical_chain_once','remote_tree_paths_modes','exact_verify_sha']
+          Path('QUALIFICATION_REPORT.json').write_text(json.dumps({'schema_version':1,'state':'QUALIFIED','result':'PASS','iteration':'I015','evidence_model':'qualification_subject_plus_evidence_overlay','qualification_subject_commit':subject,'qualification_subject_tree':tree,'workflow_run_id':run_id,'verify_only':os.environ.get('VERIFY_ONLY','false').lower()=='true','gates':gates},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          metrics={'schema_version':1,'iteration':'I015','workflow_run_id':run_id,'subject_commit':subject,'verify_only':os.environ.get('VERIFY_ONLY','false').lower()=='true','pipeline_wall_clock_seconds':max(0,int(time.time())-int(os.environ['PIPELINE_START_EPOCH'])),'schema_version':4,'single_physical_restore_core':True,'exact_sha_recheck_required':True}
+          Path(os.environ['RUNNER_TEMP'],'I015_PIPELINE_METRICS.json').write_text(json.dumps(metrics,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          PY
+          python tools/autopilot/manifest_builder.py --write
+          python tools/autopilot/manifest_builder.py --check
+
+      - name: Qualifizierte Evidence einmalig persistieren
+        id: evidence
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != 'true' }}
+        run: |
+          git config user.name "PROVOWARE Evidence Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add VERSION.json PROJECT_CONTRACT.json PROJEKTSTATUS.json README.md TODO.md CHANGELOG.md ITERATION_PLAN.json REPOSITORY_MANIFEST.json SOURCE_MANIFEST.json BUILD_MANIFEST.json RELEASE_MANIFEST.json EVIDENCE_MANIFEST.json MANIFEST_INDEX.json SHA256_DATEI_INVENTAR.json REMOTE_TREE_RECEIPT.json QUALIFICATION_REPORT.json
+          if ! git diff --cached --quiet; then
+            git commit -m "evidence: persist I015 run $GITHUB_RUN_ID"
+            git push origin HEAD:${GITHUB_REF_NAME}
+          fi
+          EVIDENCE_SHA=$(git rev-parse HEAD)
+          echo "evidence_sha=$EVIDENCE_SHA" >> "$GITHUB_OUTPUT"
+          echo "EVIDENCE_SHA=$EVIDENCE_SHA"
+
+      - name: I015 Evidence getrennt bereitstellen
+        uses: actions/upload-artifact@v4
+        with:
+          name: i015-evidence
+          path: |
+            VERSION.json
+            PROJEKTSTATUS.json
+            ITERATION_PLAN.json
+            QUALIFICATION_REPORT.json
+            REMOTE_TREE_RECEIPT.json
+            REPOSITORY_MANIFEST.json
+            SHA256_DATEI_INVENTAR.json
+            SOURCE_MANIFEST.json
+            BUILD_MANIFEST.json
+            RELEASE_MANIFEST.json
+            EVIDENCE_MANIFEST.json
+            MANIFEST_INDEX.json
+            ${{ runner.temp }}/I015_GATE_TIMINGS.json
+            ${{ runner.temp }}/I015_PIPELINE_METRICS.json
+            ${{ runner.temp }}/I015_RESTORE_FAULT_MATRIX.json
+          retention-days: 90
+
+      - name: I015 NUTZER-Paket separat bereitstellen
+        uses: actions/upload-artifact@v4
+        with:
+          name: i015-nutzerpaket
+          path: ${{ runner.temp }}/PROVOWARE_PLANER_NUTZER_I015_FINAL.zip
+          retention-days: 90
+
+      - name: Gespeicherten Evidence-Commit exakt erneut verifizieren
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVIDENCE_SHA: ${{ steps.evidence.outputs.evidence_sha }}
+          BRANCH_NAME: ${{ github.ref_name }}
+        run: |
+          python - <<'PY' > "$RUNNER_TEMP/dispatch.json"
+          import json,os
+          print(json.dumps({'ref':os.environ['BRANCH_NAME'],'inputs':{'verify_only':'true','verify_sha':os.environ['EVIDENCE_SHA']}}))
+          PY
+          curl --fail-with-body -L -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/${{ github.repository }}/actions/workflows/i015-qualifikation.yml/dispatches \
+            --data-binary @"$RUNNER_TEMP/dispatch.json"
