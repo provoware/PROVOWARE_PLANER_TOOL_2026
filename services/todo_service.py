@@ -39,6 +39,9 @@ class TodoService:
     def get_todo(self, todo_id: str, *, include_deleted: bool = False) -> TodoItem:
         return self.repository.get(todo_id, include_deleted=include_deleted)
 
+    def list_todos(self, *, include_terminal: bool = True) -> list[TodoItem]:
+        return self.repository.list_all(include_terminal=include_terminal)
+
     def update_todo(self, todo: TodoItem, *, expected_version: int) -> TodoItem:
         return self.repository.update(todo, expected_version=expected_version, updated_at=datetime.now(timezone.utc))
 
@@ -102,11 +105,15 @@ class TodoCalendarLinkService:
             replace(current, direction=direction), expected_version=expected_version, updated_at=datetime.now(timezone.utc)
         )
 
-    def assess_conflict(self, link_id: str) -> TodoCalendarLink:
+    def preview_conflict(self, link_id: str) -> LinkConflictStatus:
         link = self.todo_repository.get_link(link_id)
         todo = self.todo_repository.get(link.todo_id, include_deleted=True)
         event = self.calendar_repository.get(link.event_id, include_deleted=True)
-        desired = self._conflict_status(todo, event, link)
+        return self._conflict_status(todo, event, link)
+
+    def assess_conflict(self, link_id: str) -> TodoCalendarLink:
+        link = self.todo_repository.get_link(link_id)
+        desired = self.preview_conflict(link_id)
         if desired is link.conflict_status:
             return link
         return self.todo_repository.update_link(
