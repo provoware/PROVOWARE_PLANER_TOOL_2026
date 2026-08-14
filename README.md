@@ -6,7 +6,7 @@ Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungsw
 - **Version:** `0.7.0-dev.1`
 - **Iteration:** `I007`
 - **Checkpoint:** `C007-TODO-GUI-VIEWMODEL`
-- **Status:** `IN_ARBEIT / GELB` bis zur vollständigen Remote-Qualifikation
+- **Status:** `QUALIFIZIERT / GRÜN` nach erfolgreicher I007-Remotequalifikation
 - **Zielplattform:** Linux, insbesondere Ubuntu-/Kubuntu-Derivate
 - **Betrieb:** lokal und offline-first
 - **Technische Nutzerabnahme:** nicht Bestandteil der Pflicht-Freigabekette
@@ -78,7 +78,7 @@ Bedienbar sind Erstellen, Bearbeiten, Status, Priorität, Fortschritt, Unteraufg
 Die Pflichtkette lautet für I007 `I002 → I003 → I004 → I005 → I006 → I007`. Dazu kommen 140 Todo-GUI-Offscreen-Konfigurationen, die bestehende 112er Kalender-GUI-Matrix, Neustartpersistenz, I006-Crash-/Rollback-Regression und ein exakter Evidence-SHA-Zweitpass.
 
 ## 16. Aktueller Checkpoint
-**C007 — TODO-GUI-VIEWMODEL.** Implementierung und Verträge sind angelegt. `IN_ARBEIT / GELB` bleibt verbindlich, bis Zieltests, Vollregression, GUI-Matrizen, Autopilot, Remote-Tree und exakter SHA-Zweitpass vollständig bestanden sind.
+**C007 — TODO-GUI-VIEWMODEL.** Implementierung und Verträge sind angelegt. Der qualifizierte Evidence-Kandidat ist `GRÜN`; eine Promotion nach `main` erfolgt erst nach erfolgreichem exakten Evidence-SHA-Zweitpass.
 
 ## 17. Nächster logischer Schritt
 Nach erfolgreicher I007-Qualifikation: **I008 — Kalender↔Todo-Synchronisations- und Konfliktauflösungsvertrag.** Erst dort werden erlaubte Feldzuordnungen, Synchronisationsrichtungen und eine verlustfreie Behandlung von `BOTH_CHANGED` festgelegt.

@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "manifest_type": "EVIDENCE",
-  "version": "0.6.0-dev.1",
-  "iteration": "I006",
+  "version": "0.7.0-dev.1",
+  "iteration": "I007",
   "attestation_model": "subject_commit_plus_evidence_overlay",
   "entries": [
     {
@@ -39,6 +39,12 @@
       "path": "errors/TODO_FEHLERKATALOG.json",
       "sha256": "e5e9463d3eb34e6130ca18f5ff594bfc6c865fc66a7455a85a4788d0d89209fe",
       "size": 2190,
+      "status": "PASS"
+    },
+    {
+      "path": "errors/TODO_GUI_FEHLERKATALOG.json",
+      "sha256": "909fcaa1f8f2f0551a2b0598fb059ba9f8dc42c424e83fbddd6a064aea161bef",
+      "size": 4211,
       "status": "PASS"
     },
     {
@@ -120,6 +126,24 @@
       "status": "PASS"
     },
     {
+      "path": "tests/test_i007_gui_offscreen.py",
+      "sha256": "cba13bdceb23c2b9e1f3770f5d3577aff0ebd4a24be34c7ef370cded2356bf00",
+      "size": 6498,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i007_persistence_restart.py",
+      "sha256": "d5c682b331d65cee80d4d1c5be44206a08787fef4d67cbe39cfb2c324e7da3c3",
+      "size": 1968,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i007_query_viewmodel.py",
+      "sha256": "2ae7e517c9e954838ade4dcecb954d224111a7eaf33d1a82beb4627f0353ba99",
+      "size": 5327,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_manifest_builder.py",
       "sha256": "6ca11491249f577e370ad416ff3a8505e863bc74a5a29b6420a76c8d9a3d4596",
       "size": 567,
@@ -138,7 +162,7 @@
       "status": "PASS"
     }
   ],
-  "count": 22,
+  "count": 26,
   "remote_receipt": "REMOTE_TREE_RECEIPT.json",
   "qualification_report": "QUALIFICATION_REPORT.json"
 }

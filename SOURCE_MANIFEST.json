@@ -1,49 +1,49 @@
 {
   "schema_version": 1,
   "manifest_type": "SOURCE",
-  "version": "0.6.0-dev.1",
-  "iteration": "I006",
+  "version": "0.7.0-dev.1",
+  "iteration": "I007",
   "entries": [
     {
       "path": "CHANGELOG.md",
-      "sha256": "60f034f4b6bead486d2381e3235d705ca390c4935edd15bedf774c55067ee406",
-      "size": 2475,
+      "sha256": "34afefb00699e1a699f1f0bdb29d8f0c0252d57c5f604718638547908e150484",
+      "size": 3708,
       "status": "PASS"
     },
     {
       "path": "PROJECT_CONTRACT.json",
-      "sha256": "207f6da9dc0b00f52bbcffe584ecc842b614054f07a2bd23e3ec42591ad8c106",
-      "size": 2765,
+      "sha256": "3d0dc9bfc519a4358f9858dbd5b10780c13b2183139d7c68ba0ce671fdbf94b5",
+      "size": 3014,
       "status": "PASS"
     },
     {
       "path": "PROJEKTSTATUS.json",
-      "sha256": "c47770dc394b8e74cfab74f5fa423d99794e11bc8a57478cbccd1f487de71737",
-      "size": 1070,
+      "sha256": "1825f1eb2807bf7ca9d4cb05908f6ffbab123703e59cca7d981e24db42426174",
+      "size": 1097,
       "status": "PASS"
     },
     {
       "path": "README.md",
-      "sha256": "e2d2d3f9029cadd211750d0486611fe9d985df034b56470947755d949292e96a",
-      "size": 5582,
+      "sha256": "17d42ec5823344e87f27339cd4a6867e1e24d0595b3c894cb4d3e038394a44c3",
+      "size": 6589,
       "status": "PASS"
     },
     {
       "path": "REPOSITORY_MANIFEST.json",
-      "sha256": "4f732a61715e1b875423959cadddc6c408b85ed36127b66d314d24991090544a",
-      "size": 8572,
+      "sha256": "bf92da38d0f46fa00b7fbe5d3686980294839d561f5c9ae61d39e034bbfa2ca2",
+      "size": 9612,
       "status": "PASS"
     },
     {
       "path": "TODO.md",
-      "sha256": "ce019cd06ccea9f47a7cd51962eca84fedaca3e2fda86bcfead74c10732aa335",
-      "size": 3186,
+      "sha256": "269e58381f6483a87f5d82833c161b8008fbd3e220d620bb8bd5d66a2985f32d",
+      "size": 4349,
       "status": "PASS"
     },
     {
       "path": "VERSION.json",
-      "sha256": "4d8ae9012fa3eac0f18dbffbc9df9f411a886481def26eec76f7fc08f668b57c",
-      "size": 344,
+      "sha256": "6e97741c5f362b24c77448b3a02ef26a39891dfa28f55ee1d21007463eb75c34",
+      "size": 346,
       "status": "PASS"
     },
     {
@@ -89,6 +89,12 @@
       "status": "PASS"
     },
     {
+      "path": "contracts/TODO_GUI_CONTRACT.json",
+      "sha256": "e7d09ba7b5cea679edeba7ca44d474cce72582394c3e1559979407fd19c9c7a1",
+      "size": 1735,
+      "status": "PASS"
+    },
+    {
       "path": "docs/I002_MANIFEST_EVIDENCE_HARDENING.md",
       "sha256": "d6865e417179ea307e776da712cdcccf9de569732cf9637f0354f0e872935339",
       "size": 1049,
@@ -119,6 +125,12 @@
       "status": "PASS"
     },
     {
+      "path": "docs/I007_TODO_GUI_VIEWMODEL.md",
+      "sha256": "2451af07c29d4451f830373f6a2d2a3e1eded18d3caef07274dee6d67eae70b2",
+      "size": 2475,
+      "status": "PASS"
+    },
+    {
       "path": "errors/FEHLERKATALOG.json",
       "sha256": "f98d5700ba48326891735e17accb0532463ebb0af13744394d6800e331d7bdf6",
       "size": 9500,
@@ -146,6 +158,12 @@
       "path": "errors/TODO_FEHLERKATALOG.json",
       "sha256": "e5e9463d3eb34e6130ca18f5ff594bfc6c865fc66a7455a85a4788d0d89209fe",
       "size": 2190,
+      "status": "PASS"
+    },
+    {
+      "path": "errors/TODO_GUI_FEHLERKATALOG.json",
+      "sha256": "909fcaa1f8f2f0551a2b0598fb059ba9f8dc42c424e83fbddd6a064aea161bef",
+      "size": 4211,
       "status": "PASS"
     },
     {
@@ -216,8 +234,8 @@
     },
     {
       "path": "services/todo_service.py",
-      "sha256": "a386db831098936009771ef66a380fc3a471b554e009afeb76517e5bb3d043ad",
-      "size": 6642,
+      "sha256": "feafa33e32b7a864962b5733d5589d20bdf10740dc50643159c714743e381eb4",
+      "size": 6965,
       "status": "PASS"
     },
     {
@@ -336,8 +354,8 @@
     },
     {
       "path": "storage/todo_repository.py",
-      "sha256": "2c2ac146e62e2bf8af3ed8927d611205523986bbd8a1f0073b08d8ca824d8c71",
-      "size": 10918,
+      "sha256": "be2349fddc665dbc03bb89a2e05cfa1fa6d6c3e80187e10a1383a78fd49fb108",
+      "size": 11387,
       "status": "PASS"
     },
     {
@@ -419,6 +437,24 @@
       "status": "PASS"
     },
     {
+      "path": "tests/test_i007_gui_offscreen.py",
+      "sha256": "cba13bdceb23c2b9e1f3770f5d3577aff0ebd4a24be34c7ef370cded2356bf00",
+      "size": 6498,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i007_persistence_restart.py",
+      "sha256": "d5c682b331d65cee80d4d1c5be44206a08787fef4d67cbe39cfb2c324e7da3c3",
+      "size": 1968,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i007_query_viewmodel.py",
+      "sha256": "2ae7e517c9e954838ade4dcecb954d224111a7eaf33d1a82beb4627f0353ba99",
+      "size": 5327,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_manifest_builder.py",
       "sha256": "6ca11491249f577e370ad416ff3a8505e863bc74a5a29b6420a76c8d9a3d4596",
       "size": 567,
@@ -474,8 +510,8 @@
     },
     {
       "path": "tools/autopilot/autopilot.py",
-      "sha256": "fb14facb2c6182f8e36fea2c2e4e08ff331d45f6d6ca0999153c701f49416ec8",
-      "size": 2189,
+      "sha256": "6d30fb660a2066125eeac794f0cabac650310a0a818fb474bcf9fcc52024be3d",
+      "size": 2327,
       "status": "PASS"
     },
     {
@@ -510,8 +546,14 @@
     },
     {
       "path": "tools/autopilot/i006_validator.py",
-      "sha256": "fcf79b1728a5e8df0f29a6fa08e69fcddf9699898450eed1d537be891d44137c",
-      "size": 8103,
+      "sha256": "7c4dd90aa46132e3bc61b88fe54d9f122ea52c7352883e452977ce47e9bc76e6",
+      "size": 8323,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/autopilot/i007_validator.py",
+      "sha256": "dc932b4a2b181d85946ce0623ce770eff1e073bfebe68fcd921d525e82043f0f",
+      "size": 11248,
       "status": "PASS"
     },
     {
@@ -546,14 +588,20 @@
     },
     {
       "path": "tools/start_gui.py",
-      "sha256": "c7be0249bd15e438aa2821d13e2773d1fda72a9f6ac4a032eadd640f694af7b5",
-      "size": 3006,
+      "sha256": "23a8d579ea566937cd4b369af825dc50732f25d676585ee8d5ab6c4405cf94be",
+      "size": 3259,
       "status": "PASS"
     },
     {
       "path": "tools/start_orchestrator.py",
       "sha256": "72e8055a454bc3117f0a675d0073a36500e807be351ed407e3a76b3c45034857",
       "size": 2391,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/todo_gui_matrix.py",
+      "sha256": "aaaa0dcbb556c647924953e33d54018fb17ea1e1b83d2ccbabb4eb665a43abcd",
+      "size": 5700,
       "status": "PASS"
     },
     {
@@ -587,6 +635,24 @@
       "status": "PASS"
     },
     {
+      "path": "ui/planner_integration.py",
+      "sha256": "9fb8388cf98f42caaaffcc1fa00df3909b86c9ab9fe94f79998ac91701385b41",
+      "size": 1384,
+      "status": "PASS"
+    },
+    {
+      "path": "ui/todo_dialogs.py",
+      "sha256": "2c47f521f396d8fbbd8f976f6c20e9f73a613bc3b8671c287f3169d8f67eb8db",
+      "size": 8370,
+      "status": "PASS"
+    },
+    {
+      "path": "ui/todo_window.py",
+      "sha256": "309d006b0b52721e3c69febb6ab9c4a307e2d89bc7120ef16b01d53b0c0695cd",
+      "size": 22624,
+      "status": "PASS"
+    },
+    {
       "path": "viewmodel/__init__.py",
       "sha256": "7558a0dc65703639913993ea51b9aaeb1a63da8f517df58a403cb720bd92d2fc",
       "size": 53,
@@ -603,7 +669,19 @@
       "sha256": "f28a0bb156231ea317e6c27af3cafbf4dc40662d1bb44b74097c3b6b8e7919e6",
       "size": 2852,
       "status": "PASS"
+    },
+    {
+      "path": "viewmodel/todo_query.py",
+      "sha256": "c595a698104d24e4f6a5484b508b996ab41a72883c5fc0c2128102396ddb72a5",
+      "size": 7554,
+      "status": "PASS"
+    },
+    {
+      "path": "viewmodel/todo_viewmodel.py",
+      "sha256": "ed2b91da75748b7165e92d77a8aa32e9ffac6ceafbac4e72234d169199f810bb",
+      "size": 3959,
+      "status": "PASS"
     }
   ],
-  "count": 100
+  "count": 113
 }

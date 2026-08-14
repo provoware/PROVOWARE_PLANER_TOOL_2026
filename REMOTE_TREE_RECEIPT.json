@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "state": "ATTESTED",
-  "subject_commit": "94ca0084e2278dd3cc635cb714616212000f6c29",
-  "subject_tree": "0aa1a9442618fe2b3fb06693f7fd435f5b52ee86",
-  "entry_count": 114,
+  "subject_commit": "47581af587f09ce134584cd8fac8ef332cd41af0",
+  "subject_tree": "0abd09bd1e3e550c5e5bd42be8c1faec0092db4b",
+  "entry_count": 128,
   "subject_tree_entries": [
     {
       "path": ".github/workflows/foundation-qualifikation.yml",
@@ -48,108 +48,115 @@
       "status": "PASS"
     },
     {
-      "path": "BUILD_MANIFEST.json",
-      "blob_sha": "f41c852ac990f9157a9247db4ef1e2d55c5f157c",
+      "path": ".github/workflows/i007-qualifikation.yml",
+      "blob_sha": "fafb92f2c848ae988e34b315ddfeaf6b9f7a5631",
       "mode": "100644",
-      "size": 4115,
+      "size": 13494,
+      "status": "PASS"
+    },
+    {
+      "path": "BUILD_MANIFEST.json",
+      "blob_sha": "fe94be7cbdf9800221289a99e87b6fb8d1556941",
+      "mode": "100644",
+      "size": 4506,
       "status": "PASS"
     },
     {
       "path": "CHANGELOG.md",
-      "blob_sha": "16b8bc5851020f1980fd7de7f9e51324a8ff240f",
+      "blob_sha": "4ed622af5fef223ad29373be231999b0afab72fa",
       "mode": "100644",
-      "size": 2475,
+      "size": 3708,
       "status": "PASS"
     },
     {
       "path": "EVIDENCE_MANIFEST.json",
-      "blob_sha": "949031cfb466e33799a3791019abe40dda8f3f5b",
+      "blob_sha": "7dd0403f1c501e21feecd34e4208a38ed0f209ea",
       "mode": "100644",
-      "size": 3537,
+      "size": 4489,
       "status": "PASS"
     },
     {
       "path": "MANIFEST_INDEX.json",
-      "blob_sha": "9a661e35367cbae1f759d18ebdc2400c66c0bf60",
+      "blob_sha": "3f6bd8699d17780cb00569ec1c2c2ed18228de35",
       "mode": "100644",
       "size": 812,
       "status": "PASS"
     },
     {
       "path": "PROJECT_CONTRACT.json",
-      "blob_sha": "24641aa34ebf39f0f7d05f4be7f69bf6bc7a421b",
+      "blob_sha": "3525dc4437ae09635e80f64dca58a4e2ca25ba43",
       "mode": "100644",
-      "size": 2765,
+      "size": 3014,
       "status": "PASS"
     },
     {
       "path": "PROJEKTSTATUS.json",
-      "blob_sha": "5093dce455305d8e2f4fe1770b814b813f479085",
+      "blob_sha": "9097a54dbb4ce4ca19ee994fc36b2cc5d2447070",
       "mode": "100644",
-      "size": 1049,
+      "size": 1095,
       "status": "PASS"
     },
     {
       "path": "QUALIFICATION_REPORT.json",
-      "blob_sha": "a52c329bf70d7cbfb6739f34a97b36917cab5590",
+      "blob_sha": "42f248e6fdb0379b1e875da88af93c222c1e46c1",
       "mode": "100644",
-      "size": 795,
+      "size": 791,
       "status": "PASS"
     },
     {
       "path": "README.md",
-      "blob_sha": "36e7cc8ff6a2b666d880d7bc61012b28620d8395",
+      "blob_sha": "56d0ad07f30d2b3ce45bd6a66b08fcdb7162b063",
       "mode": "100644",
-      "size": 5582,
+      "size": 6607,
       "status": "PASS"
     },
     {
       "path": "RELEASE_MANIFEST.json",
-      "blob_sha": "a16be39a7edb20b37b0a16b8c95d625bbcb53f5b",
+      "blob_sha": "c89f0145a072506d55e65cd262747068f3613795",
       "mode": "100644",
       "size": 237,
       "status": "PASS"
     },
     {
       "path": "REMOTE_TREE_RECEIPT.json",
-      "blob_sha": "1f3931587ba564913c789e975976a3c404edbd52",
+      "blob_sha": "6a9335225a534b622735bc6660f2df525b87643d",
       "mode": "100644",
-      "size": 18367,
+      "size": 21582,
       "status": "PASS"
     },
     {
       "path": "REPOSITORY_MANIFEST.json",
-      "blob_sha": "81b2e1eb0d19c4d63ded8c78176e39163a389f44",
+      "blob_sha": "e5e4efe459df8bcc7f2a586cf6990958260dd372",
       "mode": "100644",
-      "size": 7309,
+      "size": 8572,
       "status": "PASS"
     },
     {
       "path": "SHA256_DATEI_INVENTAR.json",
-      "blob_sha": "bcb520c0f4af179c5c8e1db6851fc6f92ca56485",
+      "blob_sha": "6647cac7ea699fa4164be30d3bff9df231fd3ba7",
       "mode": "100644",
-      "size": 17673,
+      "size": 20854,
       "status": "PASS"
     },
     {
       "path": "SOURCE_MANIFEST.json",
-      "blob_sha": "94f6a30839c41d004190a30c4a4429c023e1c1d2",
+      "blob_sha": "558c4bca70e9f60de0fed4289b9a78af25ef9401",
       "mode": "100644",
-      "size": 15645,
+      "size": 18627,
       "status": "PASS"
     },
     {
       "path": "TODO.md",
-      "blob_sha": "122d2a83db58bbefa27537e2fa5d1a4ed1d84ff2",
+      "blob_sha": "c5872b880b7b93e1751abf05ff5466bbea28ce5f",
       "mode": "100644",
-      "size": 3186,
+      "size": 4349,
       "status": "PASS"
     },
     {
       "path": "VERSION.json",
-      "blob_sha": "3502f4188668ce57edbe5d91928d85e7541a9c8c",
+      "blob_sha": "7b462f147b8d2cc9bf56004ebf2efc05da4f4d7f",
       "mode": "100644",
-      "size": 344,
+      "size": 346,
       "status": "PASS"
     },
     {
@@ -202,6 +209,13 @@
       "status": "PASS"
     },
     {
+      "path": "contracts/TODO_GUI_CONTRACT.json",
+      "blob_sha": "6159d00be181f2f9b6bbca1a13599eb6a9a9ff88",
+      "mode": "100644",
+      "size": 1735,
+      "status": "PASS"
+    },
+    {
       "path": "docs/I002_MANIFEST_EVIDENCE_HARDENING.md",
       "blob_sha": "f39113071a6c7abb083d61fca25c0495cc92261a",
       "mode": "100644",
@@ -237,6 +251,13 @@
       "status": "PASS"
     },
     {
+      "path": "docs/I007_TODO_GUI_VIEWMODEL.md",
+      "blob_sha": "01dcb458e284b6676d465a781f2d7e84c28df540",
+      "mode": "100644",
+      "size": 2475,
+      "status": "PASS"
+    },
+    {
       "path": "errors/FEHLERKATALOG.json",
       "blob_sha": "59341beeb37b620abb90ed3047b2c52e4433e140",
       "mode": "100644",
@@ -269,6 +290,13 @@
       "blob_sha": "3f6644211cf4af93dfe09f9e759c132375ec5839",
       "mode": "100644",
       "size": 2190,
+      "status": "PASS"
+    },
+    {
+      "path": "errors/TODO_GUI_FEHLERKATALOG.json",
+      "blob_sha": "d62933a2e2909ca7cd33ccb27f61b1eb10e8a7f0",
+      "mode": "100644",
+      "size": 4211,
       "status": "PASS"
     },
     {
@@ -350,9 +378,9 @@
     },
     {
       "path": "services/todo_service.py",
-      "blob_sha": "6a79d579367eb88c198ddd29382725bf42881c0d",
+      "blob_sha": "02d3f7db7b7433cfcb6617fe2dbb15a852c2a244",
       "mode": "100644",
-      "size": 6642,
+      "size": 6965,
       "status": "PASS"
     },
     {
@@ -490,9 +518,9 @@
     },
     {
       "path": "storage/todo_repository.py",
-      "blob_sha": "02e99823261d5c4d5b85e6cdc8048d24b8193278",
+      "blob_sha": "746e027c71a0edad919df45388d3815cf3c21511",
       "mode": "100644",
-      "size": 10918,
+      "size": 11387,
       "status": "PASS"
     },
     {
@@ -587,6 +615,27 @@
       "status": "PASS"
     },
     {
+      "path": "tests/test_i007_gui_offscreen.py",
+      "blob_sha": "93fc5a29144916524dcabe9f12ae055cd4beb87e",
+      "mode": "100644",
+      "size": 6498,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i007_persistence_restart.py",
+      "blob_sha": "0f3bf5854117ace5633e840bfea4318adb5f4208",
+      "mode": "100644",
+      "size": 1968,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i007_query_viewmodel.py",
+      "blob_sha": "99fba0516df871d4b2db2ea556f37796e2927352",
+      "mode": "100644",
+      "size": 5327,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_manifest_builder.py",
       "blob_sha": "5871f8c4c30b6af4551f91c186872e609b6b67f4",
       "mode": "100644",
@@ -651,9 +700,9 @@
     },
     {
       "path": "tools/autopilot/autopilot.py",
-      "blob_sha": "6c06f959e78c942b5ca722da37834f37d709a304",
+      "blob_sha": "ad738739057d383fbc422a65b6784a5c236e34f5",
       "mode": "100755",
-      "size": 2189,
+      "size": 2327,
       "status": "PASS"
     },
     {
@@ -693,9 +742,16 @@
     },
     {
       "path": "tools/autopilot/i006_validator.py",
-      "blob_sha": "bad66eae6f9d083fb2159aee9b7f3be69279f6ed",
+      "blob_sha": "696f732fe9383885468ec8718996245e2411e798",
       "mode": "100644",
-      "size": 8103,
+      "size": 8323,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/autopilot/i007_validator.py",
+      "blob_sha": "442bc460b8b3b3f44077e6f50550d836e02204ba",
+      "mode": "100644",
+      "size": 11248,
       "status": "PASS"
     },
     {
@@ -735,9 +791,9 @@
     },
     {
       "path": "tools/start_gui.py",
-      "blob_sha": "6d1c110b684666b258fca3136a0d6c0f3935cad7",
+      "blob_sha": "3beb11008fefdef060b0b93696d24222d788ae51",
       "mode": "100755",
-      "size": 3006,
+      "size": 3259,
       "status": "PASS"
     },
     {
@@ -745,6 +801,13 @@
       "blob_sha": "96c3f43d9e3a4942f8ff2d6f4afec35cbd72b99a",
       "mode": "100644",
       "size": 2391,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/todo_gui_matrix.py",
+      "blob_sha": "3e772413f5073dcdc01a87680da3cd765c420c16",
+      "mode": "100644",
+      "size": 5700,
       "status": "PASS"
     },
     {
@@ -783,6 +846,27 @@
       "status": "PASS"
     },
     {
+      "path": "ui/planner_integration.py",
+      "blob_sha": "51be59d585e0fff661fa532982a52fca150ace92",
+      "mode": "100644",
+      "size": 1384,
+      "status": "PASS"
+    },
+    {
+      "path": "ui/todo_dialogs.py",
+      "blob_sha": "570395953395149913df750ae3de48134cc564c2",
+      "mode": "100644",
+      "size": 8370,
+      "status": "PASS"
+    },
+    {
+      "path": "ui/todo_window.py",
+      "blob_sha": "87ff08268a14d87e1121720eb69e2d9060a15688",
+      "mode": "100644",
+      "size": 22624,
+      "status": "PASS"
+    },
+    {
       "path": "viewmodel/__init__.py",
       "blob_sha": "9be03bb4136a2d6b7e62c324cf4efd4d8e1eb6ab",
       "mode": "100644",
@@ -801,6 +885,20 @@
       "blob_sha": "da3beeae211dbf835bef76b2eaf86dec55a881c2",
       "mode": "100644",
       "size": 2852,
+      "status": "PASS"
+    },
+    {
+      "path": "viewmodel/todo_query.py",
+      "blob_sha": "49d0094ffdfa6950ada1b7a5af377f8793ea5eb0",
+      "mode": "100644",
+      "size": 7554,
+      "status": "PASS"
+    },
+    {
+      "path": "viewmodel/todo_viewmodel.py",
+      "blob_sha": "5a2c2faf50d64cf5d9f04e7dafad7204aca8be5f",
+      "mode": "100644",
+      "size": 3959,
       "status": "PASS"
     }
   ]

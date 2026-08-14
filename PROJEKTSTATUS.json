@@ -7,12 +7,12 @@
   "phase": "FOUNDATION",
   "iteration": "I007",
   "checkpoint": "C007-TODO-GUI-VIEWMODEL",
-  "status": "IN_ARBEIT",
-  "ampel": "GELB",
+  "status": "QUALIFIZIERT",
+  "ampel": "GRUEN",
   "planning_percent": 100,
-  "implementation_percent": 56,
-  "qualification_percent": 86,
-  "release_readiness_percent": 15,
+  "implementation_percent": 62,
+  "qualification_percent": 93,
+  "release_readiness_percent": 18,
   "mandatory_user_testing": false,
   "last_completed": [
     "C000-REPOSITORY-RESET",
@@ -23,8 +23,9 @@
     "I003-KLICK-START-ORCHESTRATOR",
     "I004-KALENDER-DOMAIN-SQLITE",
     "I005-KALENDER-GUI-VIEWMODEL",
-    "I006-TODO-DOMAIN-LINK"
+    "I006-TODO-DOMAIN-LINK",
+    "I007-TODO-GUI-VIEWMODEL"
   ],
-  "next_logical_step": "I007 Todo-GUI + Todo-ViewModel remote qualifizieren",
-  "improvement_recommendation": "Konflikte in I007 ausschließlich sichtbar erklären; automatische Feldsynchronisation und BOTH_CHANGED-Auflösung erst in einem eigenen I008-Vertrag freigeben"
+  "next_logical_step": "I008 Kalender↔Todo-Synchronisations- und Konfliktauflösungsvertrag",
+  "improvement_recommendation": "I008 mit reiner Synchronisationsvorschau beginnen; BOTH_CHANGED ohne explizite verlustfreie Regel blockieren"
 }
