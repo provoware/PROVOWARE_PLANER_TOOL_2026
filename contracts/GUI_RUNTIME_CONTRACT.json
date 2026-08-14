@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "contract_id": "PROVOWARE-GUI-RUNTIME",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "platform": "Linux",
+  "python": {
+    "package": "PySide6",
+    "version": "6.9.1",
+    "lock_file": "requirements-gui.lock"
+  },
+  "native_shared_libraries": [
+    "libEGL.so.1",
+    "libGL.so.1",
+    "libxkbcommon-x11.so.0",
+    "libxcb-cursor.so.0"
+  ],
+  "ubuntu_ci_packages": [
+    "libegl1",
+    "libgl1",
+    "libxkbcommon-x11-0",
+    "libxcb-cursor0"
+  ],
+  "startup": {
+    "orchestrator_before_qt_import": true,
+    "native_library_precheck_required": true,
+    "raw_import_crash_forbidden": true,
+    "failure_code": "START-GUI-RUNTIME-001",
+    "silent_network_install_forbidden": true
+  }
+}

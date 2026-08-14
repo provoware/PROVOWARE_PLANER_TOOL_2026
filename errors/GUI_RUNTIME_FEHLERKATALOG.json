@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "catalog_id": "PROVOWARE-GUI-RUNTIME-FEHLER",
+  "catalog_version": "1.0.0",
+  "project_id": "provoware-planer-tool-2026",
+  "errors": [
+    {
+      "code": "START-GUI-RUNTIME-001",
+      "severity": "KRITISCH",
+      "component": "gui_runtime",
+      "title": "Grafische Laufzeit ist unvollständig",
+      "what": "Eine benötigte Qt-/Linux-Bibliothek oder PySide6 ist nicht verfügbar.",
+      "effect": "Die grafische Oberfläche wird nicht gestartet, damit kein unkontrollierter Absturz entsteht.",
+      "automatic_action": "BLOCKIEREN_UND_DIAGNOSE",
+      "user_action": "Den qualifizierten Klick-&-Start-/Runtime-Reparaturpfad verwenden; keine unbekannten Pakete manuell installieren.",
+      "retryable": true,
+      "blocking": true
+    }
+  ]
+}

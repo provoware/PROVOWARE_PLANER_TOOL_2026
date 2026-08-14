@@ -25,14 +25,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Python 3.12 bereitstellen
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
+      - name: Native GUI-Systembibliotheken bereitstellen
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libegl1 libgl1 libxkbcommon-x11-0 libxcb-cursor0
       - name: GUI-Laufzeit exakt bereitstellen
-        run: python -m pip install --disable-pip-version-check -r requirements-gui.lock
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements-gui.lock
+          python -m pip check
 
       - name: I005-Metadaten und Dokumentation vorbereiten
         shell: bash
@@ -40,53 +44,51 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          version = json.loads(Path('VERSION.json').read_text(encoding='utf-8'))
-          version.update(version='0.5.0-dev.1', iteration='I005', checkpoint='C005-KALENDER-GUI-VIEWMODEL')
-          version['build_revision'] = max(int(version.get('build_revision', 1)), 5)
-          Path('VERSION.json').write_text(json.dumps(version, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-          contract = json.loads(Path('PROJECT_CONTRACT.json').read_text(encoding='utf-8'))
-          contract['foundation'].update(current_iteration='I005', current_checkpoint='C005-KALENDER-GUI-VIEWMODEL', version='0.5.0-dev.1')
-          development = contract.setdefault('development', {})
+          version=json.loads(Path('VERSION.json').read_text(encoding='utf-8'))
+          version.update(version='0.5.0-dev.1',iteration='I005',checkpoint='C005-KALENDER-GUI-VIEWMODEL')
+          version['build_revision']=max(int(version.get('build_revision',1)),5)
+          Path('VERSION.json').write_text(json.dumps(version,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          contract=json.loads(Path('PROJECT_CONTRACT.json').read_text(encoding='utf-8'))
+          contract['foundation'].update(current_iteration='I005',current_checkpoint='C005-KALENDER-GUI-VIEWMODEL',version='0.5.0-dev.1')
+          development=contract.setdefault('development',{})
           for key in ('calendar_viewmodel_required','gui_service_boundary_required','qt_offscreen_matrix_required','accessible_gui_required','font_scale_matrix_required','gui_restart_persistence_required'):
-              development[key] = True
-          Path('PROJECT_CONTRACT.json').write_text(json.dumps(contract, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-          status = json.loads(Path('PROJEKTSTATUS.json').read_text(encoding='utf-8'))
-          status.update(version='0.5.0-dev.1', iteration='I005', checkpoint='C005-KALENDER-GUI-VIEWMODEL', status='QUALIFIZIERUNG_LAEUFT', ampel='GELB')
-          status['implementation_percent'] = max(int(status.get('implementation_percent', 0)), 38)
-          status['qualification_percent'] = max(int(status.get('qualification_percent', 0)), 65)
-          status['next_logical_step'] = 'I006 Todo-Domainkern + Kalenderkopplungsvertrag'
-          status['improvement_recommendation'] = 'Todo zunächst GUI-unabhängig entwickeln und erst nach stabiler Kalender-Service-Kopplung visualisieren'
-          Path('PROJEKTSTATUS.json').write_text(json.dumps(status, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-          def append_once(path, marker, block):
-              p = Path(path); text = p.read_text(encoding='utf-8')
-              if marker not in text:
-                  p.write_text(text.rstrip() + '\n\n' + block.strip() + '\n', encoding='utf-8')
-          append_once('README.md', '## I005 — Kalender-GUI + ViewModel', '''
+              development[key]=True
+          Path('PROJECT_CONTRACT.json').write_text(json.dumps(contract,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          status=json.loads(Path('PROJEKTSTATUS.json').read_text(encoding='utf-8'))
+          status.update(version='0.5.0-dev.1',iteration='I005',checkpoint='C005-KALENDER-GUI-VIEWMODEL',status='QUALIFIZIERUNG_LAEUFT',ampel='GELB')
+          status['implementation_percent']=max(int(status.get('implementation_percent',0)),38)
+          status['qualification_percent']=max(int(status.get('qualification_percent',0)),65)
+          status['next_logical_step']='I006 Todo-Domainkern + Kalenderkopplungsvertrag'
+          status['improvement_recommendation']='Todo zunächst GUI-unabhängig entwickeln und erst nach stabiler Kalender-Service-Kopplung visualisieren'
+          Path('PROJEKTSTATUS.json').write_text(json.dumps(status,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          def append_once(path,marker,block):
+              p=Path(path); text=p.read_text(encoding='utf-8')
+              if marker not in text: p.write_text(text.rstrip()+'\n\n'+block.strip()+'\n',encoding='utf-8')
+          append_once('README.md','## I005 — Kalender-GUI + ViewModel','''
           ## I005 — Kalender-GUI + ViewModel
           - Version: `0.5.0-dev.1`
           - vier echte Ansichten: Tag, Woche, Monat, Jahr
           - `CalendarService → CalendarQueryService → CalendarViewModel → PySide6/Qt`
           - fünf Markierungen gleichzeitig sichtbar und editierbar
-          - Heute / Zurück / Vor / Datumsauswahl
-          - Termin erstellen, anzeigen und bearbeiten
-          - zentrale Abstands- und Schrift-Tokens; 90/100/110/125/150/175/200 %
+          - Heute / Zurück / Vor / Datumsauswahl; Termin erstellen, anzeigen und bearbeiten
+          - zentrale Design-Tokens und Schriftgrößen 90/100/110/125/150/175/200 %
           - Ampel mit Symbol + Klartext; Tastatur, Accessible Names und High Contrast
-          - Qt-Offscreen-Matrix: 4 Fenstergrößen × 7 Schriftstufen × 4 Ansichten = 112 Konfigurationen
-          - Persistenzprüfung nach Neustart; kein SQL in der GUI
+          - 112 Offscreen-Konfigurationen plus Screenshots und Neustartpersistenz
+          - I003-Startprüfung und native GUI-Runtime-Prüfung vor Qt; kein SQL in der GUI
 
           ### Nächster logischer Schritt
           I006: Todo-Domainkern und expliziten Kalender↔Todo-Kopplungsvertrag entwickeln.
           ''')
-          append_once('TODO.md', '## I005 — Kalender-GUI + ViewModel', '''
+          append_once('TODO.md','## I005 — Kalender-GUI + ViewModel','''
           ## I005 — Kalender-GUI + ViewModel
           - [x] CalendarQueryService und CalendarViewModel
           - [x] Tag / Woche / Monat / Jahr
           - [x] fünf sichtbare/editierbare Markierungen mit atomarer Batch-Speicherung
-          - [x] Heute / Zurück / Vor / Datumsauswahl
-          - [x] Termin erstellen und bearbeiten
-          - [x] zentrale Design-Tokens und globale Schriftgrößen
-          - [x] Ampel + Klartext, Tastatur, Accessible Names, High Contrast
-          - [x] Offscreen-GUI-Matrix und Neustartpersistenz
+          - [x] Heute / Zurück / Vor / Datumsauswahl und Terminbearbeitung
+          - [x] zentrale Design-Tokens, globale Schriftgrößen, Ampel + Klartext
+          - [x] Tastatur, Accessible Names und High Contrast
+          - [x] native GUI-Runtime-Vorprüfung ohne rohen Importabsturz
+          - [x] Offscreen-GUI-Matrix, Screenshots und Neustartpersistenz
           - [x] historische Gate-Kette I002 → I003 → I004 → I005
 
           ## I006 — Nächster logischer Schritt
@@ -94,13 +96,14 @@ jobs:
           - [ ] Kalender↔Todo Soft-Link-Vertrag
           - [ ] erst danach Todo-GUI
           ''')
-          append_once('CHANGELOG.md', '## 0.5.0-dev.1 — I005', '''
+          append_once('CHANGELOG.md','## 0.5.0-dev.1 — I005','''
           ## 0.5.0-dev.1 — I005
           - CalendarQueryService und CalendarViewModel eingeführt
           - PySide6/Qt-Kalenderoberfläche mit Tag/Woche/Monat/Jahr ergänzt
           - fünf editierbare Markierungen mit atomarer Batch-Speicherung ergänzt
           - Termin-Erstellung/-Bearbeitung ausschließlich über CalendarService angebunden
           - Design-Tokens, Schriftskalierung, Ampelstatus, Tastatur und Accessible Names ergänzt
+          - native GUI-Abhängigkeiten explizit vertraglich gebunden und vor Qt-Import geprüft
           - Offscreen-Matrix mit 112 GUI-Konfigurationen, Screenshots und Neustartpersistenz ergänzt
           - historische Qualifikationskette um I005 erweitert
           ''')
@@ -110,21 +113,19 @@ jobs:
         shell: bash
         run: |
           python - <<'PY'
-          import json, subprocess
+          import json,subprocess
           from pathlib import Path
           receipt=json.loads(Path('REMOTE_TREE_RECEIPT.json').read_text(encoding='utf-8'))
           report=json.loads(Path('QUALIFICATION_REPORT.json').read_text(encoding='utf-8'))
-          if receipt.get('state') != 'ATTESTED':
-              print('GESPEICHERTER_RECEIPT=PENDING'); raise SystemExit(0)
-          subject=receipt['subject_commit']
-          tree=subprocess.check_output(['git','rev-parse',f'{subject}^{{tree}}'],text=True).strip()
-          if tree != receipt.get('subject_tree'): raise SystemExit('REMOTE-TREE-001: Subject-Tree stimmt nicht')
+          if receipt.get('state')!='ATTESTED': print('GESPEICHERTER_RECEIPT=PENDING'); raise SystemExit(0)
+          subject=receipt['subject_commit']; tree=subprocess.check_output(['git','rev-parse',f'{subject}^{{tree}}'],text=True).strip()
+          if tree!=receipt.get('subject_tree'): raise SystemExit('REMOTE-TREE-001: Subject-Tree stimmt nicht')
           actual={}
           for line in subprocess.check_output(['git','ls-tree','-r','-l',subject],text=True).splitlines():
               meta,path=line.split('\t',1); mode,_kind,blob,size=meta.split(); actual[path]=(mode,blob,int(size))
           expected={i['path']:(i['mode'],i['blob_sha'],i['size']) for i in receipt.get('subject_tree_entries',[])}
-          if actual != expected or len(expected) != receipt.get('entry_count'): raise SystemExit('REMOTE-TREE-001: gespeicherter Receipt weicht ab')
-          if report.get('state') == 'QUALIFIED' and report.get('result') != 'PASS': raise SystemExit('QUALIFICATION-001: gespeicherter Bericht ist nicht PASS')
+          if actual!=expected or len(expected)!=receipt.get('entry_count'): raise SystemExit('REMOTE-TREE-001: gespeicherter Receipt weicht ab')
+          if report.get('state')=='QUALIFIED' and report.get('result')!='PASS': raise SystemExit('QUALIFICATION-001: gespeicherter Bericht ist nicht PASS')
           print(f'GESPEICHERTER_RECEIPT=PASS files={len(actual)} subject={subject}')
           PY
 
@@ -135,11 +136,9 @@ jobs:
           import json
           from pathlib import Path
           files=sorted(str(p) for p in Path('.').rglob('*') if p.is_file() and '.git' not in p.parts and '__pycache__' not in p.parts and '.pytest_cache' not in p.parts)
-          version=json.loads(Path('VERSION.json').read_text(encoding='utf-8'))
-          data=json.loads(Path('REPOSITORY_MANIFEST.json').read_text(encoding='utf-8'))
-          data.update(project_id='PROVOWARE-PLANER-2026', version=version['version'], iteration=version['iteration'], ignored_path_parts=['.git','__pycache__','.pytest_cache'], expected_file_count=len(files), files=files, expected_paths=files, full_check_each_iteration=True)
-          Path('REPOSITORY_MANIFEST.json').write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-          print(f'REPOSITORY_SOLLPFADE={len(files)}')
+          version=json.loads(Path('VERSION.json').read_text(encoding='utf-8')); data=json.loads(Path('REPOSITORY_MANIFEST.json').read_text(encoding='utf-8'))
+          data.update(project_id='PROVOWARE-PLANER-2026',version=version['version'],iteration=version['iteration'],ignored_path_parts=['.git','__pycache__','.pytest_cache'],expected_file_count=len(files),files=files,expected_paths=files,full_check_each_iteration=True)
+          Path('REPOSITORY_MANIFEST.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8'); print(f'REPOSITORY_SOLLPFADE={len(files)}')
           PY
 
       - name: Manifeste und SHA-256-Inventar erzeugen
@@ -154,17 +153,16 @@ jobs:
         run: python tools/autopilot/i004_validator.py
       - name: I005-Kalender-GUI-Vertrag prüfen
         run: python tools/autopilot/i005_validator.py
-
       - name: Integrierten I003→I005-Startpfad prüfen
         shell: bash
         run: |
           rm -rf "$RUNNER_TEMP/i005-start-smoke"
           python tools/start_gui.py --workspace "$RUNNER_TEMP/i005-start-smoke" --offscreen-smoke --start-report "$RUNNER_TEMP/I005_START_REPORT.json"
-
       - name: ViewModel- und Persistenztests
         run: |
           python -m unittest discover -s tests -p 'test_i005_viewmodel.py' -v
           python -m unittest discover -s tests -p 'test_i005_persistence_restart.py' -v
+          python -m unittest discover -s tests -p 'test_i005_gui_runtime.py' -v
       - name: Qt-Offscreen-GUI-Tests
         run: python -m unittest discover -s tests -p 'test_i005_gui_offscreen.py' -v
       - name: Vollständige GUI-Matrix und Screenshots
@@ -185,14 +183,11 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          p=Path('PROJEKTSTATUS.json'); data=json.loads(p.read_text(encoding='utf-8'))
-          data.update(status='QUALIFIZIERT', ampel='GRUEN')
-          data['implementation_percent']=max(int(data.get('implementation_percent',0)),38)
-          data['qualification_percent']=max(int(data.get('qualification_percent',0)),78)
-          data['release_readiness_percent']=max(int(data.get('release_readiness_percent',0)),12)
+          p=Path('PROJEKTSTATUS.json'); data=json.loads(p.read_text(encoding='utf-8')); data.update(status='QUALIFIZIERT',ampel='GRUEN')
+          data['implementation_percent']=max(int(data.get('implementation_percent',0)),38); data['qualification_percent']=max(int(data.get('qualification_percent',0)),78); data['release_readiness_percent']=max(int(data.get('release_readiness_percent',0)),12)
           completed=data.setdefault('last_completed',[])
           if 'I005-KALENDER-GUI-VIEWMODEL' not in completed: completed.append('I005-KALENDER-GUI-VIEWMODEL')
-          p.write_text(json.dumps(data, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+          p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
           PY
           python tools/autopilot/manifest_builder.py --write
           python tools/autopilot/manifest_builder.py --check
@@ -206,15 +201,13 @@ jobs:
           SUBJECT_SHA: ${{ github.sha }}
         run: |
           python - <<'PY'
-          import json, os, subprocess
+          import json,os,subprocess
           from pathlib import Path
-          subject=os.environ['SUBJECT_SHA']; run_id=int(os.environ['RUN_ID'])
-          tree=subprocess.check_output(['git','rev-parse',f'{subject}^{{tree}}'],text=True).strip()
-          entries=[]
+          subject=os.environ['SUBJECT_SHA']; run_id=int(os.environ['RUN_ID']); tree=subprocess.check_output(['git','rev-parse',f'{subject}^{{tree}}'],text=True).strip(); entries=[]
           for line in subprocess.check_output(['git','ls-tree','-r','-l',subject],text=True).splitlines():
               meta,path=line.split('\t',1); mode,_kind,blob,size=meta.split(); entries.append({'path':path,'blob_sha':blob,'mode':mode,'size':int(size),'status':'PASS'})
           Path('REMOTE_TREE_RECEIPT.json').write_text(json.dumps({'schema_version':1,'state':'ATTESTED','subject_commit':subject,'subject_tree':tree,'entry_count':len(entries),'subject_tree_entries':entries},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-          gates=['stored_receipt_validation','repository_inventory','sha256_inventory','manifest_chain','i002_historical_gate','i003_historical_gate','i004_historical_gate','i005_calendar_gui_contract','integrated_start_smoke','viewmodel_tests','restart_persistence','qt_offscreen_tests','gui_matrix_112','unit_regression_tests','foundation_validator','autopilot_historical_chain','remote_tree_paths_modes']
+          gates=['stored_receipt_validation','repository_inventory','sha256_inventory','manifest_chain','i002_historical_gate','i003_historical_gate','i004_historical_gate','i005_calendar_gui_contract','native_gui_runtime','integrated_start_smoke','viewmodel_tests','restart_persistence','qt_offscreen_tests','gui_matrix_112','unit_regression_tests','foundation_validator','autopilot_historical_chain','remote_tree_paths_modes']
           Path('QUALIFICATION_REPORT.json').write_text(json.dumps({'schema_version':1,'state':'QUALIFIED','result':'PASS','iteration':'I005','subject_commit':subject,'subject_tree':tree,'workflow_run_id':run_id,'gates':gates},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
           PY
 
@@ -222,11 +215,9 @@ jobs:
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != 'true' }}
         shell: bash
         run: |
-          git config user.name "PROVOWARE Evidence Bot"
-          git config user.email "actions@users.noreply.github.com"
+          git config user.name "PROVOWARE Evidence Bot"; git config user.email "actions@users.noreply.github.com"
           git add VERSION.json PROJECT_CONTRACT.json PROJEKTSTATUS.json README.md TODO.md CHANGELOG.md REPOSITORY_MANIFEST.json SOURCE_MANIFEST.json BUILD_MANIFEST.json RELEASE_MANIFEST.json EVIDENCE_MANIFEST.json MANIFEST_INDEX.json SHA256_DATEI_INVENTAR.json REMOTE_TREE_RECEIPT.json QUALIFICATION_REPORT.json
           if git diff --cached --quiet; then echo 'EVIDENCE_COMMIT=NICHT_ERFORDERLICH'; else git commit -m "evidence: persist I005 run $GITHUB_RUN_ID" && git push origin HEAD:${GITHUB_REF_NAME}; fi
-
       - name: Evidence-Artefakt bereitstellen
         uses: actions/upload-artifact@v4
         with:
@@ -247,7 +238,6 @@ jobs:
             ${{ runner.temp }}/i005-gui-matrix/I005_GUI_MATRIX.json
             ${{ runner.temp }}/i005-gui-matrix/*.png
           if-no-files-found: error
-
       - name: Gespeicherten Evidence-Commit automatisch erneut verifizieren
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != 'true' }}
         shell: bash

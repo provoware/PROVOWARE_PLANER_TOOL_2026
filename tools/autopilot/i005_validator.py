@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import json
 import os
 import re
@@ -13,8 +14,10 @@ if str(ROOT) not in sys.path:
 
 REQUIRED_FILES = {
     "contracts/CALENDAR_GUI_CONTRACT.json",
+    "contracts/GUI_RUNTIME_CONTRACT.json",
     "docs/I005_KALENDER_GUI_VIEWMODEL.md",
     "errors/KALENDER_GUI_FEHLERKATALOG.json",
+    "errors/GUI_RUNTIME_FEHLERKATALOG.json",
     "requirements-gui.lock",
     "ui/__init__.py",
     "ui/design.py",
@@ -29,6 +32,7 @@ REQUIRED_FILES = {
     "tests/test_i005_viewmodel.py",
     "tests/test_i005_gui_offscreen.py",
     "tests/test_i005_persistence_restart.py",
+    "tests/test_i005_gui_runtime.py",
 }
 CODE_PATTERN = re.compile(r"(?:GUI|CAL)-[A-Z0-9-]+-\d{3}")
 
@@ -75,6 +79,7 @@ def validate() -> dict:
     status = load("PROJEKTSTATUS.json")
     project = load("PROJECT_CONTRACT.json")
     contract = load("contracts/CALENDAR_GUI_CONTRACT.json")
+    runtime_contract = load("contracts/GUI_RUNTIME_CONTRACT.json")
     ui_standard = load("standards/UI_STANDARD.json")
     access_standard = load("standards/ACCESSIBILITY_STANDARD.json")
 
@@ -86,6 +91,8 @@ def validate() -> dict:
         errors.append("I005_PROJEKTVERTRAG_NICHT_PROMOVIERT")
     if contract.get("status") != "VERBINDLICH":
         errors.append("I005_GUI_VERTRAG_NICHT_VERBINDLICH")
+    if runtime_contract.get("status") != "VERBINDLICH":
+        errors.append("I005_GUI_RUNTIME_VERTRAG_NICHT_VERBINDLICH")
 
     architecture = contract.get("architecture", {})
     if architecture.get("service_only") is not True:
@@ -104,6 +111,16 @@ def validate() -> dict:
         errors.append("I005_FARBALLEIN_STANDARD_FEHLT")
     if access_standard.get("rules", {}).get("accessible_names_required") is not True:
         errors.append("I005_ACCESSIBLE_NAMES_STANDARD_FEHLT")
+
+    runtime_start = runtime_contract.get("startup", {})
+    expected_libs = {"libEGL.so.1", "libGL.so.1", "libxkbcommon-x11.so.0", "libxcb-cursor.so.0"}
+    if not expected_libs.issubset(set(runtime_contract.get("native_shared_libraries", []))):
+        errors.append("I005_GUI_NATIVE_LIBS_UNVOLLSTAENDIG")
+    for key in ("orchestrator_before_qt_import", "native_library_precheck_required", "raw_import_crash_forbidden"):
+        if runtime_start.get(key) is not True:
+            errors.append(f"I005_GUI_RUNTIME_REGEL_FEHLT: {key}")
+    if runtime_start.get("failure_code") != "START-GUI-RUNTIME-001":
+        errors.append("I005_GUI_RUNTIME_FEHLERCODE_FALSCH")
 
     forbidden = ("sqlite3", "storage.", "storage import", "MigrationRunner", "SELECT ", "INSERT ", "UPDATE ", "DELETE ")
     for directory in ("ui", "viewmodel"):
@@ -128,9 +145,20 @@ def validate() -> dict:
     for token in required_tokens:
         if token not in combined:
             errors.append(f"I005_GUI_BESTANDTEIL_FEHLT: {token}")
-
     if "CalendarQueryService" not in viewmodel_text or "CalendarService" not in query_text:
         errors.append("I005_VIEWMODEL_QUERY_KETTE_FEHLT")
+
+    start_path = ROOT / "tools/start_gui.py"
+    start_text = start_path.read_text(encoding="utf-8")
+    start_ast = ast.parse(start_text)
+    for node in start_ast.body:
+        if isinstance(node, ast.ImportFrom) and (node.module or "").startswith("PySide6"):
+            errors.append("I005_QT_IMPORT_VOR_ORCHESTRATOR")
+        if isinstance(node, ast.Import) and any(alias.name.startswith("PySide6") for alias in node.names):
+            errors.append("I005_QT_IMPORT_VOR_ORCHESTRATOR")
+    for token in ("StartOrchestrator", "_check_native_gui_runtime", "START-GUI-RUNTIME-001"):
+        if token not in start_text:
+            errors.append(f"I005_STARTINTEGRATION_FEHLT: {token}")
 
     catalogs, duplicates = catalog_codes()
     if duplicates:
@@ -138,6 +166,8 @@ def validate() -> dict:
     missing_codes = sorted(used_gui_codes() - catalogs)
     if missing_codes:
         errors.append(f"I005_GUI_FEHLERCODE_NICHT_KATALOGISIERT: {missing_codes}")
+    if "START-GUI-RUNTIME-001" not in catalogs:
+        errors.append("I005_GUI_RUNTIME_FEHLERCODE_NICHT_KATALOGISIERT")
 
     runtime_result = "NOT_RUN"
     try:
@@ -146,19 +176,15 @@ def validate() -> dict:
         from services.factory import open_calendar_service
         from ui.calendar_window import CalendarWindow
         from viewmodel.calendar_viewmodel import CalendarViewMode
-
         app = QApplication.instance() or QApplication([])
         with tempfile.TemporaryDirectory(prefix="provoware-i005-validator-") as temp:
             workspace = Path(temp)
             service = open_calendar_service(workspace / "planer.sqlite3")
             window = CalendarWindow(service, repo_root=ROOT, workspace=workspace)
             try:
-                window.resize(1280, 720)
-                window.show()
-                app.processEvents()
+                window.resize(1280, 720); window.show(); app.processEvents()
                 for mode in CalendarViewMode:
-                    window._set_mode(mode)
-                    app.processEvents()
+                    window._set_mode(mode); app.processEvents()
                 if len(window.marker_labels) != 5:
                     errors.append("I005_RUNTIME_MARKER_ANZAHL_FALSCH")
                 if not all(label.text().strip() for label in window.marker_labels):
@@ -167,8 +193,7 @@ def validate() -> dict:
                     errors.append("I005_RUNTIME_VIEW_ANZAHL_FALSCH")
                 runtime_result = "PASS"
             finally:
-                window.close()
-                app.processEvents()
+                window.close(); app.processEvents()
     except Exception as exc:
         errors.append(f"I005_RUNTIME_VALIDIERUNG_FEHLER: {type(exc).__name__}: {exc}")
         runtime_result = "FAIL"

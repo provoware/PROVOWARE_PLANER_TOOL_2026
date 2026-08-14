@@ -22,8 +22,14 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Native GUI-Systembibliotheken bereitstellen
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libegl1 libgl1 libxkbcommon-x11-0 libxcb-cursor0
       - name: GUI-Laufzeit exakt bereitstellen
-        run: python -m pip install --disable-pip-version-check -r requirements-gui.lock
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements-gui.lock
+          python -m pip check
       - name: Unabhängigen Standard-Validator ausführen
         run: python tools/autopilot/standard_validator.py
       - name: Validator-Tests ausführen
