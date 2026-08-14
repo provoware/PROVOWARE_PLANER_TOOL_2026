@@ -7,12 +7,12 @@
   "phase": "FOUNDATION",
   "iteration": "I014",
   "checkpoint": "C014-TRANSPORTPROFILE-TRENNUNG",
-  "status": "IN_ARBEIT",
-  "ampel": "GELB",
+  "status": "QUALIFIZIERT",
+  "ampel": "GRUEN",
   "planning_percent": 100,
-  "implementation_percent": 98,
+  "implementation_percent": 99,
   "qualification_percent": 99,
-  "release_readiness_percent": 46,
+  "release_readiness_percent": 55,
   "mandatory_user_testing": false,
   "last_completed": [
     "C000-REPOSITORY-RESET",
@@ -30,8 +30,9 @@
     "I010-SYNC-CONTROL-GUI-RESOLUTION",
     "I011-SYNC-JOURNAL-RECOVERY",
     "I012-DIAGNOSE-DASHBOARD",
-    "I013-ENTWICKLUNGSAUTOPILOT-V2"
+    "I013-ENTWICKLUNGSAUTOPILOT-V2",
+    "I014-TRANSPORTPROFILE-TRENNUNG"
   ],
   "next_logical_step": "I015 Immutable Backup-/RestorePlan mit Kandidatenqualifikation",
-  "improvement_recommendation": "Nach I014 Sicherungs- und Restore-Funktionen nur noch gegen klar getrennten Workspace-/Backup-Bereich entwickeln und niemals in Code-Transportprofile aufnehmen"
+  "improvement_recommendation": "Sicherungen ausschließlich im Workspace-/Backup-Bereich halten und Restore-Vorschau strikt von Ausführung trennen"
 }

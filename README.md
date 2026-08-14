@@ -7,7 +7,7 @@ Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungsw
 - **Version:** `0.14.0-dev.1`
 - **Iteration:** `I014`
 - **Checkpoint:** `C014-TRANSPORTPROFILE-TRENNUNG`
-- **Status:** `IN_ARBEIT / GELB`
+- **Status:** `QUALIFIZIERT / GRÜN`
 - **Zielplattform:** Linux, insbesondere Ubuntu-/Kubuntu-Derivate
 - **Betrieb:** lokal und offline-first
 

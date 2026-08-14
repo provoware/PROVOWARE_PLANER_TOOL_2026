@@ -2,9 +2,9 @@
   "schema_version": 1,
   "state": "ATTESTED",
   "attestation_role": "QUALIFICATION_SUBJECT_TREE",
-  "subject_commit": "1e725c0cdd9a44ff28ba0ff6ff9df9df14e19cec",
-  "subject_tree": "81a021aec2e2b8d60b4b56db1e334b77698a1c34",
-  "entry_count": 211,
+  "subject_commit": "c0d1550472e94d4d3b7a1dda1c73c6c035b619fb",
+  "subject_tree": "bc313a123ed1d83b5ce565074a942f8e3f090136",
+  "entry_count": 223,
   "subject_tree_entries": [
     {
       "path": ".github/workflows/foundation-qualifikation.yml",
@@ -98,38 +98,59 @@
       "status": "PASS"
     },
     {
-      "path": "BUILD_MANIFEST.json",
-      "blob_sha": "bf9f81bc4bac264d1b81a35b72d1038981ead99f",
+      "path": ".github/workflows/i014-qualifikation.yml",
+      "blob_sha": "d011a7c389724432694fc1a2f93d221415d07adf",
       "mode": "100644",
-      "size": 6848,
+      "size": 15038,
+      "status": "PASS"
+    },
+    {
+      "path": ".gitignore",
+      "blob_sha": "22ca850b88620f32069a450f1227ec43291dc031",
+      "mode": "100644",
+      "size": 361,
+      "status": "PASS"
+    },
+    {
+      "path": "BUILD_MANIFEST.json",
+      "blob_sha": "6a27ede3b9c899583bde7dfeaf22e89ef506aaf6",
+      "mode": "100644",
+      "size": 7620,
       "status": "PASS"
     },
     {
       "path": "CHANGELOG.md",
-      "blob_sha": "20b469c04d57e31e635cdd018b4cb416d4ddb9d8",
+      "blob_sha": "cf55494ee5be7cf80103db5985eaa978c1e293e8",
       "mode": "100644",
-      "size": 4437,
+      "size": 5788,
       "status": "PASS"
     },
     {
       "path": "EVIDENCE_MANIFEST.json",
-      "blob_sha": "d0e57471969d33c86906e081672cecffd9ab3071",
+      "blob_sha": "6f2ca97c6b7ec9f8ac2abf7c0776ea9fa5de22c2",
       "mode": "100644",
-      "size": 8908,
+      "size": 9289,
       "status": "PASS"
     },
     {
       "path": "ITERATION_PLAN.json",
-      "blob_sha": "a75fbd78ba22ef5901bd7c3e4ae8349022a1d350",
+      "blob_sha": "b49ffe19c520b1b521a06a37da8b05eced73fba0",
       "mode": "100644",
-      "size": 3448,
+      "size": 4085,
       "status": "PASS"
     },
     {
       "path": "MANIFEST_INDEX.json",
-      "blob_sha": "1a4aede51a350d1065037e0c785b8d2739e28cc4",
+      "blob_sha": "41a5bb8ffa5ecd9cb7af97a990a8d6d2d48e96f0",
       "mode": "100644",
       "size": 813,
+      "status": "PASS"
+    },
+    {
+      "path": "NUTZERANLEITUNG.md",
+      "blob_sha": "dad4cac4559e4f958912a8254e2f3db5926a93ce",
+      "mode": "100644",
+      "size": 1629,
       "status": "PASS"
     },
     {
@@ -141,79 +162,79 @@
     },
     {
       "path": "PROJECT_CONTRACT.json",
-      "blob_sha": "95077e11e240c831ead44da3cb19ef2ad075d4a5",
+      "blob_sha": "6df80c73b42079ac64fef0cb58ecea5b3c695713",
       "mode": "100644",
-      "size": 5615,
+      "size": 5952,
       "status": "PASS"
     },
     {
       "path": "PROJEKTSTATUS.json",
-      "blob_sha": "a3aa43c9ca8b8a97e03440f9bc549bc1f6a40bb6",
+      "blob_sha": "d98b6f86734df60ce91023d2216d6e24149f59d2",
       "mode": "100644",
-      "size": 1303,
+      "size": 1367,
       "status": "PASS"
     },
     {
       "path": "QUALIFICATION_REPORT.json",
-      "blob_sha": "8df977dd105595fec1798e5805b1d0688b94c1d2",
+      "blob_sha": "c5d6646d3b56d2e987a27201c12ef07439a3ae96",
       "mode": "100644",
-      "size": 1180,
+      "size": 699,
       "status": "PASS"
     },
     {
       "path": "README.md",
-      "blob_sha": "365bedbe7a16d6488fb49f5a4734a67f9b30f199",
+      "blob_sha": "79455209d4efc9f1a5e53cca6561b2b7e1637666",
       "mode": "100644",
-      "size": 6804,
+      "size": 6429,
       "status": "PASS"
     },
     {
       "path": "RELEASE_MANIFEST.json",
-      "blob_sha": "a63e60776ef9d0dbb982fa818b6fe9fbb01102f4",
+      "blob_sha": "acf8ab80fc5b6dc07145bb86934c72bfc65b482c",
       "mode": "100644",
       "size": 238,
       "status": "PASS"
     },
     {
       "path": "REMOTE_TREE_RECEIPT.json",
-      "blob_sha": "94293692ec7a26ee99633928ec7aaa1d5d529248",
+      "blob_sha": "b43e451efb65ce1a6771ec62c60b42b1f0cb719a",
       "mode": "100644",
-      "size": 38100,
+      "size": 40278,
       "status": "PASS"
     },
     {
       "path": "REPOSITORY_MANIFEST.json",
-      "blob_sha": "98840631fa2efe17618c0a7612aa10d6a21b83e3",
+      "blob_sha": "29ab16ccab1ac9fbd8da38ef7b64736e9a7afb73",
       "mode": "100644",
-      "size": 15453,
+      "size": 16482,
       "status": "PASS"
     },
     {
       "path": "SHA256_DATEI_INVENTAR.json",
-      "blob_sha": "1799d67a4008f4cac9b86976cdd04920856b3488",
+      "blob_sha": "1c899e76cc505b6cd8eff6306c4d9e96e8ff7906",
       "mode": "100644",
-      "size": 37199,
+      "size": 39303,
       "status": "PASS"
     },
     {
       "path": "SOURCE_MANIFEST.json",
-      "blob_sha": "d83927ea34400795e6645150489ac21d669d91d9",
+      "blob_sha": "e2a59ee722b0b26365c29789753c46c2e8851e36",
       "mode": "100644",
-      "size": 33779,
+      "size": 35684,
       "status": "PASS"
     },
     {
       "path": "TODO.md",
-      "blob_sha": "d597311a97f7d5fdb68de78ff1d0e0f85f663c12",
+      "blob_sha": "ec137c12a598eb83611e42375f34cde64819dd77",
       "mode": "100644",
-      "size": 3019,
+      "size": 3595,
       "status": "PASS"
     },
     {
       "path": "VERSION.json",
-      "blob_sha": "67068c3d4fb692fab8f763e74b0f724b5ce6c90e",
+      "blob_sha": "23e6157f4911318961969e2510a724b38bd8641d",
       "mode": "100644",
-      "size": 354,
+      "size": 355,
       "status": "PASS"
     },
     {
@@ -315,6 +336,13 @@
       "status": "PASS"
     },
     {
+      "path": "contracts/TRANSPORT_PROFILE_CONTRACT.json",
+      "blob_sha": "86385e0ebf68dcc33b6c1b6acb9b75d8079f589e",
+      "mode": "100644",
+      "size": 3897,
+      "status": "PASS"
+    },
+    {
       "path": "diagnostics_core/__init__.py",
       "blob_sha": "95fc5a6e1aa290eb74a1a76d62ebce2dce295688",
       "mode": "100644",
@@ -410,6 +438,13 @@
       "blob_sha": "6dc026793478d9480dbeff22f6e81c40c1c715e3",
       "mode": "100644",
       "size": 3530,
+      "status": "PASS"
+    },
+    {
+      "path": "docs/I014_TRANSPORTPROFILE_TRENNUNG.md",
+      "blob_sha": "274cffc572fa470e16674ea367c4cde2290839f6",
+      "mode": "100644",
+      "size": 3767,
       "status": "PASS"
     },
     {
@@ -553,6 +588,13 @@
       "status": "PASS"
     },
     {
+      "path": "runtime/ui_tokens.json",
+      "blob_sha": "3e3e2c7545104ea69edbc3a9ae3898b2edb3feea",
+      "mode": "100644",
+      "size": 440,
+      "status": "PASS"
+    },
+    {
       "path": "services/__init__.py",
       "blob_sha": "b78bdcb9352ce083b527951e6bd2220d11b4d22f",
       "mode": "100644",
@@ -659,9 +701,9 @@
     },
     {
       "path": "standards/MANIFEST_STANDARD.json",
-      "blob_sha": "d66b10a92b2fe685ca80a45c4eaff371ba8b2117",
+      "blob_sha": "5981bf8426942461d5e895ed71d0469cf75c401c",
       "mode": "100644",
-      "size": 728,
+      "size": 1089,
       "status": "PASS"
     },
     {
@@ -687,16 +729,16 @@
     },
     {
       "path": "standards/RELEASE_STANDARD.json",
-      "blob_sha": "cb7494e1d04a83d707b4da77dc8b87d0923034d1",
+      "blob_sha": "07d65891b7f9831185f3ba416af162b1633f65ad",
       "mode": "100644",
-      "size": 784,
+      "size": 1136,
       "status": "PASS"
     },
     {
       "path": "standards/STANDARD_INDEX.json",
-      "blob_sha": "5f3e0a25a186fc718fbc7152e4c2a300725ecd6f",
+      "blob_sha": "d870b9dbeb7031b3efcfd84aaa48fb0332cbd2cb",
       "mode": "100644",
-      "size": 1490,
+      "size": 1590,
       "status": "PASS"
     },
     {
@@ -711,6 +753,13 @@
       "blob_sha": "ce87d0f2454b3ccb728738106806409a074d733d",
       "mode": "100644",
       "size": 1013,
+      "status": "PASS"
+    },
+    {
+      "path": "standards/TRANSPORT_STANDARD.json",
+      "blob_sha": "2092d578cefa39c74dbd1a7de39d554880bd01d7",
+      "mode": "100644",
+      "size": 1461,
       "status": "PASS"
     },
     {
@@ -1064,6 +1113,20 @@
       "status": "PASS"
     },
     {
+      "path": "tests/test_i014_runtime_package.py",
+      "blob_sha": "adcd1a7b7b2172f668fd1a72509e6548a4ddd12f",
+      "mode": "100644",
+      "size": 4134,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i014_transport_profiles.py",
+      "blob_sha": "b4ea39361a099c2131b40e60d50b7653ea21c25f",
+      "mode": "100644",
+      "size": 5322,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_manifest_builder.py",
       "blob_sha": "5871f8c4c30b6af4551f91c186872e609b6b67f4",
       "mode": "100644",
@@ -1128,9 +1191,9 @@
     },
     {
       "path": "tools/autopilot/autopilot.py",
-      "blob_sha": "00ecea095c8213dad2eb5833a1adc934990690be",
+      "blob_sha": "075acfacb2014e653c5412f1df26243d82329228",
       "mode": "100644",
-      "size": 4339,
+      "size": 4460,
       "status": "PASS"
     },
     {
@@ -1226,9 +1289,16 @@
     },
     {
       "path": "tools/autopilot/i013_validator.py",
-      "blob_sha": "5d2eebe439ac46f1d2f09b86b71c350af25af871",
+      "blob_sha": "fde7bacbabf3c23d71bc96f62ea1006323e1eec4",
       "mode": "100644",
-      "size": 6686,
+      "size": 7513,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/autopilot/i014_validator.py",
+      "blob_sha": "2add8e6b83c5331aa7e2c84a7e4bbde09e42eb99",
+      "mode": "100644",
+      "size": 7175,
       "status": "PASS"
     },
     {
@@ -1316,6 +1386,13 @@
       "status": "PASS"
     },
     {
+      "path": "tools/package_transport.py",
+      "blob_sha": "d2ba0f3748085ca0f9803e496ca3fb8d62e47da7",
+      "mode": "100644",
+      "size": 10520,
+      "status": "PASS"
+    },
+    {
       "path": "tools/start_gui.py",
       "blob_sha": "dda6af5760c65cbd2fa14570e654045a98d19567",
       "mode": "100755",
@@ -1334,6 +1411,13 @@
       "blob_sha": "3e772413f5073dcdc01a87680da3cd765c420c16",
       "mode": "100644",
       "size": 5700,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/transport_profiles.py",
+      "blob_sha": "c0725afbf37981467bd35a71e136e6355da352ec",
+      "mode": "100644",
+      "size": 4443,
       "status": "PASS"
     },
     {
@@ -1359,9 +1443,9 @@
     },
     {
       "path": "ui/design.py",
-      "blob_sha": "d4aa819a15aa8dd43dfa1ac3e8faff9ec07a4abb",
+      "blob_sha": "c12915eedc82971bfb5b863178b42ca805397785",
       "mode": "100644",
-      "size": 3364,
+      "size": 3360,
       "status": "PASS"
     },
     {
