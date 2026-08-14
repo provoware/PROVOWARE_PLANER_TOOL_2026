@@ -49,7 +49,7 @@
 - [x] Recovery nutzt denselben I009-Transaktionskern
 - [x] Fault-/echte Crash-Matrix für Snapshotphase
 - [x] 35er Offscreen-Journal-GUI-Matrix
-- [ ] zweistufige Remotequalifikation PASS
+- [x] zweistufige Remotequalifikation PASS
 - [ ] finalen Evidence-Commit nach `main` fast-forward promoten
 
 ## I012 — nach I011

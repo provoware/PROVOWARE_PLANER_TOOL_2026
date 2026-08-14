@@ -6,7 +6,7 @@ Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungsw
 - **Version:** `0.11.0-dev.1`
 - **Iteration:** `I011`
 - **Checkpoint:** `C011-SYNC-JOURNAL-RECOVERY`
-- **Status:** `IN_ARBEIT / GELB` bis zur vollständigen I011-Remotequalifikation und Evidence-Promotion
+- **Status:** `QUALIFIZIERT / GRÜN`
 - **Zielplattform:** Linux, insbesondere Ubuntu-/Kubuntu-Derivate
 - **Betrieb:** lokal und offline-first
 - **Technische Nutzerabnahme:** nicht Bestandteil der Pflicht-Freigabekette
@@ -87,7 +87,7 @@ Der verbindliche Schreibpfad bleibt:
 I010 verändert einen erkannten SyncPlan nicht, sondern erzeugt einen neuen ResolutionPlan. I011 verändert weder alte Receipts noch alte Entscheidungen, sondern erzeugt bei einer zulässigen Recovery einen neuen immutable RecoveryPlan. Jeder neue Plan bindet Quellnachweis, aktuellen Plan, aktuelle Objektversionen und aktuelle Feld-Hashes.
 
 ## 16. Aktueller Checkpoint
-**C011 — SYNC-JOURNAL-RECOVERY.** Implementiert werden das read-only Synchronisationsjournal, Migration 0004, atomare Snapshot-Nachweise, Integritätsprüfung alter und neuer Receipts, Vorher-/Nachher-Diff, immutable RecoveryPlans sowie eigene Fault-/Crash- und GUI-Matrizen. Die Promotion nach `main` bleibt bis zum vollständigen I011-Vollpass und exakten Evidence-SHA-Zweitpass blockiert.
+**C011 — SYNC-JOURNAL-RECOVERY.** Implementiert werden das read-only Synchronisationsjournal, Migration 0004, atomare Snapshot-Nachweise, Integritätsprüfung alter und neuer Receipts, Vorher-/Nachher-Diff, immutable RecoveryPlans sowie eigene Fault-/Crash- und GUI-Matrizen. I011 ist vollständig qualifiziert; der Evidence-SHA-Zweitpass bleibt die verbindliche Promotionsvoraussetzung für `main`.
 
 Alte I009/I010-Receipts ohne Snapshot werden ausdrücklich als `LEGACY_NO_SNAPSHOT` dargestellt: auditierbar, aber nicht automatisch recoverbar. Manipulierte Receipt-/Snapshot-Daten werden als `TAMPERED` hart blockiert.
 

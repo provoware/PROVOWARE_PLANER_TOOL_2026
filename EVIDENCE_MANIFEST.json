@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "manifest_type": "EVIDENCE",
-  "version": "0.10.0-dev.1",
-  "iteration": "I010",
+  "version": "0.11.0-dev.1",
+  "iteration": "I011",
   "attestation_model": "subject_commit_plus_evidence_overlay",
   "entries": [
     {
@@ -51,6 +51,12 @@
       "path": "errors/SYNC_FEHLERKATALOG.json",
       "sha256": "bc1db47707ef14748cd60a861215740507fb20d3efa95f446ee41ae89ee4f1a9",
       "size": 1763,
+      "status": "PASS"
+    },
+    {
+      "path": "errors/SYNC_HISTORY_FEHLERKATALOG.json",
+      "sha256": "ce8285b77a47cf55105ccce47826ebe737e57991370cf8f6faf6e0237d45dd2d",
+      "size": 2514,
       "status": "PASS"
     },
     {
@@ -187,8 +193,8 @@
     },
     {
       "path": "tests/test_i009_three_way_sync.py",
-      "sha256": "6d051afa6e8188cf1a0ebb3689aa938588151c9bc56160a9f906bc92f45b814f",
-      "size": 9044,
+      "sha256": "7ca12ad775328a70bd26124a1ed8eb046180be73ff6b5f807ae9d02b5117e7c9",
+      "size": 9183,
       "status": "PASS"
     },
     {
@@ -216,6 +222,30 @@
       "status": "PASS"
     },
     {
+      "path": "tests/test_i011_fault_matrix.py",
+      "sha256": "818053d4154e3d587dab26d6dcfda1f288b2a6aaf74cb37945968d4afd61b6e3",
+      "size": 516,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i011_history_repository.py",
+      "sha256": "30e721f2b9506e3515ae1c3f61ca8595fdfe437b0ccc68246db3ddc114faecf3",
+      "size": 4488,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i011_recovery_plan.py",
+      "sha256": "d5dd8352c7464b75be6b55c4663c33b765ab78b5f716ff92bd9ec04f2fdc18a7",
+      "size": 7058,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i011_sync_history_gui.py",
+      "sha256": "4f87d9587e6529f44b71dde41561f86e0c1273523d4e9fca401cec6d9c511f36",
+      "size": 3668,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_manifest_builder.py",
       "sha256": "6ca11491249f577e370ad416ff3a8505e863bc74a5a29b6420a76c8d9a3d4596",
       "size": 567,
@@ -234,7 +264,7 @@
       "status": "PASS"
     }
   ],
-  "count": 38,
+  "count": 43,
   "remote_receipt": "REMOTE_TREE_RECEIPT.json",
   "qualification_report": "QUALIFICATION_REPORT.json"
 }
