@@ -106,7 +106,10 @@ def validate() -> dict:
             services.database.quick_check(); runtime = "PASS"
     except Exception as exc:
         errors.append(f"I006_RUNTIME_FEHLER: {type(exc).__name__}: {exc}"); runtime = "FAIL"
-    if schema != 2: errors.append(f"I006_SCHEMA_VERSION_FALSCH: {schema}")
+    if current == 6 and schema != 2:
+        errors.append(f"I006_SCHEMA_VERSION_FALSCH: {schema}")
+    elif current > 6 and schema < 2:
+        errors.append(f"I006_HISTORISCHE_SCHEMA_BASIS_FEHLT: {schema}")
     return {"status":"PASS" if not errors else "FAIL","errors":errors,"repository_files":len(files),"todo_error_codes_used":len(used),"todo_error_codes_registered":len(used & catalogs),"schema_version":schema,"runtime":runtime}
 
 
