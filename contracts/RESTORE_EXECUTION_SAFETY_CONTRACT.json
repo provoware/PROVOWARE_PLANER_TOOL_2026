@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "contract_id": "PROVOWARE-RESTORE-EXECUTION-SAFETY",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "scope": "I016",
+  "physical_restore_core": "storage.backup.restore_backup",
+  "physical_restore_core_must_remain_unchanged_in_i016": true,
+  "parallel_restore_path_forbidden": true,
+  "execution_states": ["PREPARED", "COMMITTING", "VERIFIED", "CLOSED"],
+  "intent": {
+    "persistent": true,
+    "immutable_snapshot_model": true,
+    "canonical_sha256_required": true,
+    "previous_intent_sha256_required_after_first_revision": true,
+    "write_before_commit_required": true
+  },
+  "lease": {
+    "exclusive": true,
+    "atomic_create_required": true,
+    "pid_and_process_start_marker_required": true,
+    "normal_planner_writes_blocked_while_active": true,
+    "existing_writer_probe": "BEGIN_IMMEDIATE_ROLLBACK",
+    "live_owner_takeover_forbidden": true,
+    "stale_owner_reclaim_only_in_recovery": true
+  },
+  "pre_restore_snapshot": {
+    "required": true,
+    "sqlite_backup_api_required": true,
+    "sha256_required": true,
+    "quick_check_required": true,
+    "schema_version_required": 4,
+    "logical_state_match_required": true,
+    "target_must_exist_for_i016_execution": true
+  },
+  "crash_recovery": {
+    "startup_preflight_before_i003_database_probe_required": true,
+    "committing_expected_state_can_finalize": true,
+    "committing_original_state_can_close_no_change": true,
+    "ambiguous_state_requires_snapshot_rollback": true,
+    "verified_state_changed_after_crash_must_block": true,
+    "snapshot_rollback_must_use_physical_restore_core": true,
+    "automatic_last_writer_wins_forbidden": true
+  },
+  "transport_boundary": {
+    "runtime_state_directory": ".provoware_restore",
+    "intent_runtime_file_forbidden_in_packages": true,
+    "lease_runtime_file_forbidden_in_packages": true,
+    "snapshot_runtime_file_forbidden_in_packages": true
+  },
+  "schema_migration_in_i016": false,
+  "gui_execution_in_i016": false,
+  "next_gui_iteration": "I017"
+}
