@@ -112,6 +112,30 @@ class I005GuiOffscreenTest(unittest.TestCase):
                     f"{button.text()} ist bei {scale}% zu schmal",
                 )
 
+    def test_font_baseline_does_not_compound_between_fresh_windows(self) -> None:
+        baseline_size = getattr(self.app, "_provoware_unscaled_base_font").pointSizeF()
+        index = self.window.font_combo.findData(200)
+        self.window.font_combo.setCurrentIndex(index)
+        self.app.processEvents()
+        self.assertGreater(self.app.font().pointSizeF(), baseline_size)
+        with tempfile.TemporaryDirectory() as second_temp:
+            second_workspace = Path(second_temp)
+            fresh = CalendarWindow(
+                open_calendar_service(second_workspace / "planer.sqlite3"),
+                repo_root=ROOT,
+                workspace=second_workspace,
+                timezone_name="Europe/Berlin",
+            )
+            try:
+                fresh.show()
+                self.app.processEvents()
+                self.assertEqual(fresh.view_model.font_scale_percent, 100)
+                self.assertAlmostEqual(self.app.font().pointSizeF(), baseline_size, delta=0.2)
+                self.assertGreater(fresh.stack.height(), 100)
+            finally:
+                fresh.close()
+                self.app.processEvents()
+
     def test_status_is_symbol_plus_text_not_color_only(self) -> None:
         text = self.window.status_label.text()
         self.assertIn("●", text)
