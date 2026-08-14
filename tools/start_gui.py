@@ -35,7 +35,7 @@ def _check_native_gui_runtime() -> tuple[bool, str]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="PROVOWARE PLANER Kalender-GUI")
+    parser = argparse.ArgumentParser(description="PROVOWARE PLANER GUI")
     parser.add_argument("--workspace", type=Path, required=True)
     parser.add_argument("--timezone", default="Europe/Berlin")
     parser.add_argument("--offscreen-smoke", action="store_true")
@@ -63,12 +63,25 @@ def main() -> int:
     print(f"GUI_RUNTIME=PASS | {gui_detail}")
 
     from PySide6.QtWidgets import QApplication
-    from services.factory import open_calendar_service
+    from services.factory import open_planner_services
     from ui.calendar_window import CalendarWindow
+    from ui.planner_integration import attach_todo_module
 
     app = QApplication.instance() or QApplication(sys.argv)
-    service = open_calendar_service(workspace / "planer.sqlite3")
-    window = CalendarWindow(service, repo_root=ROOT, workspace=workspace, timezone_name=args.timezone)
+    services = open_planner_services(workspace / "planer.sqlite3")
+    window = CalendarWindow(
+        services.calendar,
+        repo_root=ROOT,
+        workspace=workspace,
+        timezone_name=args.timezone,
+    )
+    attach_todo_module(
+        window,
+        services,
+        repo_root=ROOT,
+        workspace=workspace,
+        timezone_name=args.timezone,
+    )
     window.show()
     if args.offscreen_smoke:
         app.processEvents()
