@@ -42,6 +42,13 @@ def load(path: str) -> dict:
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 
+def _iteration_number(value: object) -> int:
+    try:
+        return int(str(value).removeprefix("I"))
+    except ValueError:
+        return -1
+
+
 def repository_files() -> set[str]:
     return {
         str(path.relative_to(ROOT))
@@ -81,12 +88,19 @@ def validate() -> dict:
     project = load("PROJECT_CONTRACT.json")
     contract = load("contracts/CALENDAR_DATA_CONTRACT.json")
 
-    if version.get("iteration") != "I004" or version.get("version") != "0.4.0-dev.1":
-        errors.append("I004_VERSION_NICHT_PROMOVIERT")
-    if status.get("iteration") != "I004":
-        errors.append("I004_STATUS_NICHT_PROMOVIERT")
-    if project.get("foundation", {}).get("current_iteration") != "I004":
-        errors.append("I004_PROJEKTVERTRAG_NICHT_PROMOVIERT")
+    current_iteration = _iteration_number(version.get("iteration"))
+    project_iteration = _iteration_number(project.get("foundation", {}).get("current_iteration"))
+    status_iteration = _iteration_number(status.get("iteration"))
+    if current_iteration < 4:
+        errors.append("I004_GATE_NOCH_NICHT_ERREICHT")
+    if project_iteration < 4:
+        errors.append("I004_PROJEKTVERTRAG_UNTER_MINDESTSTAND")
+    if status_iteration < 4:
+        errors.append("I004_STATUS_UNTER_MINDESTSTAND")
+    if current_iteration == 4 and version.get("version") != "0.4.0-dev.1":
+        errors.append("I004_VERSION_FUER_I004_FALSCH")
+    if current_iteration > 4 and "I004-KALENDER-DOMAIN-SQLITE" not in status.get("last_completed", []):
+        errors.append("I004_HISTORISCHER_CHECKPOINT_FEHLT")
     if contract.get("status") != "VERBINDLICH":
         errors.append("I004_KALENDERVERTRAG_NICHT_VERBINDLICH")
 
@@ -165,6 +179,7 @@ def validate() -> dict:
         "calendar_error_codes_used": len(used_calendar_codes()),
         "calendar_error_codes_registered": len(used_calendar_codes() & catalogs),
         "schema_runtime": runtime_result,
+        "current_iteration": current_iteration,
     }
 
 
@@ -173,6 +188,7 @@ def main() -> int:
     print(f"I004-VALIDATOR: {result['status']}")
     print(f"Kalender-Fehlercodes: {result['calendar_error_codes_registered']}/{result['calendar_error_codes_used']}")
     print(f"Schema-Runtime: {result['schema_runtime']}")
+    print(f"Aktuelle Iteration: I{result['current_iteration']:03d}")
     for error in result["errors"]:
         print(f"FEHLER: {error}")
     print("MASCHINENLESBAR:", json.dumps(result, ensure_ascii=False, sort_keys=True))
