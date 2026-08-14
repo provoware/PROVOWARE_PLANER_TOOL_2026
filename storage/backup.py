@@ -5,10 +5,10 @@ import json
 import os
 import shutil
 import sqlite3
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
 
+from backup_core.manifest import BackupManifest
 from calendar_core.errors import BackupError, RestoreRejectedError
 from storage.database import Database
 
@@ -100,13 +100,11 @@ def create_backup(database: Database, target: Path) -> dict:
     _fsync_file(candidate)
     os.replace(candidate, target)
     digest = _sha256(target)
-    manifest = {
-        "schema_version": 1,
-        "created_at": datetime.now(timezone.utc).isoformat(),
-        "database_sha256": digest,
-        "size": target.stat().st_size,
-        "source": str(database.path),
-    }
+    manifest = BackupManifest.create(
+        database_sha256=digest,
+        size=target.stat().st_size,
+        source=database.path,
+    ).to_dict()
     manifest_path = target.with_suffix(target.suffix + ".json")
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     _fsync_file(manifest_path)

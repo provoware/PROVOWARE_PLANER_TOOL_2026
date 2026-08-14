@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Callable
 from urllib.parse import quote
 
+from backup_core.manifest import BackupManifest
 from backup_core.model import BackupCandidate, CandidateState, RestorePlan
 from calendar_core.errors import RestoreRejectedError
 from storage.backup import ABSENT_SHA256, restore_backup
@@ -145,11 +146,12 @@ class RestoreService:
         manifest_sha = _sha256(manifest)
         try:
             data = json.loads(manifest.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError):
+            manifest_data = BackupManifest.from_dict(data)
+        except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError):
             return BackupCandidate(**{**base, "backup_sha256": backup_sha, "manifest_sha256": manifest_sha}, state=CandidateState.BLOCKED, reason="RESTORE-CANDIDATE-003: Sicherungsmanifest ist ungültig")
 
         size = resolved.stat().st_size
-        if data.get("database_sha256") != backup_sha or int(data.get("size", -1)) != size:
+        if not manifest_data.matches(database_sha256=backup_sha, size=size):
             return BackupCandidate(
                 backup_path=str(resolved), backup_sha256=backup_sha, backup_size=size,
                 manifest_path=str(manifest), manifest_sha256=manifest_sha,
