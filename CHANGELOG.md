@@ -41,3 +41,13 @@
 - Historische Werte werden nie frei zurückgeschrieben; Recovery darf nur aktuell beweisbar vorhandene Zielwerte über den bestehenden I009-Transaktionskern übertragen.
 - Snapshot-Manipulation, stale Current-State, divergente historische Zustände, Richtungsverstöße und DUE_END-Schreibbedarf blockieren fail-closed.
 - Eigene Snapshot-Fault-/Crash-Matrix und 35er Journal-GUI-Matrix ergänzt.
+
+## 0.12.0-dev.1 — I012
+- Read-only Diagnose-/Recovery-Zentrale mit fünf Bereichen: Startzustand, SQLite-Integrität, Journal-Integrität, Backup-Nachweise und Recovery-Blockaden.
+- Datenbank- und Backup-Prüfung verwendet explizit SQLite `mode=ro` und `PRAGMA query_only=ON`.
+- Backup-Kandidaten werden zusätzlich gegen Manifest und SHA-256 geprüft; Manipulation wird sichtbar blockiert.
+- Recovery-Diagnose verwendet ausschließlich neue I011-`RecoveryPlan`-Vorschauen und führt keinen Commit aus.
+- Diagnose-GUI über `Ctrl+Shift+D` integriert; Symbol + Klartext bleiben verpflichtend, Farbe allein trägt keine Bedeutung.
+- StartOrchestrator-Bericht wird standardmäßig atomar als `LETZTER_STARTBERICHT.json` im Arbeitsbereich gespeichert.
+- I012-Service-/GUI-Zieltests, Autopilot-Gate und 35er Offscreen-Diagnosematrix ergänzt.
+- Keine neue Datenbankmigration; Schema bleibt Version 4.
