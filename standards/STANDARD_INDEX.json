@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "index_id": "PROVOWARE-STANDARD-INDEX",
-  "index_version": "1.1.0",
+  "index_version": "1.2.0",
   "standards": [
     {"id": "PROVOWARE-GLOBAL", "version": "1.0.0", "file": "standards/PROVOWARE_GLOBAL_STANDARD.json"},
     {"id": "PROVOWARE-NAMING", "version": "1.0.0", "file": "standards/NAMENSSTANDARD.json"},
@@ -11,7 +11,7 @@
     {"id": "PROVOWARE-LOGGING", "version": "1.0.0", "file": "standards/LOGGING_STANDARD.json"},
     {"id": "PROVOWARE-ERROR-HANDLING", "version": "1.0.0", "file": "standards/ERROR_HANDLING_STANDARD.json"},
     {"id": "PROVOWARE-TEST", "version": "1.0.0", "file": "standards/TEST_STANDARD.json"},
-    {"id": "PROVOWARE-START", "version": "1.0.0", "file": "standards/START_STANDARD.json"},
+    {"id": "PROVOWARE-START", "version": "1.1.0", "file": "standards/START_STANDARD.json"},
     {"id": "PROVOWARE-MANIFEST", "version": "1.0.0", "file": "standards/MANIFEST_STANDARD.json"},
     {"id": "PROVOWARE-RELEASE", "version": "1.0.0", "file": "standards/RELEASE_STANDARD.json"},
     {"id": "PROVOWARE-QUALITY", "version": "1.0.0", "file": "standards/QUALITY_STANDARD.json"},
