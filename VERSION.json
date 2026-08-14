@@ -2,11 +2,11 @@
   "schema_version": 1,
   "project_id": "PROVOWARE-PLANER-2026",
   "project_name": "PROVOWARE PLANER TOOL 2026",
-  "version": "0.8.0-dev.1",
+  "version": "0.9.0-dev.1",
   "phase": "foundation",
-  "iteration": "I008",
-  "checkpoint": "C008-SYNC-CONFLICT-PREVIEW",
-  "build_revision": 8,
+  "iteration": "I009",
+  "checkpoint": "C009-FIELD-BASELINE-TRANSACTIONAL-SYNC",
+  "build_revision": 9,
   "release_channel": "development",
   "lineage_id": "PROVOWARE-PLANER-2026-LINEAGE-001"
 }
