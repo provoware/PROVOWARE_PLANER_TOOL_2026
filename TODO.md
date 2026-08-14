@@ -96,3 +96,21 @@ I002: Manifest-/Evidence-Kette, kryptografisches Repository-Inventar und Remote-
 - [ ] Klick-&-Start-Orchestrator als Zustandsmaschine
 - [ ] Fault-Injection und Recovery
 - [ ] detailliertes laienverständliches Live-Feedback
+
+## I003 — Klick-&-Start-Orchestrator
+- [x] deterministische Startzustände
+- [x] PRECHECK → ACTION → POSTCHECK
+- [x] System-, Runtime- und Manifestprüfung
+- [x] persistenter Workspace mit realer Dateioperation
+- [x] Konfigurations-Recovery mit Quarantäne
+- [x] SQLite quick_check und Transaktionsprobe
+- [x] Module, Logging, Ereignisbus und GUI-Übergabe
+- [x] Nachstartprüfung und Ready-Marker
+- [x] Pflicht-Fault-Matrix
+- [x] automatischer zweiter Remote-Verifikationslauf
+
+## I004 — Nächster logischer Schritt
+- [ ] Kalender-Domainmodell
+- [ ] SQLite-Schema und Migrationen
+- [ ] Service-API ohne GUI-Abhängigkeit
+- [ ] erst danach erste Kalenderoberfläche

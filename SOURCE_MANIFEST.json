@@ -1,48 +1,49 @@
 {
   "schema_version": 1,
   "manifest_type": "SOURCE",
-  "version": "0.2.0-dev.1",
+  "version": "0.3.0-dev.1",
+  "iteration": "I003",
   "entries": [
     {
       "path": "CHANGELOG.md",
-      "sha256": "11b7a80f19c2f0049b35a6ddb54220b6ef275e1d94aba8876825266247fa36bf",
-      "size": 1232,
+      "sha256": "e182975b129485e7966e434812a121efc84622aea8093f4adc8902a928a3da8d",
+      "size": 1752,
       "status": "PASS"
     },
     {
       "path": "PROJECT_CONTRACT.json",
-      "sha256": "886085374ab56ddc7482359a59c8f2f61998660be604ba156e6d2d53f9ce96f8",
-      "size": 1887,
+      "sha256": "074c1f73fb1e6aa45271504ef67e5aca5102f636db0f02bbfbf6c860690526c7",
+      "size": 2101,
       "status": "PASS"
     },
     {
       "path": "PROJEKTSTATUS.json",
-      "sha256": "161872d8284a5e35e28bd6eb4211f4a34816aa180ef8f625d8a13cb0d8a1ccf5",
-      "size": 889,
+      "sha256": "8c5654b9602aa17c7d55edea68fb71d5111654a4ab2848222dfdc93a705e68b7",
+      "size": 944,
       "status": "PASS"
     },
     {
       "path": "README.md",
-      "sha256": "2c70c499e56b160b793b23de5b33deb5acdc6384e477827eaed848e2ab6cfdcd",
-      "size": 8867,
+      "sha256": "e42cbab071a04c493b1ccf6d003a68fc579e554ed256709746f1940914e44c04",
+      "size": 9498,
       "status": "PASS"
     },
     {
       "path": "REPOSITORY_MANIFEST.json",
-      "sha256": "9f5599ba7332536cae6b341e0ef611f0389469b20e596bfa480f684770f833ee",
-      "size": 3681,
+      "sha256": "3f7617565ea0c22295bdff7b8be863568b443738c3c084dbf0dcee201dc860ee",
+      "size": 4363,
       "status": "PASS"
     },
     {
       "path": "TODO.md",
-      "sha256": "6340061b2e559a43dbd70617d98e2e299d602db0d092d2c54197dc2043bc7519",
-      "size": 3543,
+      "sha256": "5acd0537a064ac853cfd83d4e606ed050d564a11cca5314c2e258eba19b31817",
+      "size": 4218,
       "status": "PASS"
     },
     {
       "path": "VERSION.json",
-      "sha256": "e8649d5d845f290236345a192d1d180c16023ca4eaa637f0ce1122b76e010028",
-      "size": 355,
+      "sha256": "54dc46bef70f2ac0fd87636f109f901442dad5a4f518358d60a8fab4d941111a",
+      "size": 352,
       "status": "PASS"
     },
     {
@@ -52,9 +53,45 @@
       "status": "PASS"
     },
     {
+      "path": "docs/I003_KLICK_START_ORCHESTRATOR.md",
+      "sha256": "5d507b6fe6bd7581b0dd06673dc39c48be9a03c3f944a25ebef96d302b8d08ff",
+      "size": 3373,
+      "status": "PASS"
+    },
+    {
       "path": "errors/FEHLERKATALOG.json",
-      "sha256": "c1575628841aec2f3054fdc82072cf69dd4cfa7d3201eee44645ef952dd3ff43",
-      "size": 2090,
+      "sha256": "f98d5700ba48326891735e17accb0532463ebb0af13744394d6800e331d7bdf6",
+      "size": 9500,
+      "status": "PASS"
+    },
+    {
+      "path": "runtime/__init__.py",
+      "sha256": "d076fad1ed584bed0bb7dbd6ee0c4d40140239e59d7e1826864710f248d75415",
+      "size": 43,
+      "status": "PASS"
+    },
+    {
+      "path": "runtime/checks.py",
+      "sha256": "7da17a4c5e7233ad82ac0a4a6999876a826775e8fdc93c8bc3d5d9384d5addbf",
+      "size": 20296,
+      "status": "PASS"
+    },
+    {
+      "path": "runtime/faults.py",
+      "sha256": "10cf9d0cc2cf894c28d539a68e34bc08568e1af7eba16f4b0a6e77e47ab27b0e",
+      "size": 2037,
+      "status": "PASS"
+    },
+    {
+      "path": "runtime/model.py",
+      "sha256": "7797cc46edd0a6673807e10b40daac8376453289681d160c4848a2e82de86389",
+      "size": 2739,
+      "status": "PASS"
+    },
+    {
+      "path": "runtime/orchestrator.py",
+      "sha256": "908d90071e4f892dc2e139f2e85980261a7549993d5f6038e4ab2c0d7158c4a3",
+      "size": 3271,
       "status": "PASS"
     },
     {
@@ -119,14 +156,14 @@
     },
     {
       "path": "standards/STANDARD_INDEX.json",
-      "sha256": "aff363af30668d468d8f13044ba531dc7c508f57bbfb50359702bf28194b3cc9",
+      "sha256": "dfcd83f05446a5e60ef3c6e85384805b40d93f0f2d7e21d7b3825ad0fd0666c9",
       "size": 1385,
       "status": "PASS"
     },
     {
       "path": "standards/START_STANDARD.json",
-      "sha256": "fa1b35b3e504abfb6377344a43d90c15135f910c3d0b1a0e9e96c20d863202d9",
-      "size": 559,
+      "sha256": "38bee372ecc2dfcc8b768f6cdc696ed657eccfb9917e79645f445b40ff730cf8",
+      "size": 1607,
       "status": "PASS"
     },
     {
@@ -145,6 +182,12 @@
       "path": "tests/test_error_handling.py",
       "sha256": "4ead233a5689c576e181db1b58c528591895034fd81f768871c57028c3d5205d",
       "size": 651,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i003_state_machine.py",
+      "sha256": "2366254c8421bceaff6208d8b320967910ca7688e11cbd2c4d28927211e1175c",
+      "size": 3357,
       "status": "PASS"
     },
     {
@@ -196,9 +239,15 @@
       "status": "PASS"
     },
     {
+      "path": "tools/autopilot/i003_validator.py",
+      "sha256": "1cf36baa1cbbb7b559ad2cb6f6df5dd1ac41040b111b347a835db4ec18e2d119",
+      "size": 4291,
+      "status": "PASS"
+    },
+    {
       "path": "tools/autopilot/manifest_builder.py",
-      "sha256": "b85e6f4c139c5bf36b3cc68c6a0d32f37e5660b33a1690d100cd8d708a2bbd48",
-      "size": 4888,
+      "sha256": "0da145ecc8a629b581462dd360c7c64c689785d125178aa5b3171adfe336898c",
+      "size": 5336,
       "status": "PASS"
     },
     {
@@ -212,7 +261,13 @@
       "sha256": "d7b5360be853938839fc564dbfa2e3e28fbb20eeac5d7fde8a8c55f2de72f1a3",
       "size": 6491,
       "status": "PASS"
+    },
+    {
+      "path": "tools/start_orchestrator.py",
+      "sha256": "72e8055a454bc3117f0a675d0073a36500e807be351ed407e3a76b3c45034857",
+      "size": 2391,
+      "status": "PASS"
     }
   ],
-  "count": 35
+  "count": 44
 }

@@ -1,29 +1,30 @@
 {
   "schema_version": 1,
-  "version": "0.2.0-dev.1",
+  "version": "0.3.0-dev.1",
+  "iteration": "I003",
   "manifests": [
     {
       "path": "SOURCE_MANIFEST.json",
-      "sha256": "cf9da14bbbbbdf673dc51ec3b7ff0543882a637ce70077e6ec1367070bbe3041",
-      "size": 6613,
+      "sha256": "b038af13ab6082634d2f33ecbf910e792f09746e733b958adf2e633038dd9613",
+      "size": 8279,
       "status": "PASS"
     },
     {
       "path": "BUILD_MANIFEST.json",
-      "sha256": "f8a22895615314c0bde5237a74fbae783d06cf09038b915c663199f0e1164240",
-      "size": 1853,
+      "sha256": "018494b7113611285eb466e821e899c6302406fc535b7184ae47da71d6119b0b",
+      "size": 3333,
       "status": "PASS"
     },
     {
       "path": "RELEASE_MANIFEST.json",
-      "sha256": "db5aa440fd3cb51b6f8629f7d08f3ebac73d6df5c61116393301271cef5abaa6",
-      "size": 197,
+      "sha256": "616c2bb8d142854473670cd9e4e4de4a0afb1d7fc0a8fdeda60051c0aaab9294",
+      "size": 237,
       "status": "PASS"
     },
     {
       "path": "EVIDENCE_MANIFEST.json",
-      "sha256": "6eee72696bc8bbd3a587bed4dfe7ab7f771c628d7a965309c2a0af677e29c259",
-      "size": 1220,
+      "sha256": "420fc476fb190c7ef66615fc0c27a19e7d81b9172511ced8dfff41ad7386c847",
+      "size": 1628,
       "status": "PASS"
     }
   ]

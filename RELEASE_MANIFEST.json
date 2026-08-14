@@ -1,7 +1,8 @@
 {
   "schema_version": 1,
   "manifest_type": "RELEASE",
-  "version": "0.2.0-dev.1",
+  "version": "0.3.0-dev.1",
+  "iteration": "I003",
   "state": "NOT_BUILT",
-  "reason": "I002 ist Foundation; ein ausführbares Releasepaket existiert noch nicht."
+  "reason": "I003 ist noch Entwicklungsstand; ein freigegebenes Endnutzer-Releasepaket existiert nicht."
 }

@@ -20,3 +20,12 @@
 - qualifizierte Evidence wird vollautomatisch persistiert und nachgeprüft
 - vollständige Repositoryprüfung je Iteration als Pflicht bestätigt
 - gespeicherter Evidence-Stand erhält eine abschließende unabhängige Remote-Nachqualifikation ohne weitere automatische Repository-Änderung
+
+## 0.3.0-dev.1 — I003
+- Klick-&-Start-Orchestrator als deterministische Zustandsmaschine eingeführt
+- verbindliche PRECHECK/ACTION/POSTCHECK-Kette implementiert
+- reale Workspace-, Konfigurations- und SQLite-Prüfungen ergänzt
+- sichere Recovery- und Quarantänepfade ergänzt
+- Fault-Injection-Matrix mit Schutz vor realen Nutzerdaten eingeführt
+- detailliertes maschinen- und laienlesbares Startfeedback ergänzt
+- zweistufige Remote-Qualifikation mit automatischer Verifikation des Evidence-Commits eingeführt

@@ -159,3 +159,15 @@ Den Repository-Vollständigkeitsvertrag um eine zweite unabhängige Remote-Tree-
 
 ### Nächster logischer Schritt
 I003: Klick-&-Start-Orchestrator als testbare Zustandsmaschine mit Vorprüfung, Aktion, Nachprüfung, Recovery und detailliertem Nutzerfeedback.
+
+## I003 — Klick-&-Start-Orchestrator
+- Version: `0.3.0-dev.1`
+- deterministische Zustände: INIT, CHECKING, READY, DEGRADED, RECOVERY_REQUIRED, BLOCKED
+- jeder vollständige Schritt: PRECHECK → ACTION → POSTCHECK
+- reale Workspace-Schreibprobe und SQLite-Integritätsprüfung
+- sichere Konfigurationsquarantäne statt stiller Überschreibung
+- detailliertes Nutzerfeedback mit Fehler-ID und automatischer Maßnahme
+- Fault-Injection ausschließlich in temporären Test-Workspaces
+
+### Nächster logischer Schritt
+I004: Kalender-Domainkern und SQLite-Persistenzschicht zunächst GUI-unabhängig entwickeln und qualifizieren.

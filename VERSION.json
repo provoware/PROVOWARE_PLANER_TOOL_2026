@@ -2,11 +2,11 @@
   "schema_version": 1,
   "project_id": "PROVOWARE-PLANER-2026",
   "project_name": "PROVOWARE PLANER TOOL 2026",
-  "version": "0.2.0-dev.1",
+  "version": "0.3.0-dev.1",
   "phase": "foundation",
-  "iteration": "I002",
-  "checkpoint": "C002-MANIFEST-EVIDENCE-HARDENING",
-  "build_revision": 2,
+  "iteration": "I003",
+  "checkpoint": "C003-KLICK-START-ORCHESTRATOR",
+  "build_revision": 3,
   "release_channel": "development",
   "lineage_id": "PROVOWARE-PLANER-2026-LINEAGE-001"
 }

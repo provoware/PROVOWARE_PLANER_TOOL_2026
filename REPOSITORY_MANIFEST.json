@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "manifest_id": "PROVOWARE-REPOSITORY-MANIFEST",
-  "version": "0.2.0-dev.1",
-  "iteration": "I002",
-  "expected_file_count": 45,
+  "version": "0.3.0-dev.1",
+  "iteration": "I003",
+  "expected_file_count": 55,
   "full_check_each_iteration": true,
   "volatile_attestations": [
     "REMOTE_TREE_RECEIPT.json",
@@ -12,6 +12,7 @@
   "expected_paths": [
     ".github/workflows/foundation-qualifikation.yml",
     ".github/workflows/i002-qualifikation.yml",
+    ".github/workflows/i003-qualifikation.yml",
     "BUILD_MANIFEST.json",
     "CHANGELOG.md",
     "EVIDENCE_MANIFEST.json",
@@ -28,7 +29,13 @@
     "TODO.md",
     "VERSION.json",
     "docs/I002_MANIFEST_EVIDENCE_HARDENING.md",
+    "docs/I003_KLICK_START_ORCHESTRATOR.md",
     "errors/FEHLERKATALOG.json",
+    "runtime/__init__.py",
+    "runtime/checks.py",
+    "runtime/faults.py",
+    "runtime/model.py",
+    "runtime/orchestrator.py",
     "standards/ACCESSIBILITY_STANDARD.json",
     "standards/DATA_STANDARD.json",
     "standards/DOKUMENTATIONS_STANDARD.json",
@@ -44,6 +51,7 @@
     "standards/TEST_STANDARD.json",
     "standards/UI_STANDARD.json",
     "tests/test_error_handling.py",
+    "tests/test_i003_state_machine.py",
     "tests/test_manifest_builder.py",
     "tests/test_remote_tree_validator.py",
     "tests/test_standard_validator.py",
@@ -52,9 +60,11 @@
     "tools/autopilot/autopilot.py",
     "tools/autopilot/error_handling.py",
     "tools/autopilot/i002_validator.py",
+    "tools/autopilot/i003_validator.py",
     "tools/autopilot/manifest_builder.py",
     "tools/autopilot/remote_tree_validator.py",
-    "tools/autopilot/standard_validator.py"
+    "tools/autopilot/standard_validator.py",
+    "tools/start_orchestrator.py"
   ],
   "project_id": "PROVOWARE-PLANER-2026",
   "ignored_path_parts": [
@@ -65,6 +75,7 @@
   "files": [
     ".github/workflows/foundation-qualifikation.yml",
     ".github/workflows/i002-qualifikation.yml",
+    ".github/workflows/i003-qualifikation.yml",
     "BUILD_MANIFEST.json",
     "CHANGELOG.md",
     "EVIDENCE_MANIFEST.json",
@@ -81,7 +92,13 @@
     "TODO.md",
     "VERSION.json",
     "docs/I002_MANIFEST_EVIDENCE_HARDENING.md",
+    "docs/I003_KLICK_START_ORCHESTRATOR.md",
     "errors/FEHLERKATALOG.json",
+    "runtime/__init__.py",
+    "runtime/checks.py",
+    "runtime/faults.py",
+    "runtime/model.py",
+    "runtime/orchestrator.py",
     "standards/ACCESSIBILITY_STANDARD.json",
     "standards/DATA_STANDARD.json",
     "standards/DOKUMENTATIONS_STANDARD.json",
@@ -97,6 +114,7 @@
     "standards/TEST_STANDARD.json",
     "standards/UI_STANDARD.json",
     "tests/test_error_handling.py",
+    "tests/test_i003_state_machine.py",
     "tests/test_manifest_builder.py",
     "tests/test_remote_tree_validator.py",
     "tests/test_standard_validator.py",
@@ -105,8 +123,10 @@
     "tools/autopilot/autopilot.py",
     "tools/autopilot/error_handling.py",
     "tools/autopilot/i002_validator.py",
+    "tools/autopilot/i003_validator.py",
     "tools/autopilot/manifest_builder.py",
     "tools/autopilot/remote_tree_validator.py",
-    "tools/autopilot/standard_validator.py"
+    "tools/autopilot/standard_validator.py",
+    "tools/start_orchestrator.py"
   ]
 }

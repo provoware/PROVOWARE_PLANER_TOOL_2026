@@ -1,19 +1,32 @@
 {
   "schema_version": 1,
   "manifest_type": "EVIDENCE",
-  "version": "0.2.0-dev.1",
+  "version": "0.3.0-dev.1",
+  "iteration": "I003",
   "attestation_model": "subject_commit_plus_evidence_overlay",
   "entries": [
     {
+      "path": "docs/I003_KLICK_START_ORCHESTRATOR.md",
+      "sha256": "5d507b6fe6bd7581b0dd06673dc39c48be9a03c3f944a25ebef96d302b8d08ff",
+      "size": 3373,
+      "status": "PASS"
+    },
+    {
       "path": "errors/FEHLERKATALOG.json",
-      "sha256": "c1575628841aec2f3054fdc82072cf69dd4cfa7d3201eee44645ef952dd3ff43",
-      "size": 2090,
+      "sha256": "f98d5700ba48326891735e17accb0532463ebb0af13744394d6800e331d7bdf6",
+      "size": 9500,
       "status": "PASS"
     },
     {
       "path": "tests/test_error_handling.py",
       "sha256": "4ead233a5689c576e181db1b58c528591895034fd81f768871c57028c3d5205d",
       "size": 651,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i003_state_machine.py",
+      "sha256": "2366254c8421bceaff6208d8b320967910ca7688e11cbd2c4d28927211e1175c",
+      "size": 3357,
       "status": "PASS"
     },
     {
@@ -35,7 +48,7 @@
       "status": "PASS"
     }
   ],
-  "count": 5,
+  "count": 7,
   "remote_receipt": "REMOTE_TREE_RECEIPT.json",
   "qualification_report": "QUALIFICATION_REPORT.json"
 }

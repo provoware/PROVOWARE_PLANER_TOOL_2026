@@ -2,20 +2,22 @@
   "schema_version": 1,
   "state": "QUALIFIED",
   "result": "PASS",
-  "subject_commit": "6512a0e01ecd57c5de7b9283786e2d080fca4472",
-  "subject_tree": "a508523a8758338d8c2069888bb6d7da16a1495f",
-  "workflow_run_id": 31754874318,
-  "closure_commit": "01b02bed5ac9292ef2e95ba79c0c00f6c31118ef",
-  "closure_tree": "85b35af0d7399b22ae962a8eac0a55bbaf57a517",
+  "iteration": "I003",
+  "subject_commit": "c2681c4d32c5b17e1817e32df509e5bd84b4669d",
+  "subject_tree": "4bfbc123a77b9167d94cae24b096b5f4481b6399",
+  "workflow_run_id": 31759671057,
   "gates": [
     "stored_receipt_validation",
     "repository_inventory",
     "sha256_inventory",
     "manifest_chain",
-    "i002_validator",
-    "remote_tree_paths_modes",
+    "i002_regression",
+    "i003_validator",
+    "healthy_runtime",
+    "fault_injection_matrix",
     "unit_tests",
     "foundation_validator",
-    "autopilot"
+    "autopilot",
+    "remote_tree_paths_modes"
   ]
 }

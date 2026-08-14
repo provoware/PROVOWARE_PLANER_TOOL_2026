@@ -41,7 +41,12 @@
     "machine_readable_evidence_required_for_release": true,
     "manifest_chain_required": true,
     "sha256_inventory_required": true,
-    "error_catalog_required": true
+    "error_catalog_required": true,
+    "deterministic_start_state_machine_required": true,
+    "fault_injection_required": true,
+    "safe_recovery_required": true,
+    "real_workspace_probe_required": true,
+    "runtime_user_feedback_required": true
   },
   "definition_of_ready": [
     "ziel_eindeutig",
@@ -60,8 +65,8 @@
     "remote_verifikation_pass"
   ],
   "foundation": {
-    "current_iteration": "I002",
-    "current_checkpoint": "C002-MANIFEST-EVIDENCE-HARDENING",
-    "version": "0.2.0-dev.1"
+    "current_iteration": "I003",
+    "current_checkpoint": "C003-KLICK-START-ORCHESTRATOR",
+    "version": "0.3.0-dev.1"
   }
 }

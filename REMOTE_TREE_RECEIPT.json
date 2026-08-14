@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "state": "ATTESTED",
-  "subject_commit": "6512a0e01ecd57c5de7b9283786e2d080fca4472",
-  "subject_tree": "a508523a8758338d8c2069888bb6d7da16a1495f",
-  "entry_count": 45,
+  "subject_commit": "c2681c4d32c5b17e1817e32df509e5bd84b4669d",
+  "subject_tree": "4bfbc123a77b9167d94cae24b096b5f4481b6399",
+  "entry_count": 55,
   "subject_tree_entries": [
     {
       "path": ".github/workflows/foundation-qualifikation.yml",
@@ -17,6 +17,13 @@
       "blob_sha": "9f4e45eab26c4e99fe9f582b2ee8a9b78e4bab26",
       "mode": "100644",
       "size": 12195,
+      "status": "PASS"
+    },
+    {
+      "path": ".github/workflows/i003-qualifikation.yml",
+      "blob_sha": "63f7d604c9420ee6e9b0955f934628ea6d36a084",
+      "mode": "100644",
+      "size": 18055,
       "status": "PASS"
     },
     {
@@ -63,9 +70,9 @@
     },
     {
       "path": "QUALIFICATION_REPORT.json",
-      "blob_sha": "d3b8919994d17e04b17367734fdf06241538de2f",
+      "blob_sha": "6ac76c352ed4a07b9ea16b1b77c8babab5d0844a",
       "mode": "100644",
-      "size": 470,
+      "size": 596,
       "status": "PASS"
     },
     {
@@ -84,9 +91,9 @@
     },
     {
       "path": "REMOTE_TREE_RECEIPT.json",
-      "blob_sha": "b85fe8b8093a967a98feeb9b56f80e82ed0b2797",
+      "blob_sha": "84a066f4b3976ded69d8c9dc6485544c90a76e27",
       "mode": "100644",
-      "size": 8655,
+      "size": 8653,
       "status": "PASS"
     },
     {
@@ -98,9 +105,9 @@
     },
     {
       "path": "SHA256_DATEI_INVENTAR.json",
-      "blob_sha": "dfbd2554e72c8930b85ae5de663e670f0d70dec0",
+      "blob_sha": "d30d9e111f0ef4e9365034608df257b36a0ef2cb",
       "mode": "100644",
-      "size": 6257,
+      "size": 8065,
       "status": "PASS"
     },
     {
@@ -132,10 +139,52 @@
       "status": "PASS"
     },
     {
-      "path": "errors/FEHLERKATALOG.json",
-      "blob_sha": "ad377dff80ea50a61fb47fbc1b2e5a2930637b20",
+      "path": "docs/I003_KLICK_START_ORCHESTRATOR.md",
+      "blob_sha": "8191189b79b71cf12c8d88dc28263996169a5488",
       "mode": "100644",
-      "size": 2090,
+      "size": 3373,
+      "status": "PASS"
+    },
+    {
+      "path": "errors/FEHLERKATALOG.json",
+      "blob_sha": "59341beeb37b620abb90ed3047b2c52e4433e140",
+      "mode": "100644",
+      "size": 9500,
+      "status": "PASS"
+    },
+    {
+      "path": "runtime/__init__.py",
+      "blob_sha": "27a5c4e828debc8742102a64d914b96faf33cad0",
+      "mode": "100644",
+      "size": 43,
+      "status": "PASS"
+    },
+    {
+      "path": "runtime/checks.py",
+      "blob_sha": "b45e8a08c38687b18423fa2f1236e9717f600688",
+      "mode": "100644",
+      "size": 20296,
+      "status": "PASS"
+    },
+    {
+      "path": "runtime/faults.py",
+      "blob_sha": "61d9e60ed5b30df2ec44b1fb4d3592f7b9a415ea",
+      "mode": "100644",
+      "size": 2037,
+      "status": "PASS"
+    },
+    {
+      "path": "runtime/model.py",
+      "blob_sha": "e9adaf8545fb159291e0e7451919e2c821dc288a",
+      "mode": "100644",
+      "size": 2739,
+      "status": "PASS"
+    },
+    {
+      "path": "runtime/orchestrator.py",
+      "blob_sha": "bbff699e1a5dab8b5fbe7a16fa1ed3fe994ccc6c",
+      "mode": "100644",
+      "size": 3271,
       "status": "PASS"
     },
     {
@@ -210,16 +259,16 @@
     },
     {
       "path": "standards/STANDARD_INDEX.json",
-      "blob_sha": "f1ee5e581e8212bf5b88ed04eeb29c09efc43fa0",
+      "blob_sha": "e4c8c1682901d1b10642e1b2ca3a9fddde7517ec",
       "mode": "100644",
       "size": 1385,
       "status": "PASS"
     },
     {
       "path": "standards/START_STANDARD.json",
-      "blob_sha": "c1dda01f2eaab34bb295f862e71e6d42c9d0e8d2",
+      "blob_sha": "ca30b21aba2e030d678947d3e49af060e4b5566c",
       "mode": "100644",
-      "size": 559,
+      "size": 1607,
       "status": "PASS"
     },
     {
@@ -241,6 +290,13 @@
       "blob_sha": "db216e0006a39ae3af2baaf34c5c010b3e9c8340",
       "mode": "100644",
       "size": 651,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i003_state_machine.py",
+      "blob_sha": "5d6bf47b9241f22271ee787e3bbbeb7cbdadda54",
+      "mode": "100644",
+      "size": 3357,
       "status": "PASS"
     },
     {
@@ -300,10 +356,17 @@
       "status": "PASS"
     },
     {
-      "path": "tools/autopilot/manifest_builder.py",
-      "blob_sha": "ed729586131194fd2f7c71ca36b8f18b97a2b071",
+      "path": "tools/autopilot/i003_validator.py",
+      "blob_sha": "398e825d6b1b400453bd528736e309aa476f93c5",
       "mode": "100644",
-      "size": 4888,
+      "size": 4291,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/autopilot/manifest_builder.py",
+      "blob_sha": "7e9f981602aa7443c4ab7921e04be7a6ae0862aa",
+      "mode": "100644",
+      "size": 5336,
       "status": "PASS"
     },
     {
@@ -318,6 +381,13 @@
       "blob_sha": "c2672d870f6a0acc5036c138cdfe0dc2fe99e3fe",
       "mode": "100644",
       "size": 6491,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/start_orchestrator.py",
+      "blob_sha": "96c3f43d9e3a4942f8ff2d6f4afec35cbd72b99a",
+      "mode": "100644",
+      "size": 2391,
       "status": "PASS"
     }
   ]
