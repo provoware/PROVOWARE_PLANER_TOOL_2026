@@ -25,6 +25,39 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _database_state_sha256(path: Path) -> str:
+    """Bindet den aktiven SQLite-Zustand einschließlich WAL rein lesend.
+
+    SHM wird bewusst nicht gebunden, weil es Lock-/Shared-Memory-Zustand und keine
+    kanonischen Nutzdaten enthält. So werden WAL-Änderungen erkannt, ohne reine
+    Leseraktivität als fachliche Datenänderung zu behandeln.
+    """
+    path = Path(path)
+    if not path.is_file():
+        return ABSENT_SHA256
+    digest = hashlib.sha256()
+    for role, item in (("MAIN", path), ("WAL", Path(str(path) + "-wal"))):
+        digest.update(role.encode("ascii") + b"\0")
+        if not item.is_file():
+            digest.update(b"ABSENT\0")
+            continue
+        digest.update(str(item.stat().st_size).encode("ascii") + b"\0")
+        with item.open("rb") as handle:
+            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _database_state_size(path: Path) -> int:
+    if not Path(path).is_file():
+        return 0
+    total = Path(path).stat().st_size
+    wal = Path(str(path) + "-wal")
+    if wal.is_file():
+        total += wal.stat().st_size
+    return total
+
+
 def _inside(path: Path, root: Path) -> bool:
     try:
         path.relative_to(root)
@@ -77,25 +110,17 @@ class RestoreService:
             resolved = supplied.resolve(strict=True)
         except OSError:
             return BackupCandidate(
-                backup_path=str(supplied),
-                backup_sha256="",
-                backup_size=0,
-                manifest_path=str(_manifest_path(supplied)),
-                manifest_sha256="",
-                schema_version=-1,
-                quick_check="NOT_RUN",
-                state=CandidateState.BLOCKED,
+                backup_path=str(supplied), backup_sha256="", backup_size=0,
+                manifest_path=str(_manifest_path(supplied)), manifest_sha256="",
+                schema_version=-1, quick_check="NOT_RUN", state=CandidateState.BLOCKED,
                 reason="RESTORE-CANDIDATE-001: Sicherungsdatei fehlt",
             )
 
         manifest = _manifest_path(resolved)
         base = dict(
-            backup_path=str(resolved),
-            backup_sha256="",
+            backup_path=str(resolved), backup_sha256="",
             backup_size=resolved.stat().st_size if resolved.is_file() else 0,
-            manifest_path=str(manifest),
-            manifest_sha256="",
-            schema_version=-1,
+            manifest_path=str(manifest), manifest_sha256="", schema_version=-1,
             quick_check="NOT_RUN",
         )
         if not _inside(resolved, self.backup_root):
@@ -110,23 +135,14 @@ class RestoreService:
         try:
             data = json.loads(manifest.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
-            return BackupCandidate(
-                **{**base, "backup_sha256": backup_sha, "manifest_sha256": manifest_sha},
-                state=CandidateState.BLOCKED,
-                reason="RESTORE-CANDIDATE-003: Sicherungsmanifest ist ungültig",
-            )
+            return BackupCandidate(**{**base, "backup_sha256": backup_sha, "manifest_sha256": manifest_sha}, state=CandidateState.BLOCKED, reason="RESTORE-CANDIDATE-003: Sicherungsmanifest ist ungültig")
 
         size = resolved.stat().st_size
         if data.get("database_sha256") != backup_sha or int(data.get("size", -1)) != size:
             return BackupCandidate(
-                backup_path=str(resolved),
-                backup_sha256=backup_sha,
-                backup_size=size,
-                manifest_path=str(manifest),
-                manifest_sha256=manifest_sha,
-                schema_version=-1,
-                quick_check="NOT_RUN",
-                state=CandidateState.BLOCKED,
+                backup_path=str(resolved), backup_sha256=backup_sha, backup_size=size,
+                manifest_path=str(manifest), manifest_sha256=manifest_sha,
+                schema_version=-1, quick_check="NOT_RUN", state=CandidateState.BLOCKED,
                 reason="RESTORE-CANDIDATE-HASH-001: Manifest, Größe oder Sicherungs-Hash stimmen nicht überein",
             )
 
@@ -134,48 +150,29 @@ class RestoreService:
             quick_check, schema_version = _readonly_sqlite_probe(resolved)
         except RestoreRejectedError as exc:
             return BackupCandidate(
-                backup_path=str(resolved),
-                backup_sha256=backup_sha,
-                backup_size=size,
-                manifest_path=str(manifest),
-                manifest_sha256=manifest_sha,
-                schema_version=-1,
-                quick_check="FAIL",
-                state=CandidateState.BLOCKED,
+                backup_path=str(resolved), backup_sha256=backup_sha, backup_size=size,
+                manifest_path=str(manifest), manifest_sha256=manifest_sha,
+                schema_version=-1, quick_check="FAIL", state=CandidateState.BLOCKED,
                 reason=str(exc),
             )
         if quick_check != "ok":
             return BackupCandidate(
-                backup_path=str(resolved),
-                backup_sha256=backup_sha,
-                backup_size=size,
-                manifest_path=str(manifest),
-                manifest_sha256=manifest_sha,
-                schema_version=schema_version,
-                quick_check=quick_check,
-                state=CandidateState.BLOCKED,
+                backup_path=str(resolved), backup_sha256=backup_sha, backup_size=size,
+                manifest_path=str(manifest), manifest_sha256=manifest_sha,
+                schema_version=schema_version, quick_check=quick_check, state=CandidateState.BLOCKED,
                 reason=f"RESTORE-CANDIDATE-004: SQLite quick_check fehlgeschlagen: {quick_check}",
             )
         if schema_version != self.expected_schema_version:
             return BackupCandidate(
-                backup_path=str(resolved),
-                backup_sha256=backup_sha,
-                backup_size=size,
-                manifest_path=str(manifest),
-                manifest_sha256=manifest_sha,
-                schema_version=schema_version,
-                quick_check=quick_check,
-                state=CandidateState.BLOCKED,
+                backup_path=str(resolved), backup_sha256=backup_sha, backup_size=size,
+                manifest_path=str(manifest), manifest_sha256=manifest_sha,
+                schema_version=schema_version, quick_check=quick_check, state=CandidateState.BLOCKED,
                 reason=f"RESTORE-SCHEMA-001: Sicherungsschema {schema_version} ist nicht der erwartete Stand {self.expected_schema_version}",
             )
         return BackupCandidate(
-            backup_path=str(resolved),
-            backup_sha256=backup_sha,
-            backup_size=size,
-            manifest_path=str(manifest),
-            manifest_sha256=manifest_sha,
-            schema_version=schema_version,
-            quick_check=quick_check,
+            backup_path=str(resolved), backup_sha256=backup_sha, backup_size=size,
+            manifest_path=str(manifest), manifest_sha256=manifest_sha,
+            schema_version=schema_version, quick_check=quick_check,
             state=CandidateState.QUALIFIED,
             reason="RESTORE-CANDIDATE-OK: Sicherung ist qualifiziert",
         )
@@ -185,8 +182,6 @@ class RestoreService:
         if not candidate.qualified:
             raise RestoreRejectedError(candidate.reason)
         target_exists = self.target_database.is_file()
-        target_sha = _sha256(self.target_database) if target_exists else ABSENT_SHA256
-        target_size = self.target_database.stat().st_size if target_exists else 0
         return RestorePlan.create(
             backup_path=candidate.backup_path,
             backup_sha256=candidate.backup_sha256,
@@ -196,10 +191,17 @@ class RestoreService:
             backup_schema_version=candidate.schema_version,
             target_path=str(self.target_database),
             target_existed=target_exists,
-            target_sha256=target_sha,
-            target_size=target_size,
+            target_sha256=_database_state_sha256(self.target_database),
+            target_size=_database_state_size(self.target_database),
             prepared_at=datetime.now(timezone.utc).isoformat(),
         )
+
+    def _verify_target_state(self, plan: RestorePlan) -> None:
+        current_exists = self.target_database.is_file()
+        current_sha = _database_state_sha256(self.target_database)
+        current_size = _database_state_size(self.target_database)
+        if (current_exists, current_sha, current_size) != (plan.target_existed, plan.target_sha256, plan.target_size):
+            raise RestoreRejectedError("RESTORE-STALE-001: aktive Datenbank wurde nach Planerstellung verändert")
 
     def _verify_plan(self, plan: RestorePlan) -> BackupCandidate:
         if not isinstance(plan, RestorePlan) or not plan.verify_hash():
@@ -210,34 +212,26 @@ class RestoreService:
         if not candidate.qualified:
             raise RestoreRejectedError(candidate.reason)
         expected_candidate = (
-            plan.backup_path,
-            plan.backup_sha256,
-            plan.backup_size,
-            plan.manifest_path,
-            plan.manifest_sha256,
-            plan.backup_schema_version,
+            plan.backup_path, plan.backup_sha256, plan.backup_size,
+            plan.manifest_path, plan.manifest_sha256, plan.backup_schema_version,
         )
         current_candidate = (
-            candidate.backup_path,
-            candidate.backup_sha256,
-            candidate.backup_size,
-            candidate.manifest_path,
-            candidate.manifest_sha256,
-            candidate.schema_version,
+            candidate.backup_path, candidate.backup_sha256, candidate.backup_size,
+            candidate.manifest_path, candidate.manifest_sha256, candidate.schema_version,
         )
         if current_candidate != expected_candidate:
             raise RestoreRejectedError("RESTORE-PLAN-STALE-001: Sicherung oder Manifest wurde nach Planerstellung verändert")
-        current_exists = self.target_database.is_file()
-        current_sha = _sha256(self.target_database) if current_exists else ABSENT_SHA256
-        current_size = self.target_database.stat().st_size if current_exists else 0
-        if (current_exists, current_sha, current_size) != (plan.target_existed, plan.target_sha256, plan.target_size):
-            raise RestoreRejectedError("RESTORE-STALE-001: aktive Datenbank wurde nach Planerstellung verändert")
+        self._verify_target_state(plan)
         return candidate
 
     def commit_restore(self, plan: RestorePlan) -> dict:
         self._fault("precheck_begin")
         candidate = self._verify_plan(plan)
         self._fault("precheck_pass")
+
+        def final_precheck(_target: Path) -> None:
+            self._fault("physical_core_precheck")
+            self._verify_target_state(plan)
 
         def postcheck(path: Path) -> None:
             self._fault("after_replace_before_postcheck")
@@ -249,10 +243,9 @@ class RestoreService:
             self._fault("postcheck_pass")
 
         restore_backup(
-            Path(plan.backup_path),
-            self.target_database,
+            Path(plan.backup_path), self.target_database,
             expected_sha256=plan.backup_sha256,
-            expected_target_sha256=plan.target_sha256,
+            precheck=final_precheck,
             postcheck=postcheck,
         )
         return {
@@ -260,7 +253,5 @@ class RestoreService:
             "plan_sha256": plan.plan_sha256,
             "restored_database_sha256": _sha256(self.target_database),
             "schema_version": self.expected_schema_version,
-            "precheck": "PASS",
-            "commit": "PASS",
-            "postcheck": "PASS",
+            "precheck": "PASS", "commit": "PASS", "postcheck": "PASS",
         }
