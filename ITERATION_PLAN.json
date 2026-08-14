@@ -67,11 +67,11 @@
       "SOURCE_MANIFEST.json",
       "TODO.md",
       "VERSION.json",
-      "runtime/checks.py",
       "standards/MANIFEST_STANDARD.json",
       "standards/RELEASE_STANDARD.json",
       "standards/STANDARD_INDEX.json",
-      "tools/autopilot/autopilot.py"
+      "tools/autopilot/autopilot.py",
+      "tools/autopilot/i013_validator.py"
     ],
     "delete": []
   },
