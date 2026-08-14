@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "state": "ATTESTED",
-  "subject_commit": "b65462ae017645823fe90ddf13ab76925afb47d5",
-  "subject_tree": "5b4721bcad1d8924cbc8ee2fd990fe9f1243ab38",
+  "subject_commit": "d345a8435a5ec6975d206d214ff844e55e60bf8b",
+  "subject_tree": "cde4506cf89dbdd7ad40825de2350fc49d1bbf34",
   "entry_count": 97,
   "subject_tree_entries": [
     {
@@ -42,105 +42,105 @@
     },
     {
       "path": "BUILD_MANIFEST.json",
-      "blob_sha": "4cedf79107dde9db0b1740923d8c6cd17fe90272",
+      "blob_sha": "1433e581d3ca018a3ef1ab0e47263da0313c53eb",
       "mode": "100644",
-      "size": 3724,
+      "size": 4115,
       "status": "PASS"
     },
     {
       "path": "CHANGELOG.md",
-      "blob_sha": "f79217dd594f9559ebd4036321ad98e282050655",
+      "blob_sha": "efc95e6f284e17f2b1d8c6bb2e2463c73ca79db4",
       "mode": "100644",
-      "size": 2412,
+      "size": 3034,
       "status": "PASS"
     },
     {
       "path": "EVIDENCE_MANIFEST.json",
-      "blob_sha": "06873b6206e659b727935bbaa6aa44c29eb55502",
+      "blob_sha": "6fa3272cd84d9eb520e62b01efd2ca06a4928525",
       "mode": "100644",
-      "size": 2387,
+      "size": 3537,
       "status": "PASS"
     },
     {
       "path": "MANIFEST_INDEX.json",
-      "blob_sha": "f2878f79cbb00b16c8a2c0d73c8bf28538cfee9b",
+      "blob_sha": "b74421a527c7f6702cbcfb5c978ed9dbde97f44a",
       "mode": "100644",
       "size": 812,
       "status": "PASS"
     },
     {
       "path": "PROJECT_CONTRACT.json",
-      "blob_sha": "3e8bacfac38c2f4950a7c7ff09f3c7e378276e7a",
+      "blob_sha": "71394cdae0f47ed786ee319b5ac1a8caf83cb36d",
       "mode": "100644",
-      "size": 2326,
+      "size": 2532,
       "status": "PASS"
     },
     {
       "path": "PROJEKTSTATUS.json",
-      "blob_sha": "8ee61e2f5d0c5053bb664f9db265804bd6930f22",
+      "blob_sha": "b8b8684e28aed147c7f186b83bda2d7b0aec936d",
       "mode": "100644",
-      "size": 994,
+      "size": 1015,
       "status": "PASS"
     },
     {
       "path": "QUALIFICATION_REPORT.json",
-      "blob_sha": "b9eb759c4aaa87570bfe34e3efabd175e6d21598",
+      "blob_sha": "609781493c6576afa30b2ce85b70b9fa84e8d70a",
       "mode": "100644",
-      "size": 645,
+      "size": 771,
       "status": "PASS"
     },
     {
       "path": "README.md",
-      "blob_sha": "b10cff5729228fd98de7e6470ef864e93aa35e4e",
+      "blob_sha": "1416d700d1fca49bb8cc4b9b430b6b2b6d91bedd",
       "mode": "100644",
-      "size": 10280,
+      "size": 11032,
       "status": "PASS"
     },
     {
       "path": "RELEASE_MANIFEST.json",
-      "blob_sha": "d0643480d4931fd9b74211ed42d02e3bc28cb671",
+      "blob_sha": "a16be39a7edb20b37b0a16b8c95d625bbcb53f5b",
       "mode": "100644",
       "size": 237,
       "status": "PASS"
     },
     {
       "path": "REMOTE_TREE_RECEIPT.json",
-      "blob_sha": "903d6f9e4de80037f37b354431b7e5d715ceb9cc",
+      "blob_sha": "7a47969c2e1ced073083e7563919f478ab3acb4a",
       "mode": "100644",
-      "size": 14249,
+      "size": 18366,
       "status": "PASS"
     },
     {
       "path": "REPOSITORY_MANIFEST.json",
-      "blob_sha": "ea0f7fc4ccb34ef977163f1ebc12dc6bd8d88370",
+      "blob_sha": "81b2e1eb0d19c4d63ded8c78176e39163a389f44",
       "mode": "100644",
-      "size": 5759,
+      "size": 7309,
       "status": "PASS"
     },
     {
       "path": "SHA256_DATEI_INVENTAR.json",
-      "blob_sha": "08f6494a951a8ce711d747e2ae35814423c37d8a",
+      "blob_sha": "7db7a0f9dd09a7886ba53bce6489da5f0daf0500",
       "mode": "100644",
-      "size": 13602,
+      "size": 17673,
       "status": "PASS"
     },
     {
       "path": "SOURCE_MANIFEST.json",
-      "blob_sha": "e297862fc74b2084e64507645d98f0882be89c74",
+      "blob_sha": "4fcfdd02c5bf4f844581856f701e413a843e3b58",
       "mode": "100644",
-      "size": 11774,
+      "size": 15645,
       "status": "PASS"
     },
     {
       "path": "TODO.md",
-      "blob_sha": "78d762682e32329a8adddcd2abc3160cd63c0ed0",
+      "blob_sha": "9a53f6007d6411dc04d0a03fa973593dd50bf394",
       "mode": "100644",
-      "size": 4996,
+      "size": 5722,
       "status": "PASS"
     },
     {
       "path": "VERSION.json",
-      "blob_sha": "0fdbd9c4cdfc5770b7cd86f7b258a98f79b0dbbd",
+      "blob_sha": "fd778e059d2a0399a4c79fdb45c6b4dd2918e35e",
       "mode": "100644",
       "size": 350,
       "status": "PASS"
@@ -483,9 +483,9 @@
     },
     {
       "path": "tests/test_i005_gui_offscreen.py",
-      "blob_sha": "de01bef16e1ff414497c7277eca80ffe7f7fab9a",
+      "blob_sha": "723ac3c8d2bafe861d81806807fb66041f5c5e4a",
       "mode": "100644",
-      "size": 6554,
+      "size": 7705,
       "status": "PASS"
     },
     {

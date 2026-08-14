@@ -3,9 +3,9 @@
   "state": "QUALIFIED",
   "result": "PASS",
   "iteration": "I005",
-  "subject_commit": "b65462ae017645823fe90ddf13ab76925afb47d5",
-  "subject_tree": "5b4721bcad1d8924cbc8ee2fd990fe9f1243ab38",
-  "workflow_run_id": 31762872093,
+  "subject_commit": "d345a8435a5ec6975d206d214ff844e55e60bf8b",
+  "subject_tree": "cde4506cf89dbdd7ad40825de2350fc49d1bbf34",
+  "workflow_run_id": 31762903290,
   "gates": [
     "stored_receipt_validation",
     "repository_inventory",

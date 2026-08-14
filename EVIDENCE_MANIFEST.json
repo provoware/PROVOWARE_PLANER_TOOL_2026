@@ -67,8 +67,8 @@
     },
     {
       "path": "tests/test_i005_gui_offscreen.py",
-      "sha256": "736df36d61856076d10573bb48b7f6a270635a000206bd135f344523ebc9f30e",
-      "size": 6554,
+      "sha256": "33d66fac4866a4c2e7a9bcbd5d3cbefa89748176f359497c5a6903ae82896d5b",
+      "size": 7705,
       "status": "PASS"
     },
     {

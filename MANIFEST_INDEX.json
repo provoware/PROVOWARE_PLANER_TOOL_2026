@@ -5,7 +5,7 @@
   "manifests": [
     {
       "path": "SOURCE_MANIFEST.json",
-      "sha256": "d86aa9f13cabf8156cdca5aae2df89ccc06fdb77f2e60f8388bdcafeabe8740c",
+      "sha256": "1cf48a77aba64d3c919035655b63f0b2ba21781bbe0f195af83abc81853a6130",
       "size": 15645,
       "status": "PASS"
     },
@@ -23,7 +23,7 @@
     },
     {
       "path": "EVIDENCE_MANIFEST.json",
-      "sha256": "0c1810348177cbc752486bee248d7e52242e24d4fdb9cea44128e05f4f8d42f8",
+      "sha256": "ccae55bf8344288d27dd801e6e7cb0a95e2b06c91505ea704a4748150b8295aa",
       "size": 3537,
       "status": "PASS"
     }
