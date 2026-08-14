@@ -1,0 +1,384 @@
+name: I003 Klick Start Orchestrator Qualifikation
+
+on:
+  push:
+    branches:
+      - agent/i003-start-orchestrator
+  workflow_dispatch:
+    inputs:
+      verify_only:
+        description: Gespeicherten Evidence-Commit nur verifizieren
+        required: false
+        default: 'false'
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  qualifikation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Python 3.12 bereitstellen
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: I003-Metadaten und Dokumentation vorbereiten
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          version = json.loads(Path('VERSION.json').read_text(encoding='utf-8'))
+          version['version'] = '0.3.0-dev.1'
+          version['iteration'] = 'I003'
+          version['checkpoint'] = 'C003-KLICK-START-ORCHESTRATOR'
+          version['build_revision'] = max(int(version.get('build_revision', 1)), 3)
+          Path('VERSION.json').write_text(json.dumps(version, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          contract = json.loads(Path('PROJECT_CONTRACT.json').read_text(encoding='utf-8'))
+          contract['foundation']['current_iteration'] = 'I003'
+          contract['foundation']['current_checkpoint'] = 'C003-KLICK-START-ORCHESTRATOR'
+          contract['foundation']['version'] = '0.3.0-dev.1'
+          contract['development']['deterministic_start_state_machine_required'] = True
+          contract['development']['fault_injection_required'] = True
+          contract['development']['safe_recovery_required'] = True
+          contract['development']['real_workspace_probe_required'] = True
+          contract['development']['runtime_user_feedback_required'] = True
+          Path('PROJECT_CONTRACT.json').write_text(json.dumps(contract, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          status = json.loads(Path('PROJEKTSTATUS.json').read_text(encoding='utf-8'))
+          status['version'] = '0.3.0-dev.1'
+          status['iteration'] = 'I003'
+          status['checkpoint'] = 'C003-KLICK-START-ORCHESTRATOR'
+          status['status'] = 'QUALIFIZIERUNG_LAEUFT'
+          status['ampel'] = 'GELB'
+          status['implementation_percent'] = max(int(status.get('implementation_percent', 0)), 15)
+          status['next_logical_step'] = 'I004 Kalender-Domainkern und SQLite-Persistenzschicht'
+          status['improvement_recommendation'] = 'Vor der ersten Kalender-GUI Domainmodell, Migrationen und Service-API vollständig qualifizieren'
+          Path('PROJEKTSTATUS.json').write_text(json.dumps(status, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          def append_once(path, marker, block):
+              p = Path(path)
+              text = p.read_text(encoding='utf-8')
+              if marker not in text:
+                  p.write_text(text.rstrip() + '\n\n' + block.strip() + '\n', encoding='utf-8')
+
+          append_once('README.md', '## I003 — Klick-&-Start-Orchestrator', '''
+          ## I003 — Klick-&-Start-Orchestrator
+          - Version: `0.3.0-dev.1`
+          - deterministische Zustände: INIT, CHECKING, READY, DEGRADED, RECOVERY_REQUIRED, BLOCKED
+          - jeder vollständige Schritt: PRECHECK → ACTION → POSTCHECK
+          - reale Workspace-Schreibprobe und SQLite-Integritätsprüfung
+          - sichere Konfigurationsquarantäne statt stiller Überschreibung
+          - detailliertes Nutzerfeedback mit Fehler-ID und automatischer Maßnahme
+          - Fault-Injection ausschließlich in temporären Test-Workspaces
+
+          ### Nächster logischer Schritt
+          I004: Kalender-Domainkern und SQLite-Persistenzschicht zunächst GUI-unabhängig entwickeln und qualifizieren.
+          ''')
+          append_once('TODO.md', '## I003 — Klick-&-Start-Orchestrator', '''
+          ## I003 — Klick-&-Start-Orchestrator
+          - [x] deterministische Startzustände
+          - [x] PRECHECK → ACTION → POSTCHECK
+          - [x] System-, Runtime- und Manifestprüfung
+          - [x] persistenter Workspace mit realer Dateioperation
+          - [x] Konfigurations-Recovery mit Quarantäne
+          - [x] SQLite quick_check und Transaktionsprobe
+          - [x] Module, Logging, Ereignisbus und GUI-Übergabe
+          - [x] Nachstartprüfung und Ready-Marker
+          - [x] Pflicht-Fault-Matrix
+          - [x] automatischer zweiter Remote-Verifikationslauf
+
+          ## I004 — Nächster logischer Schritt
+          - [ ] Kalender-Domainmodell
+          - [ ] SQLite-Schema und Migrationen
+          - [ ] Service-API ohne GUI-Abhängigkeit
+          - [ ] erst danach erste Kalenderoberfläche
+          ''')
+          append_once('CHANGELOG.md', '## 0.3.0-dev.1 — I003', '''
+          ## 0.3.0-dev.1 — I003
+          - Klick-&-Start-Orchestrator als deterministische Zustandsmaschine eingeführt
+          - verbindliche PRECHECK/ACTION/POSTCHECK-Kette implementiert
+          - reale Workspace-, Konfigurations- und SQLite-Prüfungen ergänzt
+          - sichere Recovery- und Quarantänepfade ergänzt
+          - Fault-Injection-Matrix mit Schutz vor realen Nutzerdaten eingeführt
+          - detailliertes maschinen- und laienlesbares Startfeedback ergänzt
+          - zweistufige Remote-Qualifikation mit automatischer Verifikation des Evidence-Commits eingeführt
+          ''')
+          PY
+
+      - name: Gespeicherten Remote-Receipt unabhängig prüfen
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          receipt = json.loads(Path('REMOTE_TREE_RECEIPT.json').read_text(encoding='utf-8'))
+          report = json.loads(Path('QUALIFICATION_REPORT.json').read_text(encoding='utf-8'))
+          if receipt.get('state') != 'ATTESTED':
+              print('GESPEICHERTER_RECEIPT=PENDING')
+              raise SystemExit(0)
+          subject = receipt['subject_commit']
+          actual_tree = subprocess.check_output(['git','rev-parse',f'{subject}^{{tree}}'], text=True).strip()
+          if actual_tree != receipt.get('subject_tree'):
+              raise SystemExit('REMOTE-TREE-001: Subject-Tree stimmt nicht')
+          output = subprocess.check_output(['git','ls-tree','-r','-l',subject], text=True)
+          actual = {}
+          for line in output.splitlines():
+              meta, path = line.split('\t', 1)
+              mode, _kind, blob_sha, size = meta.split()
+              actual[path] = (mode, blob_sha, int(size))
+          expected = {item['path']: (item['mode'], item['blob_sha'], item['size']) for item in receipt.get('subject_tree_entries', [])}
+          if actual != expected or len(expected) != receipt.get('entry_count'):
+              raise SystemExit('REMOTE-TREE-001: gespeicherter Receipt weicht vom Subject ab')
+          if report.get('state') == 'QUALIFIED':
+              if report.get('result') != 'PASS' or report.get('subject_commit') != subject or report.get('subject_tree') != actual_tree:
+                  raise SystemExit('QUALIFICATION-001: Bericht passt nicht zum Receipt')
+          print(f'GESPEICHERTER_RECEIPT=PASS files={len(actual)} subject={subject}')
+          PY
+
+      - name: Repository-Soll aus realem Arbeitsbaum ableiten
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files = sorted(
+              str(p) for p in Path('.').rglob('*')
+              if p.is_file() and '.git' not in p.parts and '__pycache__' not in p.parts and '.pytest_cache' not in p.parts
+          )
+          version = json.loads(Path('VERSION.json').read_text(encoding='utf-8'))
+          data = json.loads(Path('REPOSITORY_MANIFEST.json').read_text(encoding='utf-8'))
+          data['project_id'] = 'PROVOWARE-PLANER-2026'
+          data['version'] = version['version']
+          data['iteration'] = version['iteration']
+          data['ignored_path_parts'] = ['.git', '__pycache__', '.pytest_cache']
+          data['expected_file_count'] = len(files)
+          data['files'] = files
+          data['expected_paths'] = files
+          data['full_check_each_iteration'] = True
+          Path('REPOSITORY_MANIFEST.json').write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print(f'REPOSITORY_SOLLPFADE={len(files)}')
+          PY
+
+      - name: Manifeste und SHA-256-Inventar erzeugen
+        run: python tools/autopilot/manifest_builder.py --write
+
+      - name: Manifest-Inventar prüfen
+        run: python tools/autopilot/manifest_builder.py --check
+
+      - name: I002-Evidence-Vertrag regressionsprüfen
+        run: python tools/autopilot/i002_validator.py
+
+      - name: I003-Startvertrag prüfen
+        run: python tools/autopilot/i003_validator.py
+
+      - name: Healthy Runtime real ausführen
+        shell: bash
+        run: |
+          rm -rf "$RUNNER_TEMP/provoware-i003-healthy"
+          python tools/start_orchestrator.py \
+            --workspace "$RUNNER_TEMP/provoware-i003-healthy" \
+            --json-report "$RUNNER_TEMP/I003_RUNTIME_REPORT.json" \
+            --json | tee "$RUNNER_TEMP/I003_RUNTIME_CONSOLE.json"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          report = json.loads((Path(os.environ['RUNNER_TEMP']) / 'I003_RUNTIME_REPORT.json').read_text(encoding='utf-8'))
+          if report['state'] != 'READY':
+              raise SystemExit(f"HEALTHY_RUNTIME_FAIL: {report['state']}")
+          if len(report['steps']) != 12:
+              raise SystemExit(f"HEALTHY_RUNTIME_STEPS_FAIL: {len(report['steps'])}")
+          print('HEALTHY_RUNTIME=PASS state=READY steps=12')
+          PY
+
+      - name: Fault-Injection-Matrix vollständig prüfen
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os, tempfile
+          from pathlib import Path
+          from runtime.faults import RuntimeContext
+          from runtime.orchestrator import StartOrchestrator
+
+          root = Path('.').resolve()
+          cases = {
+              'workspace_missing': 'READY',
+              'config_corrupt': 'READY',
+              'manifest_tampered': 'BLOCKED',
+              'missing_permissions': 'BLOCKED',
+              'sqlite_locked': 'RECOVERY_REQUIRED',
+              'sqlite_corrupt': 'RECOVERY_REQUIRED',
+              'disk_full': 'BLOCKED',
+              'optional_module_missing': 'DEGRADED',
+          }
+          results = []
+          for fault, expected in cases.items():
+              with tempfile.TemporaryDirectory(prefix='provoware-i003-fault-') as tmp:
+                  ctx = RuntimeContext(root, Path(tmp) / 'workspace', {fault}, True)
+                  report = StartOrchestrator(ctx).run().to_dict()
+                  actual = report['state']
+                  results.append({'fault': fault, 'expected': expected, 'actual': actual, 'status': 'PASS' if actual == expected else 'FAIL'})
+                  if actual != expected:
+                      raise SystemExit(f'FAULT_MATRIX_FAIL {fault}: expected={expected} actual={actual}')
+          target = Path(os.environ['RUNNER_TEMP']) / 'I003_FAULT_MATRIX.json'
+          target.write_text(json.dumps({'schema_version': 1, 'results': results, 'count': len(results), 'status': 'PASS'}, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print(f'FAULT_MATRIX=PASS cases={len(results)}')
+          PY
+
+      - name: Unit- und Regressionstests
+        run: python -m unittest discover -s tests -v
+
+      - name: Foundation-Validator prüfen
+        run: python tools/autopilot/standard_validator.py
+
+      - name: Autopilot qualifizieren
+        run: python tools/autopilot/autopilot.py qualifizieren
+
+      - name: Remote-Tree-Pfade und Modi prüfen
+        shell: bash
+        run: git ls-tree -r -l HEAD | python tools/autopilot/remote_tree_validator.py
+
+      - name: Qualifizierten Status setzen und Manifeste nachvalidieren
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('PROJEKTSTATUS.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          data['status'] = 'QUALIFIZIERT'
+          data['ampel'] = 'GRUEN'
+          data['qualification_percent'] = max(int(data.get('qualification_percent', 0)), 45)
+          data['release_readiness_percent'] = max(int(data.get('release_readiness_percent', 0)), 5)
+          completed = data.setdefault('last_completed', [])
+          if 'I003-KLICK-START-ORCHESTRATOR' not in completed:
+              completed.append('I003-KLICK-START-ORCHESTRATOR')
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+          python tools/autopilot/manifest_builder.py --write
+          python tools/autopilot/manifest_builder.py --check
+          python tools/autopilot/i003_validator.py
+          python tools/autopilot/standard_validator.py
+
+      - name: Remote-Receipt und Qualifikationsbericht erzeugen
+        shell: bash
+        env:
+          RUN_ID: ${{ github.run_id }}
+          SUBJECT_SHA: ${{ github.sha }}
+        run: |
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          subject = os.environ['SUBJECT_SHA']
+          run_id = int(os.environ['RUN_ID'])
+          tree = subprocess.check_output(['git','rev-parse',f'{subject}^{{tree}}'], text=True).strip()
+          output = subprocess.check_output(['git','ls-tree','-r','-l',subject], text=True)
+          entries = []
+          for line in output.splitlines():
+              meta, path = line.split('\t', 1)
+              mode, _kind, blob_sha, size = meta.split()
+              entries.append({'path': path, 'blob_sha': blob_sha, 'mode': mode, 'size': int(size), 'status': 'PASS'})
+          receipt = {
+              'schema_version': 1,
+              'state': 'ATTESTED',
+              'subject_commit': subject,
+              'subject_tree': tree,
+              'entry_count': len(entries),
+              'subject_tree_entries': entries,
+          }
+          Path('REMOTE_TREE_RECEIPT.json').write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          gates = [
+              'stored_receipt_validation',
+              'repository_inventory',
+              'sha256_inventory',
+              'manifest_chain',
+              'i002_regression',
+              'i003_validator',
+              'healthy_runtime',
+              'fault_injection_matrix',
+              'unit_tests',
+              'foundation_validator',
+              'autopilot',
+              'remote_tree_paths_modes',
+          ]
+          report = {
+              'schema_version': 1,
+              'state': 'QUALIFIED',
+              'result': 'PASS',
+              'iteration': 'I003',
+              'subject_commit': subject,
+              'subject_tree': tree,
+              'workflow_run_id': run_id,
+              'gates': gates,
+          }
+          Path('QUALIFICATION_REPORT.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print(f'I003_REMOTE_RECEIPT=PASS files={len(entries)} tree={tree}')
+          PY
+
+      - name: Qualifizierte Evidence einmalig persistieren
+        id: persist
+        shell: bash
+        run: |
+          VERIFY_ONLY='${{ inputs.verify_only }}'
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$VERIFY_ONLY" = "true" ]; then
+            echo 'EVIDENCE_PERSIST=SKIP_VERIFY_ONLY'
+            echo 'persisted=false' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name 'PROVOWARE Evidence Bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add PROJECT_CONTRACT.json VERSION.json PROJEKTSTATUS.json README.md TODO.md CHANGELOG.md \
+            REPOSITORY_MANIFEST.json SOURCE_MANIFEST.json BUILD_MANIFEST.json RELEASE_MANIFEST.json \
+            EVIDENCE_MANIFEST.json MANIFEST_INDEX.json SHA256_DATEI_INVENTAR.json REMOTE_TREE_RECEIPT.json QUALIFICATION_REPORT.json
+          if git diff --cached --quiet; then
+            echo 'EVIDENCE_PERSIST=NO_CHANGES'
+            echo 'persisted=false' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "evidence: persist I003 run ${GITHUB_RUN_ID}"
+          git push origin HEAD:agent/i003-start-orchestrator
+          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo 'persisted=true' >> "$GITHUB_OUTPUT"
+
+      - name: Evidence-Artefakt bereitstellen
+        uses: actions/upload-artifact@v4
+        with:
+          name: i003-evidence
+          if-no-files-found: error
+          path: |
+            SOURCE_MANIFEST.json
+            BUILD_MANIFEST.json
+            RELEASE_MANIFEST.json
+            EVIDENCE_MANIFEST.json
+            MANIFEST_INDEX.json
+            SHA256_DATEI_INVENTAR.json
+            REMOTE_TREE_RECEIPT.json
+            QUALIFICATION_REPORT.json
+            REPOSITORY_MANIFEST.json
+            ${{ runner.temp }}/I003_RUNTIME_REPORT.json
+            ${{ runner.temp }}/I003_FAULT_MATRIX.json
+
+      - name: Gespeicherten Evidence-Commit automatisch erneut verifizieren
+        if: steps.persist.outputs.persisted == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          payload='{"ref":"agent/i003-start-orchestrator","inputs":{"verify_only":"true"}}'
+          curl --fail-with-body -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/i003-qualifikation.yml/dispatches" \
+            -d "$payload"
+          echo "I003_VERIFICATION_DISPATCH=PASS commit=${{ steps.persist.outputs.commit }}"
