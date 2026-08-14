@@ -1,0 +1,75 @@
+{
+  "contract_id": "PROVOWARE-I013-DEVELOPMENT-PIPELINE-V2",
+  "version": "2.0.0",
+  "status": "VERBINDLICH",
+  "purpose": "Ermittlung, Planung, Umsetzung, Validierung und Optimierung in einer kostenoptimierten, fail-fast und nachvollziehbaren Entwicklungskette verbinden.",
+  "baseline": {
+    "source_branch": "main",
+    "source_commit_required": true,
+    "source_tree_required": true,
+    "comparison_before_promotion_required": true
+  },
+  "iteration_plan": {
+    "file": "ITERATION_PLAN.json",
+    "base_commit_required": true,
+    "repository_delta_required": true,
+    "acceptance_criteria_required": true,
+    "risk_class_required": true,
+    "validation_profile_required": true
+  },
+  "stages": [
+    {
+      "id": "P0_STATIC",
+      "runtime_dependencies_allowed": false,
+      "checks": ["json_syntax", "python_syntax", "metadata_alignment", "standards_index", "documentation_markers", "declared_repository_delta"],
+      "fail_fast": true
+    },
+    {
+      "id": "P1_PLAN_AND_TARGET",
+      "runtime_dependencies_allowed": false,
+      "checks": ["iteration_plan_contract", "i013_target_tests"],
+      "fail_fast": true
+    },
+    {
+      "id": "P2_RUNTIME_TARGET",
+      "runtime_dependencies_allowed": true,
+      "checks": ["locked_dependencies", "target_runtime_tests"],
+      "fail_fast": true
+    },
+    {
+      "id": "P3_REGRESSION",
+      "runtime_dependencies_allowed": true,
+      "checks": ["full_unit_suite_once", "historical_gate_chain_once", "risk_relevant_matrices"],
+      "fail_fast": true
+    },
+    {
+      "id": "P4_EVIDENCE",
+      "runtime_dependencies_allowed": true,
+      "checks": ["remote_tree", "qualification_report", "artifact", "exact_sha_second_pass"],
+      "fail_fast": true
+    },
+    {
+      "id": "P5_PROMOTION",
+      "runtime_dependencies_allowed": false,
+      "checks": ["ahead_only", "behind_zero", "fast_forward_no_force", "main_postcheck"],
+      "fail_fast": true
+    }
+  ],
+  "precision_guards": {
+    "repository_expected_paths_source": "BASELINE_PLUS_DECLARED_DELTA",
+    "actual_tree_may_not_silently_expand_expected_inventory": true,
+    "second_pass_may_not_commit": true,
+    "qualification_subject_sha_must_be_explicit": true,
+    "evidence_overlay_semantics_must_be_explicit": true,
+    "gate_results_must_be_machine_readable": true
+  },
+  "efficiency_guards": {
+    "static_preflight_before_apt_or_pip": true,
+    "same_gate_once_per_pass": true,
+    "full_test_suite_once_per_pass": true,
+    "historical_chain_once_per_pass": true,
+    "ci_concurrency_cancels_stale_branch_runs": true,
+    "dependency_cache_should_be_used_when_safe": true,
+    "workflow_should_be_enabled_last_during_branch_assembly": true
+  }
+}
