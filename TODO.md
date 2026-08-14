@@ -18,10 +18,12 @@
 - [x] Status, Fortschritt, nächster Schritt und Verbesserungsempfehlung pflegen
 - [x] kompletten Repository-Inhalt gegen das Soll-Inventar prüfen
 - [x] lokale und Remote-Prüfung voneinander trennen
-- [x] ab I013: maschinenlesbarer Iterationsplan und explizite Repository-Differenz
-- [x] ab I013: statischer Fail-Fast-Preflight vor Runtime-Setup
-- [x] ab I013: Repository-Soll nur aus Baseline + deklarierter Differenz
-- [x] ab I013: vollständige Testsuite und historische Gate-Kette je Pass nur einmal
+- [x] maschinenlesbarer Iterationsplan und explizite Repository-Differenz
+- [x] statischer Fail-Fast-Preflight vor Runtime-Setup
+- [x] Repository-Soll nur aus Baseline + deklarierter Differenz
+- [x] vollständige Testsuite und historische Gate-Kette je Pass nur einmal
+- [x] normale Weitergabe ist ab I014 kein vollständiger Repository-Abzug
+- [x] Nutzdaten und Sicherungen sind in Code-Transportprofilen verboten
 - [ ] Repository-Sichtbarkeit auf privat stellen
 - [ ] `main` mit verbindlichen Statuschecks schützen
 - [ ] Release-/Evidence-Commits signieren
@@ -38,22 +40,29 @@
 - [x] I010 Sync-Control-GUI + immutable ResolutionPlan
 - [x] I011 Synchronisationsjournal + sichere Recovery
 - [x] I012 Dashboard + Diagnose-/Recovery-Zentrale
-- [x] I002 → I003 → I004 → I005 → I006 → I007 → I008 → I009 → I010 → I011 → I012 historisch qualifiziert
 
 ## I013 — Entwicklungsautopilot V2
-- [x] I012-Prozessbaseline und vermeidbare Schleifen maschinenlesbar analysieren
-- [x] Entwicklungsstandard 2.0 und Pipelinevertrag definieren
-- [x] `ITERATION_PLAN.json` mit Baseline, Risiko, Akzeptanzkriterien und Dateidifferenz einführen
-- [x] planbasiertes Kandidateninventar implementieren
-- [x] P0 Static Preflight ohne Qt/PySide6/Runtime implementieren
-- [x] Dokumentationsvertrag auf stabile semantische Marker umstellen
-- [x] Autopilot-Gates timingfähig und einmalig pro Pass ausführen
-- [ ] Foundation-CI auf Static-first, Cache und Concurrency umstellen
-- [ ] I013-Qualifikationsworkflow als neue Referenzpipeline aktivieren
-- [ ] zweistufige Exact-SHA-Remotequalifikation PASS
-- [ ] Fast-Forward nach `main` und unabhängige Main-Nachqualifikation PASS
+- [x] Prozessbaseline und vermeidbare Schleifen analysiert
+- [x] Entwicklungsstandard 2.0 und Pipelinevertrag
+- [x] `ITERATION_PLAN.json`, planbasiertes Kandidateninventar und P0 Static
+- [x] stabile Dokumentationsmarker, Gate-Deduplizierung, Timing-Evidence und CI-Cache/Concurrency
+- [x] zweistufige Exact-SHA-Qualifikation und Main-Nachqualifikation abgeschlossen
 
-## I014 — nach I013
+## I014 — Transportprofile und Artefakttrennung
+- [x] Produktkern, Nutzerdoku, Entwicklung und Evidence als eindeutige Klassen definieren
+- [x] `NUTZER` als Standardprofil festlegen
+- [x] `PROJEKTKERN`, `ENTWICKLER` und `EVIDENCE` als getrennte explizite Profile definieren
+- [x] Nutzer-/Backup-/Workspace-Dateien per Vertrag und `.gitignore` aus Codepaketen ausschließen
+- [x] deterministischen profilbasierten ZIP-Builder implementieren
+- [x] separates `PAKETMANIFEST.json` und `PAKET_INVENTAR.json` einführen
+- [x] paketbezogenes Runtime-Inventar ohne Änderung des Produkt-Startkerns vorsehen
+- [x] Profilgrenzen und deterministischen Doppelbau automatisiert testen
+- [ ] Fresh-Unpack-Nutzerpaket remote gegen externen Workspace qualifizieren
+
+Der endgültige Freigabestatus von I014 wird ausschließlich in `PROJEKTSTATUS.json`, `QUALIFICATION_REPORT.json` und `REMOTE_TREE_RECEIPT.json` geführt.
+
+## I015 — nach I014
 - [ ] immutable Backup-/RestorePlan mit Kandidatenqualifikation
 - [ ] Restore-Vorschau strikt von tatsächlicher Ausführung trennen
-- [ ] vorhandenen qualifizierten Backup-/Restore-Kern wiederverwenden; kein paralleler Restore-Pfad
+- [ ] vorhandenen qualifizierten Backup-/Restore-Kern wiederverwenden
+- [ ] Sicherungen ausschließlich im Workspace-/Backup-Bereich halten; niemals in Code-Transportprofile aufnehmen
