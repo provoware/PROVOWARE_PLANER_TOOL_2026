@@ -3,16 +3,16 @@
   "project_name": "PROVOWARE PLANER TOOL 2026",
   "project_id": "PROVOWARE-PLANER-2026",
   "repository": "provoware/PROVOWARE_PLANER_TOOL_2026",
-  "version": "0.14.0-dev.1",
+  "version": "0.15.0-dev.1",
   "phase": "FOUNDATION",
-  "iteration": "I014",
-  "checkpoint": "C014-TRANSPORTPROFILE-TRENNUNG",
-  "status": "QUALIFIZIERT",
-  "ampel": "GRUEN",
+  "iteration": "I015",
+  "checkpoint": "C015-BACKUP-RESTOREPLAN",
+  "status": "IN_ARBEIT",
+  "ampel": "GELB",
   "planning_percent": 100,
   "implementation_percent": 99,
   "qualification_percent": 99,
-  "release_readiness_percent": 55,
+  "release_readiness_percent": 58,
   "mandatory_user_testing": false,
   "last_completed": [
     "C000-REPOSITORY-RESET",
@@ -33,6 +33,6 @@
     "I013-ENTWICKLUNGSAUTOPILOT-V2",
     "I014-TRANSPORTPROFILE-TRENNUNG"
   ],
-  "next_logical_step": "I015 Immutable Backup-/RestorePlan mit Kandidatenqualifikation",
-  "improvement_recommendation": "Sicherungen ausschließlich im Workspace-/Backup-Bereich halten und Restore-Vorschau strikt von Ausführung trennen"
+  "next_logical_step": "I015 Kandidatenqualifikation, immutable RestorePlan und planpflichtiger Restore-Commit",
+  "improvement_recommendation": "Restore-Ausführung nur über den bestehenden storage.backup-Restorekern zulassen; keine zweite physische Restore-Implementierung erzeugen"
 }
