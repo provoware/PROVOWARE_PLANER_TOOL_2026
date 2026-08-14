@@ -17,6 +17,7 @@
     {"code": "SYNC-STALE-003", "what": "Feld änderte sich nach PRECHECK", "why": "Hash-Vorbedingung stimmt nicht mehr", "next": "Neuen SyncPlan erzeugen"},
     {"code": "SYNC-STALE-004", "what": "Baseline änderte sich nach PRECHECK", "why": "Planreferenz ist nicht mehr aktuell", "next": "Neuen SyncPlan erzeugen"},
     {"code": "SYNC-STALE-005", "what": "Link konnte nicht atomar fortgeschrieben werden", "why": "Paralleländerung oder Löschung", "next": "Neuen SyncPlan erzeugen"},
+    {"code": "SYNC-STALE-006", "what": "Übergebener Plan weicht vom autoritativen PRECHECK ab", "why": "Plan wurde verändert oder ist zwischenzeitlich veraltet", "next": "Plan verwerfen und aus aktuellem Datenstand neu erzeugen"},
     {"code": "SYNC-POSTCHECK-001", "what": "Feldwerte divergieren nach Write", "why": "Transaktion erfüllt den Zielzustand nicht", "next": "Automatischer Rollback; Diagnose prüfen"},
     {"code": "SYNC-POSTCHECK-002", "what": "Baseline fehlt beim Commit", "why": "Planvoraussetzung wurde verletzt", "next": "Automatischer Rollback; Baseline neu prüfen"},
     {"code": "SYNC-POSTCHECK-003", "what": "Versionsprüfung nach Write fehlgeschlagen", "why": "Endzustand ist nicht beweisbar", "next": "Automatischer Rollback"},
