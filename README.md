@@ -81,7 +81,7 @@ Feldregeln:
 
 Status, Priorität, Fortschritt, Elternaufgabe, Terminstatus, Zeitzone, Ganztägigkeit und Markierung werden nicht still ineinander übersetzt.
 
-## 15. Konfliktregeln I008
+## 15. Konfliktregeln und Evidence-Kette
 - `CLEAN`: Abweichende Werte ohne belastbare Feld-Baseline werden blockiert.
 - `TODO_CHANGED`: Vorschlag Todo→Kalender nur bei erlaubter Richtung.
 - `CALENDAR_CHANGED`: Vorschlag Kalender→Todo nur bei erlaubter Richtung.
@@ -91,14 +91,13 @@ Status, Priorität, Fortschritt, Elternaufgabe, Terminstatus, Zeitzone, Ganztäg
 
 Der Grund für die strikte Behandlung von `BOTH_CHANGED`: Der Link kennt bisher Objektversionen, aber keine Feld-Baseline oder Feld-Hashes. Eine verlustfreie automatische Zusammenführung ist deshalb noch nicht beweisbar.
 
-## 16. Evidence-Kette
 Die Pflichtkette für I008 lautet `I002 → I003 → I004 → I005 → I006 → I007 → I008`. Zusätzlich bleiben die 140er Todo-GUI-Matrix, die 112er Kalender-GUI-Matrix, die I006-Crash-/Rollback-Matrix, Vollregression, Repository-Inventar und exakter Evidence-SHA-Zweitpass Pflicht.
 
-## 17. Aktueller Checkpoint
+## 16. Aktueller Checkpoint
 **C008 — SYNC-CONFLICT-PREVIEW.** Feldvertrag, Vorschau-Domain und Zieltests sind angelegt. Der Stand bleibt GELB, bis die Remotequalifikation vollständig grün ist.
 
-## 18. Nächster logischer Schritt
+## 17. Nächster logischer Schritt
 Nach erfolgreicher I008-Qualifikation: **I009 — Feld-Baseline / Feld-Hashes + transaktionaler Synchronisationsplan.** Erst diese Iteration darf die Voraussetzungen für reale Schreibsynchronisation schaffen.
 
-## 19. Weiterführende Verbesserung
+## 18. Weiterführende Verbesserung
 Für I009 jede synchronisierbare Feldpaarung mit einem gespeicherten Baseline-Hash oder Baseline-Wert versehen. Dadurch kann bei `BOTH_CHANGED` erkannt werden, ob tatsächlich dasselbe Feld beidseitig geändert wurde oder ob sich unabhängige Änderungen verlustfrei zusammenführen lassen.
