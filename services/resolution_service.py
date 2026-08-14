@@ -21,6 +21,15 @@ from todo_core.model import LinkDirection
 from services.sync_service import SynchronizationService
 
 
+def list_active_link_ids(sync_service: SynchronizationService) -> tuple[str, ...]:
+    """Read-only Serviceprojektion für aktive Todo-Kalender-Verknüpfungen."""
+    with sync_service.repository.database.session() as connection:
+        rows = connection.execute(
+            "SELECT link_id FROM todo_calendar_links WHERE deleted_at IS NULL ORDER BY created_at, link_id"
+        ).fetchall()
+    return tuple(row["link_id"] for row in rows)
+
+
 class ResolutionService:
     """I010: erzeugt und commitet ausschließlich explizit entschiedene, hashgebundene Konfliktpläne."""
 
