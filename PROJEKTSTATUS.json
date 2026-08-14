@@ -7,12 +7,12 @@
   "phase": "FOUNDATION",
   "iteration": "I008",
   "checkpoint": "C008-SYNC-CONFLICT-PREVIEW",
-  "status": "IN_ARBEIT",
-  "ampel": "GELB",
+  "status": "QUALIFIZIERT",
+  "ampel": "GRUEN",
   "planning_percent": 100,
   "implementation_percent": 68,
-  "qualification_percent": 93,
-  "release_readiness_percent": 18,
+  "qualification_percent": 95,
+  "release_readiness_percent": 20,
   "mandatory_user_testing": false,
   "last_completed": [
     "C000-REPOSITORY-RESET",
@@ -24,8 +24,9 @@
     "I004-KALENDER-DOMAIN-SQLITE",
     "I005-KALENDER-GUI-VIEWMODEL",
     "I006-TODO-DOMAIN-LINK",
-    "I007-TODO-GUI-VIEWMODEL"
+    "I007-TODO-GUI-VIEWMODEL",
+    "I008-SYNC-CONFLICT-PREVIEW"
   ],
-  "next_logical_step": "I008 Remote-Qualifikation der read-only Synchronisationsvorschau",
-  "improvement_recommendation": "Nach I008 Feld-Baseline oder Feld-Hashes einführen, bevor echte Synchronisationsschreibvorgänge erlaubt werden"
+  "next_logical_step": "I009 Feld-Baseline / Feld-Hashes + transaktionaler Synchronisationsplan",
+  "improvement_recommendation": "Feld-Baselines kryptografisch binden; echte Schreibsynchronisation erst nach PRECHECK/COMMIT/POSTCHECK und Fault-Matrix erlauben"
 }

@@ -6,7 +6,7 @@ Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungsw
 - **Version:** `0.8.0-dev.1`
 - **Iteration:** `I008`
 - **Checkpoint:** `C008-SYNC-CONFLICT-PREVIEW`
-- **Status:** `IN_ARBEIT / GELB` bis zur vollständigen I008-Remotequalifikation
+- **Status:** `QUALIFIZIERT / GRÜN` nach erfolgreicher I008-Remotequalifikation
 - **Zielplattform:** Linux, insbesondere Ubuntu-/Kubuntu-Derivate
 - **Betrieb:** lokal und offline-first
 - **Technische Nutzerabnahme:** nicht Bestandteil der Pflicht-Freigabekette
@@ -94,7 +94,7 @@ Der Grund für die strikte Behandlung von `BOTH_CHANGED`: Der Link kennt bisher 
 Die Pflichtkette für I008 lautet `I002 → I003 → I004 → I005 → I006 → I007 → I008`. Zusätzlich bleiben die 140er Todo-GUI-Matrix, die 112er Kalender-GUI-Matrix, die I006-Crash-/Rollback-Matrix, Vollregression, Repository-Inventar und exakter Evidence-SHA-Zweitpass Pflicht.
 
 ## 16. Aktueller Checkpoint
-**C008 — SYNC-CONFLICT-PREVIEW.** Feldvertrag, Vorschau-Domain und Zieltests sind angelegt. Der Stand bleibt GELB, bis die Remotequalifikation vollständig grün ist.
+**C008 — SYNC-CONFLICT-PREVIEW.** Feldvertrag, Vorschau-Domain und Zieltests sind angelegt. Der qualifizierte Evidence-Kandidat ist GRÜN; die Promotion nach main erfolgt erst nach erfolgreichem exakten Evidence-SHA-Zweitpass.
 
 ## 17. Nächster logischer Schritt
 Nach erfolgreicher I008-Qualifikation: **I009 — Feld-Baseline / Feld-Hashes + transaktionaler Synchronisationsplan.** Erst diese Iteration darf die Voraussetzungen für reale Schreibsynchronisation schaffen.

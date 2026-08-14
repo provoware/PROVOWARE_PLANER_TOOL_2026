@@ -77,10 +77,10 @@
 - [x] Vorschau darf Linkstatus und Nutzdaten nicht verändern
 - [x] keine neue Datenbankmigration; Schema 2 bleibt bestehen
 - [x] I008-Zieltests und Validator anlegen
-- [ ] Remote-Zieltests und vollständige Regression PASS
-- [ ] 140er Todo-GUI- und 112er Kalender-GUI-Regression PASS
+- [x] Remote-Zieltests und vollständige Regression PASS
+- [x] 140er Todo-GUI- und 112er Kalender-GUI-Regression PASS
 - [ ] exakter I008-Evidence-SHA-Zweitpass PASS
-- [ ] I002 → I003 → I004 → I005 → I006 → I007 → I008 vollständig PASS
+- [x] I002 → I003 → I004 → I005 → I006 → I007 → I008 vollständig PASS
 - [ ] qualifizierten I008-Evidence-Commit nach `main` promoten
 
 ## I009 — Nach erfolgreichem I008
