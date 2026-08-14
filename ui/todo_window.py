@@ -24,7 +24,7 @@ from PySide6.QtWidgets import (
 
 from services.calendar_service import CalendarService
 from services.todo_service import TodoCalendarLinkService, TodoService
-from todo_core.model import LinkConflictStatus, TodoStatus
+from todo_core.model import TodoStatus
 from ui.design import DesignSystem, DesignTokens
 from ui.todo_dialogs import LinkDialog, TodoDialog
 from viewmodel.todo_query import STATUS_TEXT, TodoListMode
@@ -155,15 +155,14 @@ class TodoWindow(QMainWindow):
         right.addWidget(self.detail_label)
         right.addWidget(QLabel("Kalender-Verknüpfungen und Konflikte"))
         self.links_list = QListWidget()
+        self.links_list.setMinimumHeight(2 * self.design.spacing("XXL"))
         self.design.accessible(
             self.links_list,
             "Kalender-Verknüpfungen",
             "Zeigt Kopplungsrichtung und Konfliktstatus. I007 löst Konflikte nicht automatisch.",
         )
         right.addWidget(self.links_list, 1)
-        notice = QLabel(
-            "Konflikte werden in I007 nur angezeigt. Aufgabe und Termin werden weder automatisch überschrieben noch automatisch zusammengeführt."
-        )
+        notice = QLabel("I007 zeigt Konflikte nur an: keine automatische Synchronisation oder Konfliktauflösung.")
         notice.setWordWrap(True)
         right.addWidget(notice)
         body.addLayout(right, 2)
@@ -341,6 +340,7 @@ class TodoWindow(QMainWindow):
         self.links_list.clear()
         if not todo_id:
             self.detail_label.setText("Keine Aufgabe ausgewählt.")
+            self.detail_label.setToolTip("")
             return
         try:
             view = self.view_model.selected_view()
@@ -352,12 +352,16 @@ class TodoWindow(QMainWindow):
             self.set_progress_button.setEnabled(view.status is not TodoStatus.DONE)
             parent = view.parent_id or "Keine"
             description = view.description.strip() or "Keine Beschreibung"
+            compact_description = " ".join(description.split())
+            if len(compact_description) > 160:
+                compact_description = compact_description[:157].rstrip() + "…"
             self.detail_label.setText(
                 f"{view.title}\n"
-                f"Status: {view.status_text} | Priorität: {view.priority_text} | Fortschritt: {view.progress}%\n"
-                f"Start: {view.start_text}\nFällig: {view.due_text}\n"
-                f"Unteraufgabe von: {parent}\nVersion: {view.version}\n\n{description}"
+                f"{view.status_text} | {view.priority_text} | {view.progress}%\n"
+                f"Start: {view.start_text} | Fällig: {view.due_text}\n"
+                f"Unteraufgabe von: {parent} | Version: {view.version} | {compact_description}"
             )
+            self.detail_label.setToolTip(description)
             for link in view.links:
                 item = QListWidgetItem(link.display_text)
                 item.setData(Qt.UserRole, link.link_id)
