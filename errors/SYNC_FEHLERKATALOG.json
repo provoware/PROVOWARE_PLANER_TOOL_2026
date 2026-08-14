@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "catalog_id": "PROVOWARE-SYNC-I008-FEHLER",
+  "catalog_version": "1.0.0",
+  "project_id": "PROVOWARE-PLANER-2026",
+  "errors": [
+    {
+      "code": "SYNC-I008-BOTH-001",
+      "severity": "BLOCKIERT",
+      "component": "sync_preview",
+      "title": "Beide Seiten wurden geändert",
+      "what": "Aufgabe und Termin besitzen seit dem letzten Link-Snapshot neue Versionen.",
+      "effect": "I008 erzeugt keine automatische Konfliktauflösung.",
+      "user_action": "Beide Werte manuell vergleichen; keine Seite überschreiben."
+    },
+    {
+      "code": "SYNC-I008-BASELINE-001",
+      "severity": "BLOCKIERT",
+      "component": "sync_preview",
+      "title": "Sichere Feld-Ausgangsbasis fehlt",
+      "what": "Verknüpfte Werte unterscheiden sich, obwohl keine neue Objektversion vorliegt.",
+      "effect": "Die Herkunft des Unterschieds ist nicht beweisbar.",
+      "user_action": "Ausgangswerte prüfen; spätere Feld-Baseline abwarten."
+    },
+    {
+      "code": "SYNC-I008-DIRECTION-001",
+      "severity": "BLOCKIERT",
+      "component": "sync_preview",
+      "title": "Synchronisationsrichtung erlaubt den Vorschlag nicht",
+      "what": "Die geänderte Seite passt nicht zur festgelegten Link-Richtung.",
+      "effect": "Es wird kein Übertragungsvorschlag freigegeben.",
+      "user_action": "Link-Richtung prüfen."
+    },
+    {
+      "code": "SYNC-I008-SEMANTIC-001",
+      "severity": "HINWEIS",
+      "component": "sync_preview",
+      "title": "Feld benötigt semantische Prüfung",
+      "what": "Todo-Fälligkeit und Terminende können unterschiedliche Bedeutungen haben.",
+      "effect": "Das Feld ist kein automatischer Übertragungskandidat.",
+      "user_action": "Werte fachlich vergleichen."
+    }
+  ]
+}
