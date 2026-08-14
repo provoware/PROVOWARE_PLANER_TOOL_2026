@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Iterator
 
 from calendar_core.errors import DatabaseBusyError, DatabaseIntegrityError
+from storage.restore_guard import assert_restore_write_allowed
 
 
 class Database:
@@ -38,6 +39,10 @@ class Database:
 
     @contextmanager
     def transaction(self) -> Iterator[sqlite3.Connection]:
+        # I016: Neue Planner-Schreibtransaktionen dürfen eine aktive Restore-Lease
+        # niemals überholen. Leser bleiben erlaubt; der Restore prüft zusätzlich mit
+        # BEGIN IMMEDIATE, dass bereits laufende Schreiber beendet sind.
+        assert_restore_write_allowed(self.path)
         connection = self.connect()
         try:
             connection.execute("BEGIN IMMEDIATE")
