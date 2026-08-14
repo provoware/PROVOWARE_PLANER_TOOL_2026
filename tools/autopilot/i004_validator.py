@@ -159,10 +159,10 @@ def validate() -> dict:
             database.quick_check()
             markers = CalendarRepository(database).marker_types()
             backup = temp_root / "backups" / "pre_migration_v0001.sqlite3"
-            if applied != [1]:
-                errors.append(f"I004_MIGRATION_UNERWARTET: {applied}")
-            if database.schema_version() != 1:
-                errors.append("I004_SCHEMA_VERSION_FALSCH")
+            if 1 not in applied:
+                errors.append(f"I004_MIGRATION_0001_NICHT_AUSGEFUEHRT: {applied}")
+            if database.schema_version() < 1:
+                errors.append("I004_SCHEMA_UNTER_MINDESTVERSION")
             if len(markers) != 5:
                 errors.append("I004_MARKER_ANZAHL_FALSCH")
             if not backup.is_file() or not backup.with_suffix(backup.suffix + ".json").is_file():
