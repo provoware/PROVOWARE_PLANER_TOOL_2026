@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "contract_id": "PROVOWARE-SYNC-CONTROL-RESOLUTION-I010",
+  "status": "VERBINDLICH",
+  "mode": "EXPLICIT_HASH_BOUND_RESOLUTION",
+  "architecture": {
+    "sync_plan_is_read_only_source": true,
+    "sync_control_query_required": true,
+    "sync_control_viewmodel_required": true,
+    "field_table_required": true,
+    "resolution_plan_new_object_required": true,
+    "source_plan_sha256_required": true,
+    "source_precondition_sha256_required": true,
+    "manual_choice_only_for_both_different": true,
+    "default_choice_keep_blocked": true,
+    "resolution_plan_deterministic": true,
+    "same_i009_transaction_core_required": true,
+    "precheck_required": true,
+    "postcheck_required": true,
+    "audit_receipt_required": true,
+    "fault_crash_matrix_required": true
+  },
+  "field_table_columns": [
+    "Baseline",
+    "Todo",
+    "Kalender",
+    "Zustand",
+    "Geplante Aktion",
+    "Grund",
+    "Versionsstatus",
+    "Hashstatus",
+    "Entscheidung"
+  ],
+  "choices": [
+    "TODO_WERT",
+    "KALENDER_WERT",
+    "BLOCKIERT_LASSEN"
+  ],
+  "safety": {
+    "no_syncplan_mutation": true,
+    "no_heuristic_resolution": true,
+    "all_both_different_fields_require_explicit_choice": true,
+    "direction_contract_still_applies": true,
+    "stale_source_hard_block": true,
+    "tampered_resolution_hard_block": true,
+    "manual_review_outside_both_different_not_auto_resolved": true,
+    "no_partial_commit": true
+  },
+  "receipt_binding": {
+    "plan_id_is_resolution_plan_id": true,
+    "precondition_sha256_is_resolution_sha256": true,
+    "field_payload_keeps_original_state": true,
+    "field_payload_records_resolved_action": true
+  },
+  "qualification": {
+    "historical_gate_chain": [
+      "I002",
+      "I003",
+      "I004",
+      "I005",
+      "I006",
+      "I007",
+      "I008",
+      "I009",
+      "I010"
+    ],
+    "offscreen_gui_required": true,
+    "full_regression_required": true,
+    "exact_evidence_sha_second_pass": true
+  }
+}
