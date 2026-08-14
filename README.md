@@ -2,17 +2,19 @@
 
 Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungswerkzeug für Linux. Der Planner wird als wartbarer modularer Monolith entwickelt und autonom qualifiziert.
 
+<!-- PROVOWARE:SECTION:PROJECT_STATUS -->
 ## 1. Projektstatus
-- **Version:** `0.12.0-dev.1`
-- **Iteration:** `I012`
-- **Checkpoint:** `C012-DIAGNOSE-DASHBOARD`
-- **Status:** `QUALIFIZIERT / GRÜN`
+- **Version:** `0.13.0-dev.1`
+- **Iteration:** `I013`
+- **Checkpoint:** `C013-ENTWICKLUNGSAUTOPILOT-V2`
+- **Status:** `IN_ARBEIT / GELB` bis zur vollständigen I013-Remotequalifikation
 - **Zielplattform:** Linux, insbesondere Ubuntu-/Kubuntu-Derivate
 - **Betrieb:** lokal und offline-first
 - **Technische Nutzerabnahme:** nicht Bestandteil der Pflicht-Freigabekette
 
-Die maschinenlesbare Wahrheit liegt in `VERSION.json`, `PROJEKTSTATUS.json` und `PROJECT_CONTRACT.json`.
+Die maschinenlesbare Wahrheit liegt in `VERSION.json`, `PROJEKTSTATUS.json`, `PROJECT_CONTRACT.json` und ab I013 zusätzlich in `ITERATION_PLAN.json`.
 
+<!-- PROVOWARE:SECTION:PRODUCT -->
 ## 2. Was ist das Tool?
 PROVOWARE PLANER verbindet Kalender, Aufgabenplanung, Synchronisationskontrolle, Journal, Diagnose und spätere Zusatzmodule. Nutzerdaten bleiben lokal im ausgewählten Arbeitsbereich.
 
@@ -24,41 +26,43 @@ Tag, Woche, Monat und Jahr; Termine und fünf editierbare Markierungen.
 Aufgaben, Status, Priorität, Fälligkeit, Unteraufgaben, Fortschritt und sichere Kalender-Verknüpfungen.
 
 ### Synchronisation
-I009 führt Feld-Baselines, Drei-Wege-Vergleich, atomare SyncPlans und Audit-Receipts ein. I010 ergänzt die explizite, hashgebundene Konfliktentscheidung über ResolutionPlans. I011 ergänzt ein read-only Synchronisationsjournal und stale-sichere RecoveryPlans.
+I009 führt Feld-Baselines, Drei-Wege-Vergleich, atomare SyncPlans und Audit-Receipts ein. I010 ergänzt explizite Konfliktentscheidungen, I011 das read-only Journal und stale-sichere RecoveryPlans.
 
 ### Diagnose- und Recovery-Zentrale
-I012 bündelt fünf vorhandene Nachweisbereiche in einer gemeinsamen read-only Oberfläche: Startzustand, SQLite-Integrität, Journal-Integrität, Backup-Nachweise und Recovery-Blockaden. Die Zentrale besitzt keinen eigenen Reparatur-, Restore-, Sync- oder Recovery-Commit-Pfad.
+I012 bündelt Startzustand, SQLite-Integrität, Journal-Integrität, Backup-Nachweise und Recovery-Blockaden read-only.
+
+### Entwicklungsautopilot V2
+I013 verbessert die Entwicklungskette selbst: Baseline-Identität, maschinenlesbarer Iterationsplan, explizite Dateidifferenz, statischer Fail-Fast-Preflight, planbasiertes Repository-Soll, Gate-Deduplizierung, Timing-Evidence und weiterhin exakter SHA-Zweitpass.
 
 ## 4. Oberfläche und globale Gestaltung
 Die Oberfläche verwendet zentrale Designregeln, skalierbare Schrift, Tastaturnavigation und textliche Statusaussagen. Farbe allein trägt keine Bedeutung.
 
 ## 5. Ampelsystem
 - ● **GRÜN – BEREIT**
-- ▲ **GELB – EINGESCHRÄNKT**
+- ▲ **GELB – EINGESCHRÄNKT / PRÜFUNG AUSSTEHEND**
 - ● **ROT – BLOCKIERT**
-
-Gelb bedeutet in I012 auch: ein optionaler Nachweis fehlt oder ein RecoveryPlan wird absichtlich sicher blockiert. Rot ist für echte Integritäts-, Manipulations- oder Lesefehler reserviert.
 
 ## 6. Klick-&-Start
 Der Start-Orchestrator prüft Betriebssystem, Runtime, Programmdateien, Manifeste, Konfiguration, Workspace, Datenbank, Migrationen, Recovery, Module und GUI. Relevante Aktionen folgen `PRECHECK → AKTION → POSTCHECK`.
 
-I012 speichert den ohnehin erzeugten Startbericht standardmäßig atomar als `LETZTER_STARTBERICHT.json` im Arbeitsbereich. Die Diagnosezentrale liest diesen Nachweis nur.
-
 ## 7. Daten und Sicherheit
-SQLite arbeitet mit Foreign Keys, WAL, `synchronous=FULL`, Transaktionen, hashgebundenen Migrationen und Vor-Migrations-Sicherungen. Das Datenbankschema bleibt in I012 unverändert auf Version 4; I012 führt bewusst keine neue Migration ein.
+SQLite arbeitet mit Foreign Keys, WAL, `synchronous=FULL`, Transaktionen, hashgebundenen Migrationen und Vor-Migrations-Sicherungen. I013 verändert weder Datenbankschema noch Nutzdatenlogik.
 
-Die Datenbankdiagnose öffnet die aktive SQLite-Datei mit `mode=ro`, setzt `PRAGMA query_only=ON` und führt `quick_check` aus. Backup-Kandidaten werden ebenso ausschließlich lesend auf SQLite-Integrität, Manifest und SHA-256 geprüft.
-
-Ein RecoveryPlan darf historische Werte niemals frei aus dem Journal zurückschreiben. I012 zeigt lediglich neu berechnete I011-Recovery-Vorschauen und deren Blockierungsgründe an; ausgeführt wird nichts.
-
+<!-- PROVOWARE:SECTION:GLOBAL_STANDARDS -->
 ## 8. Globale Standards
-Verbindliche Standards liegen unter `standards/` und sind über `standards/STANDARD_INDEX.json` registriert. Der Vorrang lautet `PROVOWARE_GLOBAL_STANDARD → PROJECT_CONTRACT → Modulvertrag → konkrete Konfiguration`.
+Verbindliche Standards liegen unter `standards/` und sind über `standards/STANDARD_INDEX.json` registriert. I013 ergänzt `PROVOWARE-DEVELOPMENT 2.0.0`. Der Vorrang lautet `PROVOWARE_GLOBAL_STANDARD → PROJECT_CONTRACT → Modulvertrag → konkrete Konfiguration`.
 
+<!-- PROVOWARE:SECTION:REPOSITORY -->
 ## 9. Repository-Vollständigkeit
-`REPOSITORY_MANIFEST.json` ist das Soll-Inventar des vollständigen Entwicklungsbaums. Jede Iteration prüft fehlende und unerwartete Dateien, Projekt-/Versionskonsistenz, Manifeste, SHA-256-Nachweise und relevante Dateimodi.
+Ab I013 wird das Repository-Soll nicht mehr aus dem aktuellen Arbeitsbaum selbst abgeleitet. Es entsteht aus der letzten qualifizierten Baseline plus der in `ITERATION_PLAN.json` deklarierten `add`/`modify`/`delete`-Differenz. Jeder ungeplante Pfad blockiert die Qualifikation.
 
+<!-- PROVOWARE:SECTION:AUTOPILOT -->
 ## 10. Autonomer Entwicklungs- und Prüfautopilot
-`tools/autopilot/autopilot.py qualifizieren` führt globale Standards und alle historischen Pflichtgates bis zur aktuellen Iteration aus. `FAIL` und `NOT_RUN` blockieren Freigaben. I012 ergänzt das `I012-DIAGNOSE-DASHBOARD-GATE`.
+Die neue Reihenfolge lautet:
+
+`Ermittlung → Planung → P0 Static → P1 Zielprüfung → P2 Runtime → P3 Regression → P4 Evidence → P5 Promotion → Optimierung`
+
+P0 läuft ohne apt, pip, Qt oder Anwendungsruntime. Erst nach erfolgreicher statischer Prüfung dürfen Runtime-Abhängigkeiten installiert werden. Vollständige Testsuite und historische Gate-Kette laufen pro Pass jeweils genau einmal. `tools/autopilot/autopilot.py` misst zusätzlich die Gate-Laufzeiten.
 
 ## 11. Historische Entwicklung
 - **I002:** Manifest-/Evidence-Kette und Remote-Tree-Receipt.
@@ -70,31 +74,30 @@ Verbindliche Standards liegen unter `standards/` und sind über `standards/STAND
 - **I008:** read-only Synchronisationsvorschau.
 - **I009:** Feld-Baselines, Drei-Wege-Vergleich, atomarer SyncPlan und Audit-Receipt.
 - **I010:** Synchronisations-Control-GUI und immutable ResolutionPlan.
-- **I011:** read-only Journal, hashgebundene Vorher-/Nachher-Snapshots und stale-sichere RecoveryPlans.
-- **I012:** read-only Diagnose-/Recovery-Zentrale mit Start-, Datenbank-, Journal-, Backup- und Recovery-Nachweisen.
+- **I011:** read-only Journal, hashgebundene Snapshots und RecoveryPlans.
+- **I012:** read-only Diagnose-/Recovery-Zentrale.
+- **I013:** Entwicklungsautopilot V2 mit Static-first, planbasiertem Inventar und Gate-Deduplizierung.
 
 ## 12. Kalender↔Todo-Kopplungsvertrag
 Todo und Termin bleiben eigenständige Objekte. Die Kopplung ist ein versionierter Soft-Link. Physische Endpunktlöschung ist geschützt; Entkoppeln löscht keine Nutzdaten.
 
-## 13. Read-only Diagnoseprinzip
-Die Diagnosezentrale ist Beobachter, nicht Reparaturinstanz. Sie darf keine Migration ausführen, kein Backup wiederherstellen, keinen Sync committen, keinen RecoveryPlan committen und keine Nutzdaten verändern. Für risikobehaftete Aktionen bleiben ausschließlich die bereits qualifizierten Fachservices zuständig.
+## 13. Entwicklungspräzision
+`PROCESS_AUDIT_I012.json` dokumentiert die Prozessbaseline. Zwei vermeidbare I012-Remote-Fehlversuche wurden korrekt blockiert, aber zu spät erkannt: ein statischer GUI-Vertragsfehler und ein Dokumentationsstrukturfehler. I013 verschiebt beide Fehlerklassen in P0.
 
-## 14. Feld-Baseline und Drei-Wege-Vergleich
-Für `TITLE`, `DESCRIPTION`, `START_AT` und `DUE_END` werden typisierte kanonische Werte und SHA-256-Feldzustände verwendet. `BOTH_DIFFERENT`, fehlende Baselines und getrennte Endpunkte bleiben fail-closed. `due_at ↔ end_at` bleibt semantisch prüfpflichtig.
+## 14. Dokumentationsvertrag
+Maschinenprüfungen verwenden ab I013 stabile semantische README-Marker. Dadurch bleibt die Struktur verbindlich, während Überschriften sprachlich verbessert werden können, ohne einen rein textuellen Fehlalarm auszulösen.
 
-## 15. Transaktionaler Sync-, Resolution- und Recovery-Pfad
-Der verbindliche Schreibpfad bleibt:
-`PRECHECK → atomarer COMMIT → POSTCHECK → Audit-Receipt → quick_check`.
+## 15. Evidence- und Promotionspfad
+Der Exact-SHA-Zweitpass bleibt verbindlich und read-only. Promotion nach `main` ist nur bei `ahead > 0`, `behind = 0`, passender Merge-Base und ohne `force` zulässig. Danach folgt weiterhin eine unabhängige Main-Nachqualifikation.
 
-I012 fügt diesem Pfad keinen neuen Schreiber hinzu. Die Recovery-Diagnose verwendet ausschließlich `build_recovery()` als Vorschau und zeigt `READY` beziehungsweise sichere Blockaden an.
-
+<!-- PROVOWARE:SECTION:CHECKPOINT -->
 ## 16. Aktueller Checkpoint
-**C012 — DIAGNOSE-DASHBOARD.** Implementiert sind `DiagnosticsService`, Diagnose-ViewModel, Qt-Diagnosezentrale, `Ctrl+Shift+D`-Integration, standardmäßig gespeicherter letzter Startbericht, Service-/GUI-Zieltests und eine 35er Offscreen-Matrix.
+**C013 — ENTWICKLUNGSAUTOPILOT-V2.** Implementiert werden Entwicklungsstandard 2.0, Pipelinevertrag, Iterationsplan, I012-Prozessaudit, planbasiertes Kandidateninventar, statischer P0-Preflight, deduplizierter/timingfähiger Autopilot, robuste Dokumentationsmarker und effizientere CI-Reihenfolge.
 
-Vor Promotion nach `main` müssen I002→I012, I012-Zieltests, die 35er Diagnose-GUI-Matrix, die bestehenden Todo-/Kalender-/Sync-/Crashregressionen, die komplette Unit-Suite, Standards, Repository-Inventar, Remote-Tree und ein exakter read-only Evidence-SHA-Zweitpass erfolgreich sein.
-
+<!-- PROVOWARE:SECTION:NEXT_STEP -->
 ## 17. Nächster logischer Schritt
-Nach vollständig qualifiziertem I012: **I013 — immutable Backup-/RestorePlan mit Kandidatenqualifikation.** Die bestehende Backup-/Restore-Implementierung soll dabei wiederverwendet werden; Vorschau und tatsächliche Wiederherstellung bleiben strikt getrennt.
+Nach vollständig qualifiziertem I013: **I014 — immutable Backup-/RestorePlan mit Kandidatenqualifikation.** Diese sicherheitskritische Funktion wird erstmals vollständig unter dem neuen Entwicklungsvertrag umgesetzt.
 
+<!-- PROVOWARE:SECTION:IMPROVEMENT -->
 ## 18. Weiterführende Verbesserung
-Vor einer Stable-Linie sollten zusätzlich Repository-Sichtbarkeit, Schutz von `main` mit verbindlichen Statuschecks und signierte Release-/Evidence-Commits geschlossen werden, ohne die funktionale Entwicklung mit einer parallelen Freigabelogik zu vermischen.
+Vor einer Stable-Linie bleiben Repository-Sichtbarkeit, Schutz von `main` mit verbindlichen Statuschecks und signierte Release-/Evidence-Commits als Infrastrukturhärtung offen. Sie sollen getrennt von fachlicher Feature-Logik geschlossen werden.
