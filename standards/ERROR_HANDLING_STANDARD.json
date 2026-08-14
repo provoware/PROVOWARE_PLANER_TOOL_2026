@@ -1,6 +1,6 @@
 {
   "standard_id": "PROVOWARE-ERROR-HANDLING",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "VERBINDLICH",
   "principles": [
     "bekannte Fehler klassifizieren",
@@ -8,8 +8,16 @@
     "nur idempotente sichere Aktionen automatisch wiederholen",
     "Nutzerdaten niemals als Reparaturmaßnahme löschen",
     "jede automatische Behandlung protokollieren",
-    "technische Details ausklappbar"
+    "technische Details ausklappbar",
+    "Fehlerkataloge modular führen und projektweit auf eindeutige Codes prüfen",
+    "jeder im produktiven Code verwendete stabile Fehlercode muss katalogisiert sein"
   ],
+  "catalog_policy": {
+    "pattern": "errors/*FEHLERKATALOG.json",
+    "global_code_uniqueness": true,
+    "used_codes_must_be_registered": true,
+    "module_catalogs_allowed": true
+  },
   "severities": [
     "INFO",
     "HINWEIS",
