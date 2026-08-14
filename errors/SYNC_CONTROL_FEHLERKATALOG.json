@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "catalog": "I010 Synchronisations-Control",
+  "errors": [
+    {
+      "code": "SYNC-CONTROL-001",
+      "severity": "INFO",
+      "title": "Keine Verknüpfung geprüft",
+      "what": "Es wurde noch keine Todo-Kalender-Verknüpfung für die Synchronisationskontrolle geladen.",
+      "effect": "Es wird nichts geschrieben.",
+      "automatic_action": "Keine.",
+      "user_action": "Eine Verknüpfung auswählen und auf Prüfen klicken.",
+      "blocking": true
+    },
+    {
+      "code": "SYNC-CONTROL-002",
+      "severity": "WARNING",
+      "title": "Entscheidung für falsches Feld",
+      "what": "Eine manuelle Konfliktentscheidung wurde für ein Feld versucht, das nicht BOTH_DIFFERENT ist.",
+      "effect": "Die Entscheidung wird verworfen.",
+      "automatic_action": "Schreibfreigabe bleibt blockiert.",
+      "user_action": "Nur echte beidseitige Feldkonflikte entscheiden.",
+      "blocking": true
+    },
+    {
+      "code": "SYNC-CONTROL-003",
+      "severity": "WARNING",
+      "title": "Aktueller Zustand nicht ausführbar",
+      "what": "Der aktuelle SyncPlan ist weder READY noch ein explizit auflösbarer BOTH_DIFFERENT-Konflikt.",
+      "effect": "Es findet kein Commit statt.",
+      "automatic_action": "Keine.",
+      "user_action": "Die angezeigte Ursache beheben oder die Synchronisation blockiert lassen.",
+      "blocking": true
+    },
+    {
+      "code": "SYNC-CONTROL-004",
+      "severity": "WARNING",
+      "title": "Entscheidungsplan noch nicht geprüft",
+      "what": "Vor dem Schreiben wurde noch kein aktueller unveränderlicher ResolutionPlan erzeugt und angezeigt.",
+      "effect": "Es wird nichts geschrieben.",
+      "automatic_action": "Schreibfreigabe bleibt blockiert.",
+      "user_action": "Zuerst auf Entscheidungsplan prüfen klicken und den angezeigten Plan prüfen.",
+      "blocking": true
+    },
+    {
+      "code": "RESOLUTION-SOURCE-001",
+      "severity": "ERROR",
+      "title": "ResolutionPlan ohne echten Feldkonflikt",
+      "what": "Ein ResolutionPlan darf nur aus einem aktuellen BLOCKED_CONFLICT-SyncPlan entstehen.",
+      "effect": "Der ResolutionPlan wird nicht erzeugt.",
+      "automatic_action": "Fail-closed.",
+      "user_action": "Aktuellen Plan neu prüfen.",
+      "blocking": true
+    },
+    {
+      "code": "RESOLUTION-STALE-002",
+      "severity": "ERROR",
+      "title": "Ausgangsplan inzwischen verändert",
+      "what": "Der aktuelle Source-SyncPlan hat nicht mehr denselben SHA-256 wie bei der Entscheidung.",
+      "effect": "Alle Schreibvorgänge werden vor dem Commit blockiert.",
+      "automatic_action": "Aktuelle Daten neu lesen.",
+      "user_action": "Konflikt erneut prüfen und neu entscheiden.",
+      "blocking": true
+    },
+    {
+      "code": "RESOLUTION-STALE-003",
+      "severity": "ERROR",
+      "title": "Source-Plan-ID stimmt nicht",
+      "what": "Die gespeicherte Source-Plan-ID gehört nicht mehr zum aktuellen Datenstand.",
+      "effect": "Kein Commit.",
+      "automatic_action": "Fail-closed.",
+      "user_action": "Neu prüfen.",
+      "blocking": true
+    },
+    {
+      "code": "RESOLUTION-TAMPER-004",
+      "severity": "CRITICAL",
+      "title": "ResolutionPlan manipuliert oder inkonsistent",
+      "what": "Der übergebene ResolutionPlan entspricht nicht dem aus aktuellen Daten und Entscheidungen rekonstruierten Plan.",
+      "effect": "Kein Feld wird geschrieben.",
+      "automatic_action": "Vorgang wird vollständig abgebrochen.",
+      "user_action": "Aktuellen Plan neu erzeugen.",
+      "blocking": true
+    },
+    {
+      "code": "RESOLUTION-BLOCKED-005",
+      "severity": "WARNING",
+      "title": "Konflikt bewusst blockiert",
+      "what": "Mindestens ein BOTH_DIFFERENT-Feld steht weiterhin auf BLOCKIERT_LASSEN oder verletzt eine bestehende Sicherheitsregel.",
+      "effect": "Kein Commit.",
+      "automatic_action": "Keine.",
+      "user_action": "Entscheidung ändern oder blockiert lassen.",
+      "blocking": true
+    }
+  ]
+}
