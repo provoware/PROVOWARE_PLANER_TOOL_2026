@@ -16,7 +16,12 @@
     "language_target": "python-3.12+",
     "gui_target": "pyside6-qt6",
     "database_target": "sqlite",
-    "dependency_direction": ["ui", "application", "domain", "infrastructure"],
+    "dependency_direction": [
+      "ui",
+      "application",
+      "domain",
+      "infrastructure"
+    ],
     "cross_module_internal_imports_allowed": false
   },
   "autonomy": {
@@ -79,13 +84,36 @@
     "sync_postcheck_required": true,
     "sync_audit_receipt_required": true,
     "sync_fault_crash_rollback_required": true,
-    "sync_both_different_hard_block_required": true
+    "sync_both_different_hard_block_required": true,
+    "sync_control_query_required": true,
+    "sync_control_viewmodel_required": true,
+    "sync_control_gui_required": true,
+    "sync_resolution_plan_immutable_required": true,
+    "sync_resolution_source_hash_required": true,
+    "sync_resolution_explicit_choice_required": true,
+    "sync_resolution_default_block_required": true,
+    "sync_resolution_no_heuristic_required": true,
+    "sync_resolution_fault_matrix_required": true
   },
-  "definition_of_ready": ["ziel_eindeutig", "risiko_bewertet", "schnittstellen_bekannt", "tests_geplant", "baseline_pass"],
-  "definition_of_done": ["implementierung_pass", "zieltests_pass", "regression_pass", "standards_pass", "repository_inventar_pass", "dokumentation_pass", "remote_verifikation_pass"],
+  "definition_of_ready": [
+    "ziel_eindeutig",
+    "risiko_bewertet",
+    "schnittstellen_bekannt",
+    "tests_geplant",
+    "baseline_pass"
+  ],
+  "definition_of_done": [
+    "implementierung_pass",
+    "zieltests_pass",
+    "regression_pass",
+    "standards_pass",
+    "repository_inventar_pass",
+    "dokumentation_pass",
+    "remote_verifikation_pass"
+  ],
   "foundation": {
-    "current_iteration": "I009",
-    "current_checkpoint": "C009-FIELD-BASELINE-TRANSACTIONAL-SYNC",
-    "version": "0.9.0-dev.1"
+    "current_iteration": "I010",
+    "current_checkpoint": "C010-SYNC-CONTROL-GUI-RESOLUTION",
+    "version": "0.10.0-dev.1"
   }
 }
