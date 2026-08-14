@@ -88,7 +88,7 @@
     },
     {
       "path": "MANIFEST_INDEX.json",
-      "sha256": "08d98bbe97b297442974a0afbc9d7f980b4ef28873c986a94ddec6adeab4442b",
+      "sha256": "5bf1c8864adaa06da4dd456c346e60fa51885913a43dd3ac0c3058cac5bf6efb",
       "size": 813,
       "status": "PASS"
     },
@@ -106,8 +106,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "e2d3516f43694e77d7bb9c2dc486ae78508478df9018b51c15040d21a1e432bb",
-      "size": 10673,
+      "sha256": "a22ee4fe9e381b3b5ff06468418c1040ffab85e61f7c23d03516c3f668648b7a",
+      "size": 10468,
       "status": "PASS"
     },
     {
@@ -124,7 +124,7 @@
     },
     {
       "path": "SOURCE_MANIFEST.json",
-      "sha256": "2158a38315e0a23a13d65945790ca074367633d0191cfede69b663ec9fa57e65",
+      "sha256": "1a12bf3f1eb3c90c09a8a44e60b5826c7f44cc74ad11cb9722f9a859952efb06",
       "size": 28432,
       "status": "PASS"
     },
