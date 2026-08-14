@@ -23,12 +23,14 @@ REQUIRED_FILES = {
     "migrations/0001_calendar_core.sql",
     "services/__init__.py",
     "services/calendar_service.py",
+    "services/factory.py",
     "storage/__init__.py",
     "storage/backup.py",
     "storage/database.py",
     "storage/migrations.py",
     "storage/repository.py",
     "tests/test_i004_calendar_core.py",
+    "tests/test_i004_factory.py",
     "tests/test_i004_fault_injection.py",
     "docs/I004_KALENDER_DOMAIN_SQLITE.md",
 }
@@ -128,7 +130,7 @@ def validate() -> dict:
         errors.append("I004_SERVICE_ENTHAELT_SQL")
 
     migration_sql = (ROOT / "migrations/0001_calendar_core.sql").read_text(encoding="utf-8")
-    for token in ("marker_types", "calendar_events", "FOREIGN KEY", "deleted_at", "version"):
+    for token in ("marker_types", "calendar_events", "REFERENCES marker_types", "deleted_at", "version"):
         if token not in migration_sql:
             errors.append(f"I004_SCHEMA_BESTANDTEIL_FEHLT: {token}")
 
