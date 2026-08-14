@@ -1,55 +1,56 @@
 {
   "schema_version": 1,
-  "iteration": "I014",
-  "version": "0.14.0-dev.1",
-  "checkpoint": "C014-TRANSPORTPROFILE-TRENNUNG",
-  "title": "Projektkern-, Entwickler-, Evidence- und Backup-Trennung",
+  "iteration": "I015",
+  "version": "0.15.0-dev.1",
+  "checkpoint": "C015-BACKUP-RESTOREPLAN",
+  "title": "Immutable Backup-/RestorePlan mit Kandidatenqualifikation",
   "base": {
     "branch": "main",
-    "commit": "3ba56de67f3ae6bdedf4e52e8cd61d33562bd280",
-    "tree": "5e039acf10f409ffdb6e9bcd23706354d3ba2299"
+    "commit": "1b684cc99d97cd2f00221b49a8ef606686d2453b",
+    "tree": "9833d48c617a6c87c8dc664c548ca350a9581b17"
   },
-  "risk_class": "HOCH",
-  "risk_reason": "Transport-, Integritäts-, Release- und Paketgrenzen werden verändert; Nutzdatenmodell und SQLite-Schema bleiben unverändert.",
-  "objective": "Normale Nutzertransporte auf den tatsächlich lauffähigen Produktkern begrenzen und Entwicklerdateien, Evidence sowie Nutzdaten/Sicherungen verbindlich in getrennte Profile überführen.",
+  "risk_class": "KRITISCH",
+  "risk_reason": "Restore ersetzt die aktive Nutzdatenbank. I015 verändert daher ausschließlich den abgesicherten Restorepfad und keine fachlichen Tabellen oder Datenmodelle.",
+  "objective": "Sicherungskandidaten strikt lesend qualifizieren, einen hashgebundenen unveränderlichen RestorePlan erzeugen und die tatsächliche Wiederherstellung ausschließlich über den bestehenden physischen Restorekern mit exakten Precondition-Prüfungen zulassen.",
   "acceptance_criteria": [
-    {"id": "I014-A01", "text": "Jeder registrierte Repository-Pfad ist genau einer Transportklasse zugeordnet."},
-    {"id": "I014-A02", "text": "Das Standardprofil NUTZER enthält keine CI-, Test-, historische Entwicklerdoku-, Standard-, Autopilot- oder Evidence-Datei."},
-    {"id": "I014-A03", "text": "Das NUTZER-Paket enthält den vollständigen lauffähigen Produktkern einschließlich GUI-Runtime-Vertrag und Startdateien."},
-    {"id": "I014-A04", "text": "Jedes erzeugte Paket besitzt ein eigenes SHA-256-Paketinventar; der Startpfad akzeptiert dieses statt des Entwicklungsinventars."},
-    {"id": "I014-A05", "text": "SQLite-Nutzdaten, Sicherungen, Restore-Kandidaten, Logs, Caches und temporäre Dateien sind in allen Code-Transportprofilen hart ausgeschlossen."},
-    {"id": "I014-A06", "text": "Gleicher Commit plus gleiches Profil erzeugt byte-identische deterministische ZIP-Pakete."},
-    {"id": "I014-A07", "text": "ENTWICKLER und EVIDENCE sind getrennte explizite Profile; Evidence wird nicht automatisch in Entwickler- oder Nutzerpakete gemischt."},
-    {"id": "I014-A08", "text": "Ein frisch entpacktes NUTZER-Paket besteht den realen Offscreen-Start gegen einen neuen externen Workspace."},
-    {"id": "I014-A09", "text": "P0 prüft Profilvertrag, Klassifikation, verbotene Pfade und planbasiertes Repository-Soll vor Runtime-Setup."},
-    {"id": "I014-A10", "text": "Exact-SHA-Zweitpass, Fast-Forward-Promotion ohne Force und unabhängige Main-Nachqualifikation bleiben erhalten."}
+    {"id": "I015-A01", "text": "Backup-Kandidaten werden ausschließlich read-only gegen Datei, Manifest, SHA-256, Größe, SQLite quick_check und Schema geprüft."},
+    {"id": "I015-A02", "text": "Nur Kandidaten innerhalb des expliziten Workspace-/Backup-Bereichs können einen RestorePlan erhalten."},
+    {"id": "I015-A03", "text": "RestorePlan ist immutable und bindet Backup-Pfad, Backup-Hash, Manifest-Hash, Schema, Zielpfad, Zielzustands-Hash und Plan-Hash."},
+    {"id": "I015-A04", "text": "Manipulierte oder nach Planerstellung veränderte Sicherungen werden vor jedem Schreibzugriff blockiert."},
+    {"id": "I015-A05", "text": "Eine nach Planerstellung veränderte aktive Datenbank blockiert den Restore als stale."},
+    {"id": "I015-A06", "text": "Der einzige physische Restorekern bleibt storage.backup.restore_backup; I015 erzeugt keinen parallelen Dateiaustauschpfad."},
+    {"id": "I015-A07", "text": "Restore folgt PRECHECK → COMMIT → POSTCHECK und validiert das Ergebnis erneut gegen den geplanten Backup-Hash/SQLite-Zustand."},
+    {"id": "I015-A08", "text": "Fehler während Restore oder Postcheck erhalten bzw. stellen den vorherigen Datenbankzustand wieder her; Crash-/Fault-Matrix weist dies nach."},
+    {"id": "I015-A09", "text": "Kein Backup, Restore-Kandidat, Pre-Restore-Abbild oder Nutzdatenbestand gelangt in NUTZER-, ENTWICKLER- oder EVIDENCE-Codepakete."},
+    {"id": "I015-A10", "text": "SQLite-Schema bleibt Version 4; I002→I015, Vollregression und Transport-Fresh-Unpack bleiben PASS."},
+    {"id": "I015-A11", "text": "Exact-SHA-Zweitpass ist read-only, Promotion nur fast-forward bei behind=0, danach unabhängige main-Nachqualifikation."}
   ],
   "validation_profile": {
     "static_preflight": true,
     "target_tests": true,
-    "runtime_package_smoke": true,
-    "deterministic_package_rebuild": true,
+    "readonly_candidate_probe": true,
+    "stale_and_tamper_matrix": true,
+    "restore_fault_crash_matrix": true,
+    "transport_regression": true,
     "full_unit_suite": true,
     "historical_chain": true,
-    "risk_gui_matrices": ["I012_DIAGNOSTICS_35", "I010_SYNC_35", "I007_TODO_140", "I005_CALENDAR_112"],
-    "risk_fault_matrices": ["I011_HISTORY", "I010_RESOLUTION", "I009_SYNC", "I006_TODO"],
     "exact_sha_second_pass": true,
     "main_postcheck": true
   },
   "repository_delta": {
     "add": [
-      ".github/workflows/i014-qualifikation.yml",
-      ".gitignore",
-      "NUTZERANLEITUNG.md",
-      "contracts/TRANSPORT_PROFILE_CONTRACT.json",
-      "docs/I014_TRANSPORTPROFILE_TRENNUNG.md",
-      "runtime/ui_tokens.json",
-      "standards/TRANSPORT_STANDARD.json",
-      "tests/test_i014_runtime_package.py",
-      "tests/test_i014_transport_profiles.py",
-      "tools/autopilot/i014_validator.py",
-      "tools/package_transport.py",
-      "tools/transport_profiles.py"
+      ".github/workflows/i015-qualifikation.yml",
+      "backup_core/__init__.py",
+      "backup_core/model.py",
+      "contracts/BACKUP_RESTORE_PLAN_CONTRACT.json",
+      "docs/I015_BACKUP_RESTOREPLAN.md",
+      "errors/BACKUP_RESTORE_FEHLERKATALOG.json",
+      "services/restore_service.py",
+      "standards/BACKUP_RESTORE_STANDARD.json",
+      "tests/test_i015_restore_faults.py",
+      "tests/test_i015_restore_plan.py",
+      "tools/autopilot/i015_validator.py",
+      "tools/i015_restore_fault_matrix.py"
     ],
     "modify": [
       "BUILD_MANIFEST.json",
@@ -68,14 +69,13 @@
       "SOURCE_MANIFEST.json",
       "TODO.md",
       "VERSION.json",
-      "standards/MANIFEST_STANDARD.json",
-      "standards/RELEASE_STANDARD.json",
+      "contracts/TRANSPORT_PROFILE_CONTRACT.json",
       "standards/STANDARD_INDEX.json",
+      "storage/backup.py",
       "tools/autopilot/autopilot.py",
-      "tools/autopilot/i013_validator.py",
-      "ui/design.py"
+      "tools/autopilot/i014_validator.py"
     ],
     "delete": []
   },
-  "next_after_success": "I015 Immutable Backup-/RestorePlan mit Kandidatenqualifikation"
+  "next_after_success": "I016 Restore-Control-GUI mit expliziter Vorschau, Bestätigung und verständlicher Risikoanzeige"
 }
