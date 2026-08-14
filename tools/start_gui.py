@@ -34,6 +34,14 @@ def _check_native_gui_runtime() -> tuple[bool, str]:
     return True, "PySide6 und native GUI-Bibliotheken sind verfügbar."
 
 
+def _write_start_report(path: Path, payload: dict) -> None:
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    candidate = path.with_suffix(path.suffix + ".tmp")
+    candidate.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    candidate.replace(path)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="PROVOWARE PLANER GUI")
     parser.add_argument("--workspace", type=Path, required=True)
@@ -47,9 +55,8 @@ def main() -> int:
 
     report = StartOrchestrator(RuntimeContext(ROOT, workspace)).run()
     payload = report.to_dict()
-    if args.start_report:
-        args.start_report.parent.mkdir(parents=True, exist_ok=True)
-        args.start_report.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    report_path = args.start_report or (workspace / "LETZTER_STARTBERICHT.json")
+    _write_start_report(report_path, payload)
     print(f"STARTSTATUS={payload['state']} | {payload['user_summary']}")
     if report.state not in {RuntimeState.READY, RuntimeState.DEGRADED}:
         return 2
