@@ -69,13 +69,23 @@
     "sync_preview_read_only_required": true,
     "sync_both_changed_hard_block_required": true,
     "sync_baseline_divergence_block_required": true,
-    "sync_silent_field_translation_forbidden": true
+    "sync_silent_field_translation_forbidden": true,
+    "sync_field_baseline_required": true,
+    "sync_field_sha256_required": true,
+    "sync_three_way_compare_required": true,
+    "sync_deterministic_plan_required": true,
+    "sync_exact_precondition_required": true,
+    "sync_atomic_transaction_required": true,
+    "sync_postcheck_required": true,
+    "sync_audit_receipt_required": true,
+    "sync_fault_crash_rollback_required": true,
+    "sync_both_different_hard_block_required": true
   },
   "definition_of_ready": ["ziel_eindeutig", "risiko_bewertet", "schnittstellen_bekannt", "tests_geplant", "baseline_pass"],
   "definition_of_done": ["implementierung_pass", "zieltests_pass", "regression_pass", "standards_pass", "repository_inventar_pass", "dokumentation_pass", "remote_verifikation_pass"],
   "foundation": {
-    "current_iteration": "I008",
-    "current_checkpoint": "C008-SYNC-CONFLICT-PREVIEW",
-    "version": "0.8.0-dev.1"
+    "current_iteration": "I009",
+    "current_checkpoint": "C009-FIELD-BASELINE-TRANSACTIONAL-SYNC",
+    "version": "0.9.0-dev.1"
   }
 }
