@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "contract_id": "PROVOWARE-SYNC-EXECUTION-I009",
+  "status": "VERBINDLICH",
+  "iteration": "I009",
+  "mode": "HASH_BOUND_TRANSACTIONAL_SYNC",
+  "architecture": {
+    "database_migration_required": true,
+    "schema_version": 3,
+    "field_baseline_required_before_plan": true,
+    "three_way_comparison_required": true,
+    "deterministic_plan_required": true,
+    "precheck_required": true,
+    "single_atomic_transaction_required": true,
+    "postcheck_required_before_commit": true,
+    "audit_receipt_required": true,
+    "fault_and_crash_matrix_required": true
+  },
+  "field_states": [
+    "UNCHANGED",
+    "TODO_ONLY",
+    "CALENDAR_ONLY",
+    "BOTH_SAME",
+    "BOTH_DIFFERENT",
+    "BASELINE_MISSING"
+  ],
+  "field_actions": [
+    "NONE",
+    "TODO_TO_CALENDAR",
+    "CALENDAR_TO_TODO",
+    "PROMOTE_BASELINE",
+    "REVIEW_REQUIRED",
+    "BLOCKED"
+  ],
+  "rules": {
+    "UNCHANGED": "Kein Write; beide Seiten entsprechen der Baseline.",
+    "TODO_ONLY": "Nur bei erlaubter Richtung und gültigen Zielinvarianten Todo→Kalender.",
+    "CALENDAR_ONLY": "Nur bei erlaubter Richtung und gültigen Zielinvarianten Kalender→Todo.",
+    "BOTH_SAME": "Kein Nutzdatenwrite; gemeinsame neue Baseline darf atomar promoviert werden.",
+    "BOTH_DIFFERENT": "Gesamten Plan blockieren; keine heuristische Konfliktauflösung.",
+    "BASELINE_MISSING": "Gesamten Plan blockieren, bis eine beweisbare gemeinsame Baseline gebunden ist."
+  },
+  "field_contract": {
+    "TITLE": {"todo": "title", "calendar": "title", "automatic": true},
+    "DESCRIPTION": {"todo": "description", "calendar": "description", "automatic": true},
+    "START_AT": {"todo": "start_at", "calendar": "start_at", "automatic": true},
+    "DUE_END": {"todo": "due_at", "calendar": "end_at", "automatic": false, "semantic_review_required": true}
+  },
+  "precheck": {
+    "exact_todo_version": true,
+    "exact_event_version": true,
+    "exact_link_version": true,
+    "exact_direction": true,
+    "exact_baseline_hash_per_field": true,
+    "exact_todo_hash_per_field": true,
+    "exact_calendar_hash_per_field": true,
+    "tampered_or_stale_plan_must_fail_closed": true
+  },
+  "transaction": {
+    "sqlite_begin_immediate": true,
+    "partial_commit_forbidden": true,
+    "link_snapshot_update_same_transaction": true,
+    "baseline_update_same_transaction": true,
+    "receipt_insert_same_transaction": true
+  },
+  "postcheck": {
+    "all_managed_fields_equal_after_commit": true,
+    "all_baseline_hashes_equal_post_values": true,
+    "link_versions_match_entities": true,
+    "receipt_hash_present": true,
+    "sqlite_quick_check_after_commit": true
+  },
+  "safety": {
+    "both_different_hard_block": true,
+    "detached_hard_block": true,
+    "missing_baseline_hard_block": true,
+    "due_end_manual_review": true,
+    "no_cascade_delete": true,
+    "optimistic_locking": true,
+    "fault_injection_requires_explicit_enable": true,
+    "process_crash_rollback_required": true
+  },
+  "qualification": {
+    "historical_gate_chain": ["I002", "I003", "I004", "I005", "I006", "I007", "I008", "I009"],
+    "todo_gui_matrix_regression": 140,
+    "calendar_gui_matrix_regression": 112
+  }
+}
