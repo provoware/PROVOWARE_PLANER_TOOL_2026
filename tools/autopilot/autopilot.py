@@ -10,6 +10,7 @@ from pathlib import Path
 from i002_validator import validate as validate_i002
 from i003_validator import validate as validate_i003
 from i004_validator import validate as validate_i004
+from i005_validator import validate as validate_i005
 from standard_validator import print_result, validate_repository
 
 
@@ -51,14 +52,14 @@ def main() -> int:
         gates.append(("I003-START-GATE", validate_i003()))
     if current >= 4:
         gates.append(("I004-KALENDER-DATEN-GATE", validate_i004()))
+    if current >= 5:
+        gates.append(("I005-KALENDER-GUI-GATE", validate_i005()))
 
     if not all(_run_gate(name, result) for name, result in gates):
         return 1
 
     if args.command == "qualifizieren":
-        print(
-            "QUALIFIKATION: PASS - globale Standards, Repository-Inventar und alle historischen Pflichtgates bis zur aktuellen Iteration sind konsistent."
-        )
+        print("QUALIFIKATION: PASS - globale Standards, Repository-Inventar und alle historischen Pflichtgates bis zur aktuellen Iteration sind konsistent.")
     return 0
 
 

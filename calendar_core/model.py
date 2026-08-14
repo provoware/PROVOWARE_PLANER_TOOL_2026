@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from datetime import datetime
 from enum import StrEnum
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from .errors import DomainValidationError
+
+_HEX_COLOR = re.compile(r"^#[0-9A-Fa-f]{3}(?:[0-9A-Fa-f]{3})?$")
 
 
 class EventStatus(StrEnum):
@@ -26,12 +29,14 @@ class MarkerType:
     def __post_init__(self) -> None:
         if not 1 <= self.marker_id <= 5:
             raise DomainValidationError("CAL-DOMAIN-004: marker_id muss zwischen 1 und 5 liegen")
-        if not self.title.strip():
-            raise DomainValidationError("CAL-DOMAIN-005: Markierungstitel darf nicht leer sein")
-        if not self.short_title.strip():
-            raise DomainValidationError("CAL-DOMAIN-006: Markierungskürzel darf nicht leer sein")
-        if not (self.color.startswith("#") and len(self.color) in {4, 7}):
+        if not self.title.strip() or len(self.title.strip()) > 80:
+            raise DomainValidationError("CAL-DOMAIN-005: Markierungstitel muss 1 bis 80 Zeichen lang sein")
+        if not self.short_title.strip() or len(self.short_title.strip()) > 12:
+            raise DomainValidationError("CAL-DOMAIN-006: Markierungskürzel muss 1 bis 12 Zeichen lang sein")
+        if not _HEX_COLOR.fullmatch(self.color):
             raise DomainValidationError("CAL-DOMAIN-007: Markierungsfarbe ist ungültig")
+        if not self.symbol.strip() or len(self.symbol.strip()) > 8:
+            raise DomainValidationError("CAL-DOMAIN-011: Markierungssymbol muss 1 bis 8 Zeichen lang sein")
 
 
 @dataclass(frozen=True, slots=True)

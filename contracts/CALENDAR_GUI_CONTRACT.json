@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "contract_id": "PROVOWARE-CALENDAR-GUI",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "iteration": "I005",
+  "architecture": {
+    "service_only": true,
+    "sql_in_gui_forbidden": true,
+    "viewmodel_required": true,
+    "four_views": [
+      "TAG",
+      "WOCHE",
+      "MONAT",
+      "JAHR"
+    ],
+    "shared_query_model": true
+  },
+  "interaction": {
+    "today_back_forward_required": true,
+    "date_picker_required": true,
+    "event_create_view_edit_required": true,
+    "five_markers_visible_required": true,
+    "marker_edit_required": true,
+    "keyboard_required": true
+  },
+  "accessibility": {
+    "accessible_names_required": true,
+    "focus_required": true,
+    "color_only_forbidden": true,
+    "status_symbol_text_required": true,
+    "high_contrast_compatible": true,
+    "font_scales_percent": [
+      90,
+      100,
+      110,
+      125,
+      150,
+      175,
+      200
+    ]
+  },
+  "qualification": {
+    "qt_offscreen_required": true,
+    "window_sizes": [
+      "1280x720",
+      "1366x768",
+      "1600x900",
+      "1920x1080"
+    ],
+    "font_matrix": [
+      90,
+      100,
+      110,
+      125,
+      150,
+      175,
+      200
+    ],
+    "restart_persistence_required": true,
+    "historical_gate_chain": [
+      "I002",
+      "I003",
+      "I004",
+      "I005"
+    ]
+  }
+}

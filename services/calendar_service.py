@@ -4,7 +4,7 @@ from dataclasses import replace
 from datetime import datetime, timezone
 from uuid import uuid4
 
-from calendar_core.model import CalendarEvent, EventStatus
+from calendar_core.model import CalendarEvent, EventStatus, MarkerType
 from storage.repository import CalendarRepository
 
 
@@ -64,3 +64,12 @@ class CalendarService:
 
     def list_events(self, start: datetime, end: datetime) -> list[CalendarEvent]:
         return self.repository.list_between(start, end)
+
+    def list_markers(self) -> list[MarkerType]:
+        return self.repository.marker_types()
+
+    def update_markers(self, markers: tuple[MarkerType, ...] | list[MarkerType]) -> tuple[MarkerType, ...]:
+        return self.repository.update_markers(markers)
+
+    def update_marker(self, marker: MarkerType) -> MarkerType:
+        return self.repository.update_marker(marker)

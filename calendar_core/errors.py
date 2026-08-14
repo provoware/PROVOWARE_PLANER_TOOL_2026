@@ -1,19 +1,8 @@
-"""Stabile Fehlerklassen des Kalender-Datenkerns."""
-
-
 class CalendarError(Exception):
-    """Basisklasse für erwartbare Kalenderfehler."""
+    """Basisfehler des Kalenderkerns."""
 
 
-class DomainValidationError(CalendarError):
-    pass
-
-
-class EventNotFoundError(CalendarError):
-    pass
-
-
-class ConcurrentUpdateError(CalendarError):
+class DomainValidationError(CalendarError, ValueError):
     pass
 
 
@@ -37,5 +26,17 @@ class BackupError(CalendarError):
     pass
 
 
-class RestoreRejectedError(BackupError):
+class RestoreRejectedError(CalendarError):
+    pass
+
+
+class EventNotFoundError(CalendarError):
+    pass
+
+
+class MarkerNotFoundError(CalendarError):
+    pass
+
+
+class ConcurrentUpdateError(CalendarError):
     pass

@@ -1,0 +1,1 @@
+"""GUI-unabhängige Kalender-Darstellungsmodelle."""

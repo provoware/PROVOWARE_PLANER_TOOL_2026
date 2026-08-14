@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "catalog_id": "PROVOWARE-KALENDER-GUI-FEHLER",
+  "catalog_version": "1.0.0",
+  "project_id": "provoware-planer-tool-2026",
+  "errors": [
+    {
+      "code": "GUI-CALENDAR-REFRESH-001",
+      "severity": "FEHLER",
+      "component": "calendar_gui",
+      "title": "Kalenderansicht konnte nicht aktualisiert werden",
+      "what": "Die GUI konnte Daten nicht sicher in die aktuelle Ansicht übertragen.",
+      "effect": "Die alte Anzeige bleibt sichtbar; Daten werden nicht absichtlich verändert.",
+      "automatic_action": "BLOCKIEREN_UND_FEEDBACK",
+      "user_action": "Details anzeigen und Ansicht erneut laden.",
+      "retryable": true,
+      "blocking": false
+    },
+    {
+      "code": "GUI-EVENT-SAVE-001",
+      "severity": "FEHLER",
+      "component": "calendar_gui",
+      "title": "Termin konnte nicht gespeichert werden",
+      "what": "Die Service-Schicht hat den neuen Termin abgelehnt oder konnte ihn nicht speichern.",
+      "effect": "Es wird kein halbfertiger Termin bestätigt.",
+      "automatic_action": "BLOCKIEREN_UND_FEEDBACK",
+      "user_action": "Eingaben prüfen; technische Details bei Bedarf öffnen.",
+      "retryable": true,
+      "blocking": false
+    },
+    {
+      "code": "GUI-EVENT-EDIT-001",
+      "severity": "FEHLER",
+      "component": "calendar_gui",
+      "title": "Termin konnte nicht aktualisiert werden",
+      "what": "Die Service-Schicht hat die Änderung abgelehnt, z. B. wegen eines Versionskonflikts.",
+      "effect": "Neuere Daten werden nicht überschrieben.",
+      "automatic_action": "BLOCKIEREN_UND_FEEDBACK",
+      "user_action": "Ansicht neu laden und Änderung erneut prüfen.",
+      "retryable": true,
+      "blocking": false
+    },
+    {
+      "code": "GUI-MARKER-SAVE-001",
+      "severity": "FEHLER",
+      "component": "calendar_gui",
+      "title": "Markierungen konnten nicht gespeichert werden",
+      "what": "Mindestens eine Markierung ist ungültig oder konnte nicht transaktional aktualisiert werden.",
+      "effect": "Nicht bestätigte Änderungen werden nicht als gespeichert dargestellt.",
+      "automatic_action": "BLOCKIEREN_UND_FEEDBACK",
+      "user_action": "Name, Kürzel, Hexfarbe und Symbol prüfen.",
+      "retryable": true,
+      "blocking": false
+    },
+    {
+      "code": "CAL-DOMAIN-011",
+      "severity": "FEHLER",
+      "component": "calendar_domain",
+      "title": "Markierungssymbol ungültig",
+      "what": "Das Symbol ist leer oder länger als acht Zeichen.",
+      "effect": "Die Markierung wird nicht übernommen.",
+      "automatic_action": "BLOCKIEREN",
+      "user_action": "Ein kurzes sichtbares Symbol eingeben.",
+      "retryable": true,
+      "blocking": true
+    },
+    {
+      "code": "CAL-MARKER-NOTFOUND-001",
+      "severity": "KRITISCH",
+      "component": "calendar_repository",
+      "title": "Markierungsstammdatensatz fehlt",
+      "what": "Eine der fünf verbindlichen Markierungen ist in der Datenbank nicht vorhanden.",
+      "effect": "Der Marker-Editor kann den Zustand nicht sicher speichern.",
+      "automatic_action": "BLOCKIEREN_UND_DIAGNOSE",
+      "user_action": "Keine manuelle Datenbankänderung; Diagnose oder Wiederherstellung verwenden.",
+      "retryable": false,
+      "blocking": true
+    }
+  ]
+}

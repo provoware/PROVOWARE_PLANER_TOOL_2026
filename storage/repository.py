@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-from calendar_core.errors import ConcurrentUpdateError, EventNotFoundError
+from calendar_core.errors import ConcurrentUpdateError, EventNotFoundError, MarkerNotFoundError
 from calendar_core.model import CalendarEvent, EventStatus, MarkerType
 from storage.database import Database
 
@@ -156,3 +156,30 @@ class CalendarRepository:
             )
             for row in rows
         ]
+
+    def update_markers(self, markers: tuple[MarkerType, ...] | list[MarkerType]) -> tuple[MarkerType, ...]:
+        values = tuple(markers)
+        with self.database.transaction() as connection:
+            for marker in values:
+                cursor = connection.execute(
+                    """
+                    UPDATE marker_types
+                    SET title = ?, short_title = ?, color = ?, symbol = ?, description = ?, enabled = ?
+                    WHERE marker_id = ?
+                    """,
+                    (
+                        marker.title.strip(),
+                        marker.short_title.strip(),
+                        marker.color,
+                        marker.symbol,
+                        marker.description,
+                        int(marker.enabled),
+                        marker.marker_id,
+                    ),
+                )
+                if cursor.rowcount != 1:
+                    raise MarkerNotFoundError(f"CAL-MARKER-NOTFOUND-001: {marker.marker_id}")
+        return values
+
+    def update_marker(self, marker: MarkerType) -> MarkerType:
+        return self.update_markers((marker,))[0]
