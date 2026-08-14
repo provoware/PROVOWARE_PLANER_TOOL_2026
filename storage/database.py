@@ -29,6 +29,14 @@ class Database:
             raise
 
     @contextmanager
+    def session(self) -> Iterator[sqlite3.Connection]:
+        connection = self.connect()
+        try:
+            yield connection
+        finally:
+            connection.close()
+
+    @contextmanager
     def transaction(self) -> Iterator[sqlite3.Connection]:
         connection = self.connect()
         try:
@@ -48,7 +56,7 @@ class Database:
 
     def quick_check(self) -> None:
         try:
-            with self.connect() as connection:
+            with self.session() as connection:
                 result = connection.execute("PRAGMA quick_check").fetchone()[0]
         except sqlite3.DatabaseError as exc:
             raise DatabaseIntegrityError("CAL-DB-INTEGRITY-001: SQLite-Datei kann nicht geprüft werden") from exc
@@ -56,7 +64,7 @@ class Database:
             raise DatabaseIntegrityError(f"CAL-DB-INTEGRITY-001: quick_check={result}")
 
     def schema_version(self) -> int:
-        with self.connect() as connection:
+        with self.session() as connection:
             row = connection.execute(
                 "SELECT COALESCE(MAX(version), 0) FROM schema_migrations"
             ).fetchone()
