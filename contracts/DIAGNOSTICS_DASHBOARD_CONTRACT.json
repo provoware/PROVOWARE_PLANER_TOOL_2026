@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "contract_id": "I012-DIAGNOSTICS-DASHBOARD",
+  "status": "VERBINDLICH",
+  "mode": "READ_ONLY_DIAGNOSTIC_AGGREGATION",
+  "areas": [
+    "STARTZUSTAND",
+    "SQLITE_INTEGRITAET",
+    "JOURNAL_INTEGRITAET",
+    "BACKUP_NACHWEISE",
+    "RECOVERY_BLOCKADEN"
+  ],
+  "architecture": {
+    "diagnostics_service_required": true,
+    "viewmodel_required": true,
+    "qt_dashboard_required": true,
+    "existing_services_as_sources_required": true,
+    "database_read_only_uri_required": true,
+    "backup_read_only_integrity_check_required": true,
+    "journal_service_reuse_required": true,
+    "recovery_plan_preview_reuse_required": true,
+    "start_report_reuse_required": true
+  },
+  "safety": {
+    "dashboard_may_execute_sql_write": false,
+    "dashboard_may_run_migrations": false,
+    "dashboard_may_restore_backup": false,
+    "dashboard_may_commit_recovery": false,
+    "dashboard_may_commit_sync": false,
+    "dashboard_may_repair_data": false,
+    "dashboard_may_modify_user_data": false,
+    "blocked_recovery_is_information_not_auto_action": true,
+    "tampered_journal_is_hard_red": true,
+    "missing_optional_evidence_is_yellow": true,
+    "color_never_only_signal": true
+  },
+  "qualification": {
+    "historical_gate_chain": [
+      "I002", "I003", "I004", "I005", "I006", "I007", "I008", "I009", "I010", "I011", "I012"
+    ],
+    "unit_regression_required": true,
+    "offscreen_gui_matrix_required": true,
+    "database_non_mutation_test_required": true,
+    "backup_tamper_test_required": true,
+    "start_report_test_required": true,
+    "remote_evidence_second_pass_required": true
+  }
+}
