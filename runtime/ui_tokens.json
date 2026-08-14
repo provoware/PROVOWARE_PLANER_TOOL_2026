@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "source_standard": "PROVOWARE-UI",
+  "source_standard_version": "1.0.0",
+  "spacing_tokens_px": {
+    "XXS": 4,
+    "XS": 8,
+    "S": 12,
+    "M": 16,
+    "L": 24,
+    "XL": 32,
+    "XXL": 48
+  },
+  "font_scale_percent": [90, 100, 110, 125, 150, 175, 200],
+  "status_lights": {
+    "GREEN": {"text": "GRUEN - BEREIT"},
+    "YELLOW": {"text": "GELB - EINGESCHRAENKT"},
+    "RED": {"text": "ROT - BLOCKIERT"}
+  }
+}
