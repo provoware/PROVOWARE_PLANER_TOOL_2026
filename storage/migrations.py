@@ -6,13 +6,21 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from calendar_core.errors import MigrationError, MigrationTamperedError
+from storage.backup import create_backup
 from storage.database import Database
 
 
 class MigrationRunner:
-    def __init__(self, database: Database, migrations_dir: Path) -> None:
+    def __init__(
+        self,
+        database: Database,
+        migrations_dir: Path,
+        *,
+        backup_dir: Path | None = None,
+    ) -> None:
         self.database = database
         self.migrations_dir = Path(migrations_dir)
+        self.backup_dir = Path(backup_dir) if backup_dir else database.path.parent / "backups"
 
     @staticmethod
     def _hash(path: Path) -> str:
@@ -47,6 +55,11 @@ class MigrationRunner:
             raise MigrationError("CAL-MIGRATION-001: Migrationsversionen sind nicht eindeutig")
         return files
 
+    def _backup_before(self, version: int) -> None:
+        self.backup_dir.mkdir(parents=True, exist_ok=True)
+        target = self.backup_dir / f"pre_migration_v{version:04d}.sqlite3"
+        create_backup(self.database, target)
+
     def apply_all(self) -> list[int]:
         applied_now: list[int] = []
         connection = self.database.connect()
@@ -75,6 +88,7 @@ class MigrationRunner:
                             f"CAL-MIGRATION-HASH-001: angewandte Migration {version} wurde verändert"
                         )
                     continue
+                self._backup_before(version)
                 try:
                     connection.execute("BEGIN IMMEDIATE")
                     for statement in self._statements(path.read_text(encoding="utf-8")):
