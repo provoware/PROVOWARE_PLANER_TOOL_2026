@@ -5,10 +5,12 @@ from pathlib import Path
 
 from services.calendar_service import CalendarService
 from services.sync_preview_service import SynchronizationPreviewService
+from services.sync_service import SynchronizationService
 from services.todo_service import TodoCalendarLinkService, TodoService
 from storage.database import Database
 from storage.migrations import MigrationRunner
 from storage.repository import CalendarRepository
+from storage.sync_repository import SyncRepository
 from storage.todo_repository import TodoRepository
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -45,6 +47,7 @@ class PlannerServices:
     todos: TodoService
     links: TodoCalendarLinkService
     sync_preview: SynchronizationPreviewService
+    sync: SynchronizationService
 
 
 def open_planner_services(
@@ -65,4 +68,5 @@ def open_planner_services(
         todos=todos,
         links=links,
         sync_preview=SynchronizationPreviewService(todos, calendar, links),
+        sync=SynchronizationService(SyncRepository(database)),
     )
