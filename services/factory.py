@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from services.calendar_service import CalendarService
+from services.sync_preview_service import SynchronizationPreviewService
 from services.todo_service import TodoCalendarLinkService, TodoService
 from storage.database import Database
 from storage.migrations import MigrationRunner
@@ -43,6 +44,7 @@ class PlannerServices:
     calendar: CalendarService
     todos: TodoService
     links: TodoCalendarLinkService
+    sync_preview: SynchronizationPreviewService
 
 
 def open_planner_services(
@@ -54,9 +56,13 @@ def open_planner_services(
     database = _prepare_database(database_path, migrations_dir=migrations_dir, backup_dir=backup_dir)
     calendar_repository = CalendarRepository(database)
     todo_repository = TodoRepository(database)
+    calendar = CalendarService(calendar_repository)
+    todos = TodoService(todo_repository)
+    links = TodoCalendarLinkService(todo_repository, calendar_repository)
     return PlannerServices(
         database=database,
-        calendar=CalendarService(calendar_repository),
-        todos=TodoService(todo_repository),
-        links=TodoCalendarLinkService(todo_repository, calendar_repository),
+        calendar=calendar,
+        todos=todos,
+        links=links,
+        sync_preview=SynchronizationPreviewService(todos, calendar, links),
     )
