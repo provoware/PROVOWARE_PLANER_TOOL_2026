@@ -1,14 +1,20 @@
 {
   "schema_version": 1,
   "manifest_type": "EVIDENCE",
-  "version": "0.14.0-dev.1",
-  "iteration": "I014",
+  "version": "0.15.0-dev.1",
+  "iteration": "I015",
   "attestation_model": "subject_commit_plus_evidence_overlay",
   "entries": [
     {
       "path": "docs/I003_KLICK_START_ORCHESTRATOR.md",
       "sha256": "5d507b6fe6bd7581b0dd06673dc39c48be9a03c3f944a25ebef96d302b8d08ff",
       "size": 3373,
+      "status": "PASS"
+    },
+    {
+      "path": "errors/BACKUP_RESTORE_FEHLERKATALOG.json",
+      "sha256": "8a710f694591b7e283ad8d617d399e966d31c959c8f73efa93b2e2aebc188484",
+      "size": 1527,
       "status": "PASS"
     },
     {
@@ -282,6 +288,18 @@
       "status": "PASS"
     },
     {
+      "path": "tests/test_i015_restore_faults.py",
+      "sha256": "da3d085ef4e6ce81e465f28a2013a501a7f4b995e72d0d4d1991e503be40bde4",
+      "size": 3273,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i015_restore_plan.py",
+      "sha256": "e2935176bfe19aaa794ed0feb7d08d5e7ca9fa0a6eb21f69489d4d21c34e6d29",
+      "size": 5313,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_manifest_builder.py",
       "sha256": "6ca11491249f577e370ad416ff3a8505e863bc74a5a29b6420a76c8d9a3d4596",
       "size": 567,
@@ -300,7 +318,7 @@
       "status": "PASS"
     }
   ],
-  "count": 49,
+  "count": 52,
   "remote_receipt": "REMOTE_TREE_RECEIPT.json",
   "qualification_report": "QUALIFICATION_REPORT.json"
 }

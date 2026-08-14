@@ -7,7 +7,7 @@ Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungsw
 - **Version:** `0.15.0-dev.1`
 - **Iteration:** `I015`
 - **Checkpoint:** `C015-BACKUP-RESTOREPLAN`
-- **Status:** `IN_ARBEIT / GELB` bis zur vollständigen Remotequalifikation
+- **Status:** `QUALIFIZIERT / GRÜN`
 - **Zielplattform:** Linux, insbesondere Ubuntu-/Kubuntu-Derivate
 - **Betrieb:** lokal und offline-first
 

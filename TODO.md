@@ -56,7 +56,7 @@
 - [x] rollbackfähigen Postcheck in denselben physischen Kern integrieren
 - [x] Plan-Tamper, Backup-/Manifest-Tamper und Ziel-Stale automatisiert testen
 - [x] Fault-/Crash-Matrix für Fehler vor Schreibzugriff und Fehler nach Austausch ergänzen
-- [ ] I015 Remotequalifikation inkl. Vollregression und Transport-Fresh-Unpack PASS
+- [x] I015 Remotequalifikation inkl. Vollregression und Transport-Fresh-Unpack PASS
 - [ ] Exact-SHA-Zweitpass PASS
 - [ ] Fast-Forward nach `main` und unabhängige Main-Nachqualifikation PASS
 
