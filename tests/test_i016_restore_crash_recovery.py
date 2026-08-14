@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import dataclasses
-import json
 import os
 import sqlite3
 import subprocess
@@ -38,34 +36,32 @@ class I016RestoreCrashRecoveryTest(unittest.TestCase):
             connection.commit()
         finally:
             connection.close()
-        self.restore = RestoreService(backup_root=self.backups, target_database=self.target)
-        self.plan = self.restore.prepare_restore(self.backup)
-        self.plan_file = self.root / "plan.json"
-        self.plan_file.write_text(json.dumps(dataclasses.asdict(self.plan)), encoding="utf-8")
 
     def tearDown(self) -> None:
         self.temp.cleanup()
 
     def _crash(self, point: str, code: int) -> subprocess.CompletedProcess[str]:
         script = r'''
-import json, os, sys
+import os, sys
 from pathlib import Path
-from backup_core.model import RestorePlan
 from services.restore_execution_service import RestoreExecutionService
 from services.restore_service import RestoreService
-plan = RestorePlan(**json.loads(Path(sys.argv[1]).read_text(encoding="utf-8")))
+backup_root = Path(sys.argv[1])
+target = Path(sys.argv[2])
+backup = Path(sys.argv[3])
 point = sys.argv[4]
 code = int(sys.argv[5])
 def fault(name):
     if name == point:
         os._exit(code)
-service = RestoreExecutionService(RestoreService(backup_root=Path(sys.argv[2]), target_database=Path(sys.argv[3]), fault_hook=fault))
-service.execute(plan)
+restore = RestoreService(backup_root=backup_root, target_database=target, fault_hook=fault)
+plan = restore.prepare_restore(backup)
+RestoreExecutionService(restore).execute(plan)
 '''
         env = os.environ.copy()
         env["PYTHONPATH"] = str(ROOT) + os.pathsep + env.get("PYTHONPATH", "")
         return subprocess.run(
-            [sys.executable, "-c", script, str(self.plan_file), str(self.backups), str(self.target), point, str(code)],
+            [sys.executable, "-c", script, str(self.backups), str(self.target), str(self.backup), point, str(code)],
             cwd=ROOT,
             env=env,
             text=True,
