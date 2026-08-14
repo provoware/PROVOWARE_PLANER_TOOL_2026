@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "catalog_id": "PROVOWARE-SYNC-EXECUTION-I009",
+  "errors": [
+    {"code": "SYNC-CANONICAL-001", "what": "Zeitwert ohne Zeitzone", "why": "Kanonische Hashbildung wäre mehrdeutig", "next": "Zeitzone am Quellwert korrigieren"},
+    {"code": "SYNC-CANONICAL-002", "what": "Nicht unterstützter Feldtyp", "why": "Der Wert kann nicht deterministisch serialisiert werden", "next": "Feldvertrag prüfen"},
+    {"code": "SYNC-LINK-001", "what": "Verknüpfung fehlt", "why": "Der SyncPlan hat keinen gültigen Link", "next": "Verknüpfung neu laden oder neu anlegen"},
+    {"code": "SYNC-LINK-002", "what": "Verknüpfter Endpunkt fehlt physisch", "why": "Datenintegrität ist verletzt", "next": "Recovery/Diagnose ausführen"},
+    {"code": "SYNC-BASELINE-001", "what": "Baseline auf getrenntem Endpunkt blockiert", "why": "Gelöschte Daten dürfen nicht wiederbelebt werden", "next": "Linkzustand prüfen"},
+    {"code": "SYNC-BASELINE-002", "what": "Ausgangswerte sind nicht identisch", "why": "Eine gemeinsame Baseline wäre unbeweisbar", "next": "Werte manuell prüfen und angleichen"},
+    {"code": "SYNC-BASELINE-003", "what": "Vorhandene Baseline widerspricht dem aktuellen Wert", "why": "Stille Neubindung könnte Historie überschreiben", "next": "Konflikt prüfen statt Baseline zu ersetzen"},
+    {"code": "SYNC-PRECHECK-004", "what": "Zeitwert ohne Zeitzone", "why": "Zielwert wäre nicht eindeutig", "next": "Zeitwert korrigieren"},
+    {"code": "SYNC-PLAN-001", "what": "Plan ist nicht schreibbar", "why": "Konflikt, Baseline, Richtung oder Semantik blockiert", "next": "Planfeedback lesen und Ursache beheben"},
+    {"code": "SYNC-PLAN-002", "what": "Nicht commitfähiges Feld im Plan", "why": "Ein blockiertes Feld darf nicht teilweise übergangen werden", "next": "Plan neu erzeugen"},
+    {"code": "SYNC-STALE-001", "what": "Plan ist veraltet", "why": "Version oder Richtung änderte sich nach PRECHECK", "next": "Neuen SyncPlan erzeugen"},
+    {"code": "SYNC-STALE-002", "what": "Entität wurde gleichzeitig geändert", "why": "Optimistic Locking schützt vor Überschreiben", "next": "Neuen SyncPlan erzeugen"},
+    {"code": "SYNC-STALE-003", "what": "Feld änderte sich nach PRECHECK", "why": "Hash-Vorbedingung stimmt nicht mehr", "next": "Neuen SyncPlan erzeugen"},
+    {"code": "SYNC-STALE-004", "what": "Baseline änderte sich nach PRECHECK", "why": "Planreferenz ist nicht mehr aktuell", "next": "Neuen SyncPlan erzeugen"},
+    {"code": "SYNC-STALE-005", "what": "Link konnte nicht atomar fortgeschrieben werden", "why": "Paralleländerung oder Löschung", "next": "Neuen SyncPlan erzeugen"},
+    {"code": "SYNC-POSTCHECK-001", "what": "Feldwerte divergieren nach Write", "why": "Transaktion erfüllt den Zielzustand nicht", "next": "Automatischer Rollback; Diagnose prüfen"},
+    {"code": "SYNC-POSTCHECK-002", "what": "Baseline fehlt beim Commit", "why": "Planvoraussetzung wurde verletzt", "next": "Automatischer Rollback; Baseline neu prüfen"},
+    {"code": "SYNC-POSTCHECK-003", "what": "Versionsprüfung nach Write fehlgeschlagen", "why": "Endzustand ist nicht beweisbar", "next": "Automatischer Rollback"},
+    {"code": "SYNC-POSTCHECK-004", "what": "Endwerte divergieren", "why": "Atomare Zusammenführung ist fehlgeschlagen", "next": "Automatischer Rollback"},
+    {"code": "SYNC-POSTCHECK-005", "what": "Baseline entspricht nicht dem Endwert", "why": "Nächster Drei-Wege-Vergleich wäre unsicher", "next": "Automatischer Rollback"},
+    {"code": "SYNC-POSTCHECK-006", "what": "Audit-Receipt fehlt oder ist inkonsistent", "why": "Commit wäre nicht vollständig nachweisbar", "next": "Automatischer Rollback"},
+    {"code": "SYNC-FAULT-001", "what": "Simulierter Sync-Fehler", "why": "Fault-Injection testet Rollback", "next": "Nur im expliziten Testmodus zulässig"}
+  ]
+}
