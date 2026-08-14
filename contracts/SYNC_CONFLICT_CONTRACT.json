@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "contract_id": "PROVOWARE-SYNC-CONFLICT-I008",
+  "status": "VERBINDLICH",
+  "iteration": "I008",
+  "mode": "READ_ONLY_PREVIEW",
+  "architecture": {
+    "required_chain": ["TodoCalendarLinkService", "SynchronizationPreviewService", "SyncPreview"],
+    "database_migration_required": false,
+    "preview_must_not_write": true,
+    "write_api_present_in_i008": false,
+    "automatic_sync_in_i008": false
+  },
+  "field_rules": [
+    {
+      "field_id": "TITLE",
+      "todo_field": "title",
+      "calendar_field": "title",
+      "preview_bidirectional": true,
+      "future_automatic_candidate": true
+    },
+    {
+      "field_id": "DESCRIPTION",
+      "todo_field": "description",
+      "calendar_field": "description",
+      "preview_bidirectional": true,
+      "future_automatic_candidate": true
+    },
+    {
+      "field_id": "START_AT",
+      "todo_field": "start_at",
+      "calendar_field": "start_at",
+      "preview_bidirectional": true,
+      "future_automatic_candidate": true
+    },
+    {
+      "field_id": "DUE_END",
+      "todo_field": "due_at",
+      "calendar_field": "end_at",
+      "preview_bidirectional": true,
+      "future_automatic_candidate": false,
+      "semantic_review_required": true
+    }
+  ],
+  "unmapped_fields": {
+    "todo": ["status", "priority", "progress", "parent_id"],
+    "calendar": ["status", "timezone", "all_day", "marker_id"]
+  },
+  "conflict_rules": {
+    "CLEAN": "Nur identische Werte sind konfliktfrei; abweichende Basiswerte ohne Feld-Baseline blockieren.",
+    "TODO_CHANGED": "Nur Todo→Kalender darf vorgeschlagen werden, wenn die Link-Richtung es erlaubt.",
+    "CALENDAR_CHANGED": "Nur Kalender→Todo darf vorgeschlagen werden, wenn die Link-Richtung es erlaubt.",
+    "BOTH_CHANGED": "Immer blockieren; keine automatische oder heuristische Auflösung.",
+    "DETACHED": "Immer blockieren; kein gelöschter Endpunkt wird wiederbelebt."
+  },
+  "direction_rules": {
+    "TODO_TO_CALENDAR": ["TODO_CHANGED"],
+    "CALENDAR_TO_TODO": ["CALENDAR_CHANGED"],
+    "BIDIRECTIONAL": ["TODO_CHANGED", "CALENDAR_CHANGED"],
+    "MANUAL": []
+  },
+  "safety": {
+    "both_changed_hard_block": true,
+    "detached_hard_block": true,
+    "baseline_divergence_hard_block": true,
+    "semantic_due_end_requires_manual_review": true,
+    "preview_write_permitted_must_be_false": true,
+    "optimistic_versions_visible": true,
+    "silent_field_translation_forbidden": true
+  },
+  "future_execution_contract": {
+    "required_before_writes": [
+      "field_baseline_or_field_hashes",
+      "PRECHECK",
+      "atomic_transaction",
+      "POSTCHECK",
+      "rollback_fault_matrix",
+      "audit_receipt"
+    ]
+  },
+  "qualification": {
+    "schema_version_must_remain": 2,
+    "historical_gate_chain": ["I002", "I003", "I004", "I005", "I006", "I007", "I008"]
+  }
+}
