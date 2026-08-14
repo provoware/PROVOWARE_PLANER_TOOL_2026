@@ -16,12 +16,7 @@
     "language_target": "python-3.12+",
     "gui_target": "pyside6-qt6",
     "database_target": "sqlite",
-    "dependency_direction": [
-      "ui",
-      "application",
-      "domain",
-      "infrastructure"
-    ],
+    "dependency_direction": ["ui", "application", "domain", "infrastructure"],
     "cross_module_internal_imports_allowed": false
   },
   "autonomy": {
@@ -103,27 +98,21 @@
     "sync_recovery_no_historical_replay_required": true,
     "sync_recovery_same_transaction_core_required": true,
     "sync_history_gui_required": true,
-    "sync_history_fault_matrix_required": true
+    "sync_history_fault_matrix_required": true,
+    "diagnostics_dashboard_read_only_required": true,
+    "diagnostics_start_state_required": true,
+    "diagnostics_database_integrity_required": true,
+    "diagnostics_journal_integrity_required": true,
+    "diagnostics_backup_evidence_required": true,
+    "diagnostics_recovery_blocker_required": true,
+    "diagnostics_no_parallel_repair_path_required": true,
+    "diagnostics_gui_matrix_required": true
   },
-  "definition_of_ready": [
-    "ziel_eindeutig",
-    "risiko_bewertet",
-    "schnittstellen_bekannt",
-    "tests_geplant",
-    "baseline_pass"
-  ],
-  "definition_of_done": [
-    "implementierung_pass",
-    "zieltests_pass",
-    "regression_pass",
-    "standards_pass",
-    "repository_inventar_pass",
-    "dokumentation_pass",
-    "remote_verifikation_pass"
-  ],
+  "definition_of_ready": ["ziel_eindeutig", "risiko_bewertet", "schnittstellen_bekannt", "tests_geplant", "baseline_pass"],
+  "definition_of_done": ["implementierung_pass", "zieltests_pass", "regression_pass", "standards_pass", "repository_inventar_pass", "dokumentation_pass", "remote_verifikation_pass"],
   "foundation": {
-    "current_iteration": "I011",
-    "current_checkpoint": "C011-SYNC-JOURNAL-RECOVERY",
-    "version": "0.11.0-dev.1"
+    "current_iteration": "I012",
+    "current_checkpoint": "C012-DIAGNOSE-DASHBOARD",
+    "version": "0.12.0-dev.1"
   }
 }
