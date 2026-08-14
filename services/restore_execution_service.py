@@ -12,12 +12,7 @@ from uuid import uuid4
 from backup_core.execution import RestoreIntent, RestoreIntentState
 from backup_core.model import RestorePlan
 from calendar_core.errors import RestoreRejectedError
-from services.restore_service import (
-    EXPECTED_SCHEMA_VERSION,
-    RestoreService,
-    _readonly_sqlite_probe,
-    _sha256,
-)
+from services.restore_service import EXPECTED_SCHEMA_VERSION, RestoreService, _readonly_sqlite_probe, _sha256
 from storage.backup import restore_backup
 from storage.restore_guard import (
     acquire_restore_lease,
@@ -226,16 +221,17 @@ class RestoreExecutionService:
             if logical_database_sha256(snapshot) != approved_before_logical:
                 raise RestoreRejectedError("RESTORE-SNAPSHOT-VERIFY-001: Vorzustand-Snapshot stimmt fachlich nicht mit dem Ziel überein")
 
-            # Die Quieszenzprobe darf WAL-Metadaten ändern. Deshalb wird danach ein
-            # neuer interner I015-Plan erzeugt. Seine Backup-/Manifestbindung muss
-            # exakt der zuvor vom Aufrufer genehmigten Sicherung entsprechen.
+            # Letzte fachliche Zielprüfung VOR dem finalen I015-Plan. Ab hier darf
+            # bis commit_restore kein SQLite-Zugriff auf die Zieldatenbank erfolgen,
+            # weil selbst ein reiner Leser den physischen WAL-Lebenszyklus ändern kann.
+            if logical_database_sha256(self.target_database) != approved_before_logical:
+                raise RestoreRejectedError("RESTORE-STALE-001: Fachlicher Zielzustand änderte sich vor dem finalen Execution-Plan")
+
+            expected_logical = logical_database_sha256(Path(plan.backup_path))
             execution_plan = self.restore_service.prepare_restore(Path(plan.backup_path))
             if not _same_authorized_backup(plan, execution_plan):
                 raise RestoreRejectedError("RESTORE-EXECUTION-PLAN-001: Interner Execution-Plan weicht von der genehmigten Sicherung ab")
-            if logical_database_sha256(self.target_database) != approved_before_logical:
-                raise RestoreRejectedError("RESTORE-STALE-001: Fachlicher Zielzustand änderte sich vor COMMITTING")
 
-            expected_logical = logical_database_sha256(Path(plan.backup_path))
             intent = self._persist(RestoreIntent.create(
                 intent_id=str(uuid4()),
                 plan_sha256=plan.plan_sha256,
