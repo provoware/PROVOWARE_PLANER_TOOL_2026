@@ -17,6 +17,7 @@ from i008_validator import validate as validate_i008
 from i009_validator import validate as validate_i009
 from i010_validator import validate as validate_i010
 from i011_validator import validate as validate_i011
+from i012_validator import validate as validate_i012
 from standard_validator import print_result, validate_repository
 
 
@@ -70,6 +71,8 @@ def main() -> int:
         gates.append(("I010-SYNC-CONTROL-RESOLUTION-GATE", validate_i010()))
     if current >= 11:
         gates.append(("I011-SYNC-JOURNAL-RECOVERY-GATE", validate_i011()))
+    if current >= 12:
+        gates.append(("I012-DIAGNOSE-DASHBOARD-GATE", validate_i012()))
     if not all(_run_gate(name, result) for name, result in gates):
         return 1
     if args.command == "qualifizieren":
