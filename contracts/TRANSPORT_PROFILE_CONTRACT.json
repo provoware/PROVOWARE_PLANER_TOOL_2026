@@ -6,116 +6,31 @@
   "default_profile": "NUTZER",
   "classes": ["PRODUKTKERN", "NUTZERDOKU", "ENTWICKLUNG", "EVIDENCE"],
   "classification_rules": [
-    {
-      "class": "NUTZERDOKU",
-      "exact": ["NUTZERANLEITUNG.md"]
-    },
+    {"class": "NUTZERDOKU", "exact": ["NUTZERANLEITUNG.md"]},
     {
       "class": "PRODUKTKERN",
-      "exact": [
-        "VERSION.json",
-        "requirements-gui.lock",
-        "contracts/GUI_RUNTIME_CONTRACT.json",
-        "tools/start_gui.py",
-        "tools/start_orchestrator.py"
-      ],
-      "prefixes": [
-        "calendar_core/",
-        "diagnostics_core/",
-        "errors/",
-        "migrations/",
-        "runtime/",
-        "services/",
-        "storage/",
-        "sync_core/",
-        "todo_core/",
-        "ui/",
-        "viewmodel/"
-      ]
+      "exact": ["VERSION.json", "requirements-gui.lock", "contracts/GUI_RUNTIME_CONTRACT.json", "tools/start_gui.py", "tools/start_orchestrator.py"],
+      "prefixes": ["backup_core/", "calendar_core/", "diagnostics_core/", "errors/", "migrations/", "runtime/", "services/", "storage/", "sync_core/", "todo_core/", "ui/", "viewmodel/"]
     },
     {
       "class": "EVIDENCE",
-      "exact": [
-        "BUILD_MANIFEST.json",
-        "EVIDENCE_MANIFEST.json",
-        "MANIFEST_INDEX.json",
-        "PROCESS_AUDIT_I012.json",
-        "QUALIFICATION_REPORT.json",
-        "RELEASE_MANIFEST.json",
-        "REMOTE_TREE_RECEIPT.json",
-        "REPOSITORY_MANIFEST.json",
-        "SHA256_DATEI_INVENTAR.json",
-        "SOURCE_MANIFEST.json"
-      ],
+      "exact": ["BUILD_MANIFEST.json", "EVIDENCE_MANIFEST.json", "MANIFEST_INDEX.json", "PROCESS_AUDIT_I012.json", "QUALIFICATION_REPORT.json", "RELEASE_MANIFEST.json", "REMOTE_TREE_RECEIPT.json", "REPOSITORY_MANIFEST.json", "SHA256_DATEI_INVENTAR.json", "SOURCE_MANIFEST.json"],
       "globs": ["PROCESS_AUDIT_*.json"]
     },
     {
       "class": "ENTWICKLUNG",
-      "exact": [
-        ".gitignore",
-        "CHANGELOG.md",
-        "ITERATION_PLAN.json",
-        "PROJECT_CONTRACT.json",
-        "PROJEKTSTATUS.json",
-        "README.md",
-        "TODO.md"
-      ],
-      "prefixes": [
-        ".github/",
-        "contracts/",
-        "docs/",
-        "standards/",
-        "tests/",
-        "tools/"
-      ],
-      "exclude_exact": [
-        "contracts/GUI_RUNTIME_CONTRACT.json",
-        "tools/start_gui.py",
-        "tools/start_orchestrator.py"
-      ]
+      "exact": [".gitignore", "CHANGELOG.md", "ITERATION_PLAN.json", "PROJECT_CONTRACT.json", "PROJEKTSTATUS.json", "README.md", "TODO.md"],
+      "prefixes": [".github/", "contracts/", "docs/", "standards/", "tests/", "tools/"],
+      "exclude_exact": ["contracts/GUI_RUNTIME_CONTRACT.json", "tools/start_gui.py", "tools/start_orchestrator.py"]
     }
   ],
   "profiles": {
-    "PROJEKTKERN": {
-      "classes": ["PRODUKTKERN"],
-      "description": "Reiner technischer Produktkern ohne Nutzer-, Entwickler- oder Evidence-Dokumentation."
-    },
-    "NUTZER": {
-      "classes": ["PRODUKTKERN", "NUTZERDOKU"],
-      "description": "Standardtransport für Nutzung und Weitergabe; enthält nur lauffähiges Programm und kurze Nutzeranleitung."
-    },
-    "ENTWICKLER": {
-      "classes": ["PRODUKTKERN", "NUTZERDOKU", "ENTWICKLUNG"],
-      "description": "Explizites Entwicklungspaket mit Tests, Standards, Verträgen, Werkzeugen und Entwicklungsdokumentation; Evidence bleibt getrennt."
-    },
-    "EVIDENCE": {
-      "classes": ["EVIDENCE"],
-      "include_exact": ["VERSION.json", "PROJEKTSTATUS.json"],
-      "description": "Nachweispaket ohne Produktquellbaum; enthält Evidence plus minimalen Versions-/Statuskontext."
-    }
+    "PROJEKTKERN": {"classes": ["PRODUKTKERN"], "description": "Reiner technischer Produktkern ohne Nutzer-, Entwickler- oder Evidence-Dokumentation."},
+    "NUTZER": {"classes": ["PRODUKTKERN", "NUTZERDOKU"], "description": "Standardtransport für Nutzung und Weitergabe; enthält nur lauffähiges Programm und kurze Nutzeranleitung."},
+    "ENTWICKLER": {"classes": ["PRODUKTKERN", "NUTZERDOKU", "ENTWICKLUNG"], "description": "Explizites Entwicklungspaket mit Tests, Standards, Verträgen, Werkzeugen und Entwicklungsdokumentation; Evidence bleibt getrennt."},
+    "EVIDENCE": {"classes": ["EVIDENCE"], "include_exact": ["VERSION.json", "PROJEKTSTATUS.json"], "description": "Nachweispaket ohne Produktquellbaum; enthält Evidence plus minimalen Versions-/Statuskontext."}
   },
-  "never_transport_globs": [
-    ".git/**",
-    ".venv/**",
-    "venv/**",
-    "**/__pycache__/**",
-    "**/.pytest_cache/**",
-    "dist/**",
-    "dist_transport/**",
-    "workspace/**",
-    "Arbeitsbereich/**",
-    "backups/**",
-    "Sicherungen/**",
-    "*.sqlite3",
-    "*.sqlite3-*",
-    "*.db",
-    "*.db-*",
-    "*.pre-restore",
-    "*.restore-candidate",
-    "*.tmp",
-    "*.log",
-    "LETZTER_STARTBERICHT.json"
-  ],
+  "never_transport_globs": [".git/**", ".venv/**", "venv/**", "**/__pycache__/**", "**/.pytest_cache/**", "dist/**", "dist_transport/**", "workspace/**", "Arbeitsbereich/**", "backups/**", "Sicherungen/**", "*.sqlite3", "*.sqlite3-*", "*.db", "*.db-*", "*.pre-restore", "*.restore-candidate", "*.tmp", "*.log", "LETZTER_STARTBERICHT.json"],
   "generated_package_files": ["PAKETMANIFEST.json", "PAKET_INVENTAR.json"],
   "runtime_compatibility_inventory": "SHA256_DATEI_INVENTAR.json",
   "runtime_compatibility_profiles": ["PROJEKTKERN", "NUTZER", "ENTWICKLER"],
