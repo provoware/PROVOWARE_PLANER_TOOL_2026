@@ -106,13 +106,21 @@
     "diagnostics_backup_evidence_required": true,
     "diagnostics_recovery_blocker_required": true,
     "diagnostics_no_parallel_repair_path_required": true,
-    "diagnostics_gui_matrix_required": true
+    "diagnostics_gui_matrix_required": true,
+    "development_v2_iteration_plan_required": true,
+    "development_v2_declared_repository_delta_required": true,
+    "development_v2_static_preflight_required": true,
+    "development_v2_cost_ordered_fail_fast_required": true,
+    "development_v2_gate_deduplication_required": true,
+    "development_v2_plan_based_inventory_required": true,
+    "development_v2_timing_evidence_required": true,
+    "development_v2_stale_ci_cancellation_required": true
   },
-  "definition_of_ready": ["ziel_eindeutig", "risiko_bewertet", "schnittstellen_bekannt", "tests_geplant", "baseline_pass"],
-  "definition_of_done": ["implementierung_pass", "zieltests_pass", "regression_pass", "standards_pass", "repository_inventar_pass", "dokumentation_pass", "remote_verifikation_pass"],
+  "definition_of_ready": ["ziel_eindeutig", "risiko_bewertet", "schnittstellen_bekannt", "tests_geplant", "baseline_pass", "iterationsplan_vollstaendig", "repository_delta_deklariert"],
+  "definition_of_done": ["implementierung_pass", "zieltests_pass", "regression_pass", "standards_pass", "repository_inventar_pass", "dokumentation_pass", "remote_verifikation_pass", "prozessmetriken_erfasst"],
   "foundation": {
-    "current_iteration": "I012",
-    "current_checkpoint": "C012-DIAGNOSE-DASHBOARD",
-    "version": "0.12.0-dev.1"
+    "current_iteration": "I013",
+    "current_checkpoint": "C013-ENTWICKLUNGSAUTOPILOT-V2",
+    "version": "0.13.0-dev.1"
   }
 }
