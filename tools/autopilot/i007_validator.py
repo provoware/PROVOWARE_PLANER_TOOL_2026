@@ -231,8 +231,10 @@ def validate() -> dict:
         errors.append(f"I007_RUNTIME_FEHLER: {type(exc).__name__}: {exc}")
         runtime = "FAIL"
 
-    if schema != 2:
+    if current == 7 and schema != 2:
         errors.append(f"I007_SCHEMA_VERSION_FALSCH: {schema}")
+    elif current > 7 and schema < 2:
+        errors.append(f"I007_HISTORISCHE_SCHEMA_BASIS_FEHLT: {schema}")
     return {
         "status": "PASS" if not errors else "FAIL",
         "errors": errors,
