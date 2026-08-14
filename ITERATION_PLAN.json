@@ -9,7 +9,8 @@
     "commit": "1b684cc99d97cd2f00221b49a8ef606686d2453b",
     "tree": "9833d48c617a6c87c8dc664c548ca350a9581b17"
   },
-  "risk_class": "KRITISCH",
+  "risk_class": "HOCH",
+  "safety_critical": true,
   "risk_reason": "Restore ersetzt die aktive Nutzdatenbank. I015 verändert daher ausschließlich den abgesicherten Restorepfad und keine fachlichen Tabellen oder Datenmodelle.",
   "objective": "Sicherungskandidaten strikt lesend qualifizieren, einen hashgebundenen unveränderlichen RestorePlan erzeugen und die tatsächliche Wiederherstellung ausschließlich über den bestehenden physischen Restorekern mit exakten Precondition-Prüfungen zulassen.",
   "acceptance_criteria": [
