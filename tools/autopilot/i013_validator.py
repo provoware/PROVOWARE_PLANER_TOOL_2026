@@ -1,15 +1,9 @@
 from __future__ import annotations
 
 import json
-import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
-from tools.autopilot.candidate_inventory import validate as validate_candidate_inventory
-from tools.autopilot.preflight import validate as validate_preflight
 
 REQUIRED_FILES = {
     "ITERATION_PLAN.json",
@@ -110,6 +104,16 @@ def validate() -> dict:
     if audit.get("target_state_i013", {}).get("unplanned_repository_paths_target") != 0:
         errors.append("I013_AUDIT_ZIEL_FALSCH")
 
+    candidate_source = (ROOT / "tools/autopilot/candidate_inventory.py").read_text(encoding="utf-8") if (ROOT / "tools/autopilot/candidate_inventory.py").exists() else ""
+    for token in ("BASELINE_PLUS_DECLARED_DELTA", "changed_paths", "write_repository_manifest", "I013-INVENTAR-UNGEPLANT"):
+        if token not in candidate_source:
+            errors.append(f"I013_INVENTARWERKZEUG_FEHLT: {token}")
+
+    preflight_source = (ROOT / "tools/autopilot/preflight.py").read_text(encoding="utf-8") if (ROOT / "tools/autopilot/preflight.py").exists() else ""
+    for token in ("P0_STATIC", "py_compile", "readme_required_section_markers", "validate_candidate_inventory"):
+        if token not in preflight_source:
+            errors.append(f"I013_PREFLIGHT_WERKZEUG_FEHLT: {token}")
+
     workflow = (ROOT / ".github/workflows/i013-qualifikation.yml").read_text(encoding="utf-8") if (ROOT / ".github/workflows/i013-qualifikation.yml").exists() else ""
     for token in (
         "concurrency:",
@@ -129,30 +133,21 @@ def validate() -> dict:
     if workflow.find("preflight.py") > workflow.find("apt-get") >= 0:
         errors.append("I013_PREFLIGHT_ZU_SPAET")
 
-    inventory = validate_candidate_inventory()
-    if inventory.get("status") != "PASS":
-        errors.extend(f"I013_INVENTAR: {item}" for item in inventory.get("errors", []))
-
-    preflight = validate_preflight()
-    if preflight.get("status") != "PASS":
-        errors.extend(f"I013_PREFLIGHT: {item}" for item in preflight.get("errors", []))
-
     return {
         "status": "PASS" if not errors else "FAIL",
         "errors": errors,
         "repository_files": len(files),
-        "candidate_inventory": inventory.get("status"),
-        "static_preflight": preflight.get("status"),
         "acceptance_criteria": len(criteria),
         "risk_class": plan.get("risk_class"),
+        "gate_execution_model": "ONE_GATE_ONCE_PER_PASS",
     }
 
 
 def main() -> int:
     result = validate()
     print(f"I013-VALIDATOR: {result['status']}")
-    print(f"P0-Preflight: {result['static_preflight']} | Kandidateninventar: {result['candidate_inventory']}")
     print(f"Akzeptanzkriterien: {result['acceptance_criteria']} | Risiko: {result['risk_class']}")
+    print(f"Gate-Modell: {result['gate_execution_model']}")
     for error in result["errors"]:
         print(f"FEHLER: {error}")
     print("MASCHINENLESBAR:", json.dumps(result, ensure_ascii=False, sort_keys=True))
