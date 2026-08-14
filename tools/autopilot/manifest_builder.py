@@ -51,7 +51,9 @@ def write_json(relative_path: str, value: dict) -> None:
 
 
 def build() -> None:
-    version = json.loads((ROOT / "VERSION.json").read_text(encoding="utf-8"))["version"]
+    version_data = json.loads((ROOT / "VERSION.json").read_text(encoding="utf-8"))
+    version = version_data["version"]
+    iteration = version_data["iteration"]
     files = repository_files()
     generated = set(MANIFESTS) | {
         "MANIFEST_INDEX.json",
@@ -60,13 +62,25 @@ def build() -> None:
         "QUALIFICATION_REPORT.json",
     }
     source = [item for item in files if item not in generated and not item.startswith(".github/")]
-    build_scope = [item for item in files if item.startswith(".github/") or item.startswith("tools/autopilot/")]
-    evidence = [item for item in files if item.startswith("tests/") or item.startswith("errors/")]
+    build_scope = [
+        item for item in files
+        if item.startswith(".github/")
+        or item.startswith("tools/autopilot/")
+        or item.startswith("runtime/")
+        or item == "tools/start_orchestrator.py"
+    ]
+    evidence = [
+        item for item in files
+        if item.startswith("tests/")
+        or item.startswith("errors/")
+        or item.startswith("docs/I003_")
+    ]
 
     write_json("SOURCE_MANIFEST.json", {
         "schema_version": 1,
         "manifest_type": "SOURCE",
         "version": version,
+        "iteration": iteration,
         "entries": [file_info(item) for item in source],
         "count": len(source),
     })
@@ -74,6 +88,7 @@ def build() -> None:
         "schema_version": 1,
         "manifest_type": "BUILD",
         "version": version,
+        "iteration": iteration,
         "entries": [file_info(item) for item in build_scope],
         "count": len(build_scope),
     })
@@ -81,13 +96,15 @@ def build() -> None:
         "schema_version": 1,
         "manifest_type": "RELEASE",
         "version": version,
+        "iteration": iteration,
         "state": "NOT_BUILT",
-        "reason": "I002 ist Foundation; ein ausführbares Releasepaket existiert noch nicht.",
+        "reason": f"{iteration} ist noch Entwicklungsstand; ein freigegebenes Endnutzer-Releasepaket existiert nicht.",
     })
     write_json("EVIDENCE_MANIFEST.json", {
         "schema_version": 1,
         "manifest_type": "EVIDENCE",
         "version": version,
+        "iteration": iteration,
         "attestation_model": "subject_commit_plus_evidence_overlay",
         "entries": [file_info(item) for item in evidence],
         "count": len(evidence),
@@ -97,6 +114,7 @@ def build() -> None:
     write_json("MANIFEST_INDEX.json", {
         "schema_version": 1,
         "version": version,
+        "iteration": iteration,
         "manifests": [file_info(item) for item in MANIFESTS],
     })
 
