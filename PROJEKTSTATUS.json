@@ -7,12 +7,12 @@
   "phase": "FOUNDATION",
   "iteration": "I006",
   "checkpoint": "C006-TODO-DOMAIN-LINK",
-  "status": "QUALIFIZIERUNG_LAEUFT",
-  "ampel": "GELB",
+  "status": "QUALIFIZIERT",
+  "ampel": "GRUEN",
   "planning_percent": 100,
   "implementation_percent": 48,
-  "qualification_percent": 78,
-  "release_readiness_percent": 14,
+  "qualification_percent": 86,
+  "release_readiness_percent": 15,
   "mandatory_user_testing": false,
   "last_completed": [
     "C000-REPOSITORY-RESET",
@@ -22,7 +22,8 @@
     "I002-MANIFEST-EVIDENCE-HARDENING",
     "I003-KLICK-START-ORCHESTRATOR",
     "I004-KALENDER-DOMAIN-SQLITE",
-    "I005-KALENDER-GUI-VIEWMODEL"
+    "I005-KALENDER-GUI-VIEWMODEL",
+    "I006-TODO-DOMAIN-LINK"
   ],
   "next_logical_step": "I007 Todo-GUI + Todo-ViewModel",
   "improvement_recommendation": "Todo-GUI ausschließlich auf TodoService und TodoCalendarLinkService aufbauen; Synchronisationsauflösung erst nach sichtbarer Konfliktprüfung freigeben"

@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "manifest_type": "EVIDENCE",
-  "version": "0.5.0-dev.1",
-  "iteration": "I005",
+  "version": "0.6.0-dev.1",
+  "iteration": "I006",
   "attestation_model": "subject_commit_plus_evidence_overlay",
   "entries": [
     {
@@ -36,6 +36,12 @@
       "status": "PASS"
     },
     {
+      "path": "errors/TODO_FEHLERKATALOG.json",
+      "sha256": "e5e9463d3eb34e6130ca18f5ff594bfc6c865fc66a7455a85a4788d0d89209fe",
+      "size": 2190,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_error_handling.py",
       "sha256": "4ead233a5689c576e181db1b58c528591895034fd81f768871c57028c3d5205d",
       "size": 651,
@@ -49,8 +55,8 @@
     },
     {
       "path": "tests/test_i004_calendar_core.py",
-      "sha256": "d96a3d33caab637ba5a78f8c234a9ed0d5f4688f657fcb030428484c30674ce8",
-      "size": 7874,
+      "sha256": "b1c99e82bceed3753e592008a12f2cbb6119ea6e719342e9bd64d4d95033d80e",
+      "size": 8293,
       "status": "PASS"
     },
     {
@@ -90,6 +96,30 @@
       "status": "PASS"
     },
     {
+      "path": "tests/test_i006_domain.py",
+      "sha256": "44ca951067b2ee0e1c3c13e4dca4b37c6d51c602eb6d7cc0d974247335618bfa",
+      "size": 1727,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i006_fault_matrix.py",
+      "sha256": "0494e1e9347411663dab5acb629e46ffc659b5422f5f0177818e4182750de3d2",
+      "size": 484,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i006_persistence_links.py",
+      "sha256": "f3b482bbeebda27ab4255e86f3046cd6c1efeb8076a93986989db8b159265709",
+      "size": 5032,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i006_repository_constraints.py",
+      "sha256": "efeff67ffe1ec516e926d859647dadaeba8f7402d148b546774e58bb13b9bd19",
+      "size": 2385,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_manifest_builder.py",
       "sha256": "6ca11491249f577e370ad416ff3a8505e863bc74a5a29b6420a76c8d9a3d4596",
       "size": 567,
@@ -108,7 +138,7 @@
       "status": "PASS"
     }
   ],
-  "count": 17,
+  "count": 22,
   "remote_receipt": "REMOTE_TREE_RECEIPT.json",
   "qualification_report": "QUALIFICATION_REPORT.json"
 }

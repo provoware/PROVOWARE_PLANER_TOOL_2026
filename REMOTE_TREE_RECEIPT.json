@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "state": "ATTESTED",
-  "subject_commit": "dc025438fc41f00b94f49b6ab4f0a0fa0388c044",
-  "subject_tree": "c5c616f07c28570a18554eb15ba1c5ce66949d7e",
-  "entry_count": 97,
+  "subject_commit": "94ca0084e2278dd3cc635cb714616212000f6c29",
+  "subject_tree": "0aa1a9442618fe2b3fb06693f7fd435f5b52ee86",
+  "entry_count": 114,
   "subject_tree_entries": [
     {
       "path": ".github/workflows/foundation-qualifikation.yml",
@@ -41,17 +41,24 @@
       "status": "PASS"
     },
     {
+      "path": ".github/workflows/i006-qualifikation.yml",
+      "blob_sha": "d4dcc0f3103bda6372d9ddaa6ca37c8d62140003",
+      "mode": "100644",
+      "size": 12286,
+      "status": "PASS"
+    },
+    {
       "path": "BUILD_MANIFEST.json",
-      "blob_sha": "1433e581d3ca018a3ef1ab0e47263da0313c53eb",
+      "blob_sha": "f41c852ac990f9157a9247db4ef1e2d55c5f157c",
       "mode": "100644",
       "size": 4115,
       "status": "PASS"
     },
     {
       "path": "CHANGELOG.md",
-      "blob_sha": "89c30c4126712355ffe6460b92bd1f68c54a3adc",
+      "blob_sha": "16b8bc5851020f1980fd7de7f9e51324a8ff240f",
       "mode": "100644",
-      "size": 3390,
+      "size": 2475,
       "status": "PASS"
     },
     {
@@ -63,37 +70,37 @@
     },
     {
       "path": "MANIFEST_INDEX.json",
-      "blob_sha": "920881c643554f49b70474c3181f66334067e7c0",
+      "blob_sha": "9a661e35367cbae1f759d18ebdc2400c66c0bf60",
       "mode": "100644",
       "size": 812,
       "status": "PASS"
     },
     {
       "path": "PROJECT_CONTRACT.json",
-      "blob_sha": "71394cdae0f47ed786ee319b5ac1a8caf83cb36d",
+      "blob_sha": "24641aa34ebf39f0f7d05f4be7f69bf6bc7a421b",
       "mode": "100644",
-      "size": 2532,
+      "size": 2765,
       "status": "PASS"
     },
     {
       "path": "PROJEKTSTATUS.json",
-      "blob_sha": "b8b8684e28aed147c7f186b83bda2d7b0aec936d",
+      "blob_sha": "5093dce455305d8e2f4fe1770b814b813f479085",
       "mode": "100644",
-      "size": 1015,
+      "size": 1049,
       "status": "PASS"
     },
     {
       "path": "QUALIFICATION_REPORT.json",
-      "blob_sha": "edd684b04b27bc2ec5f6a6a7e88772cac3217669",
+      "blob_sha": "a52c329bf70d7cbfb6739f34a97b36917cab5590",
       "mode": "100644",
-      "size": 771,
+      "size": 795,
       "status": "PASS"
     },
     {
       "path": "README.md",
-      "blob_sha": "1416d700d1fca49bb8cc4b9b430b6b2b6d91bedd",
+      "blob_sha": "36e7cc8ff6a2b666d880d7bc61012b28620d8395",
       "mode": "100644",
-      "size": 11032,
+      "size": 5582,
       "status": "PASS"
     },
     {
@@ -105,7 +112,7 @@
     },
     {
       "path": "REMOTE_TREE_RECEIPT.json",
-      "blob_sha": "375e91fdbc5115fdcbeefeade2787ed56577137f",
+      "blob_sha": "1f3931587ba564913c789e975976a3c404edbd52",
       "mode": "100644",
       "size": 18367,
       "status": "PASS"
@@ -119,30 +126,30 @@
     },
     {
       "path": "SHA256_DATEI_INVENTAR.json",
-      "blob_sha": "12fbe73b84290f6f512adcb87a536329110e27aa",
+      "blob_sha": "bcb520c0f4af179c5c8e1db6851fc6f92ca56485",
       "mode": "100644",
       "size": 17673,
       "status": "PASS"
     },
     {
       "path": "SOURCE_MANIFEST.json",
-      "blob_sha": "5f6af52e987489c7ea1994da168e2f663f2d687f",
+      "blob_sha": "94f6a30839c41d004190a30c4a4429c023e1c1d2",
       "mode": "100644",
       "size": 15645,
       "status": "PASS"
     },
     {
       "path": "TODO.md",
-      "blob_sha": "9a53f6007d6411dc04d0a03fa973593dd50bf394",
+      "blob_sha": "122d2a83db58bbefa27537e2fa5d1a4ed1d84ff2",
       "mode": "100644",
-      "size": 5722,
+      "size": 3186,
       "status": "PASS"
     },
     {
       "path": "VERSION.json",
-      "blob_sha": "fd778e059d2a0399a4c79fdb45c6b4dd2918e35e",
+      "blob_sha": "3502f4188668ce57edbe5d91928d85e7541a9c8c",
       "mode": "100644",
-      "size": 350,
+      "size": 344,
       "status": "PASS"
     },
     {
@@ -188,6 +195,13 @@
       "status": "PASS"
     },
     {
+      "path": "contracts/TODO_DOMAIN_LINK_CONTRACT.json",
+      "blob_sha": "687e7f9c46baa381d7075fcd5fab1e7fbdcf0480",
+      "mode": "100644",
+      "size": 1979,
+      "status": "PASS"
+    },
+    {
       "path": "docs/I002_MANIFEST_EVIDENCE_HARDENING.md",
       "blob_sha": "f39113071a6c7abb083d61fca25c0495cc92261a",
       "mode": "100644",
@@ -213,6 +227,13 @@
       "blob_sha": "86bb3e6e36c8844edb0105280164f30d4fc4110d",
       "mode": "100644",
       "size": 3124,
+      "status": "PASS"
+    },
+    {
+      "path": "docs/I006_TODO_DOMAIN_LINK.md",
+      "blob_sha": "4e92d203b38894c87bb44a0f11aace05ca4c347d",
+      "mode": "100644",
+      "size": 2457,
       "status": "PASS"
     },
     {
@@ -244,10 +265,24 @@
       "status": "PASS"
     },
     {
+      "path": "errors/TODO_FEHLERKATALOG.json",
+      "blob_sha": "3f6644211cf4af93dfe09f9e759c132375ec5839",
+      "mode": "100644",
+      "size": 2190,
+      "status": "PASS"
+    },
+    {
       "path": "migrations/0001_calendar_core.sql",
       "blob_sha": "e8c684e0629f247b6787d66d83dab3e5343da37d",
       "mode": "100644",
       "size": 2191,
+      "status": "PASS"
+    },
+    {
+      "path": "migrations/0002_todo_domain_links.sql",
+      "blob_sha": "9ace65db78f05dbda5f57e43ac115c82b90d8ca1",
+      "mode": "100644",
+      "size": 2553,
       "status": "PASS"
     },
     {
@@ -308,9 +343,16 @@
     },
     {
       "path": "services/factory.py",
-      "blob_sha": "8d29e3fcb096f88ee9c5f9ad7ef8385996175f6c",
+      "blob_sha": "93a682a1a1cea0ad12d3c9ca7bb675bacd8eaefc",
       "mode": "100644",
-      "size": 766,
+      "size": 1933,
+      "status": "PASS"
+    },
+    {
+      "path": "services/todo_service.py",
+      "blob_sha": "6a79d579367eb88c198ddd29382725bf42881c0d",
+      "mode": "100644",
+      "size": 6642,
       "status": "PASS"
     },
     {
@@ -447,6 +489,13 @@
       "status": "PASS"
     },
     {
+      "path": "storage/todo_repository.py",
+      "blob_sha": "02e99823261d5c4d5b85e6cdc8048d24b8193278",
+      "mode": "100644",
+      "size": 10918,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_error_handling.py",
       "blob_sha": "db216e0006a39ae3af2baaf34c5c010b3e9c8340",
       "mode": "100644",
@@ -462,9 +511,9 @@
     },
     {
       "path": "tests/test_i004_calendar_core.py",
-      "blob_sha": "afdad5c92bf63496f3b0a6b87a026f64c3fa299d",
+      "blob_sha": "02d3d14d60b17c5d7486859d248974313b4d23b2",
       "mode": "100644",
-      "size": 7874,
+      "size": 8293,
       "status": "PASS"
     },
     {
@@ -510,6 +559,34 @@
       "status": "PASS"
     },
     {
+      "path": "tests/test_i006_domain.py",
+      "blob_sha": "ff036801db849c83bd5bfdc84af99f89c30e622c",
+      "mode": "100644",
+      "size": 1727,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i006_fault_matrix.py",
+      "blob_sha": "d9da56d1933729f865151583f64be823bb70b11e",
+      "mode": "100644",
+      "size": 484,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i006_persistence_links.py",
+      "blob_sha": "75eeb20f00c3a48512ef6739c2e992b6ba4a8a14",
+      "mode": "100644",
+      "size": 5032,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i006_repository_constraints.py",
+      "blob_sha": "5cbc49edcda802c43391720896c3d4b0c21da90b",
+      "mode": "100644",
+      "size": 2385,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_manifest_builder.py",
       "blob_sha": "5871f8c4c30b6af4551f91c186872e609b6b67f4",
       "mode": "100644",
@@ -531,6 +608,34 @@
       "status": "PASS"
     },
     {
+      "path": "todo_core/__init__.py",
+      "blob_sha": "30252ff95fdaeeeee7ceffde89ebc755e5392838",
+      "mode": "100644",
+      "size": 247,
+      "status": "PASS"
+    },
+    {
+      "path": "todo_core/errors.py",
+      "blob_sha": "be1f5e04641157919ad863c024d716b4efe816ce",
+      "mode": "100644",
+      "size": 435,
+      "status": "PASS"
+    },
+    {
+      "path": "todo_core/faults.py",
+      "blob_sha": "fd2b3b1ac93854f59d0142f179c70485202d26fd",
+      "mode": "100644",
+      "size": 614,
+      "status": "PASS"
+    },
+    {
+      "path": "todo_core/model.py",
+      "blob_sha": "da44c01d7a141da83d9cd95841c71d1afa3125e7",
+      "mode": "100644",
+      "size": 5031,
+      "status": "PASS"
+    },
+    {
       "path": "tools/__init__.py",
       "blob_sha": "41026d4e93d0fe90d507e994575b97b533f24161",
       "mode": "100644",
@@ -546,9 +651,9 @@
     },
     {
       "path": "tools/autopilot/autopilot.py",
-      "blob_sha": "a484a0e8967483428801e54c0c170d270a8394d9",
+      "blob_sha": "6c06f959e78c942b5ca722da37834f37d709a304",
       "mode": "100755",
-      "size": 2166,
+      "size": 2189,
       "status": "PASS"
     },
     {
@@ -574,16 +679,23 @@
     },
     {
       "path": "tools/autopilot/i004_validator.py",
-      "blob_sha": "c12bc7c48c56df431c5abb33004a56eec61970a1",
+      "blob_sha": "12b541769a67e147627fc6c5fb5918f6048890e6",
       "mode": "100644",
-      "size": 7844,
+      "size": 7863,
       "status": "PASS"
     },
     {
       "path": "tools/autopilot/i005_validator.py",
-      "blob_sha": "4dd79a2b893e21d17ec59fa9e527ff8c3b0723ee",
+      "blob_sha": "ad2e164ddbc20abfbc97e7e43389eea5af586c2e",
       "mode": "100644",
-      "size": 9860,
+      "size": 10045,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/autopilot/i006_validator.py",
+      "blob_sha": "bad66eae6f9d083fb2159aee9b7f3be69279f6ed",
+      "mode": "100644",
+      "size": 8103,
       "status": "PASS"
     },
     {
@@ -612,6 +724,13 @@
       "blob_sha": "3500b4101fc7fe5209b7d89143166b206cc22161",
       "mode": "100755",
       "size": 4908,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/i006_fault_matrix.py",
+      "blob_sha": "e3c14ec0e6011d30e715081860d20ddcd2f1c775",
+      "mode": "100755",
+      "size": 4380,
       "status": "PASS"
     },
     {

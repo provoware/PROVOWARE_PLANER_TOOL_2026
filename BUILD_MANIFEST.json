@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "manifest_type": "BUILD",
-  "version": "0.5.0-dev.1",
-  "iteration": "I005",
+  "version": "0.6.0-dev.1",
+  "iteration": "I006",
   "entries": [
     {
       "path": ".github/workflows/foundation-qualifikation.yml",
@@ -32,6 +32,12 @@
       "path": ".github/workflows/i005-qualifikation.yml",
       "sha256": "008c64728c388ad310f82fffda0c962dd41c4403304a41b30ebe8a9ada2941f9",
       "size": 12280,
+      "status": "PASS"
+    },
+    {
+      "path": ".github/workflows/i006-qualifikation.yml",
+      "sha256": "54dd61a41a6fb0593aeecd7e17622ed73c028e823b75c4009feda4fb2ba61660",
+      "size": 12286,
       "status": "PASS"
     },
     {
@@ -72,8 +78,8 @@
     },
     {
       "path": "tools/autopilot/autopilot.py",
-      "sha256": "1b5a39889933eeeac877128648e3e9bc002f3c4bad2ee66c252ae855455369fd",
-      "size": 2166,
+      "sha256": "fb14facb2c6182f8e36fea2c2e4e08ff331d45f6d6ca0999153c701f49416ec8",
+      "size": 2189,
       "status": "PASS"
     },
     {
@@ -96,14 +102,20 @@
     },
     {
       "path": "tools/autopilot/i004_validator.py",
-      "sha256": "24fb04cee9051bd34e2c7f1d75b3f20c259e322a503b5ee8b4328530bce9603b",
-      "size": 7844,
+      "sha256": "4123fe2419dfdb2795f87365ab3395b4d709035963992e65644390d6ed6a065f",
+      "size": 7863,
       "status": "PASS"
     },
     {
       "path": "tools/autopilot/i005_validator.py",
-      "sha256": "ecb851fc3f08d7790f81d7add30530e57c49082caf9a3c10f39ad2d1d9679ab6",
-      "size": 9860,
+      "sha256": "188059c8964a32b80023c1d8a501fa81e026d60a9ead6f096ebff53eb5443b35",
+      "size": 10045,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/autopilot/i006_validator.py",
+      "sha256": "fcf79b1728a5e8df0f29a6fa08e69fcddf9699898450eed1d537be891d44137c",
+      "size": 8103,
       "status": "PASS"
     },
     {
@@ -131,5 +143,5 @@
       "status": "PASS"
     }
   ],
-  "count": 21
+  "count": 23
 }
