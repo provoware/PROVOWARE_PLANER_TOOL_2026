@@ -19,7 +19,7 @@ jobs:
   foundation:
     name: Standards, Inventar und Autopilot
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: Repository vollständig auschecken
         uses: actions/checkout@v4
@@ -36,6 +36,13 @@ jobs:
           python3 tools/autopilot/manifest_builder.py --write
           python3 tools/autopilot/manifest_builder.py --check
           python3 tools/autopilot/standard_validator.py
+
+      - name: I016 Restore-Execution-Zieltests
+        run: |
+          python3 -m unittest discover -s tests -p 'test_i016_restore_execution.py' -v
+          python3 -m unittest discover -s tests -p 'test_i016_restore_crash_recovery.py' -v
+          python3 tools/i016_restore_crash_matrix.py --output "$RUNNER_TEMP/I016_RESTORE_CRASH_MATRIX.json"
+          python3 tools/autopilot/i016_validator.py
 
       - name: Python 3.12 mit Lockdatei-Cache bereitstellen
         uses: actions/setup-python@v5
@@ -54,8 +61,48 @@ jobs:
           python -m pip install --disable-pip-version-check -r requirements-gui.lock
           python -m pip check
 
+      - name: I016 Transportgrenze und deterministischer Fresh-Unpack
+        run: |
+          rm -rf "$RUNNER_TEMP/i016-user-a" "$RUNNER_TEMP/i016-user-b" "$RUNNER_TEMP/i016-unpacked" "$RUNNER_TEMP/i016-workspace"
+          python tools/package_transport.py --profile NUTZER --output-dir "$RUNNER_TEMP/i016-user-a"
+          python tools/package_transport.py --profile NUTZER --output-dir "$RUNNER_TEMP/i016-user-b"
+          A=$(find "$RUNNER_TEMP/i016-user-a" -maxdepth 1 -name 'PROVOWARE_PLANER_NUTZER_*.zip' -print -quit)
+          B=$(find "$RUNNER_TEMP/i016-user-b" -maxdepth 1 -name 'PROVOWARE_PLANER_NUTZER_*.zip' -print -quit)
+          test -n "$A" -a -n "$B"
+          test "$(sha256sum "$A" | awk '{print $1}')" = "$(sha256sum "$B" | awk '{print $1}')"
+          mkdir -p "$RUNNER_TEMP/i016-unpacked"
+          unzip -q "$A" -d "$RUNNER_TEMP/i016-unpacked"
+          test -f "$RUNNER_TEMP/i016-unpacked/backup_core/execution.py"
+          test -f "$RUNNER_TEMP/i016-unpacked/services/restore_execution_service.py"
+          test -f "$RUNNER_TEMP/i016-unpacked/storage/restore_guard.py"
+          test -f "$RUNNER_TEMP/i016-unpacked/runtime/restore_recovery.py"
+          test ! -d "$RUNNER_TEMP/i016-unpacked/tests"
+          test ! -d "$RUNNER_TEMP/i016-unpacked/standards"
+          if find "$RUNNER_TEMP/i016-unpacked" -type d -name '.provoware_restore' | grep -q .; then exit 1; fi
+          if find "$RUNNER_TEMP/i016-unpacked" -type f \( -name 'RESTORE_INTENT.json' -o -name 'RESTORE_LEASE.json' -o -name 'PRE_RESTORE_SNAPSHOT.sqlite3' -o -name '*.pre-restore' \) | grep -q .; then exit 1; fi
+          (cd "$RUNNER_TEMP/i016-unpacked" && python tools/start_gui.py --workspace "$RUNNER_TEMP/i016-workspace" --offscreen-smoke)
+          cp "$A" "$RUNNER_TEMP/PROVOWARE_PLANER_NUTZER_I016_FINAL.zip"
+
       - name: Vollständige Unit- und Regressionstests genau einmal
         run: python -m unittest discover -s tests -p 'test_*.py' -v
 
+      - name: Risikorelevante GUI-Matrizen
+        run: |
+          python tools/i012_diagnostics_gui_matrix.py --output "$RUNNER_TEMP/i016-i012-diagnostics"
+          python tools/i010_sync_gui_matrix.py --output "$RUNNER_TEMP/i016-i010-sync"
+          python tools/todo_gui_matrix.py --output "$RUNNER_TEMP/i016-i007-todo"
+          python tools/gui_matrix.py --output "$RUNNER_TEMP/i016-i005-calendar"
+
+      - name: Bestehende Fault- und Crash-Matrizen
+        run: |
+          python tools/i015_restore_fault_matrix.py --output "$RUNNER_TEMP/I016_I015_RESTORE_FAULT_MATRIX.json"
+          python tools/i011_history_fault_matrix.py --output "$RUNNER_TEMP/I016_I011_HISTORY_FAULT_MATRIX.json"
+          python tools/i010_resolution_fault_matrix.py --output "$RUNNER_TEMP/I016_I010_RESOLUTION_FAULT_MATRIX.json"
+          python tools/i009_fault_matrix.py --output "$RUNNER_TEMP/I016_I009_FAULT_MATRIX.json"
+          python tools/i006_fault_matrix.py --output "$RUNNER_TEMP/I016_I006_FAULT_MATRIX.json"
+
       - name: Standards und historische Gate-Kette genau einmal qualifizieren
         run: python tools/autopilot/autopilot.py qualifizieren --timing-output "$RUNNER_TEMP/FOUNDATION_GATE_TIMINGS.json"
+
+      - name: Remote-Tree-Pfade und Modi prüfen
+        run: git ls-tree -r -l HEAD | python tools/autopilot/remote_tree_validator.py
