@@ -16,7 +16,7 @@ class DesignTokens:
 
     @classmethod
     def from_repository(cls, root: Path) -> "DesignTokens":
-        data = json.loads((Path(root) / "standards" / "UI_STANDARD.json").read_text(encoding="utf-8"))
+        data = json.loads((Path(root) / "runtime" / "ui_tokens.json").read_text(encoding="utf-8"))
         return cls(
             spacing={key: int(value) for key, value in data["spacing_tokens_px"].items()},
             font_scales=tuple(int(value) for value in data["font_scale_percent"]),
