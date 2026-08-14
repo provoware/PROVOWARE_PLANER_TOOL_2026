@@ -43,6 +43,7 @@
       "NUTZERANLEITUNG.md",
       "contracts/TRANSPORT_PROFILE_CONTRACT.json",
       "docs/I014_TRANSPORTPROFILE_TRENNUNG.md",
+      "runtime/ui_tokens.json",
       "standards/TRANSPORT_STANDARD.json",
       "tests/test_i014_runtime_package.py",
       "tests/test_i014_transport_profiles.py",
@@ -71,7 +72,8 @@
       "standards/RELEASE_STANDARD.json",
       "standards/STANDARD_INDEX.json",
       "tools/autopilot/autopilot.py",
-      "tools/autopilot/i013_validator.py"
+      "tools/autopilot/i013_validator.py",
+      "ui/design.py"
     ],
     "delete": []
   },
