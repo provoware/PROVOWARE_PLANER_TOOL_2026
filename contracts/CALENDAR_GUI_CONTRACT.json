@@ -1,19 +1,14 @@
 {
   "schema_version": 1,
   "contract_id": "PROVOWARE-CALENDAR-GUI",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "VERBINDLICH",
   "iteration": "I005",
   "architecture": {
     "service_only": true,
     "sql_in_gui_forbidden": true,
     "viewmodel_required": true,
-    "four_views": [
-      "TAG",
-      "WOCHE",
-      "MONAT",
-      "JAHR"
-    ],
+    "four_views": ["TAG", "WOCHE", "MONAT", "JAHR"],
     "shared_query_model": true
   },
   "interaction": {
@@ -30,39 +25,15 @@
     "color_only_forbidden": true,
     "status_symbol_text_required": true,
     "high_contrast_compatible": true,
-    "font_scales_percent": [
-      90,
-      100,
-      110,
-      125,
-      150,
-      175,
-      200
-    ]
+    "font_scales_percent": [90, 100, 110, 125, 150, 175, 200]
   },
   "qualification": {
     "qt_offscreen_required": true,
-    "window_sizes": [
-      "1280x720",
-      "1366x768",
-      "1600x900",
-      "1920x1080"
-    ],
-    "font_matrix": [
-      90,
-      100,
-      110,
-      125,
-      150,
-      175,
-      200
-    ],
+    "window_sizes": ["1280x720", "1366x768", "1600x900", "1920x1080"],
+    "font_matrix": [90, 100, 110, 125, 150, 175, 200],
     "restart_persistence_required": true,
-    "historical_gate_chain": [
-      "I002",
-      "I003",
-      "I004",
-      "I005"
-    ]
+    "exact_evidence_sha_second_pass_required": true,
+    "moving_branch_ref_for_second_pass_forbidden": true,
+    "historical_gate_chain": ["I002", "I003", "I004", "I005"]
   }
 }

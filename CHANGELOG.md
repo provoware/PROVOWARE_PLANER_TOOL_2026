@@ -50,4 +50,7 @@
 - Design-Tokens, Schriftskalierung, Ampelstatus, Tastatur und Accessible Names ergänzt
 - native GUI-Abhängigkeiten explizit vertraglich gebunden und vor Qt-Import geprüft
 - Offscreen-Matrix mit 112 GUI-Konfigurationen, Screenshots und Neustartpersistenz ergänzt
+- Aktionsbuttons werden bei jeder Schriftstufe zentral neu vermessen; Schriftbasis kann sich zwischen Fenstern nicht aufschaukeln
+- historischen I004-Validator für nachfolgende Iterationen vorwärtskompatibel gehärtet
+- zweiter Evidence-Pass kryptografisch an eine explizite `verify_sha` gebunden; bewegliche Branch-Referenz als Prüfziel ausgeschlossen
 - historische Qualifikationskette um I005 erweitert

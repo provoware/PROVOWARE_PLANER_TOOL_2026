@@ -22,17 +22,20 @@ Heute, Zurück, Vor, Datumsauswahl und Ansichtsumschaltung sind direkt erreichba
 ## Markierungen
 Alle fünf Markierungen sind gleichzeitig sichtbar. Name, Kürzel, Hexfarbe und Symbol sind editierbar. Farbe ist nur ergänzend; Symbol, Kürzel und Klartext bleiben sichtbar. Der komplette Markierungssatz wird transaktional gespeichert.
 
-## Design
-Abstände und Schriftskalierung werden aus `standards/UI_STANDARD.json` gelesen. Unterstützte Skalierungen: 90, 100, 110, 125, 150, 175 und 200 Prozent.
+## Design und Schriftskalierung
+Abstände und Schriftskalierung werden aus `standards/UI_STANDARD.json` gelesen. Unterstützt werden 90, 100, 110, 125, 150, 175 und 200 Prozent. Texttragende Aktionsbuttons werden nach jeder Skalierung zentral neu vermessen. Die unskalierte Anwendungsschrift wird einmalig gespeichert, damit eine bereits skalierte Schrift niemals zur neuen 100-Prozent-Basis werden kann.
 
 ## Barrierefreiheit
 Interaktive Kernelemente besitzen Accessible Names. Status wird als Symbol + Klartext dargestellt. Die Oberfläche verwendet die Systempalette und setzt Markierungsfarben nur ergänzend ein, damit High-Contrast-Themes funktionsfähig bleiben.
 
 ## GUI-Laufzeit
-`contracts/GUI_RUNTIME_CONTRACT.json` bindet PySide6 6.9.1 sowie die notwendigen nativen Linux-Bibliotheken. Der I003-Start-Orchestrator läuft vor jedem Qt-Import. Fehlt die GUI-Laufzeit, wird mit `START-GUI-RUNTIME-001` verständlich blockiert statt roh abzustürzen. Netzwerkbasierte stille Nachinstallation ist untersagt.
+`contracts/GUI_RUNTIME_CONTRACT.json` bindet PySide6 6.9.1 sowie notwendige native Linux-Bibliotheken. Der I003-Start-Orchestrator läuft vor jedem Qt-Import. Fehlt die GUI-Laufzeit, wird mit `START-GUI-RUNTIME-001` verständlich blockiert statt roh abzustürzen. Netzwerkbasierte stille Nachinstallation ist untersagt.
 
 ## Automatische Qualifikation
-Offscreen-Qt wird für 1280×720, 1366×768, 1600×900 und 1920×1080 sowie 90/100/110/125/150/175/200 Prozent geprüft. Zusätzlich werden ViewModel, Marker-Persistenz, Neustartpersistenz, vier Ansichten, Tastaturpfade und historische Gates I002→I003→I004→I005 validiert.
+Offscreen-Qt wird für 1280×720, 1366×768, 1600×900 und 1920×1080 sowie 90/100/110/125/150/175/200 Prozent geprüft. Vier Ansichten ergeben 112 Matrixkonfigurationen. Zusätzlich werden ViewModel, Marker-Persistenz, Neustartpersistenz, Tastaturpfade, High Contrast, Button-Clipping und historische Gates I002→I003→I004→I005 validiert.
+
+## Evidence-Closure
+Der erste vollständige PASS erzeugt einen Evidence-Commit. Der zweite Lauf erhält dessen exakte SHA als `verify_sha`, checkt genau diesen Commit aus und leitet Subject-Commit und Subject-Tree aus dem realen Checkout ab. Ein inzwischen weiterbewegter Branch darf damit niemals versehentlich als Verifikationsziel dienen.
 
 ## Startintegration
 `tools/start_gui.py` führt vor Qt den qualifizierten I003-Start-Orchestrator und danach den nativen GUI-Runtime-Check aus. Nur `READY` oder kontrolliert `DEGRADED` plus vollständige GUI-Runtime dürfen zur Oberfläche weitergehen.
