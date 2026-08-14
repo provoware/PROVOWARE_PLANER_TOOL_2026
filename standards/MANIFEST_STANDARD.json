@@ -1,6 +1,6 @@
 {
   "standard_id": "PROVOWARE-MANIFEST",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "status": "VERBINDLICH",
   "repository_inventory_required_each_iteration": true,
   "exact_file_inventory_required": true,
@@ -12,5 +12,11 @@
   "planned_release_chain": ["SOURCE_MANIFEST.json", "BUILD_MANIFEST.json", "RELEASE_MANIFEST.json", "EVIDENCE_MANIFEST.json"],
   "cryptographic_hash": "SHA-256",
   "remote_tree_verification_required_for_release": true,
-  "generator_must_not_be_only_validator": true
+  "generator_must_not_be_only_validator": true,
+  "repository_inventory_and_transport_inventory_are_distinct": true,
+  "transport_package_manifest_required": true,
+  "transport_package_inventory_required": true,
+  "transport_inventory_must_bind_only_selected_profile_payload": true,
+  "transport_profile_must_not_be_derived_from_untracked_files": true,
+  "transport_inventory_self_reference_forbidden": true
 }
