@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "standard_id": "PROVOWARE-RESTORE-EXECUTION",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "rules": {
+    "persistent_intent_before_destructive_commit_required": true,
+    "exclusive_restore_lease_required": true,
+    "planner_write_guard_required": true,
+    "existing_writer_exclusion_required": true,
+    "durable_pre_restore_snapshot_required": true,
+    "snapshot_hash_and_integrity_required": true,
+    "startup_crash_recovery_required": true,
+    "ambiguous_recovery_must_fail_closed": true,
+    "single_physical_restore_core_required": true,
+    "parallel_file_replace_path_forbidden": true,
+    "hard_process_exit_after_replace_test_required": true,
+    "runtime_restore_state_never_transport_required": true
+  }
+}
