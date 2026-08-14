@@ -120,13 +120,22 @@
     "transport_runtime_developer_evidence_separation_required": true,
     "transport_user_data_backup_exclusion_required": true,
     "transport_deterministic_package_required": true,
-    "transport_fresh_unpack_start_required": true
+    "transport_fresh_unpack_start_required": true,
+    "backup_candidate_readonly_qualification_required": true,
+    "backup_manifest_sha256_binding_required": true,
+    "restore_plan_immutable_required": true,
+    "restore_plan_target_precondition_required": true,
+    "restore_plan_stale_rejection_required": true,
+    "restore_single_physical_core_required": true,
+    "restore_precheck_commit_postcheck_required": true,
+    "restore_rollback_on_postcheck_failure_required": true,
+    "backup_workspace_boundary_required": true
   },
   "definition_of_ready": ["ziel_eindeutig", "risiko_bewertet", "schnittstellen_bekannt", "tests_geplant", "baseline_pass", "iterationsplan_vollstaendig", "repository_delta_deklariert"],
   "definition_of_done": ["implementierung_pass", "zieltests_pass", "regression_pass", "standards_pass", "repository_inventar_pass", "dokumentation_pass", "remote_verifikation_pass", "prozessmetriken_erfasst"],
   "foundation": {
-    "current_iteration": "I014",
-    "current_checkpoint": "C014-TRANSPORTPROFILE-TRENNUNG",
-    "version": "0.14.0-dev.1"
+    "current_iteration": "I015",
+    "current_checkpoint": "C015-BACKUP-RESTOREPLAN",
+    "version": "0.15.0-dev.1"
   }
 }
