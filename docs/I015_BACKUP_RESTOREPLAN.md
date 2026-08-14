@@ -14,9 +14,9 @@ Ein Kandidat ist nur freigegeben, wenn:
 2. das zugehörige Manifest vorhanden und gültig ist,
 3. Manifest-SHA, Datenbank-SHA und Größe konsistent sind,
 4. SQLite `quick_check` `ok` meldet,
-5. `PRAGMA user_version` exakt dem aktuellen Schema 4 entspricht.
+5. die bereits seit I004 kanonische Tabelle `schema_migrations` als höchste angewandte Migration exakt Schema 4 ausweist.
 
-Die Kandidatenprüfung verwendet SQLite `mode=ro`, `immutable=1` und `query_only=ON` und verändert die Sicherung nicht.
+Die Kandidatenprüfung verwendet SQLite `mode=ro`, `immutable=1` und `query_only=ON` und verändert die Sicherung nicht. I015 führt bewusst **kein** paralleles `PRAGMA user_version`-Signal ein; dieselbe Schemaquelle wird verwendet wie in `Database.schema_version()`.
 
 ## RestorePlan
 `RestorePlan` ist `dataclass(frozen=True, slots=True)` und bindet alle sicherheitsrelevanten Eingaben in einen kanonischen SHA-256-Planhash. Ein verändertes Feld bei unverändertem Plan-Hash wird abgewiesen.
@@ -57,4 +57,4 @@ Ein harter Prozessabbruch **nach** dem atomaren Austausch kann nicht durch Pytho
 `backup_core/`, `RestoreService` und `storage/backup.py` sind Produkt-Runtime. Echte Sicherungsdateien, aktive Datenbanken, `.pre-restore`, `.restore-candidate`, WAL/DB-Dateien und Workspace-Daten bleiben dennoch aus allen Code-Transportprofilen ausgeschlossen.
 
 ## Datenbankschema
-I015 führt **keine Migration** ein. Schema bleibt Version 4.
+I015 führt **keine Migration** ein. Schema bleibt Version 4; maßgeblich ist weiterhin die bestehende `schema_migrations`-Historie.
