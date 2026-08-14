@@ -22,6 +22,7 @@ from i011_validator import validate as validate_i011
 from i012_validator import validate as validate_i012
 from i013_validator import validate as validate_i013
 from i014_validator import validate as validate_i014
+from i015_validator import validate as validate_i015
 from standard_validator import print_result, validate_repository
 
 
@@ -78,6 +79,7 @@ def main() -> int:
         (12, "I012-DIAGNOSE-DASHBOARD-GATE", validate_i012),
         (13, "I013-ENTWICKLUNGSAUTOPILOT-V2-GATE", validate_i013),
         (14, "I014-TRANSPORTPROFILE-TRENNUNG-GATE", validate_i014),
+        (15, "I015-BACKUP-RESTOREPLAN-GATE", validate_i015),
     ]
     for minimum, name, validator in validators:
         if current < minimum:
@@ -94,10 +96,7 @@ def main() -> int:
         args.timing_output.parent.mkdir(parents=True, exist_ok=True)
         args.timing_output.write_text(json.dumps({"status": "PASS", "timings": timings}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if args.command == "qualifizieren":
-        print(
-            "QUALIFIKATION: PASS - globale Standards, Repository-Inventar und alle historischen "
-            "Pflichtgates bis zur aktuellen Iteration sind konsistent; jedes Gate wurde in diesem Pass genau einmal ausgeführt."
-        )
+        print("QUALIFIKATION: PASS - globale Standards, Repository-Inventar und alle historischen Pflichtgates bis zur aktuellen Iteration sind konsistent; jedes Gate wurde in diesem Pass genau einmal ausgeführt.")
     return 0
 
 
