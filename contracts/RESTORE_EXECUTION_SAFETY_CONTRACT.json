@@ -13,7 +13,10 @@
     "immutable_snapshot_model": true,
     "canonical_sha256_required": true,
     "previous_intent_sha256_required_after_first_revision": true,
-    "write_before_commit_required": true
+    "write_before_commit_required": true,
+    "approved_plan_sha256_required": true,
+    "execution_plan_sha256_required": true,
+    "execution_plan_must_bind_same_backup_manifest_schema_and_target": true
   },
   "lease": {
     "exclusive": true,
@@ -33,6 +36,13 @@
     "logical_state_match_required": true,
     "target_must_exist_for_i016_execution": true
   },
+  "stale_protection": {
+    "approved_plan_verified_before_lease": true,
+    "logical_target_state_must_remain_unchanged_during_quiescence": true,
+    "execution_plan_created_only_after_writer_exclusion": true,
+    "binary_target_precondition_rebound_after_quiescence": true,
+    "backup_authorization_may_not_change": true
+  },
   "crash_recovery": {
     "startup_preflight_before_i003_database_probe_required": true,
     "committing_expected_state_can_finalize": true,
@@ -40,7 +50,8 @@
     "ambiguous_state_requires_snapshot_rollback": true,
     "verified_state_changed_after_crash_must_block": true,
     "snapshot_rollback_must_use_physical_restore_core": true,
-    "automatic_last_writer_wins_forbidden": true
+    "automatic_last_writer_wins_forbidden": true,
+    "physical_pre_restore_residue_cleanup_only_after_verified_recovery": true
   },
   "transport_boundary": {
     "runtime_state_directory": ".provoware_restore",
