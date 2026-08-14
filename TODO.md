@@ -54,17 +54,40 @@
 - [x] Konfliktzustände CLEAN / TODO_CHANGED / CALENDAR_CHANGED / BOTH_CHANGED / DETACHED
 - [x] kein kaskadierendes Löschen zwischen Todo, Termin und Link
 - [x] Entkoppeln erhält beide Endpunkte
-- [x] Fault-Matrix für Insert, Link und Soft Delete
-- [x] echter Prozessabbruch vor Commit mit Rollback-Nachweis
+- [x] Fault-Matrix und echter Prozessabbruch vor Commit
 - [x] automatische Neustartpersistenz
 - [x] historische Gate-Kette I002 → I003 → I004 → I005 → I006
 - [x] keine Todo-GUI und keine automatische Inhalts-Synchronisation in I006
 
-## I007 — Nächster logischer Schritt
-- [ ] TodoQueryService und TodoViewModel
-- [ ] Listen: Heute / Diese Woche / Überfällig / Ohne Datum / Erledigt
-- [ ] Erstellen, Bearbeiten, Status, Priorität, Fortschritt und Unteraufgaben
-- [ ] sichtbare Kalenderkopplung und Konfliktstatus
-- [ ] Tastatur, Accessible Names, High Contrast und Schriftmatrix
-- [ ] automatische GUI-/Persistenz-/Regressionstests
-- [ ] Konfliktauflösung noch nicht automatisch durchführen
+## I007 — Todo-GUI + Todo-ViewModel
+- [x] TodoQueryService als reine Leseschicht
+- [x] TodoViewModel ohne Repository-/SQL-Abhängigkeit
+- [x] Darstellungsmodelle mit deutschen Status-, Prioritäts- und Konflikttexten
+- [x] Listen: Heute / Diese Woche / Überfällig / Ohne Datum / Erledigt
+- [x] Erstellen und Bearbeiten
+- [x] Status, Priorität und Fortschritt
+- [x] Unteraufgaben
+- [x] sichtbare Kalenderkopplung mit eigener Link-ID
+- [x] Konfliktstatus und Erklärung sichtbar
+- [x] reine Konfliktvorschau ohne Schreiboperation beim Anzeigen
+- [x] Verknüpfung lösen, ohne Todo oder Termin zu löschen
+- [x] Soft Delete mit ausdrücklichem Schutz gekoppelter Termine
+- [x] Tastaturreihenfolge und Kurzbefehle
+- [x] Accessible Names und High-Contrast-Klartexte
+- [x] Schriftmatrix 90/100/110/125/150/175/200 %
+- [x] Todo-GUI-Neustartpersistenz
+- [x] 140er Offscreen-GUI-Matrix angelegt
+- [x] I005-112er GUI-Matrix als Regression vorgesehen
+- [x] automatische Konfliktauflösung und Inhalts-Synchronisation bleiben in I007 deaktiviert
+- [ ] Remote-Zieltests und vollständige Regression PASS
+- [ ] exakter Evidence-SHA-Zweitpass PASS
+- [ ] I002 → I003 → I004 → I005 → I006 → I007 vollständig PASS
+- [ ] qualifizierten I007-Evidence-Commit nach `main` promoten
+
+## I008 — Nächster logischer Schritt nach I007
+- [ ] Synchronisationsvertrag auf Feldebene definieren
+- [ ] Quelle/Ziel und erlaubte Richtungen je Feld festlegen
+- [ ] Synchronisationsvorschau vor jeder Änderung
+- [ ] atomare PRECHECK → COMMIT → POSTCHECK-Kette
+- [ ] verlustfreie Konfliktregeln für BOTH_CHANGED
+- [ ] automatische Auflösung nur für ausdrücklich qualifizierte konfliktfreie Fälle
