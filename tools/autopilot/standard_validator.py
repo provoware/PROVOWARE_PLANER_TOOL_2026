@@ -42,6 +42,13 @@ def _inventory(root: Path, ignored_parts: set[str]) -> set[str]:
     return files
 
 
+def _iteration(value: object) -> int:
+    try:
+        return int(str(value).removeprefix("I"))
+    except ValueError:
+        return 0
+
+
 def validate_repository(root: Path, foundation_checks: bool = True) -> dict[str, Any]:
     root = root.resolve()
     errors: list[str] = []
@@ -49,7 +56,7 @@ def validate_repository(root: Path, foundation_checks: bool = True) -> dict[str,
 
     manifest_path = root / "REPOSITORY_MANIFEST.json"
     manifest = _load_json(manifest_path, errors)
-    expected = set(manifest.get("files", []))
+    expected = set(manifest.get("files") or manifest.get("expected_paths") or [])
     ignored = set(manifest.get("ignored_path_parts", [".git", "__pycache__", ".pytest_cache"]))
     actual = _inventory(root, ignored)
 
@@ -74,6 +81,7 @@ def validate_repository(root: Path, foundation_checks: bool = True) -> dict[str,
         status = _load_json(root / "PROJEKTSTATUS.json", errors)
         index = _load_json(root / "standards/STANDARD_INDEX.json", errors)
         documentation = _load_json(root / "standards/DOKUMENTATIONS_STANDARD.json", errors)
+        current = _iteration(version.get("iteration"))
 
         identities = {
             contract.get("contract_id"),
@@ -106,15 +114,35 @@ def validate_repository(root: Path, foundation_checks: bool = True) -> dict[str,
         readme = readme_path.read_text(encoding="utf-8") if readme_path.exists() else ""
         if version.get("version") and version["version"] not in readme:
             errors.append("README_VERSION_FEHLT")
-        for heading in documentation.get("readme_required_headings", []):
-            if heading not in readme:
-                errors.append(f"README_ABSCHNITT_FEHLT: {heading}")
+        markers = documentation.get("readme_required_section_markers", [])
+        if markers:
+            for marker in markers:
+                if marker not in readme:
+                    errors.append(f"README_ABSCHNITTSMARKER_FEHLT: {marker}")
+        else:
+            for heading in documentation.get("readme_required_headings", []):
+                if heading not in readme:
+                    errors.append(f"README_ABSCHNITT_FEHLT: {heading}")
 
         todo_path = root / "TODO.md"
         todo = todo_path.read_text(encoding="utf-8") if todo_path.exists() else ""
         for marker in ("## I000 — Foundation", "## I001 — Globale Standards", "vollständige Repository-Dateiliste"):
             if marker not in todo:
                 errors.append(f"TODO_INHALT_FEHLT: {marker}")
+
+        if current >= 13:
+            plan_path = root / "ITERATION_PLAN.json"
+            if not plan_path.is_file():
+                errors.append("I013_ITERATIONSPLAN_FEHLT")
+            else:
+                plan = _load_json(plan_path, errors)
+                if plan.get("iteration") != version.get("iteration") or plan.get("version") != version.get("version"):
+                    errors.append("I013_ITERATIONSPLAN_METADATA_WIDERSPRUCH")
+            development = _load_json(root / "standards/ENTWICKLUNGS_STANDARD.json", errors)
+            if development.get("standard_id") != "PROVOWARE-DEVELOPMENT" or development.get("status") != "VERBINDLICH":
+                errors.append("I013_ENTWICKLUNGSSTANDARD_UNGUELTIG")
+            if manifest.get("inventory_source") != "BASELINE_PLUS_DECLARED_DELTA":
+                errors.append("I013_MANIFEST_SOLLQUELLE_FALSCH")
 
     return {
         "ok": not errors,
