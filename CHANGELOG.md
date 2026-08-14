@@ -41,3 +41,13 @@
 - modularen Kalender-Fehlerkatalog und globale Fehlercode-Eindeutigkeit ergänzt
 - Autopilot um historische Pflichtgates erweitert
 - zweistufige I004-Remotequalifikation ergänzt
+
+## 0.5.0-dev.1 — I005
+- CalendarQueryService und CalendarViewModel eingeführt
+- PySide6/Qt-Kalenderoberfläche mit Tag/Woche/Monat/Jahr ergänzt
+- fünf editierbare Markierungen mit atomarer Batch-Speicherung ergänzt
+- Termin-Erstellung/-Bearbeitung ausschließlich über CalendarService angebunden
+- Design-Tokens, Schriftskalierung, Ampelstatus, Tastatur und Accessible Names ergänzt
+- native GUI-Abhängigkeiten explizit vertraglich gebunden und vor Qt-Import geprüft
+- Offscreen-Matrix mit 112 GUI-Konfigurationen, Screenshots und Neustartpersistenz ergänzt
+- historische Qualifikationskette um I005 erweitert

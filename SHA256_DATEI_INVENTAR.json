@@ -10,8 +10,8 @@
   "entries": [
     {
       "path": ".github/workflows/foundation-qualifikation.yml",
-      "sha256": "b871c59baa5d4ec71f29c743cf9493005dede6cd2a5fcaee1281cc556766bf97",
-      "size": 746,
+      "sha256": "2fe176e05dfbe1803a83e92b6107633c0541ea475478cde81aea542b6a797b58",
+      "size": 1168,
       "status": "PASS"
     },
     {
@@ -33,74 +33,80 @@
       "status": "PASS"
     },
     {
+      "path": ".github/workflows/i005-qualifikation.yml",
+      "sha256": "29e0bc9cc9ab2d09bdf8d45c86fcaa717ee3f5c4b989859330293bfe17b24d9b",
+      "size": 15245,
+      "status": "PASS"
+    },
+    {
       "path": "BUILD_MANIFEST.json",
-      "sha256": "e924c03c99166b0639372e6a5066b7a9fbbd62b810dc9ef21526a9292af42cb8",
-      "size": 3724,
+      "sha256": "6d0541e3290eade91e6ffaf0670047b3f0f1bf2b25483570d55bec9cadac110f",
+      "size": 4115,
       "status": "PASS"
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "5fcd888efb512a95d12ed7fad4a416fe3f9d6d58b254b45d7e31e30d2fbff837",
-      "size": 2412,
+      "sha256": "bbba808dc2e048420b71c49907eaf2e8506697945ee8fd19591101c8f8d39cff",
+      "size": 3034,
       "status": "PASS"
     },
     {
       "path": "EVIDENCE_MANIFEST.json",
-      "sha256": "d6f1d77c0b7adcc838e74192a4fdac7925a968b551d571acea97257184103267",
-      "size": 2387,
+      "sha256": "0c1810348177cbc752486bee248d7e52242e24d4fdb9cea44128e05f4f8d42f8",
+      "size": 3537,
       "status": "PASS"
     },
     {
       "path": "MANIFEST_INDEX.json",
-      "sha256": "5b6a2e89b9bdd9571f3956443afd356711c474ee91851eca831238383b00ab18",
+      "sha256": "c7863f557838c5cb1de3e33ac2fb47020bfe30912a84b4f19275228f4d9a786c",
       "size": 812,
       "status": "PASS"
     },
     {
       "path": "PROJECT_CONTRACT.json",
-      "sha256": "aba1450b6d9aa6f33ee872627f130738eb93ad47abfc1732a5191c8322dd643c",
-      "size": 2326,
+      "sha256": "5844a3fd14f657700675269034386d6b8b0c2f86176b4f9c9d7c3d9a4f285b9a",
+      "size": 2532,
       "status": "PASS"
     },
     {
       "path": "PROJEKTSTATUS.json",
-      "sha256": "d821d07c2f41f5b8b4978799010e4a8e2e14aa088aceccfaba475889a8a41dd7",
-      "size": 994,
+      "sha256": "5fd9c6b4422c375437b0b562c10449adf5d780f55d46a11adf163cf69469bff7",
+      "size": 1015,
       "status": "PASS"
     },
     {
       "path": "README.md",
-      "sha256": "c3424bd951ca9415829d6e9d75ac0d3f3d23f2d6c50941d6792ce702a11aea1c",
-      "size": 10280,
+      "sha256": "bf12acf830dcaef9c1c721f0931832eea755b4a7b2f56933a63e95ace774c37c",
+      "size": 11032,
       "status": "PASS"
     },
     {
       "path": "RELEASE_MANIFEST.json",
-      "sha256": "3f7520393b92d47ec74fcaad2fc77410473de693438814afc0becb54486eb165",
+      "sha256": "5c06755b2e50afe4e8859d4f8c14e057b4de0cd3543c95ca72dedc11548a6d5a",
       "size": 237,
       "status": "PASS"
     },
     {
       "path": "REPOSITORY_MANIFEST.json",
-      "sha256": "bd5a3323c606746beef562662403f0ea7cd70bf70ef1b88a879237e253a27139",
-      "size": 5759,
+      "sha256": "a7b112249f245069c16c69a577deafcea511fba67c9c95eb87f8a656dfddc646",
+      "size": 7309,
       "status": "PASS"
     },
     {
       "path": "SOURCE_MANIFEST.json",
-      "sha256": "5d718428dfa3d371d43e7620c3db90f7a873916199d59851dda12134a869a8df",
-      "size": 11774,
+      "sha256": "d86aa9f13cabf8156cdca5aae2df89ccc06fdb77f2e60f8388bdcafeabe8740c",
+      "size": 15645,
       "status": "PASS"
     },
     {
       "path": "TODO.md",
-      "sha256": "b9e24334744a7c12b66245b200731905c46ad2465e2d2a91b88a5fec45029c94",
-      "size": 4996,
+      "sha256": "0d8dcfcaf6f4bbe8cbbfb06a4fa5286165c5d7e3cc543e68d96f6b1e62926416",
+      "size": 5722,
       "status": "PASS"
     },
     {
       "path": "VERSION.json",
-      "sha256": "4cec22e48b7f7c055c39411bdb9b899a4fa9571c32b8563570079f8c26857056",
+      "sha256": "cd2951e646532f736b7d4c3818cbf962a73605bf010db52df5b074a6756bfc10",
       "size": 350,
       "status": "PASS"
     },
@@ -112,20 +118,32 @@
     },
     {
       "path": "calendar_core/errors.py",
-      "sha256": "09e934441d322601fce247ef3e9525c097de43c319a19856e90550d95f6d0425",
-      "size": 612,
+      "sha256": "1b31c68afaf6fb139eac30babb619238b8039eeac0ba59991fdab6da5c2bf835",
+      "size": 611,
       "status": "PASS"
     },
     {
       "path": "calendar_core/model.py",
-      "sha256": "e4e4c303dcf740025b80dbd2d0064c0a1c4f902bc91c25c119ea7cd19e9cfed9",
-      "size": 3427,
+      "sha256": "efc48999e69c10d4a0a4a5aeea55482d62440c6cb3d37f72b37327c821b7bebb",
+      "size": 3745,
       "status": "PASS"
     },
     {
       "path": "contracts/CALENDAR_DATA_CONTRACT.json",
       "sha256": "24486b7ecc9dc2879cb1af6e24fce7fe29720273b5ae0e5262e1c81a4cbc1342",
       "size": 1405,
+      "status": "PASS"
+    },
+    {
+      "path": "contracts/CALENDAR_GUI_CONTRACT.json",
+      "sha256": "136194a048fa1b6242dd25f12830de3972d924d1a4de9628c4b9522adff31f69",
+      "size": 1338,
+      "status": "PASS"
+    },
+    {
+      "path": "contracts/GUI_RUNTIME_CONTRACT.json",
+      "sha256": "740f9b41bb9f91e39869a0a7c4ad2d15efa544905ef37d9250fdeb0d69736d9b",
+      "size": 723,
       "status": "PASS"
     },
     {
@@ -147,9 +165,21 @@
       "status": "PASS"
     },
     {
+      "path": "docs/I005_KALENDER_GUI_VIEWMODEL.md",
+      "sha256": "8dea2e3f2f3a25189ad49c9f41a97c43b6a9eae9f51243e95f354559a9758ed4",
+      "size": 2480,
+      "status": "PASS"
+    },
+    {
       "path": "errors/FEHLERKATALOG.json",
       "sha256": "f98d5700ba48326891735e17accb0532463ebb0af13744394d6800e331d7bdf6",
       "size": 9500,
+      "status": "PASS"
+    },
+    {
+      "path": "errors/GUI_RUNTIME_FEHLERKATALOG.json",
+      "sha256": "13a1a880046b7d5770964d3330a614babd5e3dd74f440c7d6a920495c8ccf664",
+      "size": 781,
       "status": "PASS"
     },
     {
@@ -159,9 +189,21 @@
       "status": "PASS"
     },
     {
+      "path": "errors/KALENDER_GUI_FEHLERKATALOG.json",
+      "sha256": "3ba9db31fdc57167b6e37901d96d2e64efe6f17f2dcf85a89f4255c16abc7301",
+      "size": 3270,
+      "status": "PASS"
+    },
+    {
       "path": "migrations/0001_calendar_core.sql",
       "sha256": "2216fb1c356047e4620190531b08061a1ef26eb47f0987aba1a76f7b49002b10",
       "size": 2191,
+      "status": "PASS"
+    },
+    {
+      "path": "requirements-gui.lock",
+      "sha256": "02afb79a77755f87ac6ad3ef2c8c6a52506877edfdf624acb13b4eef604e4f67",
+      "size": 15,
       "status": "PASS"
     },
     {
@@ -202,8 +244,8 @@
     },
     {
       "path": "services/calendar_service.py",
-      "sha256": "fe6726110b1d87f9d194479807bb391a75e1cad0650bb7a3cc5a27db85a076fb",
-      "size": 2171,
+      "sha256": "36fe9aaf32689aa50928c97e9bb79f9dc98cb843eb0ee001bde82d05c758bd3b",
+      "size": 2559,
       "status": "PASS"
     },
     {
@@ -322,8 +364,8 @@
     },
     {
       "path": "storage/repository.py",
-      "sha256": "8145c4f2c2a12d1dd96b0b2e4e2ca799728f8209781f05c2034daaa73ccad9b9",
-      "size": 6638,
+      "sha256": "62cbf983252d2d25d1aa249b6ffcdf8b112246bf3ec064ae6743e71abb3c8465",
+      "size": 7807,
       "status": "PASS"
     },
     {
@@ -354,6 +396,30 @@
       "path": "tests/test_i004_fault_injection.py",
       "sha256": "404032043eee7a257362bc1ad470c5d002dd856cdfd4fe544bbb4ce0e4c1220b",
       "size": 3348,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i005_gui_offscreen.py",
+      "sha256": "736df36d61856076d10573bb48b7f6a270635a000206bd135f344523ebc9f30e",
+      "size": 6554,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i005_gui_runtime.py",
+      "sha256": "76433aa98f800bee0166b577c060f0c73f98ecbbf41b1b6c6eba7732351aa9a1",
+      "size": 1105,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i005_persistence_restart.py",
+      "sha256": "ad71e819e628da5ea11b5151b26a683a430e4215f0117202798b07430a00d065",
+      "size": 1402,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i005_viewmodel.py",
+      "sha256": "b9d1d5f3e30260f8d9340738a05fdeef941ddeccc5702ebf5d157af38675db22",
+      "size": 4382,
       "status": "PASS"
     },
     {
@@ -388,8 +454,8 @@
     },
     {
       "path": "tools/autopilot/autopilot.py",
-      "sha256": "da6c61c2cc686485c6a2a6111ef2ad98bfdad8c0b5d5f69dcfa308d710c44527",
-      "size": 2048,
+      "sha256": "1b5a39889933eeeac877128648e3e9bc002f3c4bad2ee66c252ae855455369fd",
+      "size": 2166,
       "status": "PASS"
     },
     {
@@ -412,8 +478,14 @@
     },
     {
       "path": "tools/autopilot/i004_validator.py",
-      "sha256": "ad7733e06a0d89438a6f66abf09024cbee877537fec1330653b47644d39e2d49",
-      "size": 7163,
+      "sha256": "24fb04cee9051bd34e2c7f1d75b3f20c259e322a503b5ee8b4328530bce9603b",
+      "size": 7844,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/autopilot/i005_validator.py",
+      "sha256": "78ffc67c576f923ce6d382a86f6170460147343c4170d3c073ae6628e67576da",
+      "size": 9750,
       "status": "PASS"
     },
     {
@@ -435,11 +507,71 @@
       "status": "PASS"
     },
     {
+      "path": "tools/gui_matrix.py",
+      "sha256": "66305520050490fa116c5d802c0b850b38802d87c59ae4cd1bdc80c33e1e6d65",
+      "size": 4908,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/start_gui.py",
+      "sha256": "c7be0249bd15e438aa2821d13e2773d1fda72a9f6ac4a032eadd640f694af7b5",
+      "size": 3006,
+      "status": "PASS"
+    },
+    {
       "path": "tools/start_orchestrator.py",
       "sha256": "72e8055a454bc3117f0a675d0073a36500e807be351ed407e3a76b3c45034857",
       "size": 2391,
       "status": "PASS"
+    },
+    {
+      "path": "ui/__init__.py",
+      "sha256": "69b9d29961d71d7d1c92135ffa134f75fa186d335b1a2eb0bd1ce0662db17692",
+      "size": 49,
+      "status": "PASS"
+    },
+    {
+      "path": "ui/calendar_views.py",
+      "sha256": "f0bba07cf0aaa8c910716a531cf33c20af2f53189419538aec6d28da66553bbf",
+      "size": 6966,
+      "status": "PASS"
+    },
+    {
+      "path": "ui/calendar_window.py",
+      "sha256": "ebd9ed085f20de63c832edc6ecb7914a0b8b3b4a3abba37d1b387c7be236bb3f",
+      "size": 16063,
+      "status": "PASS"
+    },
+    {
+      "path": "ui/design.py",
+      "sha256": "903f1b1c009499cab2fe4c44e7c7efc919ab7f032c6a1013870436de96857446",
+      "size": 3364,
+      "status": "PASS"
+    },
+    {
+      "path": "ui/dialogs.py",
+      "sha256": "ba9e9534e27ba1b9438af2723902368038909b9218d6f8230c254c8ed3211b11",
+      "size": 7703,
+      "status": "PASS"
+    },
+    {
+      "path": "viewmodel/__init__.py",
+      "sha256": "7558a0dc65703639913993ea51b9aaeb1a63da8f517df58a403cb720bd92d2fc",
+      "size": 53,
+      "status": "PASS"
+    },
+    {
+      "path": "viewmodel/calendar_query.py",
+      "sha256": "b548df2b8e737bbc28de5568fbd27615e40c57d21d7fa06c9fb9c68cb041177e",
+      "size": 6628,
+      "status": "PASS"
+    },
+    {
+      "path": "viewmodel/calendar_viewmodel.py",
+      "sha256": "f28a0bb156231ea317e6c27af3cafbf4dc40662d1bb44b74097c3b6b8e7919e6",
+      "size": 2852,
+      "status": "PASS"
     }
   ],
-  "count": 72
+  "count": 94
 }

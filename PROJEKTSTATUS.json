@@ -3,16 +3,16 @@
   "project_name": "PROVOWARE PLANER TOOL 2026",
   "project_id": "PROVOWARE-PLANER-2026",
   "repository": "provoware/PROVOWARE_PLANER_TOOL_2026",
-  "version": "0.4.0-dev.1",
+  "version": "0.5.0-dev.1",
   "phase": "FOUNDATION",
-  "iteration": "I004",
-  "checkpoint": "C004-KALENDER-DOMAIN-SQLITE",
+  "iteration": "I005",
+  "checkpoint": "C005-KALENDER-GUI-VIEWMODEL",
   "status": "QUALIFIZIERT",
   "ampel": "GRUEN",
   "planning_percent": 100,
-  "implementation_percent": 25,
-  "qualification_percent": 60,
-  "release_readiness_percent": 8,
+  "implementation_percent": 38,
+  "qualification_percent": 78,
+  "release_readiness_percent": 12,
   "mandatory_user_testing": false,
   "last_completed": [
     "C000-REPOSITORY-RESET",
@@ -21,8 +21,9 @@
     "STANDARD-VALIDATOR-GRUNDSTRUKTUR",
     "I002-MANIFEST-EVIDENCE-HARDENING",
     "I003-KLICK-START-ORCHESTRATOR",
-    "I004-KALENDER-DOMAIN-SQLITE"
+    "I004-KALENDER-DOMAIN-SQLITE",
+    "I005-KALENDER-GUI-VIEWMODEL"
   ],
-  "next_logical_step": "I005 Kalender-GUI auf ausschließlich qualifizierter Service-API",
-  "improvement_recommendation": "I005 mit Design-Tokens, vier Kalenderansichten und automatischer GUI-/Barrierefreiheitsmatrix aufbauen"
+  "next_logical_step": "I006 Todo-Domainkern + Kalenderkopplungsvertrag",
+  "improvement_recommendation": "Todo zunächst GUI-unabhängig entwickeln und erst nach stabiler Kalender-Service-Kopplung visualisieren"
 }

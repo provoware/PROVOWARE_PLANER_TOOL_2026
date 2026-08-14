@@ -186,3 +186,17 @@ I004: Kalender-Domainkern und SQLite-Persistenzschicht zunächst GUI-unabhängig
 
 ### Nächster logischer Schritt
 I005: Kalender-GUI mit Tag-, Woche-, Monat- und Jahransicht auf dem qualifizierten I004-Service aufbauen.
+
+## I005 — Kalender-GUI + ViewModel
+- Version: `0.5.0-dev.1`
+- vier echte Ansichten: Tag, Woche, Monat, Jahr
+- `CalendarService → CalendarQueryService → CalendarViewModel → PySide6/Qt`
+- fünf Markierungen gleichzeitig sichtbar und editierbar
+- Heute / Zurück / Vor / Datumsauswahl; Termin erstellen, anzeigen und bearbeiten
+- zentrale Design-Tokens und Schriftgrößen 90/100/110/125/150/175/200 %
+- Ampel mit Symbol + Klartext; Tastatur, Accessible Names und High Contrast
+- 112 Offscreen-Konfigurationen plus Screenshots und Neustartpersistenz
+- I003-Startprüfung und native GUI-Runtime-Prüfung vor Qt; kein SQL in der GUI
+
+### Nächster logischer Schritt
+I006: Todo-Domainkern und expliziten Kalender↔Todo-Kopplungsvertrag entwickeln.

@@ -133,3 +133,19 @@ I002: Manifest-/Evidence-Kette, kryptografisches Repository-Inventar und Remote-
 - [ ] fünf Markierungen sichtbar und editierbar
 - [ ] Design-Tokens, flexible Schrift und Ampelstatus verwenden
 - [ ] automatisierte GUI- und Barrierefreiheitsmatrix
+
+## I005 — Kalender-GUI + ViewModel
+- [x] CalendarQueryService und CalendarViewModel
+- [x] Tag / Woche / Monat / Jahr
+- [x] fünf sichtbare/editierbare Markierungen mit atomarer Batch-Speicherung
+- [x] Heute / Zurück / Vor / Datumsauswahl und Terminbearbeitung
+- [x] zentrale Design-Tokens, globale Schriftgrößen, Ampel + Klartext
+- [x] Tastatur, Accessible Names und High Contrast
+- [x] native GUI-Runtime-Vorprüfung ohne rohen Importabsturz
+- [x] Offscreen-GUI-Matrix, Screenshots und Neustartpersistenz
+- [x] historische Gate-Kette I002 → I003 → I004 → I005
+
+## I006 — Nächster logischer Schritt
+- [ ] Todo-Domainmodell und SQLite-Migration
+- [ ] Kalender↔Todo Soft-Link-Vertrag
+- [ ] erst danach Todo-GUI
