@@ -67,6 +67,11 @@
         "standards/",
         "tests/",
         "tools/"
+      ],
+      "exclude_exact": [
+        "contracts/GUI_RUNTIME_CONTRACT.json",
+        "tools/start_gui.py",
+        "tools/start_orchestrator.py"
       ]
     }
   ],
@@ -115,6 +120,7 @@
   "safety": {
     "user_profile_is_default": true,
     "unclassified_repository_path_blocks_build": true,
+    "ambiguous_repository_path_blocks_build": true,
     "user_data_in_code_package_forbidden": true,
     "backup_data_in_code_package_forbidden": true,
     "evidence_in_user_package_forbidden": true,
