@@ -12,6 +12,7 @@ from i003_validator import validate as validate_i003
 from i004_validator import validate as validate_i004
 from i005_validator import validate as validate_i005
 from i006_validator import validate as validate_i006
+from i007_validator import validate as validate_i007
 from standard_validator import print_result, validate_repository
 
 
@@ -38,6 +39,7 @@ def main() -> int:
     if current >= 4: gates.append(("I004-KALENDER-DATEN-GATE", validate_i004()))
     if current >= 5: gates.append(("I005-KALENDER-GUI-GATE", validate_i005()))
     if current >= 6: gates.append(("I006-TODO-DOMAIN-LINK-GATE", validate_i006()))
+    if current >= 7: gates.append(("I007-TODO-GUI-VIEWMODEL-GATE", validate_i007()))
     if not all(_run_gate(name, result) for name, result in gates): return 1
     if args.command == "qualifizieren": print("QUALIFIKATION: PASS - globale Standards, Repository-Inventar und alle historischen Pflichtgates bis zur aktuellen Iteration sind konsistent.")
     return 0
