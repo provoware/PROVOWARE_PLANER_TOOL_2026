@@ -1,0 +1,1 @@
+"""Anwendungsdienste ohne GUI-Abhängigkeit."""
