@@ -7,9 +7,13 @@ import shutil
 import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Callable
 
 from calendar_core.errors import BackupError, RestoreRejectedError
 from storage.database import Database
+
+
+ABSENT_SHA256 = "ABSENT"
 
 
 def _sha256(path: Path) -> str:
@@ -60,6 +64,19 @@ def _validate_sqlite(path: Path) -> None:
         raise RestoreRejectedError(f"CAL-RESTORE-001: Sicherungsprüfung fehlgeschlagen: {result}")
 
 
+def _verify_target_precondition(target: Path, expected_target_sha256: str | None) -> None:
+    if expected_target_sha256 is None:
+        return
+    if expected_target_sha256 == ABSENT_SHA256:
+        if target.exists():
+            raise RestoreRejectedError("RESTORE-STALE-001: Zieldatenbank wurde nach Planerstellung angelegt")
+        return
+    if not target.is_file():
+        raise RestoreRejectedError("RESTORE-STALE-001: geplante Zieldatenbank fehlt")
+    if _sha256(target) != expected_target_sha256:
+        raise RestoreRejectedError("RESTORE-STALE-001: Zieldatenbank wurde nach Planerstellung verändert")
+
+
 def create_backup(database: Database, target: Path) -> dict:
     target = Path(target)
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -96,7 +113,20 @@ def create_backup(database: Database, target: Path) -> dict:
     return manifest
 
 
-def restore_backup(backup: Path, target: Path, *, expected_sha256: str | None = None) -> None:
+def restore_backup(
+    backup: Path,
+    target: Path,
+    *,
+    expected_sha256: str | None = None,
+    expected_target_sha256: str | None = None,
+    postcheck: Callable[[Path], None] | None = None,
+) -> None:
+    """Einziger physischer Restorekern.
+
+    I015 erweitert den historischen Kern ausschließlich um fail-closed Precondition-
+    Prüfungen und einen rollbackfähigen Postcheck. Der eigentliche Austauschpfad bleibt
+    hier zentralisiert.
+    """
     backup = Path(backup)
     target = Path(target)
     if not backup.is_file():
@@ -104,6 +134,7 @@ def restore_backup(backup: Path, target: Path, *, expected_sha256: str | None = 
     if expected_sha256 and _sha256(backup) != expected_sha256:
         raise RestoreRejectedError("CAL-RESTORE-HASH-001: Sicherungs-Hash stimmt nicht")
     _validate_sqlite(backup)
+    _verify_target_precondition(target, expected_target_sha256)
 
     target.parent.mkdir(parents=True, exist_ok=True)
     candidate = target.with_suffix(target.suffix + ".restore-candidate")
@@ -136,9 +167,15 @@ def restore_backup(backup: Path, target: Path, *, expected_sha256: str | None = 
         os.replace(candidate, target)
         _remove_sidecars(target)
         _validate_sqlite(target)
+        if postcheck is not None:
+            postcheck(target)
     except Exception:
+        candidate.unlink(missing_ok=True)
         if rollback_copy.exists():
             os.replace(rollback_copy, target)
+            _remove_sidecars(target)
+        else:
+            target.unlink(missing_ok=True)
             _remove_sidecars(target)
         raise
     else:
