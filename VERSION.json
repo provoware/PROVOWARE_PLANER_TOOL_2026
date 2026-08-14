@@ -2,11 +2,11 @@
   "schema_version": 1,
   "project_id": "PROVOWARE-PLANER-2026",
   "project_name": "PROVOWARE PLANER TOOL 2026",
-  "version": "0.15.0-dev.1",
+  "version": "0.16.0-dev.1",
   "phase": "foundation",
-  "iteration": "I015",
-  "checkpoint": "C015-BACKUP-RESTOREPLAN",
-  "build_revision": 15,
+  "iteration": "I016",
+  "checkpoint": "C016-RESTORE-EXECUTION-SAFETY",
+  "build_revision": 16,
   "release_channel": "development",
   "lineage_id": "PROVOWARE-PLANER-2026-LINEAGE-001"
 }
