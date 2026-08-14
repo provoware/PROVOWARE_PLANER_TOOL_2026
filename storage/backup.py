@@ -25,6 +25,28 @@ def _fsync_file(path: Path) -> None:
         os.fsync(handle.fileno())
 
 
+def _sidecars(path: Path) -> tuple[Path, Path]:
+    return Path(str(path) + "-wal"), Path(str(path) + "-shm")
+
+
+def _remove_sidecars(path: Path) -> None:
+    for sidecar in _sidecars(path):
+        sidecar.unlink(missing_ok=True)
+
+
+def _checkpoint(path: Path) -> None:
+    if not path.exists():
+        return
+    try:
+        connection = sqlite3.connect(path)
+        try:
+            connection.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone()
+        finally:
+            connection.close()
+    except sqlite3.DatabaseError as exc:
+        raise RestoreRejectedError("CAL-RESTORE-001: aktive Datenbank konnte vor Restore nicht gesichert werden") from exc
+
+
 def _validate_sqlite(path: Path) -> None:
     try:
         connection = sqlite3.connect(path)
@@ -42,8 +64,7 @@ def create_backup(database: Database, target: Path) -> dict:
     target = Path(target)
     target.parent.mkdir(parents=True, exist_ok=True)
     candidate = target.with_suffix(target.suffix + ".tmp")
-    if candidate.exists():
-        candidate.unlink()
+    candidate.unlink(missing_ok=True)
     source = database.connect()
     try:
         destination = sqlite3.connect(candidate)
@@ -106,15 +127,19 @@ def restore_backup(backup: Path, target: Path, *, expected_sha256: str | None = 
 
     _validate_sqlite(candidate)
     _fsync_file(candidate)
+    _checkpoint(target)
+    _remove_sidecars(target)
     if target.exists():
         shutil.copy2(target, rollback_copy)
         _fsync_file(rollback_copy)
     try:
         os.replace(candidate, target)
+        _remove_sidecars(target)
         _validate_sqlite(target)
     except Exception:
         if rollback_copy.exists():
             os.replace(rollback_copy, target)
+            _remove_sidecars(target)
         raise
     else:
         rollback_copy.unlink(missing_ok=True)
