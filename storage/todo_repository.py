@@ -71,6 +71,15 @@ class TodoRepository:
             raise TodoNotFoundError(f"TODO-NOTFOUND-001: {todo_id}")
         return _todo(row)
 
+    def list_all(self, *, include_terminal: bool = True) -> list[TodoItem]:
+        with self.database.session() as connection:
+            sql = "SELECT * FROM todos WHERE deleted_at IS NULL"
+            if not include_terminal:
+                sql += " AND status NOT IN ('DONE','CANCELLED')"
+            sql += " ORDER BY due_at IS NULL, due_at, created_at, todo_id"
+            rows = connection.execute(sql).fetchall()
+        return [_todo(row) for row in rows]
+
     def update(self, todo: TodoItem, *, expected_version: int, updated_at: datetime) -> TodoItem:
         new_version = expected_version + 1
         with self.database.transaction() as connection:
