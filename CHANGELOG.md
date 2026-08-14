@@ -49,3 +49,17 @@
 - 140er Todo-Offscreen-Matrix angelegt; 112er I005-Kalender-Matrix bleibt Pflichtregression.
 - I006-Historienvalidator für nachfolgende Iterationen vorwärtskompatibel gehärtet.
 - I007-Vertrag, Fehlerkatalog, unabhängiger Validator und Autopilot-Gate ergänzt.
+
+## 0.8.0-dev.1 — I008
+- `SynchronizationPreviewService` als ausschließlich lesende Synchronisationsvorschau eingeführt.
+- immutable `SyncPreview`- und `SyncFieldPreview`-Modelle mit Objekt-/Snapshot-Versionen ergänzt.
+- Feldvertrag für Titel, Beschreibung und Startzeit als spätere gerichtete Übertragungskandidaten definiert.
+- `due_at ↔ end_at` ausdrücklich als semantisch prüfpflichtig und nicht automatisch übertragbar markiert.
+- Status, Priorität, Fortschritt, Elternaufgabe, Terminstatus, Zeitzone, Ganztägigkeit und Markierung von stiller Feldübersetzung ausgeschlossen.
+- `BOTH_CHANGED`, `DETACHED` und abweichende `CLEAN`-Ausgangswerte als harte Blocker festgelegt.
+- Richtung `MANUAL` erzeugt keine automatische Übertragungsempfehlung.
+- I008 enthält absichtlich keine `apply()`, `execute()` oder `synchronize()`-Schreibschnittstelle.
+- `SyncPreview.write_permitted` bleibt in I008 immer `False`.
+- Planner-Service-Fabrik um den read-only Preview-Service ergänzt.
+- keine neue Migration eingeführt; SQLite-Schema bleibt Version 2.
+- Zieltests, Contract-Guards, Sicherheitsfehlerkatalog und I008-Validator ergänzt.
