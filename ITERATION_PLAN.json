@@ -1,56 +1,60 @@
 {
   "schema_version": 1,
-  "iteration": "I013",
-  "version": "0.13.0-dev.1",
-  "checkpoint": "C013-ENTWICKLUNGSAUTOPILOT-V2",
-  "title": "Entwicklungsautopilot V2",
+  "iteration": "I014",
+  "version": "0.14.0-dev.1",
+  "checkpoint": "C014-TRANSPORTPROFILE-TRENNUNG",
+  "title": "Projektkern-, Entwickler-, Evidence- und Backup-Trennung",
   "base": {
     "branch": "main",
-    "commit": "f2e12bde3f4a6e3d8cd490018fb5e101819d281b",
-    "tree": "996d6c8882d2661b4c36a7192b65339d65f8ae6f"
+    "commit": "3ba56de67f3ae6bdedf4e52e8cd61d33562bd280",
+    "tree": "5e039acf10f409ffdb6e9bcd23706354d3ba2299"
   },
   "risk_class": "HOCH",
-  "risk_reason": "CI-, Evidence-, Manifest-, Standard- und Qualifikationslogik wird verändert; Produktdatenmodell bleibt unverändert.",
-  "objective": "Entwicklungskette fail-fast, planbasiert, dedupliziert und präziser machen, bevor weitere sicherheitskritische Produktfunktionen entstehen.",
+  "risk_reason": "Transport-, Integritäts-, Release- und Paketgrenzen werden verändert; Nutzdatenmodell und SQLite-Schema bleiben unverändert.",
+  "objective": "Normale Nutzertransporte auf den tatsächlich lauffähigen Produktkern begrenzen und Entwicklerdateien, Evidence sowie Nutzdaten/Sicherungen verbindlich in getrennte Profile überführen.",
   "acceptance_criteria": [
-    {"id": "I013-A01", "text": "Statische Vorprüfung läuft vor apt/pip oder PySide6."},
-    {"id": "I013-A02", "text": "Repository-Soll wird aus Baseline plus deklarierter Differenz berechnet und ungeplante Pfade blockieren."},
-    {"id": "I013-A03", "text": "Vollständige Testsuite und historische Gate-Kette laufen pro Pass jeweils höchstens einmal."},
-    {"id": "I013-A04", "text": "Dokumentationspflichten werden über stabile Abschnittsmarker statt fragile exakte Überschriften geprüft."},
-    {"id": "I013-A05", "text": "Stale Branch-CI-Läufe werden per concurrency abgebrochen."},
-    {"id": "I013-A06", "text": "Pip-Abhängigkeiten nutzen sicheren Cache anhand der Lockdatei."},
-    {"id": "I013-A07", "text": "Exact-SHA-Zweitpass bleibt read-only und vollständig reproduzierbar."},
-    {"id": "I013-A08", "text": "Main-Promotion bleibt Fast-Forward ohne Force und wird unabhängig nachgeprüft."}
+    {"id": "I014-A01", "text": "Jeder registrierte Repository-Pfad ist genau einer Transportklasse zugeordnet."},
+    {"id": "I014-A02", "text": "Das Standardprofil NUTZER enthält keine CI-, Test-, historische Entwicklerdoku-, Standard-, Autopilot- oder Evidence-Datei."},
+    {"id": "I014-A03", "text": "Das NUTZER-Paket enthält den vollständigen lauffähigen Produktkern einschließlich GUI-Runtime-Vertrag und Startdateien."},
+    {"id": "I014-A04", "text": "Jedes erzeugte Paket besitzt ein eigenes SHA-256-Paketinventar; der Startpfad akzeptiert dieses statt des Entwicklungsinventars."},
+    {"id": "I014-A05", "text": "SQLite-Nutzdaten, Sicherungen, Restore-Kandidaten, Logs, Caches und temporäre Dateien sind in allen Code-Transportprofilen hart ausgeschlossen."},
+    {"id": "I014-A06", "text": "Gleicher Commit plus gleiches Profil erzeugt byte-identische deterministische ZIP-Pakete."},
+    {"id": "I014-A07", "text": "ENTWICKLER und EVIDENCE sind getrennte explizite Profile; Evidence wird nicht automatisch in Entwickler- oder Nutzerpakete gemischt."},
+    {"id": "I014-A08", "text": "Ein frisch entpacktes NUTZER-Paket besteht den realen Offscreen-Start gegen einen neuen externen Workspace."},
+    {"id": "I014-A09", "text": "P0 prüft Profilvertrag, Klassifikation, verbotene Pfade und planbasiertes Repository-Soll vor Runtime-Setup."},
+    {"id": "I014-A10", "text": "Exact-SHA-Zweitpass, Fast-Forward-Promotion ohne Force und unabhängige Main-Nachqualifikation bleiben erhalten."}
   ],
   "validation_profile": {
     "static_preflight": true,
     "target_tests": true,
+    "runtime_package_smoke": true,
+    "deterministic_package_rebuild": true,
     "full_unit_suite": true,
     "historical_chain": true,
-    "gui_matrices": ["I012_DIAGNOSTICS_35", "I010_SYNC_35", "I007_TODO_140", "I005_CALENDAR_112"],
-    "fault_matrices": ["I011_HISTORY", "I010_RESOLUTION", "I009_SYNC", "I006_TODO"],
+    "risk_gui_matrices": ["I012_DIAGNOSTICS_35", "I010_SYNC_35", "I007_TODO_140", "I005_CALENDAR_112"],
+    "risk_fault_matrices": ["I011_HISTORY", "I010_RESOLUTION", "I009_SYNC", "I006_TODO"],
     "exact_sha_second_pass": true,
     "main_postcheck": true
   },
   "repository_delta": {
     "add": [
-      ".github/workflows/i013-qualifikation.yml",
-      "ITERATION_PLAN.json",
-      "PROCESS_AUDIT_I012.json",
-      "contracts/DEVELOPMENT_PIPELINE_CONTRACT.json",
-      "docs/I013_ENTWICKLUNGSAUTOPILOT_V2.md",
-      "standards/ENTWICKLUNGS_STANDARD.json",
-      "tests/test_i013_candidate_inventory.py",
-      "tests/test_i013_preflight.py",
-      "tools/autopilot/candidate_inventory.py",
-      "tools/autopilot/i013_validator.py",
-      "tools/autopilot/preflight.py"
+      ".github/workflows/i014-qualifikation.yml",
+      ".gitignore",
+      "NUTZERANLEITUNG.md",
+      "contracts/TRANSPORT_PROFILE_CONTRACT.json",
+      "docs/I014_TRANSPORTPROFILE_TRENNUNG.md",
+      "standards/TRANSPORT_STANDARD.json",
+      "tests/test_i014_runtime_package.py",
+      "tests/test_i014_transport_profiles.py",
+      "tools/autopilot/i014_validator.py",
+      "tools/package_transport.py",
+      "tools/transport_profiles.py"
     ],
     "modify": [
-      ".github/workflows/foundation-qualifikation.yml",
       "BUILD_MANIFEST.json",
       "CHANGELOG.md",
       "EVIDENCE_MANIFEST.json",
+      "ITERATION_PLAN.json",
       "MANIFEST_INDEX.json",
       "PROJECT_CONTRACT.json",
       "PROJEKTSTATUS.json",
@@ -63,16 +67,13 @@
       "SOURCE_MANIFEST.json",
       "TODO.md",
       "VERSION.json",
-      "standards/DOKUMENTATIONS_STANDARD.json",
+      "runtime/checks.py",
       "standards/MANIFEST_STANDARD.json",
-      "standards/QUALITY_STANDARD.json",
       "standards/RELEASE_STANDARD.json",
       "standards/STANDARD_INDEX.json",
-      "standards/TEST_STANDARD.json",
-      "tools/autopilot/autopilot.py",
-      "tools/autopilot/standard_validator.py"
+      "tools/autopilot/autopilot.py"
     ],
     "delete": []
   },
-  "next_after_success": "I014 Immutable Backup-/RestorePlan mit Kandidatenqualifikation"
+  "next_after_success": "I015 Immutable Backup-/RestorePlan mit Kandidatenqualifikation"
 }
