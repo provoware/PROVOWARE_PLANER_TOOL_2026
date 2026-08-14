@@ -114,13 +114,19 @@
     "development_v2_gate_deduplication_required": true,
     "development_v2_plan_based_inventory_required": true,
     "development_v2_timing_evidence_required": true,
-    "development_v2_stale_ci_cancellation_required": true
+    "development_v2_stale_ci_cancellation_required": true,
+    "transport_profile_contract_required": true,
+    "transport_default_user_profile_required": true,
+    "transport_runtime_developer_evidence_separation_required": true,
+    "transport_user_data_backup_exclusion_required": true,
+    "transport_deterministic_package_required": true,
+    "transport_fresh_unpack_start_required": true
   },
   "definition_of_ready": ["ziel_eindeutig", "risiko_bewertet", "schnittstellen_bekannt", "tests_geplant", "baseline_pass", "iterationsplan_vollstaendig", "repository_delta_deklariert"],
   "definition_of_done": ["implementierung_pass", "zieltests_pass", "regression_pass", "standards_pass", "repository_inventar_pass", "dokumentation_pass", "remote_verifikation_pass", "prozessmetriken_erfasst"],
   "foundation": {
-    "current_iteration": "I013",
-    "current_checkpoint": "C013-ENTWICKLUNGSAUTOPILOT-V2",
-    "version": "0.13.0-dev.1"
+    "current_iteration": "I014",
+    "current_checkpoint": "C014-TRANSPORTPROFILE-TRENNUNG",
+    "version": "0.14.0-dev.1"
   }
 }
