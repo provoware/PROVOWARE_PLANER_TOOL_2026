@@ -1,12 +1,22 @@
 {
   "standard_id": "PROVOWARE-DOCUMENTATION",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "VERBINDLICH",
   "language": "de",
   "readme_is_human_entrypoint": true,
   "machine_readable_contracts_are_authoritative": true,
   "required_root_documents": ["README.md", "TODO.md", "CHANGELOG.md"],
-  "readme_required_headings": [
+  "readme_required_section_markers": [
+    "<!-- PROVOWARE:SECTION:PROJECT_STATUS -->",
+    "<!-- PROVOWARE:SECTION:PRODUCT -->",
+    "<!-- PROVOWARE:SECTION:GLOBAL_STANDARDS -->",
+    "<!-- PROVOWARE:SECTION:REPOSITORY -->",
+    "<!-- PROVOWARE:SECTION:AUTOPILOT -->",
+    "<!-- PROVOWARE:SECTION:CHECKPOINT -->",
+    "<!-- PROVOWARE:SECTION:NEXT_STEP -->",
+    "<!-- PROVOWARE:SECTION:IMPROVEMENT -->"
+  ],
+  "legacy_required_headings_for_reference": [
     "## 1. Projektstatus",
     "## 2. Was ist das Tool?",
     "## 8. Globale Standards",
@@ -16,6 +26,7 @@
     "## 17. Nächster logischer Schritt",
     "## 18. Weiterführende Verbesserung"
   ],
+  "exact_heading_text_is_not_machine_contract": true,
   "status_sync_required": true,
   "broken_internal_references_forbidden": true
 }
