@@ -6,6 +6,8 @@ from PySide6.QtGui import QAction, QKeySequence
 from PySide6.QtWidgets import QMainWindow
 
 from services.factory import PlannerServices
+from services.resolution_service import ResolutionService
+from ui.sync_control_window import SyncControlWindow
 from ui.todo_window import TodoWindow
 
 
@@ -20,7 +22,7 @@ def attach_todo_module(
     menu = calendar_window.menuBar().addMenu("Module")
     action = QAction("Aufgaben öffnen", calendar_window)
     action.setShortcut(QKeySequence("Ctrl+Shift+T"))
-    action.setToolTip("Öffnet die Aufgabenverwaltung. Konflikte werden nur angezeigt, nicht automatisch aufgelöst.")
+    action.setToolTip("Öffnet die Aufgabenverwaltung. Konflikte bleiben sichtbar und werden nicht still aufgelöst.")
 
     def open_todos() -> None:
         existing = getattr(calendar_window, "_provoware_todo_window", None)
@@ -41,4 +43,26 @@ def attach_todo_module(
     action.triggered.connect(open_todos)
     menu.addAction(action)
     calendar_window.addAction(action)
+
+    sync_action = QAction("Synchronisation prüfen", calendar_window)
+    sync_action.setShortcut(QKeySequence("Ctrl+Shift+S"))
+    sync_action.setToolTip(
+        "Zeigt Feld-Baselines, Hashstatus und Konflikte. BOTH_DIFFERENT wird nur nach ausdrücklicher Feldentscheidung freigegeben."
+    )
+
+    def open_sync_control() -> None:
+        existing = getattr(calendar_window, "_provoware_sync_control_window", None)
+        if existing is None:
+            resolver = ResolutionService(services.sync, services.sync.repository)
+            existing = SyncControlWindow(services.sync, resolver, repo_root=repo_root)
+            setattr(calendar_window, "_provoware_sync_control_window", existing)
+        existing.refresh_links()
+        existing.show()
+        existing.raise_()
+        existing.activateWindow()
+
+    sync_action.triggered.connect(open_sync_control)
+    menu.addAction(sync_action)
+    calendar_window.addAction(sync_action)
+    setattr(calendar_window, "_provoware_sync_control_action", sync_action)
     return action
