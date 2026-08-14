@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -29,11 +30,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="I016 Restore-Crash-Matrix")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(ROOT) + os.pathsep + env.get("PYTHONPATH", "")
     results = []
     for scenario, test_name in SCENARIOS:
         process = subprocess.run(
             [sys.executable, "-m", "unittest", test_name, "-v"],
             cwd=ROOT / "tests",
+            env=env,
             text=True,
             capture_output=True,
             check=False,
