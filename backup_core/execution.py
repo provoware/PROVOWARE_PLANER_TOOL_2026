@@ -26,6 +26,7 @@ class RestoreIntent:
     previous_intent_sha256: str
     state: RestoreIntentState
     plan_sha256: str
+    execution_plan_sha256: str
     backup_path: str
     backup_sha256: str
     target_path: str
@@ -61,6 +62,7 @@ class RestoreIntent:
         *,
         intent_id: str,
         plan_sha256: str,
+        execution_plan_sha256: str,
         backup_path: str,
         backup_sha256: str,
         target_path: str,
@@ -80,6 +82,7 @@ class RestoreIntent:
             previous_intent_sha256="",
             state=RestoreIntentState.PREPARED,
             plan_sha256=plan_sha256,
+            execution_plan_sha256=execution_plan_sha256,
             backup_path=backup_path,
             backup_sha256=backup_sha256,
             target_path=target_path,
@@ -126,6 +129,7 @@ class RestoreIntent:
             previous_intent_sha256=str(payload.get("previous_intent_sha256", "")),
             state=RestoreIntentState(payload["state"]),
             plan_sha256=str(payload["plan_sha256"]),
+            execution_plan_sha256=str(payload["execution_plan_sha256"]),
             backup_path=str(payload["backup_path"]),
             backup_sha256=str(payload["backup_sha256"]),
             target_path=str(payload["target_path"]),
