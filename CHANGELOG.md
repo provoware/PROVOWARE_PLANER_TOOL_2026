@@ -61,3 +61,15 @@
 - Dokumentationsstandard auf stabile semantische README-Marker umgestellt; exakter Überschriftentext ist nicht mehr Maschinenvertrag.
 - Autopilot führt historische Gates pro Pass genau einmal aus und schreibt optionale Laufzeit-Evidence.
 - CI-Referenzpipeline erhält Concurrency-Abbruch für veraltete Läufe, Lockdatei-gebundenen pip-Cache und Static-first-Reihenfolge.
+
+## 0.14.0-dev.1 — I014
+- Repository und normale Weitergabe technisch getrennt: vollständige Entwicklungsbasis bleibt auditierbar, Standardtransport ist jetzt das reduzierte `NUTZER`-Profil.
+- Vier eindeutige Transportklassen eingeführt: `PRODUKTKERN`, `NUTZERDOKU`, `ENTWICKLUNG`, `EVIDENCE`.
+- Vier Profile eingeführt: `PROJEKTKERN`, `NUTZER`, `ENTWICKLER`, `EVIDENCE`; Evidence wird weder in Nutzer- noch Entwicklerpakete gemischt.
+- SQLite-Nutzdaten, Sicherungen, Restore-Kandidaten, Workspaces, Logs, Caches und temporäre Dateien sind in allen Code-Transportprofilen hart ausgeschlossen.
+- `.gitignore` ergänzt als zweite Schutzschicht gegen versehentliches Einchecken lokaler Nutzdaten/Sicherungen.
+- Deterministischer profilbasierter ZIP-Builder mit festen Zeitstempeln, sortierten Pfaden und normalisierten Dateimodi eingeführt.
+- Jedes Paket erhält `PAKETMANIFEST.json` und `PAKET_INVENTAR.json`; lauffähige Profile zusätzlich ein paketbezogenes kompatibles `SHA256_DATEI_INVENTAR.json`.
+- Paketbau bezieht seine Quelldateien ausschließlich aus dem registrierten Repository-Soll; ungetrackte lokale Arbeits-/Backupdaten werden nicht entdeckt oder eingesammelt.
+- Fresh-Unpack-Nutzerstart, Profilgrenzen und byte-identischer Doppelbau werden als I014-Pflichtgates qualifiziert.
+- Keine Datenbankmigration; Schema bleibt Version 4.
