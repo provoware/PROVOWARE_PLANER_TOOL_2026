@@ -1,12 +1,76 @@
 {
   "standard_id": "PROVOWARE-START",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "VERBINDLICH",
   "sequence_principle": "PRECHECK-AKTION-POSTCHECK",
+  "step_sequence": [
+    "PRECHECK",
+    "ACTION",
+    "POSTCHECK"
+  ],
+  "state_machine": [
+    "INIT",
+    "CHECKING",
+    "READY",
+    "DEGRADED",
+    "RECOVERY_REQUIRED",
+    "BLOCKED"
+  ],
+  "allowed_transitions": [
+    "INIT->CHECKING",
+    "CHECKING->READY",
+    "CHECKING->DEGRADED",
+    "CHECKING->RECOVERY_REQUIRED",
+    "CHECKING->BLOCKED",
+    "RECOVERY_REQUIRED->CHECKING"
+  ],
   "administrator_rights_by_default": false,
   "start_only_required_components": true,
-  "planned_checks": [
-    "os", "architecture", "runtime", "program_manifest", "configuration", "workspace_identity", "real_read_write", "database", "schema", "backup", "recovery", "modules", "logging", "event_bus", "gui", "post_start"
+  "minimum_free_bytes_before_write_probe": 67108864,
+  "required_checks": [
+    "system",
+    "runtime",
+    "manifest",
+    "workspace",
+    "configuration",
+    "database",
+    "recovery",
+    "modules",
+    "logging",
+    "event_bus",
+    "gui",
+    "post_start"
   ],
-  "safe_repair_requires": ["reversible", "local", "deterministic", "validated", "logged"]
+  "fault_injection": {
+    "required": true,
+    "temporary_workspace_only": true,
+    "explicit_permission_required": true,
+    "must_not_modify_real_user_data": true,
+    "required_scenarios": [
+      "missing_permissions",
+      "workspace_missing",
+      "config_corrupt",
+      "manifest_tampered",
+      "sqlite_locked",
+      "sqlite_corrupt",
+      "disk_full"
+    ]
+  },
+  "safe_repair_requires": [
+    "reversible",
+    "local",
+    "deterministic",
+    "validated",
+    "logged",
+    "no_privilege_escalation",
+    "no_silent_user_data_overwrite"
+  ],
+  "user_feedback_required_fields": [
+    "phase",
+    "status",
+    "error_code",
+    "user_message",
+    "technical_details",
+    "automatic_action"
+  ]
 }
