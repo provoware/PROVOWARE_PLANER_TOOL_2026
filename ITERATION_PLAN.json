@@ -56,6 +56,7 @@
       "tools/i016_restore_crash_matrix.py"
     ],
     "modify": [
+      ".github/workflows/foundation-qualifikation.yml",
       "BUILD_MANIFEST.json",
       "CHANGELOG.md",
       "EVIDENCE_MANIFEST.json",
