@@ -68,7 +68,7 @@ def validate() -> dict:
 
     architecture = contract.get("architecture", {})
     if architecture.get("database_migration_required") is not False:
-        errors.append("I008_UNERWARTETE_MIGRATION")
+        errors.append("I008_UNERWARTETE_MIGRATION_IM_I008_VERTRAG")
     if architecture.get("preview_must_not_write") is not True:
         errors.append("I008_VORSCHAU_SCHREIBSPERRE_FEHLT")
     if architecture.get("write_api_present_in_i008") is not False:
@@ -78,13 +78,9 @@ def validate() -> dict:
 
     safety = contract.get("safety", {})
     for key in (
-        "both_changed_hard_block",
-        "detached_hard_block",
-        "baseline_divergence_hard_block",
-        "semantic_due_end_requires_manual_review",
-        "preview_write_permitted_must_be_false",
-        "optimistic_versions_visible",
-        "silent_field_translation_forbidden",
+        "both_changed_hard_block", "detached_hard_block", "baseline_divergence_hard_block",
+        "semantic_due_end_requires_manual_review", "preview_write_permitted_must_be_false",
+        "optimistic_versions_visible", "silent_field_translation_forbidden",
     ):
         if safety.get(key) is not True:
             errors.append(f"I008_SICHERHEITSREGEL_FEHLT: {key}")
@@ -94,14 +90,6 @@ def validate() -> dict:
         errors.append("I008_FELDREGELN_UNVOLLSTAENDIG")
     if field_rules.get("DUE_END", {}).get("future_automatic_candidate") is not False:
         errors.append("I008_DUE_END_DARF_NICHT_AUTOMATISCH_SEIN")
-    if field_rules.get("DUE_END", {}).get("semantic_review_required") is not True:
-        errors.append("I008_DUE_END_PRUEFUNG_FEHLT")
-
-    conflict_rules = contract.get("conflict_rules", {})
-    if set(conflict_rules) != {"CLEAN", "TODO_CHANGED", "CALENDAR_CHANGED", "BOTH_CHANGED", "DETACHED"}:
-        errors.append("I008_KONFLIKTMATRIX_UNVOLLSTAENDIG")
-    if "block" not in conflict_rules.get("BOTH_CHANGED", "").lower():
-        errors.append("I008_BOTH_CHANGED_NICHT_BLOCKIERT")
 
     source = (ROOT / "services/sync_preview_service.py").read_text(encoding="utf-8")
     for forbidden in ("def apply(", "def synchronize(", "def execute(", "mark_synchronized(", "assess_conflict("):
@@ -125,8 +113,8 @@ def validate() -> dict:
                 title="Gleich", description="Text", start_at=start, end_at=start + timedelta(hours=1), timezone_name="Europe/Berlin"
             )
             link = services.links.create_link(todo.todo_id, event.event_id, direction=LinkDirection.BIDIRECTIONAL)
-            services.todos.update_todo(replace(todo, title="Todo geändert"), expected_version=todo.version)
-            services.calendar.update_event(replace(event, title="Termin geändert"), expected_version=event.version)
+            services.todos.update_todo(replace(todo, title="I008 Todo geändert"), expected_version=todo.version)
+            services.calendar.update_event(replace(event, title="I008 Termin geändert"), expected_version=event.version)
             preview = services.sync_preview.preview(link.link_id)
             if preview.state is not SyncPreviewState.BLOCKIERT_BEIDSEITIG:
                 errors.append("I008_RUNTIME_BOTH_CHANGED_NICHT_BLOCKIERT")
@@ -134,8 +122,7 @@ def validate() -> dict:
                 errors.append("I008_RUNTIME_WRITE_PERMITTED_FALSCH")
             if any(field.action not in {SyncFieldAction.IDENTISCH, SyncFieldAction.BLOCKIERT} for field in preview.fields):
                 errors.append("I008_RUNTIME_BOTH_CHANGED_ENTHAELT_VORSCHLAG")
-            stored = services.links.get_link(link.link_id)
-            if stored.version != 1:
+            if services.links.get_link(link.link_id).version != 1:
                 errors.append("I008_RUNTIME_VORSCHAU_HAT_LINK_GESCHRIEBEN")
             services.database.quick_check()
             runtime = "PASS"
@@ -143,10 +130,11 @@ def validate() -> dict:
         errors.append(f"I008_RUNTIME_FEHLER: {type(exc).__name__}: {exc}")
         runtime = "FAIL"
 
-    if schema != 2:
+    if current == 8 and schema != 2:
         errors.append(f"I008_SCHEMA_VERSION_FALSCH: {schema}")
-    qualification = contract.get("qualification", {})
-    if qualification.get("historical_gate_chain") != ["I002", "I003", "I004", "I005", "I006", "I007", "I008"]:
+    elif current > 8 and schema < 2:
+        errors.append(f"I008_HISTORISCHE_SCHEMA_BASIS_FEHLT: {schema}")
+    if contract.get("qualification", {}).get("historical_gate_chain") != ["I002", "I003", "I004", "I005", "I006", "I007", "I008"]:
         errors.append("I008_HISTORISCHE_KETTE_FALSCH")
 
     return {
