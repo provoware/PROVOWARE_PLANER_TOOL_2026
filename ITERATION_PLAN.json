@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "iteration": "I013",
+  "version": "0.13.0-dev.1",
+  "checkpoint": "C013-ENTWICKLUNGSAUTOPILOT-V2",
+  "title": "Entwicklungsautopilot V2",
+  "base": {
+    "branch": "main",
+    "commit": "f2e12bde3f4a6e3d8cd490018fb5e101819d281b",
+    "tree": "996d6c8882d2661b4c36a7192b65339d65f8ae6f"
+  },
+  "risk_class": "HOCH",
+  "risk_reason": "CI-, Evidence-, Manifest-, Standard- und Qualifikationslogik wird verändert; Produktdatenmodell bleibt unverändert.",
+  "objective": "Entwicklungskette fail-fast, planbasiert, dedupliziert und präziser machen, bevor weitere sicherheitskritische Produktfunktionen entstehen.",
+  "acceptance_criteria": [
+    {"id": "I013-A01", "text": "Statische Vorprüfung läuft vor apt/pip oder PySide6."},
+    {"id": "I013-A02", "text": "Repository-Soll wird aus Baseline plus deklarierter Differenz berechnet und ungeplante Pfade blockieren."},
+    {"id": "I013-A03", "text": "Vollständige Testsuite und historische Gate-Kette laufen pro Pass jeweils höchstens einmal."},
+    {"id": "I013-A04", "text": "Dokumentationspflichten werden über stabile Abschnittsmarker statt fragile exakte Überschriften geprüft."},
+    {"id": "I013-A05", "text": "Stale Branch-CI-Läufe werden per concurrency abgebrochen."},
+    {"id": "I013-A06", "text": "Pip-Abhängigkeiten nutzen sicheren Cache anhand der Lockdatei."},
+    {"id": "I013-A07", "text": "Exact-SHA-Zweitpass bleibt read-only und vollständig reproduzierbar."},
+    {"id": "I013-A08", "text": "Main-Promotion bleibt Fast-Forward ohne Force und wird unabhängig nachgeprüft."}
+  ],
+  "validation_profile": {
+    "static_preflight": true,
+    "target_tests": true,
+    "full_unit_suite": true,
+    "historical_chain": true,
+    "gui_matrices": ["I012_DIAGNOSTICS_35", "I010_SYNC_35", "I007_TODO_140", "I005_CALENDAR_112"],
+    "fault_matrices": ["I011_HISTORY", "I010_RESOLUTION", "I009_SYNC", "I006_TODO"],
+    "exact_sha_second_pass": true,
+    "main_postcheck": true
+  },
+  "repository_delta": {
+    "add": [
+      ".github/workflows/i013-qualifikation.yml",
+      "ITERATION_PLAN.json",
+      "PROCESS_AUDIT_I012.json",
+      "contracts/DEVELOPMENT_PIPELINE_CONTRACT.json",
+      "docs/I013_ENTWICKLUNGSAUTOPILOT_V2.md",
+      "standards/ENTWICKLUNGS_STANDARD.json",
+      "tests/test_i013_candidate_inventory.py",
+      "tests/test_i013_preflight.py",
+      "tools/autopilot/candidate_inventory.py",
+      "tools/autopilot/i013_validator.py",
+      "tools/autopilot/preflight.py"
+    ],
+    "modify": [
+      ".github/workflows/foundation-qualifikation.yml",
+      "BUILD_MANIFEST.json",
+      "CHANGELOG.md",
+      "EVIDENCE_MANIFEST.json",
+      "MANIFEST_INDEX.json",
+      "PROJECT_CONTRACT.json",
+      "PROJEKTSTATUS.json",
+      "QUALIFICATION_REPORT.json",
+      "README.md",
+      "RELEASE_MANIFEST.json",
+      "REMOTE_TREE_RECEIPT.json",
+      "REPOSITORY_MANIFEST.json",
+      "SHA256_DATEI_INVENTAR.json",
+      "SOURCE_MANIFEST.json",
+      "TODO.md",
+      "VERSION.json",
+      "standards/DOKUMENTATIONS_STANDARD.json",
+      "standards/MANIFEST_STANDARD.json",
+      "standards/QUALITY_STANDARD.json",
+      "standards/RELEASE_STANDARD.json",
+      "standards/STANDARD_INDEX.json",
+      "standards/TEST_STANDARD.json",
+      "tools/autopilot/autopilot.py",
+      "tools/autopilot/standard_validator.py"
+    ],
+    "delete": []
+  },
+  "next_after_success": "I014 Immutable Backup-/RestorePlan mit Kandidatenqualifikation"
+}
