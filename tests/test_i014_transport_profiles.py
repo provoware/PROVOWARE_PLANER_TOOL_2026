@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import json
 import unittest
-from pathlib import Path
 
 from tools.transport_profiles import (
     ROOT,
@@ -32,6 +32,7 @@ class I014TransportProfileTests(unittest.TestCase):
             "VERSION.json",
             "requirements-gui.lock",
             "contracts/GUI_RUNTIME_CONTRACT.json",
+            "runtime/ui_tokens.json",
             "tools/start_gui.py",
             "tools/start_orchestrator.py",
             "NUTZERANLEITUNG.md",
@@ -46,6 +47,7 @@ class I014TransportProfileTests(unittest.TestCase):
             "QUALIFICATION_REPORT.json",
             "REMOTE_TREE_RECEIPT.json",
             "ITERATION_PLAN.json",
+            "standards/UI_STANDARD.json",
             "standards/TEST_STANDARD.json",
             "tests/test_standard_validator.py",
             "tools/autopilot/autopilot.py",
@@ -54,11 +56,27 @@ class I014TransportProfileTests(unittest.TestCase):
         ):
             self.assertNotIn(forbidden, selected)
 
+    def test_runtime_ui_projection_matches_governance_standard(self) -> None:
+        standard = json.loads((ROOT / "standards" / "UI_STANDARD.json").read_text(encoding="utf-8"))
+        runtime = json.loads((ROOT / "runtime" / "ui_tokens.json").read_text(encoding="utf-8"))
+        self.assertEqual(runtime["source_standard"], standard["standard_id"])
+        self.assertEqual(runtime["source_standard_version"], standard["version"])
+        self.assertEqual(runtime["spacing_tokens_px"], standard["spacing_tokens_px"])
+        self.assertEqual(runtime["font_scale_percent"], standard["font_scale_percent"])
+        self.assertEqual(
+            {key: value["text"] for key, value in runtime["status_lights"].items()},
+            {key: value["text"] for key, value in standard["status_lights"].items()},
+        )
+        design_source = (ROOT / "ui" / "design.py").read_text(encoding="utf-8")
+        self.assertIn('"runtime" / "ui_tokens.json"', design_source)
+        self.assertNotIn('"standards" / "UI_STANDARD.json"', design_source)
+
     def test_developer_and_evidence_profiles_are_separate(self) -> None:
         developer = set(select_profile("ENTWICKLER", ROOT))
         evidence = set(select_profile("EVIDENCE", ROOT))
         self.assertIn("tests/test_standard_validator.py", developer)
         self.assertIn("standards/ENTWICKLUNGS_STANDARD.json", developer)
+        self.assertIn("standards/UI_STANDARD.json", developer)
         self.assertNotIn("QUALIFICATION_REPORT.json", developer)
         self.assertIn("QUALIFICATION_REPORT.json", evidence)
         self.assertIn("REMOTE_TREE_RECEIPT.json", evidence)
@@ -70,6 +88,7 @@ class I014TransportProfileTests(unittest.TestCase):
     def test_runtime_overrides_are_not_ambiguous(self) -> None:
         contract = load_contract(ROOT)
         self.assertEqual(classify_path("contracts/GUI_RUNTIME_CONTRACT.json", contract), "PRODUKTKERN")
+        self.assertEqual(classify_path("runtime/ui_tokens.json", contract), "PRODUKTKERN")
         self.assertEqual(classify_path("tools/start_gui.py", contract), "PRODUKTKERN")
         self.assertEqual(classify_path("tools/autopilot/autopilot.py", contract), "ENTWICKLUNG")
 
