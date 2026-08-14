@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "contract_id": "PROVOWARE-CALENDAR-DATA",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "domain": {
+    "event_title_required": true,
+    "event_title_max_length": 200,
+    "timezone_model": "IANA",
+    "storage_time_basis": "UTC",
+    "display_timezone_preserved": true,
+    "end_must_not_precede_start": true,
+    "marker_count": 5,
+    "marker_semantics": "Farbe plus Symbol plus Kürzel plus Text",
+    "soft_delete_required": true,
+    "optimistic_locking_field": "version"
+  },
+  "sqlite": {
+    "foreign_keys": true,
+    "journal_mode": "WAL",
+    "synchronous": "FULL",
+    "busy_timeout_required": true,
+    "quick_check_required": true,
+    "transactional_writes_only": true
+  },
+  "migrations": {
+    "versioned": true,
+    "sha256_bound": true,
+    "immutable_after_apply": true,
+    "backup_before_apply": true,
+    "rollback_on_failure": true,
+    "post_integrity_check": true
+  },
+  "backup_restore": {
+    "sqlite_backup_api": true,
+    "candidate_validation": true,
+    "sha256_verification_supported": true,
+    "atomic_promotion": true,
+    "wal_checkpoint_before_restore": true,
+    "stale_sidecar_removal": true,
+    "active_database_must_survive_rejected_restore": true
+  },
+  "gui_boundary": {
+    "gui_may_execute_sql": false,
+    "gui_may_run_migrations": false,
+    "gui_may_implement_recovery": false,
+    "gui_uses_service_api_only": true
+  }
+}
