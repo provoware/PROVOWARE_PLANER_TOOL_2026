@@ -5,8 +5,10 @@ from pathlib import Path
 from PySide6.QtGui import QAction, QKeySequence
 from PySide6.QtWidgets import QMainWindow
 
+from services.diagnostics_service import DiagnosticsService
 from services.factory import PlannerServices
 from services.resolution_service import ResolutionService
+from ui.diagnostics_window import DiagnosticsWindow
 from ui.sync_control_window import SyncControlWindow
 from ui.sync_history_window import SyncHistoryWindow
 from ui.todo_window import TodoWindow
@@ -88,4 +90,30 @@ def attach_todo_module(
     menu.addAction(history_action)
     calendar_window.addAction(history_action)
     setattr(calendar_window, "_provoware_sync_history_action", history_action)
+
+    diagnostics_action = QAction("Diagnosezentrale öffnen", calendar_window)
+    diagnostics_action.setShortcut(QKeySequence("Ctrl+Shift+D"))
+    diagnostics_action.setToolTip(
+        "Bündelt Startzustand, Datenbank-, Journal-, Backup- und Recovery-Nachweise ausschließlich lesend."
+    )
+
+    def open_diagnostics() -> None:
+        existing = getattr(calendar_window, "_provoware_diagnostics_window", None)
+        if existing is None:
+            diagnosis = DiagnosticsService(
+                services.database,
+                services.journal,
+                workspace=workspace,
+            )
+            existing = DiagnosticsWindow(diagnosis, repo_root=repo_root)
+            setattr(calendar_window, "_provoware_diagnostics_window", existing)
+        existing.refresh()
+        existing.show()
+        existing.raise_()
+        existing.activateWindow()
+
+    diagnostics_action.triggered.connect(open_diagnostics)
+    menu.addAction(diagnostics_action)
+    calendar_window.addAction(diagnostics_action)
+    setattr(calendar_window, "_provoware_diagnostics_action", diagnostics_action)
     return action
