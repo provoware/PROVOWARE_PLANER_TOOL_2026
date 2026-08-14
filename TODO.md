@@ -92,3 +92,17 @@
 - [ ] Feldzustand, Quelle/Ziel, Hashstatus, Grund und erwartete Version verständlich anzeigen
 - [ ] `BOTH_DIFFERENT` ausschließlich explizit manuell entscheiden
 - [ ] GUI darf weder SQL noch eigene Konfliktlogik enthalten
+
+
+## I010 – Synchronisations-Control-GUI
+
+- [x] SyncControlQuery read-only
+- [x] SyncControlViewModel
+- [x] Feldtabelle mit 9 Nachweisspalten + Entscheidung
+- [x] immutable ResolutionPlan
+- [x] explizite BOTH_DIFFERENT-Entscheidung
+- [x] Stale-/Manipulationsschutz
+- [x] atomarer I009-Commitkern wiederverwendet
+- [x] Audit-Receipt-Bindung
+- [x] Fault-/Crash-Matrix
+- [x] Offscreen-GUI-Matrix

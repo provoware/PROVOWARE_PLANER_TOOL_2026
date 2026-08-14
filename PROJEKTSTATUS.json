@@ -7,12 +7,12 @@
   "phase": "FOUNDATION",
   "iteration": "I010",
   "checkpoint": "C010-SYNC-CONTROL-GUI-RESOLUTION",
-  "status": "IN_ARBEIT",
-  "ampel": "GELB",
+  "status": "QUALIFIZIERT",
+  "ampel": "GRUEN",
   "planning_percent": 100,
-  "implementation_percent": 82,
-  "qualification_percent": 70,
-  "release_readiness_percent": 28,
+  "implementation_percent": 84,
+  "qualification_percent": 98,
+  "release_readiness_percent": 30,
   "mandatory_user_testing": false,
   "last_completed": [
     "C000-REPOSITORY-RESET",
@@ -26,8 +26,9 @@
     "I006-TODO-DOMAIN-LINK",
     "I007-TODO-GUI-VIEWMODEL",
     "I008-SYNC-CONFLICT-PREVIEW",
-    "I009-FIELD-BASELINE-TRANSACTIONAL-SYNC"
+    "I009-FIELD-BASELINE-TRANSACTIONAL-SYNC",
+    "I010-SYNC-CONTROL-GUI-RESOLUTION"
   ],
-  "next_logical_step": "I010 Remotequalifikation für Synchronisations-Control-GUI und ResolutionPlan",
-  "improvement_recommendation": "ResolutionPlan-Entscheidungen zusätzlich als nutzerlesbare Vorschau mit Vorher/Nachher-Diff anzeigen; niemals heuristisch vorbelegen"
+  "next_logical_step": "I011 Synchronisationsjournal + Resolution-Historie + sichere Wiederholungs-/Recovery-Ansicht",
+  "improvement_recommendation": "Resolution- und Sync-Receipts als unveränderliche Historie mit Vorher/Nachher-Diff und gezielter Recovery-Vorschau darstellen"
 }

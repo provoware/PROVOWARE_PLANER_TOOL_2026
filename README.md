@@ -124,3 +124,8 @@ Nach erfolgreicher I010-Qualifikation: **I011 — Synchronisationsjournal + Reso
 
 ## 18. Weiterführende Verbesserung
 Für I011 eine sichere Recovery-Vorschau ergänzen, die auf bestehende Receipt-Hashes und konkrete Datenversionen referenziert. Ein Wiederholungs- oder Wiederherstellungsplan muss erneut immutable, hashgebunden und stale-sicher sein; eine vergangene Konfliktentscheidung darf niemals automatisch auf einen inzwischen veränderten Datenstand übertragen werden.
+
+
+### I010 Synchronisations-Control
+
+I010 zeigt den I009-SyncPlan read-only in einer Feldtabelle. Echte BOTH_DIFFERENT-Konflikte bleiben standardmäßig blockiert und können nur über einen neuen hashgebundenen ResolutionPlan explizit auf Todo-Wert oder Kalender-Wert entschieden werden. Der ursprüngliche SyncPlan wird nie verändert.

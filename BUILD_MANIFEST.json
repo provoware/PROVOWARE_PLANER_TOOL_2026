@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "manifest_type": "BUILD",
-  "version": "0.9.0-dev.1",
-  "iteration": "I009",
+  "version": "0.10.0-dev.1",
+  "iteration": "I010",
   "entries": [
     {
       "path": ".github/workflows/foundation-qualifikation.yml",
@@ -59,6 +59,12 @@
       "status": "PASS"
     },
     {
+      "path": ".github/workflows/i010-qualifikation.yml",
+      "sha256": "1576decfad52b4fcdfd2b1623e4c160546cf3cbbd28eaaa9987a9dc5d3a223f2",
+      "size": 15909,
+      "status": "PASS"
+    },
+    {
       "path": "runtime/__init__.py",
       "sha256": "d076fad1ed584bed0bb7dbd6ee0c4d40140239e59d7e1826864710f248d75415",
       "size": 43,
@@ -96,8 +102,8 @@
     },
     {
       "path": "tools/autopilot/autopilot.py",
-      "sha256": "e188393569d87d974112d09dd5bcb42b78e5a39664904a91905e8f1235267236",
-      "size": 2606,
+      "sha256": "aab1e05937684ae6694c8cccd97b02125de91be01fa059d61a805adf2c29e705",
+      "size": 2750,
       "status": "PASS"
     },
     {
@@ -155,6 +161,12 @@
       "status": "PASS"
     },
     {
+      "path": "tools/autopilot/i010_validator.py",
+      "sha256": "7754e894a0a41a3e08e561db68bde1688759a12070ac9f4477f99a5cf5bc89f0",
+      "size": 8416,
+      "status": "PASS"
+    },
+    {
       "path": "tools/autopilot/manifest_builder.py",
       "sha256": "0da145ecc8a629b581462dd360c7c64c689785d125178aa5b3171adfe336898c",
       "size": 5336,
@@ -179,5 +191,5 @@
       "status": "PASS"
     }
   ],
-  "count": 29
+  "count": 31
 }

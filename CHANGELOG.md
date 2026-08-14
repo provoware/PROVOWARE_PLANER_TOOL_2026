@@ -46,3 +46,12 @@
 - Fault-Injection nach Nutzdatenwrite, Baseline-Write, vor Receipt und nach Receipt sowie echter Prozessabbruch nach Nutzdatenwrite ergänzt.
 - I008-Historienvalidator für legitime spätere Schema-Versionen vorwärtskompatibel gehärtet.
 - I009-Vertrag, Fehlerkatalog, Tests, Fault-Matrix, unabhängiger Validator und Autopilot-Gate ergänzt.
+
+
+## I010 – Synchronisations-Control-GUI + explizite Konfliktentscheidung
+
+- Read-only SyncControlQuery und SyncControlViewModel.
+- Feldtabelle mit Baseline, Todo, Kalender, Zustand, Aktion, Grund, Versions- und Hashstatus.
+- Neuer unveränderlicher ResolutionPlan mit Source-Plan-SHA-256.
+- TODO_WERT / KALENDER_WERT / BLOCKIERT_LASSEN ausschließlich für BOTH_DIFFERENT.
+- Manipulations-, Stale-, Fault-, Crash- und GUI-Matrix-Gates.
