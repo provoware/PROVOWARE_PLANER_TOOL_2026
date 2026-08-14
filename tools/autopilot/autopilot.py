@@ -15,6 +15,7 @@ from i006_validator import validate as validate_i006
 from i007_validator import validate as validate_i007
 from i008_validator import validate as validate_i008
 from i009_validator import validate as validate_i009
+from i010_validator import validate as validate_i010
 from standard_validator import print_result, validate_repository
 
 
@@ -44,6 +45,7 @@ def main() -> int:
     if current >= 7: gates.append(("I007-TODO-GUI-VIEWMODEL-GATE", validate_i007()))
     if current >= 8: gates.append(("I008-SYNC-KONFLIKT-GATE", validate_i008()))
     if current >= 9: gates.append(("I009-FELD-BASELINE-TRANSAKTIONS-GATE", validate_i009()))
+    if current >= 10: gates.append(("I010-SYNC-CONTROL-RESOLUTION-GATE", validate_i010()))
     if not all(_run_gate(name, result) for name, result in gates): return 1
     if args.command == "qualifizieren": print("QUALIFIKATION: PASS - globale Standards, Repository-Inventar und alle historischen Pflichtgates bis zur aktuellen Iteration sind konsistent.")
     return 0
