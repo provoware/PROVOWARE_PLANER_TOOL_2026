@@ -64,13 +64,18 @@
     "todo_gui_required": true,
     "todo_conflict_display_only_required": true,
     "todo_gui_matrix_required": true,
-    "todo_gui_restart_persistence_required": true
+    "todo_gui_restart_persistence_required": true,
+    "sync_field_contract_required": true,
+    "sync_preview_read_only_required": true,
+    "sync_both_changed_hard_block_required": true,
+    "sync_baseline_divergence_block_required": true,
+    "sync_silent_field_translation_forbidden": true
   },
   "definition_of_ready": ["ziel_eindeutig", "risiko_bewertet", "schnittstellen_bekannt", "tests_geplant", "baseline_pass"],
   "definition_of_done": ["implementierung_pass", "zieltests_pass", "regression_pass", "standards_pass", "repository_inventar_pass", "dokumentation_pass", "remote_verifikation_pass"],
   "foundation": {
-    "current_iteration": "I007",
-    "current_checkpoint": "C007-TODO-GUI-VIEWMODEL",
-    "version": "0.7.0-dev.1"
+    "current_iteration": "I008",
+    "current_checkpoint": "C008-SYNC-CONFLICT-PREVIEW",
+    "version": "0.8.0-dev.1"
   }
 }
