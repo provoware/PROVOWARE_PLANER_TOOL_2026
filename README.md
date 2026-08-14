@@ -91,8 +91,10 @@ I012 fügt diesem Pfad keinen neuen Schreiber hinzu. Die Recovery-Diagnose verwe
 ## 16. Aktueller Checkpoint
 **C012 — DIAGNOSE-DASHBOARD.** Implementiert sind `DiagnosticsService`, Diagnose-ViewModel, Qt-Diagnosezentrale, `Ctrl+Shift+D`-Integration, standardmäßig gespeicherter letzter Startbericht, Service-/GUI-Zieltests und eine 35er Offscreen-Matrix.
 
-## 17. Qualifikationsziel
 Vor Promotion nach `main` müssen I002→I012, I012-Zieltests, die 35er Diagnose-GUI-Matrix, die bestehenden Todo-/Kalender-/Sync-/Crashregressionen, die komplette Unit-Suite, Standards, Repository-Inventar, Remote-Tree und ein exakter read-only Evidence-SHA-Zweitpass erfolgreich sein.
 
-## 18. Nächster logischer Schritt
+## 17. Nächster logischer Schritt
 Nach vollständig qualifiziertem I012: **I013 — immutable Backup-/RestorePlan mit Kandidatenqualifikation.** Die bestehende Backup-/Restore-Implementierung soll dabei wiederverwendet werden; Vorschau und tatsächliche Wiederherstellung bleiben strikt getrennt.
+
+## 18. Weiterführende Verbesserung
+Vor einer Stable-Linie sollten zusätzlich Repository-Sichtbarkeit, Schutz von `main` mit verbindlichen Statuschecks und signierte Release-/Evidence-Commits geschlossen werden, ohne die funktionale Entwicklung mit einer parallelen Freigabelogik zu vermischen.
