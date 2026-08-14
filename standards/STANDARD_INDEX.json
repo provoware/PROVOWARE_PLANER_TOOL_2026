@@ -1,11 +1,12 @@
 {
   "schema_version": 1,
   "index_id": "PROVOWARE-STANDARD-INDEX",
-  "index_version": "1.5.0",
+  "index_version": "1.6.0",
   "standards": [
     {"id": "PROVOWARE-GLOBAL", "version": "1.0.0", "file": "standards/PROVOWARE_GLOBAL_STANDARD.json"},
     {"id": "PROVOWARE-DEVELOPMENT", "version": "2.0.0", "file": "standards/ENTWICKLUNGS_STANDARD.json"},
     {"id": "PROVOWARE-TRANSPORT", "version": "1.0.0", "file": "standards/TRANSPORT_STANDARD.json"},
+    {"id": "PROVOWARE-BACKUP-RESTORE", "version": "1.0.0", "file": "standards/BACKUP_RESTORE_STANDARD.json"},
     {"id": "PROVOWARE-NAMING", "version": "1.0.0", "file": "standards/NAMENSSTANDARD.json"},
     {"id": "PROVOWARE-UI", "version": "1.0.0", "file": "standards/UI_STANDARD.json"},
     {"id": "PROVOWARE-ACCESSIBILITY", "version": "1.0.0", "file": "standards/ACCESSIBILITY_STANDARD.json"},
