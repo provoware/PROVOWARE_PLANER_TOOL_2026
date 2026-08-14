@@ -69,6 +69,10 @@ def run(output_dir: Path) -> dict:
                         app.processEvents()
                         key = f"{width}x{height}-{scale}-{mode.value}"
                         problems: list[str] = []
+                        if window.width() > width or window.height() > height:
+                            problems.append(
+                                f"Fenster überschreitet Zielgröße: {window.width()}x{window.height()} statt maximal {width}x{height}"
+                            )
                         if window.todo_list.width() < 180 or window.todo_list.height() < 120:
                             problems.append("Aufgabenliste zu klein")
                         if window.links_list.width() < 120 or window.links_list.height() < 80:
@@ -86,6 +90,8 @@ def run(output_dir: Path) -> dict:
                             "configuration": key,
                             "width": width,
                             "height": height,
+                            "actual_width": window.width(),
+                            "actual_height": window.height(),
                             "font_scale_percent": scale,
                             "view": mode.value,
                             "status": status,
