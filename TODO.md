@@ -1,11 +1,22 @@
 # TODO — PROVOWARE PLANER TOOL 2026
 
+## I000 — Foundation
+- [x] Projekt- und Architekturvertrag
+- [x] Definition of Ready / Done
+- [x] autonome Freigabe- und Repository-Regeln
+
+## I001 — Globale Standards
+- [x] Standardindex und Benennungsstandard
+- [x] UI-, Barrierefreiheits-, Daten-, Logging-, Test-, Start-, Manifest- und Releasestandard
+- [x] vollständige Repository-Dateiliste als Pflicht jeder Iteration
+- [x] Version und Projektstatus als kanonische Metadaten
+
 ## Permanente Regeln
 - [x] keine technische Nutzerabnahme als Pflicht
-- [x] kein Release bei nicht bestandenen oder nicht ausgeführten Pflichtprüfungen
+- [x] kein Release bei FAIL oder NOT_RUN eines Pflichtgates
 - [x] kleine, klar begrenzte Patches
 - [x] Status, Fortschritt, nächster Schritt und Verbesserungsempfehlung pflegen
-- [x] kompletten Repository-Inhalt nach jeder Iteration gegen Soll-Inventar prüfen
+- [x] kompletten Repository-Inhalt gegen das Soll-Inventar prüfen
 - [x] lokale und Remote-Prüfung voneinander trennen
 - [ ] Repository-Sichtbarkeit auf privat stellen
 
@@ -17,14 +28,14 @@
 
 ## I003 — Klick-&-Start-Orchestrator
 - [x] deterministische Startzustände
-- [x] PRECHECK → ACTION → POSTCHECK
+- [x] PRECHECK → AKTION → POSTCHECK
 - [x] Workspace-, SQLite-, Recovery- und Fault-Prüfung
 
 ## I004 — Kalender-Domainkern + SQLite-Persistenz
 - [x] Domainmodell und Invarianten
-- [x] SQLite-Schema, Migrationen, fünf Markierungen
-- [x] Optimistic Locking, Soft Delete, Backup/Restore
-- [x] historische Gate-Kette I002 → I003 → I004
+- [x] SQLite-Schema und Migration 0001
+- [x] fünf Markierungen, Optimistic Locking, Soft Delete und Backup/Restore
+- [x] historische I004-Tests isolieren Migration 0001 von späteren Migrationen
 
 ## I005 — Kalender-GUI + ViewModel
 - [x] CalendarQueryService und CalendarViewModel
@@ -32,7 +43,6 @@
 - [x] fünf sichtbare/editierbare Markierungen
 - [x] Design-Tokens, Schriftmatrix, Accessible Names und High Contrast
 - [x] 112er Offscreen-GUI-Matrix und Neustartpersistenz
-- [x] historische Gate-Kette I002 → I003 → I004 → I005
 
 ## I006 — Todo-Domainkern + Kalender↔Todo-Kopplungsvertrag
 - [x] Todo-Domainmodell: Status, Priorität, Fortschritt, Start und Fälligkeit

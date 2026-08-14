@@ -1,95 +1,83 @@
 # PROVOWARE PLANER TOOL 2026
 
-Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungswerkzeug für Linux. Das Projekt wird als maximal wartbarer modularer Monolith entwickelt und soll ohne technische Nutzerabnahme autonom qualifiziert werden.
+Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungswerkzeug für Linux. Das Projekt wird als wartbarer modularer Monolith entwickelt und autonom qualifiziert.
 
 ## 1. Projektstatus
-
-- **Kanonische Version:** siehe `VERSION.json`
-- **Kanonischer Entwicklungsstand:** siehe `PROJEKTSTATUS.json`
+- **Version:** `0.6.0-dev.1`
+- **Iteration:** `I006`
+- **Checkpoint:** `C006-TODO-DOMAIN-LINK`
 - **Zielplattform:** Linux, insbesondere Ubuntu-/Kubuntu-Derivate
-- **Betrieb:** lokal, offline-first, ohne Cloud-Zwang
-- **Technische Nutzerabnahme:** nicht Bestandteil der Freigabekette
-- **Releaseziel:** reproduzierbares Linux-Paket plus qualifiziertes ZIP
+- **Betrieb:** lokal und offline-first
+- **Technische Nutzerabnahme:** nicht Bestandteil der Pflicht-Freigabekette
 
-Die Ampel ist nur eine Zusatzinformation. Ein Status wird immer zusätzlich als Text ausgegeben.
+Die maschinenlesbare Wahrheit liegt in `VERSION.json`, `PROJEKTSTATUS.json` und `PROJECT_CONTRACT.json`.
 
 ## 2. Was ist das Tool?
-
-PROVOWARE PLANER verbindet Kalender, Aufgabenplanung, Dashboard, Diagnose und spätere Zusatzmodule in einer einheitlichen Oberfläche. Nutzerdaten bleiben lokal. Beim ersten Start wird ein Arbeitsordner gewählt, real auf Lesen und Schreiben geprüft und über eine eindeutige Workspace-ID dauerhaft zugeordnet.
+PROVOWARE PLANER verbindet Kalender, Aufgabenplanung, Dashboard, Diagnose und spätere Zusatzmodule. Nutzerdaten bleiben lokal. Der Arbeitsordner wird real geprüft und dauerhaft über eine Workspace-ID zugeordnet.
 
 ## 3. Kernmodule
-
 ### Kalender
-Jahres-, Monats-, Wochen- und Tagesansicht, Termine, ganztägige Einträge sowie fünf frei benennbare Markierungen. Markierungen verwenden Farbe plus Text oder Symbol, damit Farbe nie alleinige Information ist.
+Tag, Woche, Monat und Jahr; Termine und fünf editierbare Markierungen. Markierungen verwenden Farbe plus Text oder Symbol.
 
 ### Todo
-Aufgaben mit Status, Priorität, Fälligkeit, Unteraufgaben, Fortschritt und expliziter Kalenderkopplung. Todo und Termin bleiben eigenständige Datenobjekte; Kopplungen besitzen eine eigene Identität und löschen ihre Endpunkte niemals kaskadierend.
+Aufgaben mit Status, Priorität, Fälligkeit, Unteraufgaben und Fortschritt. Todo und Termin bleiben eigenständige Datenobjekte; ihre Kopplung besitzt eine eigene Identität.
 
 ### Dashboard
-Heute, nächste Termine, fällige und überfällige Aufgaben, Sicherungszustand, Modulstatus, Systemstatus und Schnellaktionen.
+Heute, nächste Termine, fällige/überfällige Aufgaben sowie Sicherungs-, Modul- und Systemstatus.
 
 ### Diagnose und Logging
-Jedes relevante Problem soll eindeutig beantworten: Was? Wann? Wo? Wie? Wodurch? Welche Auswirkung? Was kann automatisch getan werden? Was kann der Nutzer tun? Technische Ereignisse erhalten stabile IDs und maschinenlesbare Daten.
+Probleme erhalten stabile IDs, maschinenlesbare Daten und laienverständliche Hinweise zu Ursache, Auswirkung und nächstem Schritt.
 
 ## 4. Oberfläche und globale Gestaltung
-
-Alle Module verwenden zentrale Designregeln. Einzelne Module dürfen Abstände, Typografie, Fokusdarstellung oder Statusfarben nicht frei neu erfinden.
-
-Das globale Abstandssystem basiert auf einem 4-Pixel-Raster: 4, 8, 12, 16, 24, 32 und 48 Pixel. Schrift wird über semantische Rollen geführt und global skalierbar gehalten. Freigegebene Stufen sind 90 %, 100 %, 110 %, 125 %, 150 %, 175 % und 200 %.
+Alle Module verwenden zentrale Designregeln. Abstände basieren auf dem 4-Pixel-Raster; Schrift ist global in 90, 100, 110, 125, 150, 175 und 200 Prozent skalierbar.
 
 ## 5. Ampelsystem
+- 🟢 **GRÜN – BEREIT**
+- 🟡 **GELB – EINGESCHRÄNKT**
+- 🔴 **ROT – BLOCKIERT**
 
-- 🟢 **GRÜN – BEREIT:** alle für den Zustand erforderlichen Prüfungen bestanden
-- 🟡 **GELB – EINGESCHRÄNKT:** nutzbar, aber mindestens ein nichtkritischer Hinweis besteht
-- 🔴 **ROT – BLOCKIERT:** sichere Weiterarbeit oder Freigabe nicht zulässig
-
-Farbe wird nie ohne Symbol und Text verwendet.
+Farbe wird nie ohne Symbol und Klartext verwendet.
 
 ## 6. Klick-&-Start
-
-Der Start-Orchestrator prüft Betriebssystem, Runtime, Programmdateien, Manifeste, Konfiguration, Workspace, Datenbank, Schema, Recovery, Module und GUI. Jede relevante Aktion folgt `PRECHECK → AKTION → POSTCHECK`.
+Der Start-Orchestrator prüft Betriebssystem, Runtime, Programmdateien, Manifeste, Konfiguration, Workspace, Datenbank, Schema, Recovery, Module und GUI. Relevante Aktionen folgen `PRECHECK → AKTION → POSTCHECK`.
 
 ## 7. Daten und Sicherheit
+SQLite arbeitet mit Foreign Keys, WAL, Transaktionen, hashgebundenen Migrationen und Vor-Migrations-Sicherungen. Fachliches Löschen erfolgt als Soft Delete. Todo↔Termin verwendet keine kaskadierenden Löschungen.
 
-Programm, Nutzerdaten, Laufzeitdaten, Konfiguration, Sicherungen und Logs werden strikt getrennt. SQLite arbeitet mit Foreign Keys, WAL, Transaktionen, hashgebundenen Migrationen und Vor-Migrations-Sicherungen. Fachliches Löschen erfolgt als Soft Delete.
+## 8. Globale Standards
+Verbindliche Standards liegen unter `standards/` und sind über `standards/STANDARD_INDEX.json` registriert. Der Vorrang lautet `PROVOWARE_GLOBAL_STANDARD → PROJECT_CONTRACT → Modulvertrag → konkrete Konfiguration`.
 
-## 8. Repository- und Evidence-Vertrag
+## 9. Repository-Vollständigkeit
+`REPOSITORY_MANIFEST.json` ist das Soll-Inventar des vollständigen Entwicklungsbaums. Jede Iteration prüft fehlende und unerwartete Dateien, Projekt-/Versionskonsistenz, Manifeste sowie relevante Dateimodi und Hash-Nachweise.
 
-`REPOSITORY_MANIFEST.json` ist das Soll-Inventar. Source-, Build-, Release- und Evidence-Manifeste sowie ein SHA-256-Inventar und Remote-Tree-Receipt bilden die Nachweiskette. Jede Iteration wird lokal logisch und remote unabhängig geprüft.
+## 10. Autonomer Entwicklungs- und Prüfautopilot
+`tools/autopilot/autopilot.py qualifizieren` führt globale Standards und alle historischen Pflichtgates bis zur aktuellen Iteration aus. `FAIL` und `NOT_RUN` blockieren Freigaben. Remote-Prüfungen laufen zusätzlich in GitHub Actions.
 
-## 9. Entwicklungsautopilot
+## 11. Historische Entwicklung
+- **I002:** Manifest-/Evidence-Kette, SHA-256-Inventar und Remote-Tree-Receipt.
+- **I003:** Klick-&-Start-Orchestrator, Workspace-Prüfung, Recovery und Fault-Injection.
+- **I004:** Kalender-Domainkern, Migration 0001, Optimistic Locking, Soft Delete, Backup/Restore.
+- **I005:** Kalender-GUI + ViewModel, vier Ansichten, sieben Schriftstufen und 112 Offscreen-Konfigurationen.
 
-`tools/autopilot/autopilot.py qualifizieren` führt globale Standards und alle historischen Pflichtgates bis zur aktuellen Iteration aus. `FAIL` und `NOT_RUN` blockieren Freigaben.
+## 12. I006 — Todo-Domainkern
+`TodoItem` unterstützt Status, Priorität, Fortschritt, Start, Fälligkeit und Unteraufgaben. Eine erledigte Aufgabe besitzt 100 Prozent Fortschritt. Änderungen verwenden Optimistic Locking; fachliches Löschen ist Soft Delete.
 
-## I002 — Manifest + Evidence Hardening
-- Version `0.2.0-dev.1`
-- SHA-256-Inventar, Manifestkette, Remote-Tree-Receipt und zweite Remote-Prüfung.
+## 13. Kalender↔Todo-Kopplungsvertrag
+`todo_calendar_links` ist ein eigenes versioniertes Soft-Link-Objekt mit `link_id`, Todo-/Termin-ID, Synchronisationsrichtung und Versions-Snapshots. Konfliktzustände sind `CLEAN`, `TODO_CHANGED`, `CALENDAR_CHANGED`, `BOTH_CHANGED` und `DETACHED`.
 
-## I003 — Klick-&-Start-Orchestrator
-- Version `0.3.0-dev.1`
-- deterministische Startzustände, Workspace-Prüfung, Recovery und Fault-Injection.
+`ON DELETE CASCADE` zwischen Todo, Termin und Link ist verboten. Link-Endpunkte verwenden `ON DELETE RESTRICT`. Ein explizites Entkoppeln löscht nur den Link weich. Automatische Inhalts-Synchronisation ist in I006 ausdrücklich deaktiviert.
 
-## I004 — Kalender-Domainkern + SQLite-Persistenz
-- Version `0.4.0-dev.1`
-- Kalender-Domainmodell, fünf Marker, Migrationen, Optimistic Locking, Soft Delete, Backup/Restore.
+## 14. Crash- und Rollback-Prüfung
+I006 simuliert kontrollierte Schreibabbrüche vor Commit und zusätzlich einen echten separaten Prozess, der während einer offenen SQLite-Transaktion per `os._exit()` endet. Danach müssen Rollback, Wiederöffnung und `quick_check` bestehen.
 
-## I005 — Kalender-GUI + ViewModel
-- Version `0.5.0-dev.1`
-- Tag/Woche/Monat/Jahr, `CalendarService → CalendarQueryService → CalendarViewModel → Qt`.
-- sieben Schriftstufen, vier Fenstergrößen, 112 Offscreen-Konfigurationen, Accessible Names und High Contrast.
+## 15. Evidence-Kette
+Die historische Pflichtkette lautet `I002 → I003 → I004 → I005 → I006`. Der qualifizierte Evidence-Commit wird in einem zweiten Remote-Pass anhand einer exakten Commit-SHA erneut geprüft.
 
-## I006 — Todo-Domainkern + Kalender↔Todo-Kopplungsvertrag
-- Version: `0.6.0-dev.1`
-- Status, Priorität, Fortschritt, Start, Fälligkeit und Unteraufgaben als GUI-unabhängiges Domainmodell.
-- Migration `0002_todo_domain_links.sql` mit Foreign Keys, Constraints und Optimistic Locking.
-- Todo und Termin bleiben eigenständige Entitäten; fachliches Löschen ist Soft Delete.
-- Kopplungen besitzen eigene `link_id`, Version, Richtung und Versions-Snapshots.
-- Konfliktstatus: sauber, Todo geändert, Termin geändert, beide geändert oder getrennt.
-- `ON DELETE CASCADE` ist für Todo↔Termin verboten; Link-Endpunkte verwenden `RESTRICT`.
-- Entkoppeln löscht weder Todo noch Termin.
-- automatische Inhalts-Synchronisation ist in I006 ausdrücklich deaktiviert.
-- kontrollierte Transaktionsabbrüche plus echter Prozessabbruch vor Commit werden automatisch geprüft.
-- historische Gate-Kette: I002 → I003 → I004 → I005 → I006.
+## 16. Aktueller Checkpoint
+**C006 — TODO-DOMAIN-LINK.** Implementierung ist angelegt; die Remote-Qualifikation entscheidet verbindlich über die Promotion nach `main`.
 
-### Nächster logischer Schritt
-I007: Todo-GUI + Todo-ViewModel ausschließlich auf den qualifizierten I006-Services aufbauen. Konflikte zunächst sichtbar machen; automatische Konfliktauflösung erst nach eigenem Vertrag freigeben.
+## 17. Nächster logischer Schritt
+**I007 — Todo-GUI + Todo-ViewModel.** Die sichtbare Oberfläche darf ausschließlich `TodoService` und `TodoCalendarLinkService` verwenden. Konfliktzustände werden zunächst angezeigt; automatische Konfliktauflösung bleibt gesperrt, bis ein eigener Vertrag sie qualifiziert.
+
+## 18. Weiterführende Verbesserung
+Für I007 den TodoQueryService als reine Leseschicht zwischen Service und ViewModel einführen. So bleiben Filter wie Heute, Diese Woche, Überfällig und Ohne Datum von Qt entkoppelt und können unabhängig getestet werden.

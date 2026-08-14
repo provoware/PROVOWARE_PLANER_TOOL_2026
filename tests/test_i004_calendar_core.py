@@ -32,8 +32,16 @@ class CalendarCoreTest(unittest.TestCase):
         self.root = Path(self.temp.name)
         self.db_path = self.root / "planner.sqlite3"
         self.database = Database(self.db_path, busy_timeout_ms=100)
-        self.runner = MigrationRunner(self.database, ROOT / "migrations")
+
+        # Historischer I004-Test: bewusst nur die I004-Migration verwenden.
+        # Spätere Migrationen dürfen die isolierten I004-Invarianten nicht verändern.
+        self.i004_migrations = self.root / "i004_migrations"
+        self.i004_migrations.mkdir()
+        migration_0001 = ROOT / "migrations" / "0001_calendar_core.sql"
+        shutil.copy2(migration_0001, self.i004_migrations / migration_0001.name)
+        self.runner = MigrationRunner(self.database, self.i004_migrations)
         self.assertEqual(self.runner.apply_all(), [1])
+
         self.repository = CalendarRepository(self.database)
         self.service = CalendarService(self.repository)
         self.berlin = ZoneInfo("Europe/Berlin")
