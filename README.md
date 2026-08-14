@@ -7,7 +7,7 @@ Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungsw
 - **Version:** `0.13.0-dev.1`
 - **Iteration:** `I013`
 - **Checkpoint:** `C013-ENTWICKLUNGSAUTOPILOT-V2`
-- **Status:** `IN_ARBEIT / GELB` bis zur vollständigen I013-Remotequalifikation
+- **Status:** `QUALIFIZIERT / GRÜN`
 - **Zielplattform:** Linux, insbesondere Ubuntu-/Kubuntu-Derivate
 - **Betrieb:** lokal und offline-first
 - **Technische Nutzerabnahme:** nicht Bestandteil der Pflicht-Freigabekette

@@ -1,15 +1,16 @@
 {
   "schema_version": 1,
   "state": "ATTESTED",
-  "subject_commit": "3896ba0c9ff269f5369fb60fc83365ab5682cf25",
-  "subject_tree": "42e342bb37bbc3f4de6c9d0ac9caac3cf02285f1",
-  "entry_count": 200,
+  "attestation_role": "QUALIFICATION_SUBJECT_TREE",
+  "subject_commit": "1e725c0cdd9a44ff28ba0ff6ff9df9df14e19cec",
+  "subject_tree": "81a021aec2e2b8d60b4b56db1e334b77698a1c34",
+  "entry_count": 211,
   "subject_tree_entries": [
     {
       "path": ".github/workflows/foundation-qualifikation.yml",
-      "blob_sha": "affce6c096b0b66ef3f4fd0eb24c2e4fd963bb5b",
+      "blob_sha": "7553d4430f3aa9cc80aafc78826f2ee06804c205",
       "mode": "100644",
-      "size": 1168,
+      "size": 1558,
       "status": "PASS"
     },
     {
@@ -90,108 +91,129 @@
       "status": "PASS"
     },
     {
-      "path": "BUILD_MANIFEST.json",
-      "blob_sha": "63c04e7d14497d6a9ab57b46b5b03ea2fad31ce8",
+      "path": ".github/workflows/i013-qualifikation.yml",
+      "blob_sha": "de3590c11938b60594e177b5d2323caa6382d3fd",
       "mode": "100644",
-      "size": 6458,
+      "size": 12007,
+      "status": "PASS"
+    },
+    {
+      "path": "BUILD_MANIFEST.json",
+      "blob_sha": "bf9f81bc4bac264d1b81a35b72d1038981ead99f",
+      "mode": "100644",
+      "size": 6848,
       "status": "PASS"
     },
     {
       "path": "CHANGELOG.md",
-      "blob_sha": "e0e498a9adf16894fdef92701879c8aa02c084d2",
+      "blob_sha": "20b469c04d57e31e635cdd018b4cb416d4ddb9d8",
       "mode": "100644",
-      "size": 3302,
+      "size": 4437,
       "status": "PASS"
     },
     {
       "path": "EVIDENCE_MANIFEST.json",
-      "blob_sha": "df554b949cf68d4c15ade30a5c72a6667b45c8c6",
+      "blob_sha": "d0e57471969d33c86906e081672cecffd9ab3071",
       "mode": "100644",
-      "size": 8520,
+      "size": 8908,
+      "status": "PASS"
+    },
+    {
+      "path": "ITERATION_PLAN.json",
+      "blob_sha": "a75fbd78ba22ef5901bd7c3e4ae8349022a1d350",
+      "mode": "100644",
+      "size": 3448,
       "status": "PASS"
     },
     {
       "path": "MANIFEST_INDEX.json",
-      "blob_sha": "6ab74c025c3142f43cd9a794aeba141f63141f1c",
+      "blob_sha": "1a4aede51a350d1065037e0c785b8d2739e28cc4",
       "mode": "100644",
       "size": 813,
       "status": "PASS"
     },
     {
-      "path": "PROJECT_CONTRACT.json",
-      "blob_sha": "a7515cc72b44db125a30c7ebc321758a54fe3687",
+      "path": "PROCESS_AUDIT_I012.json",
+      "blob_sha": "1f3cfe6d122bd653c30c55280254f046d001217c",
       "mode": "100644",
-      "size": 5065,
+      "size": 3295,
+      "status": "PASS"
+    },
+    {
+      "path": "PROJECT_CONTRACT.json",
+      "blob_sha": "95077e11e240c831ead44da3cb19ef2ad075d4a5",
+      "mode": "100644",
+      "size": 5615,
       "status": "PASS"
     },
     {
       "path": "PROJEKTSTATUS.json",
-      "blob_sha": "b26c1bf4bc55648090a00b081d95cb70ce590264",
+      "blob_sha": "a3aa43c9ca8b8a97e03440f9bc549bc1f6a40bb6",
       "mode": "100644",
-      "size": 1268,
+      "size": 1303,
       "status": "PASS"
     },
     {
       "path": "QUALIFICATION_REPORT.json",
-      "blob_sha": "4e754f0f056dd93daf918b5c061f237ec72c6322",
+      "blob_sha": "8df977dd105595fec1798e5805b1d0688b94c1d2",
       "mode": "100644",
-      "size": 1209,
+      "size": 1180,
       "status": "PASS"
     },
     {
       "path": "README.md",
-      "blob_sha": "7c1b68b2e02d56a5e59b92eb8cf6ad476fb3d89b",
+      "blob_sha": "365bedbe7a16d6488fb49f5a4734a67f9b30f199",
       "mode": "100644",
-      "size": 7359,
+      "size": 6804,
       "status": "PASS"
     },
     {
       "path": "RELEASE_MANIFEST.json",
-      "blob_sha": "365ce95b2fea112250ce54f124a3ee2cfe0f04a9",
+      "blob_sha": "a63e60776ef9d0dbb982fa818b6fe9fbb01102f4",
       "mode": "100644",
       "size": 238,
       "status": "PASS"
     },
     {
       "path": "REMOTE_TREE_RECEIPT.json",
-      "blob_sha": "824016085a42ce0a14ba04ec3e772d37be29ed1b",
+      "blob_sha": "94293692ec7a26ee99633928ec7aaa1d5d529248",
       "mode": "100644",
-      "size": 35780,
+      "size": 38100,
       "status": "PASS"
     },
     {
       "path": "REPOSITORY_MANIFEST.json",
-      "blob_sha": "a3014ea9310913107e5e27245398af02b0e4fdea",
+      "blob_sha": "98840631fa2efe17618c0a7612aa10d6a21b83e3",
       "mode": "100644",
-      "size": 14463,
+      "size": 15453,
       "status": "PASS"
     },
     {
       "path": "SHA256_DATEI_INVENTAR.json",
-      "blob_sha": "66270ffdc36bd2b7e1eace7073eaa13bb9e87ad4",
+      "blob_sha": "1799d67a4008f4cac9b86976cdd04920856b3488",
       "mode": "100644",
-      "size": 34903,
+      "size": 37199,
       "status": "PASS"
     },
     {
       "path": "SOURCE_MANIFEST.json",
-      "blob_sha": "b7ca78e50bf0b38a778614bf5e38cf74e8ac1442",
+      "blob_sha": "d83927ea34400795e6645150489ac21d669d91d9",
       "mode": "100644",
-      "size": 31682,
+      "size": 33779,
       "status": "PASS"
     },
     {
       "path": "TODO.md",
-      "blob_sha": "2c68c9b249d72d0727b8c24f056a6dfc54021c4f",
+      "blob_sha": "d597311a97f7d5fdb68de78ff1d0e0f85f663c12",
       "mode": "100644",
-      "size": 2963,
+      "size": 3019,
       "status": "PASS"
     },
     {
       "path": "VERSION.json",
-      "blob_sha": "e258fb2e5ca533e43d6ae5828b15ff74e2d548f2",
+      "blob_sha": "67068c3d4fb692fab8f763e74b0f724b5ce6c90e",
       "mode": "100644",
-      "size": 348,
+      "size": 354,
       "status": "PASS"
     },
     {
@@ -227,6 +249,13 @@
       "blob_sha": "c746cf9f396b71ea5c98868a00d7e12de0f57f18",
       "mode": "100644",
       "size": 1262,
+      "status": "PASS"
+    },
+    {
+      "path": "contracts/DEVELOPMENT_PIPELINE_CONTRACT.json",
+      "blob_sha": "537282607e6fe65e56aa79a7c8ac45953e1cb41a",
+      "mode": "100644",
+      "size": 2686,
       "status": "PASS"
     },
     {
@@ -374,6 +403,13 @@
       "blob_sha": "20efa5663a3bc6102c21df225909ea0e4a853491",
       "mode": "100644",
       "size": 2033,
+      "status": "PASS"
+    },
+    {
+      "path": "docs/I013_ENTWICKLUNGSAUTOPILOT_V2.md",
+      "blob_sha": "6dc026793478d9480dbeff22f6e81c40c1c715e3",
+      "mode": "100644",
+      "size": 3530,
       "status": "PASS"
     },
     {
@@ -595,9 +631,16 @@
     },
     {
       "path": "standards/DOKUMENTATIONS_STANDARD.json",
-      "blob_sha": "48b191d8b9befcab05f03535805c549c617a33d4",
+      "blob_sha": "ce7f136cfdd80b91e6c00a95081ce978a6e348a1",
       "mode": "100644",
-      "size": 704,
+      "size": 1181,
+      "status": "PASS"
+    },
+    {
+      "path": "standards/ENTWICKLUNGS_STANDARD.json",
+      "blob_sha": "76f576459ccacadf10a4a2212d55d661a003103f",
+      "mode": "100644",
+      "size": 2317,
       "status": "PASS"
     },
     {
@@ -616,9 +659,9 @@
     },
     {
       "path": "standards/MANIFEST_STANDARD.json",
-      "blob_sha": "1dae1197724e0e9106f34fb04ea129eabc001e04",
+      "blob_sha": "d66b10a92b2fe685ca80a45c4eaff371ba8b2117",
       "mode": "100644",
-      "size": 455,
+      "size": 728,
       "status": "PASS"
     },
     {
@@ -637,23 +680,23 @@
     },
     {
       "path": "standards/QUALITY_STANDARD.json",
-      "blob_sha": "ec9591bb1e2d4673b7790c939d6530144676de45",
+      "blob_sha": "b61f6311c005220a83b8bdd0e7ce3e9781246ff4",
       "mode": "100644",
-      "size": 470,
+      "size": 944,
       "status": "PASS"
     },
     {
       "path": "standards/RELEASE_STANDARD.json",
-      "blob_sha": "151e1c53bfcd444bf295e2448a150d8be519b164",
+      "blob_sha": "cb7494e1d04a83d707b4da77dc8b87d0923034d1",
       "mode": "100644",
-      "size": 401,
+      "size": 784,
       "status": "PASS"
     },
     {
       "path": "standards/STANDARD_INDEX.json",
-      "blob_sha": "2caeaf24b44235a9b9db108b95f7157b2b49df66",
+      "blob_sha": "5f3e0a25a186fc718fbc7152e4c2a300725ecd6f",
       "mode": "100644",
-      "size": 1385,
+      "size": 1490,
       "status": "PASS"
     },
     {
@@ -665,9 +708,9 @@
     },
     {
       "path": "standards/TEST_STANDARD.json",
-      "blob_sha": "f037b0dd56fe52a049e5c55d28db78a27f51cb71",
+      "blob_sha": "ce87d0f2454b3ccb728738106806409a074d733d",
       "mode": "100644",
-      "size": 524,
+      "size": 1013,
       "status": "PASS"
     },
     {
@@ -1007,6 +1050,20 @@
       "status": "PASS"
     },
     {
+      "path": "tests/test_i013_candidate_inventory.py",
+      "blob_sha": "f486c5378cd2da9f6cbcc507c27f3313aa14922e",
+      "mode": "100644",
+      "size": 1492,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i013_preflight.py",
+      "blob_sha": "3c2c877467b19319840c341fcfaa78a83d06d592",
+      "mode": "100644",
+      "size": 766,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_manifest_builder.py",
       "blob_sha": "5871f8c4c30b6af4551f91c186872e609b6b67f4",
       "mode": "100644",
@@ -1071,9 +1128,16 @@
     },
     {
       "path": "tools/autopilot/autopilot.py",
-      "blob_sha": "9280eb08d4dc5a1e93470e60b5bc023de67b1f28",
+      "blob_sha": "00ecea095c8213dad2eb5833a1adc934990690be",
       "mode": "100644",
-      "size": 3233,
+      "size": 4339,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/autopilot/candidate_inventory.py",
+      "blob_sha": "cdcb0b0270429d1d4a2effc309ffee6ab164f695",
+      "mode": "100644",
+      "size": 6390,
       "status": "PASS"
     },
     {
@@ -1161,10 +1225,24 @@
       "status": "PASS"
     },
     {
+      "path": "tools/autopilot/i013_validator.py",
+      "blob_sha": "5d2eebe439ac46f1d2f09b86b71c350af25af871",
+      "mode": "100644",
+      "size": 6686,
+      "status": "PASS"
+    },
+    {
       "path": "tools/autopilot/manifest_builder.py",
       "blob_sha": "7e9f981602aa7443c4ab7921e04be7a6ae0862aa",
       "mode": "100644",
       "size": 5336,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/autopilot/preflight.py",
+      "blob_sha": "274423a05ac0e57df379b2fdc96d9a5cb1be2566",
+      "mode": "100644",
+      "size": 8164,
       "status": "PASS"
     },
     {
@@ -1176,9 +1254,9 @@
     },
     {
       "path": "tools/autopilot/standard_validator.py",
-      "blob_sha": "c2672d870f6a0acc5036c138cdfe0dc2fe99e3fe",
+      "blob_sha": "c885b89badbb8d5fc21457fb3ee3511b2b9c0ea0",
       "mode": "100644",
-      "size": 6491,
+      "size": 7871,
       "status": "PASS"
     },
     {

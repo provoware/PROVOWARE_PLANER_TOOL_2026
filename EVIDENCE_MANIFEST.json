@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "manifest_type": "EVIDENCE",
-  "version": "0.12.0-dev.1",
-  "iteration": "I012",
+  "version": "0.13.0-dev.1",
+  "iteration": "I013",
   "attestation_model": "subject_commit_plus_evidence_overlay",
   "entries": [
     {
@@ -258,6 +258,18 @@
       "status": "PASS"
     },
     {
+      "path": "tests/test_i013_candidate_inventory.py",
+      "sha256": "944c607f6ac4fc521ebcafc80a21ba2b853860c2c0d53b343fb105fed1c1d672",
+      "size": 1492,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i013_preflight.py",
+      "sha256": "14cb053f61e73f370e40281cf43e29bd9635c1d9571ffdf224ab8a3448c19a43",
+      "size": 766,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_manifest_builder.py",
       "sha256": "6ca11491249f577e370ad416ff3a8505e863bc74a5a29b6420a76c8d9a3d4596",
       "size": 567,
@@ -276,7 +288,7 @@
       "status": "PASS"
     }
   ],
-  "count": 45,
+  "count": 47,
   "remote_receipt": "REMOTE_TREE_RECEIPT.json",
   "qualification_report": "QUALIFICATION_REPORT.json"
 }
