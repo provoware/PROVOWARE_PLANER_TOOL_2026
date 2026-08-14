@@ -1,13 +1,17 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from runtime.checks import CHECKS
 from runtime.faults import FAULTS
 from runtime.model import Phase, RuntimeState
 
-ROOT = Path(__file__).resolve().parents[2]
 REQUIRED_FILES = {
     "runtime/__init__.py",
     "runtime/model.py",
@@ -65,7 +69,11 @@ def load(path: str) -> dict:
 
 def validate() -> dict:
     errors: list[str] = []
-    files = {str(p.relative_to(ROOT)) for p in ROOT.rglob("*") if p.is_file() and ".git" not in p.parts and "__pycache__" not in p.parts}
+    files = {
+        str(p.relative_to(ROOT))
+        for p in ROOT.rglob("*")
+        if p.is_file() and ".git" not in p.parts and "__pycache__" not in p.parts
+    }
     for path in sorted(REQUIRED_FILES - files):
         errors.append(f"I003_DATEI_FEHLT: {path}")
 
@@ -83,7 +91,11 @@ def validate() -> dict:
         errors.append("I003_STATUS_NICHT_PROMOVIERT")
 
     development = contract.get("development", {})
-    for field in ("deterministic_start_state_machine_required", "fault_injection_required", "safe_recovery_required"):
+    for field in (
+        "deterministic_start_state_machine_required",
+        "fault_injection_required",
+        "safe_recovery_required",
+    ):
         if development.get(field) is not True:
             errors.append(f"I003_VERTRAG_FELD_FEHLT: {field}")
 
