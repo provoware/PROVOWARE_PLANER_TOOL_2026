@@ -3,10 +3,10 @@
 Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungswerkzeug für Linux. Das Projekt wird als wartbarer modularer Monolith entwickelt und autonom qualifiziert.
 
 ## 1. Projektstatus
-- **Version:** `0.9.0-dev.1`
-- **Iteration:** `I009`
-- **Checkpoint:** `C009-FIELD-BASELINE-TRANSACTIONAL-SYNC`
-- **Status:** `QUALIFIZIERT / GRÜN` nach erfolgreicher I009-Remotequalifikation
+- **Version:** `0.10.0-dev.1`
+- **Iteration:** `I010`
+- **Checkpoint:** `C010-SYNC-CONTROL-GUI-RESOLUTION`
+- **Status:** `IN_ARBEIT / GELB` bis zur vollständigen I010-Remotequalifikation und Evidence-Promotion
 - **Zielplattform:** Linux, insbesondere Ubuntu-/Kubuntu-Derivate
 - **Betrieb:** lokal und offline-first
 - **Technische Nutzerabnahme:** nicht Bestandteil der Pflicht-Freigabekette
@@ -24,7 +24,7 @@ Tag, Woche, Monat und Jahr; Termine und fünf editierbare Markierungen. Markieru
 Aufgaben mit Status, Priorität, Fälligkeit, Unteraufgaben und Fortschritt. Die fünf Ansichten sind **Heute**, **Diese Woche**, **Überfällig**, **Ohne Datum** und **Erledigt**.
 
 ### Synchronisation
-Todo und Termin bleiben eigenständige Objekte. Ihre Kopplung verwendet einen eigenen Soft-Link. I009 ergänzt beweisbare Feld-Baselines, SHA-256-Feldzustände und einen atomaren Synchronisationsplan.
+Todo und Termin bleiben eigenständige Objekte. Ihre Kopplung verwendet einen eigenen Soft-Link. I009 ergänzt beweisbare Feld-Baselines, SHA-256-Feldzustände und einen atomaren Synchronisationsplan. I010 stellt diesen qualifizierten Kern über eine eigene Synchronisationskontrolle dar und erlaubt `BOTH_DIFFERENT` nur über einen neuen unveränderlichen, hashgebundenen `ResolutionPlan` explizit zu entscheiden.
 
 ### Dashboard
 Heute, nächste Termine, fällige/überfällige Aufgaben sowie Sicherungs-, Modul- und Systemstatus.
@@ -46,7 +46,7 @@ Der Start-Orchestrator prüft Betriebssystem, Runtime, Programmdateien, Manifest
 ## 7. Daten und Sicherheit
 SQLite arbeitet mit Foreign Keys, WAL, `synchronous=FULL`, Transaktionen, hashgebundenen Migrationen und Vor-Migrations-Sicherungen. Fachliches Löschen erfolgt als Soft Delete. Todo↔Termin verwendet keine kaskadierenden Löschungen.
 
-I009 führt Migration `0003_sync_field_baseline.sql` ein. Schema-Version 3 ergänzt `sync_field_baselines` und `sync_audit_receipts`. Bestehende Links erhalten keine erfundene Baseline: Eine Baseline wird nur gebunden, wenn beide Feldwerte kanonisch identisch sind.
+I009 führt Migration `0003_sync_field_baseline.sql` ein. Schema-Version 3 ergänzt `sync_field_baselines` und `sync_audit_receipts`. Bestehende Links erhalten keine erfundene Baseline: Eine Baseline wird nur gebunden, wenn beide Feldwerte kanonisch identisch sind. I010 benötigt keine weitere Migration und nutzt denselben qualifizierten I009-Transaktionskern.
 
 ## 8. Globale Standards
 Verbindliche Standards liegen unter `standards/` und sind über `standards/STANDARD_INDEX.json` registriert. Der Vorrang lautet `PROVOWARE_GLOBAL_STANDARD → PROJECT_CONTRACT → Modulvertrag → konkrete Konfiguration`.
@@ -66,12 +66,13 @@ Verbindliche Standards liegen unter `standards/` und sind über `standards/STAND
 - **I007:** TodoQueryService, TodoViewModel, fünf Todo-Ansichten und 140er Todo-GUI-Matrix.
 - **I008:** ausschließlich lesende Synchronisationsvorschau mit Feldvertrag und harten Konfliktblockaden.
 - **I009:** Feld-Baselines, Feld-Hashes, Drei-Wege-Vergleich, atomarer SyncPlan und Audit-Receipt.
+- **I010:** Synchronisations-Control-GUI, explizite `BOTH_DIFFERENT`-Entscheidung und neuer hashgebundener `ResolutionPlan` ohne Mutation des ursprünglichen `SyncPlan`.
 
 ## 12. Kalender↔Todo-Kopplungsvertrag
 `todo_calendar_links` ist ein eigenes versioniertes Soft-Link-Objekt mit `link_id`, Todo-/Termin-ID, Synchronisationsrichtung und Versions-Snapshots. Physische Endpunktlöschung ist geschützt; Entkoppeln löscht nur den Link weich.
 
 ## 13. I008 — Read-only Synchronisationsvorschau
-`SynchronizationPreviewService` bleibt unverändert als reine Vorschau bestehen. Er besitzt keine `apply()`, `execute()` oder `synchronize()`-Schreibschnittstelle. Damit bleibt die frühere sichere Diagnoseebene auch neben I009 verfügbar.
+`SynchronizationPreviewService` bleibt unverändert als reine Vorschau bestehen. Er besitzt keine `apply()`, `execute()` oder `synchronize()`-Schreibschnittstelle. Damit bleibt die frühere sichere Diagnoseebene auch neben I009 und I010 verfügbar.
 
 ## 14. I009 — Feld-Baseline und Drei-Wege-Vergleich
 Für `TITLE`, `DESCRIPTION`, `START_AT` und `DUE_END` wird eine gemeinsame Baseline mit kanonischem SHA-256 gespeichert. Zeitpunkte werden vor der Hashbildung nach UTC normalisiert.
@@ -101,13 +102,25 @@ Der POSTCHECK prüft noch vor dem SQLite-Commit Endwerte, Baseline-Hashes, Versi
 
 Die I009-Fault-Matrix injiziert Fehler nach Nutzdatenwrite, nach Baseline-Write, vor Receipt, nach Receipt vor Commit und einen echten Prozessabbruch nach Nutzdatenwrite. Jeder Pfad muss vollständig auf den Vorzustand zurückrollen.
 
-Die historische Pflichtkette lautet `I002 → I003 → I004 → I005 → I006 → I007 → I008 → I009`; die 140er Todo-GUI- und 112er Kalender-GUI-Matrix bleiben Pflichtregressionen.
+## 16. I010 — Synchronisations-Control-GUI und ResolutionPlan
+Die I010-Oberfläche zeigt den qualifizierten `SyncPlan` ausschließlich über `SyncControlQuery` und `SyncControlViewModel`. Die Feldtabelle enthält Baseline, Todo, Kalender, Zustand, geplante Aktion, Grund, Versionsstatus, Hashstatus und Entscheidung. Die ViewModel-Schicht führt kein SQL aus.
 
-## 16. Aktueller Checkpoint
-**C009 — FIELD-BASELINE-TRANSACTIONAL-SYNC.** Migration, Baseline-/Hashmodell, Drei-Wege-Planung, atomare Ausführung, POSTCHECK, Audit-Receipt, Fault-Matrix und Validator sind angelegt. Der I009-Evidence-Kandidat ist `GRÜN`; die Promotion nach `main` erfolgt erst nach erfolgreichem exakten Evidence-SHA-Zweitpass.
+Manuelle Entscheidungen sind ausschließlich für `BOTH_DIFFERENT` zulässig:
+- `TODO_WERT`
+- `KALENDER_WERT`
+- `BLOCKIERT_LASSEN`
 
-## 17. Nächster logischer Schritt
-Nach erfolgreicher I009-Qualifikation: **I010 — Synchronisations-Control-GUI + explizite Konfliktentscheidung.** Die Oberfläche darf ausschließlich qualifizierte `SyncPlan`-Objekte anzeigen und committen; sie darf weder SQL ausführen noch Konfliktlogik duplizieren.
+`BLOCKIERT_LASSEN` ist der sichere Standard. Eine Wahl verändert den ursprünglichen `SyncPlan` nie. Stattdessen wird ein neuer `ResolutionPlan` erzeugt, der Source-Plan-ID, vollständigen Source-Plan-SHA-256, ursprüngliche Precondition, Objektversionen und alle Feld-Hashes bindet. Vor dem Commit wird der Source-Plan erneut autoritativ erzeugt und der ResolutionPlan deterministisch rekonstruiert. Veraltete oder manipulierte Pläne werden vor jedem Write blockiert.
 
-## 18. Weiterführende Verbesserung
-Für I010 `BOTH_DIFFERENT` ausschließlich über eine explizite manuelle Feldentscheidung behandeln: Todo-Wert übernehmen, Kalender-Wert übernehmen oder unverändert lassen. Jede Entscheidung sollte einen neuen immutable Plan erzeugen und separat im Audit-Receipt nachweisbar sein; keine automatische Heuristik darf Daten überschreiben.
+Der Datenwrite selbst nutzt weiterhin den I009-Transaktionskern. Das Audit-Receipt bindet die `resolution_plan_id`, den `resolution_sha256`, den ursprünglichen Feldzustand und die explizit gewählte Aktion. Damit bleiben erkannter Konflikt und Entscheidung gemeinsam nachweisbar.
+
+## 17. Aktueller Checkpoint
+**C010 — SYNC-CONTROL-GUI-RESOLUTION.** Query, ViewModel, Feldtabelle, unveränderlicher ResolutionPlan, Stale-/Manipulationsschutz, Wiederverwendung des atomaren I009-Commitkerns sowie eigene Fault-/Crash- und GUI-Matrizen sind implementiert. Die Promotion nach `main` bleibt bis zum vollständigen I010-Vollpass und exakten Evidence-SHA-Zweitpass blockiert.
+
+Die historische Pflichtkette lautet `I002 → I003 → I004 → I005 → I006 → I007 → I008 → I009 → I010`; die 140er Todo-GUI-, 112er Kalender-GUI- und I010-Sync-Control-GUI-Matrix bleiben Pflichtregressionen.
+
+## 18. Nächster logischer Schritt
+Nach erfolgreicher I010-Qualifikation: **I011 — Synchronisationsjournal + Resolution-Historie + sichere Wiederholungs-/Recovery-Ansicht.** Synchronisations- und Resolution-Receipts sollen unveränderlich als verständliche Vorher-/Nachher-Historie dargestellt werden, ohne alte Entscheidungen still erneut auszuführen.
+
+## 19. Weiterführende Verbesserung
+Für I011 eine sichere Recovery-Vorschau ergänzen, die auf bestehende Receipt-Hashes und konkrete Datenversionen referenziert. Ein Wiederholungs- oder Wiederherstellungsplan muss erneut immutable, hashgebunden und stale-sicher sein; eine vergangene Konfliktentscheidung darf niemals automatisch auf einen inzwischen veränderten Datenstand übertragen werden.
