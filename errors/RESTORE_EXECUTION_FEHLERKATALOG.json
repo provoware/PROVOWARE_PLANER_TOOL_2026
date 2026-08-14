@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "catalog_id": "PROVOWARE-RESTORE-EXECUTION-ERRORS",
+  "version": "1.0.0",
+  "errors": [
+    {"code": "RESTORE-LEASE-001", "user_message": "Die Datenbank ist gerade für eine Wiederherstellung reserviert. Andere Änderungen werden sicher blockiert."},
+    {"code": "RESTORE-LEASE-STALE-001", "user_message": "Eine frühere Wiederherstellung wurde nicht sauber beendet. Die automatische Recovery muss zuerst prüfen."},
+    {"code": "RESTORE-LEASE-BUSY-001", "user_message": "Eine laufende Datenbankänderung verhindert den sicheren Restore. Es wurde noch nichts überschrieben."},
+    {"code": "RESTORE-INTENT-HASH-001", "user_message": "Der gespeicherte Restore-Status ist nicht vertrauenswürdig. Die Wiederherstellung wird blockiert."},
+    {"code": "RESTORE-INTENT-PENDING-001", "user_message": "Ein älterer Restore-Vorgang ist noch offen und muss zuerst sicher abgeschlossen werden."},
+    {"code": "RESTORE-SNAPSHOT-001", "user_message": "Vor dem Restore konnte kein sicherer Rückkehrzustand bestätigt werden. Der Restore wird nicht gestartet."},
+    {"code": "RESTORE-SNAPSHOT-HASH-001", "user_message": "Der Sicherheits-Snapshot fehlt oder wurde verändert. Automatisches Zurücksetzen ist blockiert."},
+    {"code": "RESTORE-EXECUTION-POST-001", "user_message": "Der wiederhergestellte Datenbestand entspricht nicht exakt der geplanten Sicherung."},
+    {"code": "RESTORE-RECOVERY-AMBIGUOUS-001", "user_message": "Nach einem Abbruch ist der Datenzustand nicht eindeutig. Das Programm startet nicht mit einer Vermutung."},
+    {"code": "RESTORE-START-RECOVERY-001", "user_message": "Ein früherer Restore muss vor dem Programmstart sicher geprüft oder abgeschlossen werden."}
+  ]
+}
