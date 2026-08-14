@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "catalog_id": "PROVOWARE-BACKUP-RESTORE-FEHLER",
+  "iteration": "I015",
+  "errors": [
+    {"code": "RESTORE-CANDIDATE-001", "message": "Sicherungsdatei fehlt oder ist keine reguläre Datei."},
+    {"code": "RESTORE-CANDIDATE-002", "message": "Sicherungsmanifest fehlt."},
+    {"code": "RESTORE-CANDIDATE-003", "message": "Sicherungsmanifest ist ungültig."},
+    {"code": "RESTORE-CANDIDATE-004", "message": "Sicherung ist keine gültige oder lesbare SQLite-Datenbank."},
+    {"code": "RESTORE-CANDIDATE-HASH-001", "message": "Manifest, Größe oder Sicherungs-Hash stimmen nicht überein."},
+    {"code": "RESTORE-BOUNDARY-001", "message": "Sicherung liegt außerhalb des freigegebenen Backup-Bereichs."},
+    {"code": "RESTORE-SCHEMA-001", "message": "Sicherung hat eine nicht freigegebene Schema-Version."},
+    {"code": "RESTORE-PLAN-HASH-001", "message": "RestorePlan ist verändert oder ungültig."},
+    {"code": "RESTORE-PLAN-TARGET-001", "message": "RestorePlan gehört zu einer anderen Zieldatenbank."},
+    {"code": "RESTORE-PLAN-STALE-001", "message": "Sicherung oder Manifest wurde nach Planerstellung verändert."},
+    {"code": "RESTORE-STALE-001", "message": "Aktive Datenbank wurde nach Planerstellung verändert."},
+    {"code": "RESTORE-POSTCHECK-001", "message": "Wiederhergestellte Datenbank stimmt nicht mit dem geplanten Backup überein."},
+    {"code": "RESTORE-POSTCHECK-002", "message": "Wiederhergestellte Datenbank besteht Integritäts- oder Schemaprüfung nicht."}
+  ]
+}
