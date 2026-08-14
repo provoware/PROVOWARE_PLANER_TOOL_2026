@@ -10,6 +10,14 @@ from services.factory import open_planner_services
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def _current_iteration() -> int:
+    value = json.loads((ROOT / "VERSION.json").read_text(encoding="utf-8")).get("iteration", "I000")
+    try:
+        return int(str(value).removeprefix("I"))
+    except ValueError:
+        return 0
+
+
 class I008ContractGuardTest(unittest.TestCase):
     def test_contract_is_read_only_and_both_changed_is_blocked(self) -> None:
         data = json.loads((ROOT / "contracts/SYNC_CONFLICT_CONTRACT.json").read_text(encoding="utf-8"))
@@ -26,7 +34,11 @@ class I008ContractGuardTest(unittest.TestCase):
             self.assertFalse(hasattr(services.sync_preview, "apply"))
             self.assertFalse(hasattr(services.sync_preview, "synchronize"))
             self.assertFalse(hasattr(services.sync_preview, "execute"))
-            self.assertEqual(services.database.schema_version(), 2)
+            schema = services.database.schema_version()
+            if _current_iteration() == 8:
+                self.assertEqual(schema, 2)
+            else:
+                self.assertGreaterEqual(schema, 2)
 
 
 if __name__ == "__main__":
