@@ -13,7 +13,6 @@ from pathlib import Path, PurePosixPath
 from transport_profiles import (
     ROOT,
     TransportProfileError,
-    classify_path,
     load_contract,
     never_transport,
     profile_report,
@@ -48,22 +47,23 @@ def _write_json(path: Path, payload: dict) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def _package_inventory(staging: Path) -> dict:
+def _inventory(staging: Path, excluded: set[str], scope: str) -> dict:
     entries = []
     for path in sorted(p for p in staging.rglob("*") if p.is_file()):
         rel = path.relative_to(staging).as_posix()
-        if rel == PACKAGE_INVENTORY:
+        if rel in excluded:
             continue
         entries.append({
             "path": rel,
             "sha256": sha256_file(path),
             "size": path.stat().st_size,
+            "status": "PASS",
         })
     return {
         "schema_version": 1,
         "algorithm": "SHA-256",
-        "scope": "Transportpaket ohne Selbstreferenz des Paketinventars",
-        "excluded": [PACKAGE_INVENTORY],
+        "scope": scope,
+        "excluded": sorted(excluded),
         "count": len(entries),
         "entries": entries,
     }
@@ -95,6 +95,8 @@ def build_package(profile: str, output_dir: Path, root: Path = ROOT) -> Path:
     version = json.loads((root / "VERSION.json").read_text(encoding="utf-8"))
     output_dir = Path(output_dir)
     archive = output_dir / f"PROVOWARE_PLANER_{profile}_{version['version']}.zip"
+    compatibility_inventory = str(contract.get("runtime_compatibility_inventory", "SHA256_DATEI_INVENTAR.json"))
+    compatibility_profiles = set(contract.get("runtime_compatibility_profiles", []))
 
     with tempfile.TemporaryDirectory(prefix="provoware-transport-") as temp:
         staging = Path(temp) / "paket"
@@ -121,11 +123,26 @@ def build_package(profile: str, output_dir: Path, root: Path = ROOT) -> Path:
             "payload_file_count": len(selected),
             "payload_classes": contract["profiles"][profile].get("classes", []),
             "package_inventory": PACKAGE_INVENTORY,
+            "runtime_compatibility_inventory": compatibility_inventory if profile in compatibility_profiles else None,
             "user_data_included": False,
             "backup_data_included": False,
         }
         _write_json(staging / PACKAGE_MANIFEST, manifest)
-        _write_json(staging / PACKAGE_INVENTORY, _package_inventory(staging))
+
+        if profile in compatibility_profiles:
+            runtime_inventory = _inventory(
+                staging,
+                excluded={compatibility_inventory, PACKAGE_INVENTORY},
+                scope="Lauffähiges Transportpaket ohne Selbstreferenz und Paket-Metainventar",
+            )
+            _write_json(staging / compatibility_inventory, runtime_inventory)
+
+        package_inventory = _inventory(
+            staging,
+            excluded={PACKAGE_INVENTORY},
+            scope="Transportpaket ohne Selbstreferenz des Paketinventars",
+        )
+        _write_json(staging / PACKAGE_INVENTORY, package_inventory)
         _zip_staging(staging, archive)
 
     validate_archive(archive, root=root)
@@ -135,7 +152,10 @@ def build_package(profile: str, output_dir: Path, root: Path = ROOT) -> Path:
 def validate_archive(archive: Path, root: Path = ROOT) -> dict:
     archive = Path(archive)
     contract = load_contract(root)
+    compatibility_inventory = str(contract.get("runtime_compatibility_inventory", "SHA256_DATEI_INVENTAR.json"))
+    compatibility_profiles = set(contract.get("runtime_compatibility_profiles", []))
     errors: list[str] = []
+
     with zipfile.ZipFile(archive, "r") as handle:
         names = sorted(info.filename for info in handle.infolist() if not info.is_dir())
         for name in names:
@@ -159,6 +179,8 @@ def validate_archive(archive: Path, root: Path = ROOT) -> dict:
         else:
             allowed = set(select_profile(profile, root))
             generated = set(contract.get("generated_package_files", []))
+            if profile in compatibility_profiles:
+                generated.add(compatibility_inventory)
             actual_source_names = set(names) - generated
             if actual_source_names != allowed:
                 missing = sorted(allowed - actual_source_names)
@@ -176,6 +198,17 @@ def validate_archive(archive: Path, root: Path = ROOT) -> dict:
             payload = handle.read(name)
             if len(payload) != item.get("size") or sha256_bytes(payload) != item.get("sha256"):
                 errors.append(f"TRANSPORT-INVENTAR-HASH-FALSCH: {name}")
+
+        if profile in compatibility_profiles:
+            if compatibility_inventory not in names:
+                errors.append("TRANSPORT-RUNTIME-INVENTAR-FEHLT")
+            else:
+                runtime_inventory = json.loads(handle.read(compatibility_inventory).decode("utf-8"))
+                for item in runtime_inventory.get("entries", []):
+                    name = item["path"]
+                    payload = handle.read(name)
+                    if len(payload) != item.get("size") or sha256_bytes(payload) != item.get("sha256"):
+                        errors.append(f"TRANSPORT-RUNTIME-INVENTAR-HASH-FALSCH: {name}")
 
         if manifest.get("user_data_included") is not False or manifest.get("backup_data_included") is not False:
             errors.append("TRANSPORT-PAKET-DEKLARIERT-NUTZERDATEN")
