@@ -16,12 +16,7 @@
     "language_target": "python-3.12+",
     "gui_target": "pyside6-qt6",
     "database_target": "sqlite",
-    "dependency_direction": [
-      "ui",
-      "application",
-      "domain",
-      "infrastructure"
-    ],
+    "dependency_direction": ["ui", "application", "domain", "infrastructure"],
     "cross_module_internal_imports_allowed": false
   },
   "autonomy": {
@@ -56,27 +51,20 @@
     "qt_offscreen_matrix_required": true,
     "accessible_gui_required": true,
     "font_scale_matrix_required": true,
-    "gui_restart_persistence_required": true
+    "gui_restart_persistence_required": true,
+    "todo_domain_contract_required": true,
+    "todo_soft_delete_required": true,
+    "todo_optimistic_locking_required": true,
+    "todo_calendar_soft_link_required": true,
+    "todo_calendar_no_cascade_required": true,
+    "todo_calendar_conflict_detection_required": true,
+    "todo_crash_rollback_matrix_required": true
   },
-  "definition_of_ready": [
-    "ziel_eindeutig",
-    "risiko_bewertet",
-    "schnittstellen_bekannt",
-    "tests_geplant",
-    "baseline_pass"
-  ],
-  "definition_of_done": [
-    "implementierung_pass",
-    "zieltests_pass",
-    "regression_pass",
-    "standards_pass",
-    "repository_inventar_pass",
-    "dokumentation_pass",
-    "remote_verifikation_pass"
-  ],
+  "definition_of_ready": ["ziel_eindeutig", "risiko_bewertet", "schnittstellen_bekannt", "tests_geplant", "baseline_pass"],
+  "definition_of_done": ["implementierung_pass", "zieltests_pass", "regression_pass", "standards_pass", "repository_inventar_pass", "dokumentation_pass", "remote_verifikation_pass"],
   "foundation": {
-    "current_iteration": "I005",
-    "current_checkpoint": "C005-KALENDER-GUI-VIEWMODEL",
-    "version": "0.5.0-dev.1"
+    "current_iteration": "I006",
+    "current_checkpoint": "C006-TODO-DOMAIN-LINK",
+    "version": "0.6.0-dev.1"
   }
 }

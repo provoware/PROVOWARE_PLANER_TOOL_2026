@@ -13,23 +13,26 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 REQUIRED_FILES = {
-    "contracts/CALENDAR_GUI_CONTRACT.json",
-    "contracts/GUI_RUNTIME_CONTRACT.json",
-    "docs/I005_KALENDER_GUI_VIEWMODEL.md",
-    "errors/KALENDER_GUI_FEHLERKATALOG.json",
-    "errors/GUI_RUNTIME_FEHLERKATALOG.json",
-    "requirements-gui.lock",
+    "contracts/CALENDAR_GUI_CONTRACT.json", "contracts/GUI_RUNTIME_CONTRACT.json",
+    "docs/I005_KALENDER_GUI_VIEWMODEL.md", "errors/KALENDER_GUI_FEHLERKATALOG.json",
+    "errors/GUI_RUNTIME_FEHLERKATALOG.json", "requirements-gui.lock",
     "ui/__init__.py", "ui/design.py", "ui/dialogs.py", "ui/calendar_views.py", "ui/calendar_window.py",
     "viewmodel/__init__.py", "viewmodel/calendar_query.py", "viewmodel/calendar_viewmodel.py",
-    "tools/start_gui.py", "tools/gui_matrix.py",
-    "tests/test_i005_viewmodel.py", "tests/test_i005_gui_offscreen.py",
-    "tests/test_i005_persistence_restart.py", "tests/test_i005_gui_runtime.py",
+    "tools/start_gui.py", "tools/gui_matrix.py", "tests/test_i005_viewmodel.py",
+    "tests/test_i005_gui_offscreen.py", "tests/test_i005_persistence_restart.py", "tests/test_i005_gui_runtime.py",
 }
 CODE_PATTERN = re.compile(r"(?:GUI|CAL)-[A-Z0-9-]+-\d{3}")
 
 
 def load(path: str) -> dict:
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
+
+
+def _iteration(value: object) -> int:
+    try:
+        return int(str(value).removeprefix("I"))
+    except ValueError:
+        return 0
 
 
 def repository_files() -> set[str]:
@@ -56,28 +59,21 @@ def used_gui_codes() -> set[str]:
 def validate() -> dict:
     errors: list[str] = []
     files = repository_files()
-    for path in sorted(REQUIRED_FILES - files):
-        errors.append(f"I005_DATEI_FEHLT: {path}")
-
-    version = load("VERSION.json")
-    status = load("PROJEKTSTATUS.json")
-    project = load("PROJECT_CONTRACT.json")
-    contract = load("contracts/CALENDAR_GUI_CONTRACT.json")
-    runtime_contract = load("contracts/GUI_RUNTIME_CONTRACT.json")
-    ui_standard = load("standards/UI_STANDARD.json")
-    access_standard = load("standards/ACCESSIBILITY_STANDARD.json")
-
-    if version.get("iteration") != "I005" or version.get("version") != "0.5.0-dev.1": errors.append("I005_VERSION_NICHT_PROMOVIERT")
-    if status.get("iteration") != "I005": errors.append("I005_STATUS_NICHT_PROMOVIERT")
-    if project.get("foundation", {}).get("current_iteration") != "I005": errors.append("I005_PROJEKTVERTRAG_NICHT_PROMOVIERT")
+    for path in sorted(REQUIRED_FILES - files): errors.append(f"I005_DATEI_FEHLT: {path}")
+    version = load("VERSION.json"); status = load("PROJEKTSTATUS.json"); project = load("PROJECT_CONTRACT.json")
+    contract = load("contracts/CALENDAR_GUI_CONTRACT.json"); runtime_contract = load("contracts/GUI_RUNTIME_CONTRACT.json")
+    ui_standard = load("standards/UI_STANDARD.json"); access_standard = load("standards/ACCESSIBILITY_STANDARD.json")
+    current = _iteration(version.get("iteration")); status_current = _iteration(status.get("iteration")); project_current = _iteration(project.get("foundation", {}).get("current_iteration"))
+    if current < 5: errors.append("I005_VERSION_UNTER_MINDESTSTAND")
+    if status_current < 5: errors.append("I005_STATUS_UNTER_MINDESTSTAND")
+    if project_current < 5: errors.append("I005_PROJEKTVERTRAG_UNTER_MINDESTSTAND")
+    if current == 5 and version.get("version") != "0.5.0-dev.1": errors.append("I005_VERSION_FALSCH")
     if contract.get("status") != "VERBINDLICH": errors.append("I005_GUI_VERTRAG_NICHT_VERBINDLICH")
     if runtime_contract.get("status") != "VERBINDLICH": errors.append("I005_GUI_RUNTIME_VERTRAG_NICHT_VERBINDLICH")
-
     architecture = contract.get("architecture", {})
     if architecture.get("service_only") is not True: errors.append("I005_SERVICE_GRENZE_FEHLT")
     if architecture.get("sql_in_gui_forbidden") is not True: errors.append("I005_SQL_VERBOT_FEHLT")
     if architecture.get("four_views") != ["TAG", "WOCHE", "MONAT", "JAHR"]: errors.append("I005_VIER_ANSICHTEN_VERTRAG_FALSCH")
-
     expected_scales = [90, 100, 110, 125, 150, 175, 200]
     if ui_standard.get("font_scale_percent") != expected_scales: errors.append("I005_SCHRIFTSKALA_STANDARD_FALSCH")
     if contract.get("accessibility", {}).get("font_scales_percent") != expected_scales: errors.append("I005_SCHRIFTSKALA_VERTRAG_FALSCH")
@@ -86,50 +82,37 @@ def validate() -> dict:
     qualification = contract.get("qualification", {})
     if qualification.get("exact_evidence_sha_second_pass_required") is not True: errors.append("I005_EXACT_SHA_ZWEITPASS_FEHLT")
     if qualification.get("moving_branch_ref_for_second_pass_forbidden") is not True: errors.append("I005_BEWEGLICHER_BRANCH_ZWEITPASS_NICHT_VERBOTEN")
-
     runtime_start = runtime_contract.get("startup", {})
     expected_libs = {"libEGL.so.1", "libGL.so.1", "libxkbcommon-x11.so.0", "libxcb-cursor.so.0"}
     if not expected_libs.issubset(set(runtime_contract.get("native_shared_libraries", []))): errors.append("I005_GUI_NATIVE_LIBS_UNVOLLSTAENDIG")
     for key in ("orchestrator_before_qt_import", "native_library_precheck_required", "raw_import_crash_forbidden"):
         if runtime_start.get(key) is not True: errors.append(f"I005_GUI_RUNTIME_REGEL_FEHLT: {key}")
     if runtime_start.get("failure_code") != "START-GUI-RUNTIME-001": errors.append("I005_GUI_RUNTIME_FEHLERCODE_FALSCH")
-
     forbidden = ("sqlite3", "storage.", "storage import", "MigrationRunner", "SELECT ", "INSERT ", "UPDATE ", "DELETE ")
     for directory in ("ui", "viewmodel"):
         for path in (ROOT / directory).rglob("*.py"):
             text = path.read_text(encoding="utf-8")
             for token in forbidden:
                 if token in text: errors.append(f"I005_GUI_SCHICHTVERLETZUNG: {path.relative_to(ROOT)} enthält {token!r}")
-
-    window_text = (ROOT / "ui/calendar_window.py").read_text(encoding="utf-8")
-    views_text = (ROOT / "ui/calendar_views.py").read_text(encoding="utf-8")
-    design_text = (ROOT / "ui/design.py").read_text(encoding="utf-8")
-    viewmodel_text = (ROOT / "viewmodel/calendar_viewmodel.py").read_text(encoding="utf-8")
-    query_text = (ROOT / "viewmodel/calendar_query.py").read_text(encoding="utf-8")
-    combined = "\n".join((window_text, views_text, design_text, viewmodel_text, query_text))
+    combined = "\n".join((ROOT / path).read_text(encoding="utf-8") for path in ("ui/calendar_window.py","ui/calendar_views.py","ui/design.py","viewmodel/calendar_viewmodel.py","viewmodel/calendar_query.py"))
     for token in ("DayView", "WeekView", "MonthView", "YearView", "Heute", "Zurück", "Vor", "Markierungen", "Ctrl+N", "Ctrl+E", "Ctrl+T", "Alt+", "setAccessibleName", "apply_font_scale", "_provoware_unscaled_base_font", "fit_text_controls"):
         if token not in combined: errors.append(f"I005_GUI_BESTANDTEIL_FEHLT: {token}")
-    if "CalendarQueryService" not in viewmodel_text or "CalendarService" not in query_text: errors.append("I005_VIEWMODEL_QUERY_KETTE_FEHLT")
-
-    start_path = ROOT / "tools/start_gui.py"
-    start_text = start_path.read_text(encoding="utf-8")
-    start_ast = ast.parse(start_text)
+    if "CalendarQueryService" not in (ROOT / "viewmodel/calendar_viewmodel.py").read_text(encoding="utf-8"): errors.append("I005_VIEWMODEL_QUERY_KETTE_FEHLT")
+    if "CalendarService" not in (ROOT / "viewmodel/calendar_query.py").read_text(encoding="utf-8"): errors.append("I005_VIEWMODEL_QUERY_KETTE_FEHLT")
+    start_text = (ROOT / "tools/start_gui.py").read_text(encoding="utf-8"); start_ast = ast.parse(start_text)
     for node in start_ast.body:
         if isinstance(node, ast.ImportFrom) and (node.module or "").startswith("PySide6"): errors.append("I005_QT_IMPORT_VOR_ORCHESTRATOR")
         if isinstance(node, ast.Import) and any(alias.name.startswith("PySide6") for alias in node.names): errors.append("I005_QT_IMPORT_VOR_ORCHESTRATOR")
     for token in ("StartOrchestrator", "_check_native_gui_runtime", "START-GUI-RUNTIME-001"):
         if token not in start_text: errors.append(f"I005_STARTINTEGRATION_FEHLT: {token}")
-
     workflow_text = (ROOT / ".github/workflows/i005-qualifikation.yml").read_text(encoding="utf-8")
     for token in ("verify_sha", "git rev-parse HEAD", "inputs[verify_sha]"):
         if token not in workflow_text: errors.append(f"I005_EXACT_SHA_WORKFLOW_FEHLT: {token}")
-
     catalogs, duplicates = catalog_codes()
     if duplicates: errors.append(f"I005_FEHLERCODE_DOPPELT: {duplicates}")
     missing_codes = sorted(used_gui_codes() - catalogs)
     if missing_codes: errors.append(f"I005_GUI_FEHLERCODE_NICHT_KATALOGISIERT: {missing_codes}")
     if "START-GUI-RUNTIME-001" not in catalogs: errors.append("I005_GUI_RUNTIME_FEHLERCODE_NICHT_KATALOGISIERT")
-
     runtime_result = "NOT_RUN"
     try:
         os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
@@ -152,18 +135,13 @@ def validate() -> dict:
                 window.close(); app.processEvents()
     except Exception as exc:
         errors.append(f"I005_RUNTIME_VALIDIERUNG_FEHLER: {type(exc).__name__}: {exc}"); runtime_result = "FAIL"
-
-    return {"status": "PASS" if not errors else "FAIL", "errors": errors, "repository_files": len(files), "gui_error_codes_used": len(used_gui_codes()), "gui_error_codes_registered": len(used_gui_codes() & catalogs), "qt_runtime": runtime_result}
+    return {"status":"PASS" if not errors else "FAIL","errors":errors,"repository_files":len(files),"gui_error_codes_used":len(used_gui_codes()),"gui_error_codes_registered":len(used_gui_codes() & catalogs),"qt_runtime":runtime_result,"current_iteration":current}
 
 
 def main() -> int:
-    result = validate()
-    print(f"I005-VALIDATOR: {result['status']}")
-    print(f"GUI-Fehlercodes: {result['gui_error_codes_registered']}/{result['gui_error_codes_used']}")
-    print(f"Qt-Runtime: {result['qt_runtime']}")
+    result = validate(); print(f"I005-VALIDATOR: {result['status']}"); print(f"GUI-Fehlercodes: {result['gui_error_codes_registered']}/{result['gui_error_codes_used']}"); print(f"Qt-Runtime: {result['qt_runtime']}"); print(f"Aktuelle Iteration: I{result['current_iteration']:03d}")
     for error in result["errors"]: print(f"FEHLER: {error}")
-    print("MASCHINENLESBAR:", json.dumps(result, ensure_ascii=False, sort_keys=True))
-    return 0 if result["status"] == "PASS" else 1
+    print("MASCHINENLESBAR:", json.dumps(result, ensure_ascii=False, sort_keys=True)); return 0 if result["status"] == "PASS" else 1
 
 
 if __name__ == "__main__":

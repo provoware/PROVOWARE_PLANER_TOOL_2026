@@ -1,56 +1,38 @@
 # CHANGELOG — PROVOWARE PLANER TOOL 2026
 
 ## 0.1.0-dev.1 — I000/I001 Foundation
-
-- neuer maschinenlesbarer `PROJECT_CONTRACT.json`
-- globale, versionierte PROVOWARE-Standards eingeführt
-- zentrale UI-Abstände, Typografie-Rollen und flexible Schriftskalierung festgeschrieben
-- barrierefreies Ampelsystem als Farbe + Symbol + Text standardisiert
-- `VERSION.json` und `PROJEKTSTATUS.json` als kanonische Statusquellen eingeführt
-- vollständiges `REPOSITORY_MANIFEST.json` für jede Iteration eingeführt
-- unabhängigen `standard_validator` ohne Drittanbieter-Abhängigkeiten angelegt
-- minimalen Entwicklungs- und Prüfautopiloten angelegt
-- GitHub-Actions-Foundation-Qualifikation hinzugefügt
-- README und TODO auf den neuen Foundation-Stand synchronisiert
+- Projektvertrag, globale Standards, Statusdateien, Repository-Inventar und Foundation-Autopilot eingeführt.
 
 ## 0.2.0-dev.1 — I002
-- Manifest- und Evidence-Kette ergänzt
-- SHA-256-Inventar und Remote-Tree-Validierung ergänzt
-- Fehlerbehandlungsstandard und Fehlerkatalog ergänzt
-- qualifizierte Evidence wird vollautomatisch persistiert und nachgeprüft
-- vollständige Repositoryprüfung je Iteration als Pflicht bestätigt
-- gespeicherter Evidence-Stand erhält eine abschließende unabhängige Remote-Nachqualifikation ohne weitere automatische Repository-Änderung
+- Manifest- und Evidence-Kette, SHA-256-Inventar, Remote-Tree-Validierung und zweistufige Remote-Prüfung ergänzt.
 
 ## 0.3.0-dev.1 — I003
-- Klick-&-Start-Orchestrator als deterministische Zustandsmaschine eingeführt
-- verbindliche PRECHECK/ACTION/POSTCHECK-Kette implementiert
-- reale Workspace-, Konfigurations- und SQLite-Prüfungen ergänzt
-- sichere Recovery- und Quarantänepfade ergänzt
-- Fault-Injection-Matrix mit Schutz vor realen Nutzerdaten eingeführt
-- detailliertes maschinen- und laienlesbares Startfeedback ergänzt
-- zweistufige Remote-Qualifikation mit automatischer Verifikation des Evidence-Commits eingeführt
+- Klick-&-Start-Orchestrator, Workspace-Prüfung, Recovery, Fault-Injection und detailliertes Startfeedback ergänzt.
 
 ## 0.4.0-dev.1 — I004
-- GUI-unabhängigen Kalender-Domainkern eingeführt
-- SQLite-Persistenz mit Constraints, Foreign Keys, WAL und Transaktionen ergänzt
-- UTC-Zeitpersistenz und IANA-Zeitzonenvertrag ergänzt
-- fünf editierbare Markierungstypen als Datenmodell eingeführt
-- hashgebundene Migrationen mit automatischem Vor-Migrations-Backup eingeführt
-- Optimistic Locking und Soft Delete ergänzt
-- atomisches, SHA-256-validierbares Backup/Restore mit WAL-Schutz ergänzt
-- modularen Kalender-Fehlerkatalog und globale Fehlercode-Eindeutigkeit ergänzt
-- Autopilot um historische Pflichtgates erweitert
-- zweistufige I004-Remotequalifikation ergänzt
+- Kalender-Domainkern, SQLite-Persistenz, Migrationen, fünf Markierungen, Optimistic Locking, Soft Delete und Backup/Restore ergänzt.
 
 ## 0.5.0-dev.1 — I005
-- CalendarQueryService und CalendarViewModel eingeführt
-- PySide6/Qt-Kalenderoberfläche mit Tag/Woche/Monat/Jahr ergänzt
-- fünf editierbare Markierungen mit atomarer Batch-Speicherung ergänzt
-- Termin-Erstellung/-Bearbeitung ausschließlich über CalendarService angebunden
-- Design-Tokens, Schriftskalierung, Ampelstatus, Tastatur und Accessible Names ergänzt
-- native GUI-Abhängigkeiten explizit vertraglich gebunden und vor Qt-Import geprüft
-- Offscreen-Matrix mit 112 GUI-Konfigurationen, Screenshots und Neustartpersistenz ergänzt
-- Aktionsbuttons werden bei jeder Schriftstufe zentral neu vermessen; Schriftbasis kann sich zwischen Fenstern nicht aufschaukeln
-- historischen I004-Validator für nachfolgende Iterationen vorwärtskompatibel gehärtet
-- zweiter Evidence-Pass kryptografisch an eine explizite `verify_sha` gebunden; bewegliche Branch-Referenz als Prüfziel ausgeschlossen
-- historische Qualifikationskette um I005 erweitert
+- CalendarQueryService und CalendarViewModel eingeführt.
+- PySide6/Qt-Kalenderoberfläche mit Tag/Woche/Monat/Jahr ergänzt.
+- fünf editierbare Markierungen mit atomarer Batch-Speicherung ergänzt.
+- Design-Tokens, Schriftskalierung, Ampelstatus, Tastatur und Accessible Names ergänzt.
+- native GUI-Abhängigkeiten vor Qt-Import geprüft.
+- 112er Offscreen-Matrix, Screenshots und Neustartpersistenz ergänzt.
+- Aktionsbuttons werden bei jeder Schriftstufe zentral neu vermessen; Schriftbasis kann sich nicht aufschaukeln.
+- zweiter Evidence-Pass an exakte `verify_sha` gebunden.
+
+## 0.6.0-dev.1 — I006
+- GUI-unabhängigen Todo-Domainkern mit Status, Priorität, Fortschritt, Start, Fälligkeit und Unteraufgaben eingeführt.
+- Migration `0002_todo_domain_links.sql` mit `todos` und `todo_calendar_links` ergänzt.
+- TodoRepository, TodoService und TodoCalendarLinkService eingeführt.
+- Todo und Termin als unabhängige Entitäten mit Soft Delete und Optimistic Locking abgesichert.
+- Kalender↔Todo-Kopplung als eigenes versioniertes Soft-Link-Objekt mit Synchronisationsrichtung eingeführt.
+- Konfliktzustände für einseitige, beidseitige und getrennte Änderungen ergänzt.
+- `ON DELETE CASCADE` zwischen Todo, Termin und Link verboten; physische Endpunktlöschung per `RESTRICT` geschützt.
+- Entkoppeln löscht ausschließlich den Link weich und erhält Todo sowie Termin.
+- automatische Inhalts-Synchronisation in I006 ausdrücklich deaktiviert.
+- deterministische Fault-Injection für Schreibabbruch vor Commit ergänzt.
+- echten Prozessabbruch während offener SQLite-Transaktion und anschließenden Rollback-/Quick-Check-Nachweis ergänzt.
+- I005-Validator als historisches Mindestgate für nachfolgende Iterationen vorwärtskompatibel gehärtet.
+- historische Pflichtkette um I006 erweitert.
