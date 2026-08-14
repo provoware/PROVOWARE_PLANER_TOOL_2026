@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "state": "ATTESTED",
-  "subject_commit": "c2681c4d32c5b17e1817e32df509e5bd84b4669d",
-  "subject_tree": "4bfbc123a77b9167d94cae24b096b5f4481b6399",
-  "entry_count": 55,
+  "subject_commit": "1bb8657025f09cefd2bdf3f8c2d69d186db767e7",
+  "subject_tree": "aeaf3f8b734593ccb252f09a96e86d86ba9a54e6",
+  "entry_count": 75,
   "subject_tree_entries": [
     {
       "path": ".github/workflows/foundation-qualifikation.yml",
@@ -27,108 +27,143 @@
       "status": "PASS"
     },
     {
-      "path": "BUILD_MANIFEST.json",
-      "blob_sha": "d5af056377e6a8a7cd7265f6bc8cc66528a16644",
+      "path": ".github/workflows/i004-qualifikation.yml",
+      "blob_sha": "c44cc44fb4eef9901d849d4f85e44666c9a72659",
       "mode": "100644",
-      "size": 1853,
+      "size": 17104,
+      "status": "PASS"
+    },
+    {
+      "path": "BUILD_MANIFEST.json",
+      "blob_sha": "29a259c34d3846bb65e7dab3a6b7756cf4913d40",
+      "mode": "100644",
+      "size": 3333,
       "status": "PASS"
     },
     {
       "path": "CHANGELOG.md",
-      "blob_sha": "42e9b44583ad9d2cac83be0f69e3e895dc6dfd08",
+      "blob_sha": "589744c3b10944d6681ed3448f5695df636964e9",
       "mode": "100644",
-      "size": 1232,
+      "size": 1752,
       "status": "PASS"
     },
     {
       "path": "EVIDENCE_MANIFEST.json",
-      "blob_sha": "91a4d31a3210ae07983a27d4c957f9049bfa025b",
+      "blob_sha": "fc94b7864bb54b1134c8576ffc1ff03455a6f4c6",
       "mode": "100644",
-      "size": 1220,
+      "size": 1628,
       "status": "PASS"
     },
     {
       "path": "MANIFEST_INDEX.json",
-      "blob_sha": "c8729633262d23d35ead21f8a51cb1ca9f21209b",
+      "blob_sha": "117a300b1287a7be8cb0c4fe1e1798240bfcabd3",
       "mode": "100644",
-      "size": 788,
+      "size": 811,
       "status": "PASS"
     },
     {
       "path": "PROJECT_CONTRACT.json",
-      "blob_sha": "a13cfb41d4d41d9400fd44e208bf2ee5b931bc54",
+      "blob_sha": "744b91f30e3329f8d2182082f33e21f81fdc05b9",
       "mode": "100644",
-      "size": 1887,
+      "size": 2101,
       "status": "PASS"
     },
     {
       "path": "PROJEKTSTATUS.json",
-      "blob_sha": "38a859fef67142c271df90cb41bf92b894bb1d26",
+      "blob_sha": "578f0c36f6e1e0da3170eb288e98d33fa098ecf8",
       "mode": "100644",
-      "size": 889,
+      "size": 944,
       "status": "PASS"
     },
     {
       "path": "QUALIFICATION_REPORT.json",
-      "blob_sha": "6ac76c352ed4a07b9ea16b1b77c8babab5d0844a",
+      "blob_sha": "6cd3167c6c173976d73dd55615bca3f7baf5dfd3",
       "mode": "100644",
-      "size": 596,
+      "size": 569,
       "status": "PASS"
     },
     {
       "path": "README.md",
-      "blob_sha": "d4455e0bf8589ade0c9926f0cc052c88291654f8",
+      "blob_sha": "f8f0f5daf502fc20bf94ace08190fb0e4ea75528",
       "mode": "100644",
-      "size": 8867,
+      "size": 9498,
       "status": "PASS"
     },
     {
       "path": "RELEASE_MANIFEST.json",
-      "blob_sha": "b78c194566cabb1f79af600ac112c1882eaf49b9",
+      "blob_sha": "7303e74edc4ae08a58fce8b9acb7675d042bd7e8",
       "mode": "100644",
-      "size": 197,
+      "size": 237,
       "status": "PASS"
     },
     {
       "path": "REMOTE_TREE_RECEIPT.json",
-      "blob_sha": "84a066f4b3976ded69d8c9dc6485544c90a76e27",
+      "blob_sha": "7c61a0a4e645d079c4757991d004c9bf8a7a1b69",
       "mode": "100644",
-      "size": 8653,
+      "size": 10515,
       "status": "PASS"
     },
     {
       "path": "REPOSITORY_MANIFEST.json",
-      "blob_sha": "cb3861502272d8ffb4e8618b73169d63275770cb",
+      "blob_sha": "2398807846c7be61444ba8f72a7f264903d9b9e9",
       "mode": "100644",
-      "size": 3681,
+      "size": 4363,
       "status": "PASS"
     },
     {
       "path": "SHA256_DATEI_INVENTAR.json",
-      "blob_sha": "d30d9e111f0ef4e9365034608df257b36a0ef2cb",
+      "blob_sha": "1ea7f66968ac63eed6fbd9ae60127b39a78c29ec",
       "mode": "100644",
-      "size": 8065,
+      "size": 9907,
       "status": "PASS"
     },
     {
       "path": "SOURCE_MANIFEST.json",
-      "blob_sha": "9732e8e7b9348d3b3960a60627b93c4a2d842051",
+      "blob_sha": "3114b425f96144dc2f1d0cf7fd149cac221e06a6",
       "mode": "100644",
-      "size": 6613,
+      "size": 8279,
       "status": "PASS"
     },
     {
       "path": "TODO.md",
-      "blob_sha": "def3fd39a8b1ce5408bd5f760090a58c06d36bb0",
+      "blob_sha": "d1206110ca7fd3c4b336a99731f71b6424acf24e",
       "mode": "100644",
-      "size": 3543,
+      "size": 4218,
       "status": "PASS"
     },
     {
       "path": "VERSION.json",
-      "blob_sha": "7f91ce09a1e3db3eb1257c61147b0f661d816efb",
+      "blob_sha": "02040de003a4ce5585ffc18ccfd6d0a02ba2bcbd",
       "mode": "100644",
-      "size": 355,
+      "size": 352,
+      "status": "PASS"
+    },
+    {
+      "path": "calendar_core/__init__.py",
+      "blob_sha": "982494934b6f64dba9067c000cd49c2d2a0c4a87",
+      "mode": "100644",
+      "size": 162,
+      "status": "PASS"
+    },
+    {
+      "path": "calendar_core/errors.py",
+      "blob_sha": "9605a502c84fba36a6a4d621b176d32c372d0300",
+      "mode": "100644",
+      "size": 612,
+      "status": "PASS"
+    },
+    {
+      "path": "calendar_core/model.py",
+      "blob_sha": "7b7ff162567380d48703b34e635506cdff94b9e9",
+      "mode": "100644",
+      "size": 3427,
+      "status": "PASS"
+    },
+    {
+      "path": "contracts/CALENDAR_DATA_CONTRACT.json",
+      "blob_sha": "95e2fd2cdbe9fd0301237b2a97cf0b084e4c90bc",
+      "mode": "100644",
+      "size": 1405,
       "status": "PASS"
     },
     {
@@ -146,10 +181,31 @@
       "status": "PASS"
     },
     {
+      "path": "docs/I004_KALENDER_DOMAIN_SQLITE.md",
+      "blob_sha": "9b38ffa7a6652e8bf18457c6dfeef574f26fb39a",
+      "mode": "100644",
+      "size": 2928,
+      "status": "PASS"
+    },
+    {
       "path": "errors/FEHLERKATALOG.json",
       "blob_sha": "59341beeb37b620abb90ed3047b2c52e4433e140",
       "mode": "100644",
       "size": 9500,
+      "status": "PASS"
+    },
+    {
+      "path": "errors/KALENDER_FEHLERKATALOG.json",
+      "blob_sha": "19eeced068f30253809f0f2ded24326aae86b93c",
+      "mode": "100644",
+      "size": 7060,
+      "status": "PASS"
+    },
+    {
+      "path": "migrations/0001_calendar_core.sql",
+      "blob_sha": "e8c684e0629f247b6787d66d83dab3e5343da37d",
+      "mode": "100644",
+      "size": 2191,
       "status": "PASS"
     },
     {
@@ -188,6 +244,27 @@
       "status": "PASS"
     },
     {
+      "path": "services/__init__.py",
+      "blob_sha": "b78bdcb9352ce083b527951e6bd2220d11b4d22f",
+      "mode": "100644",
+      "size": 48,
+      "status": "PASS"
+    },
+    {
+      "path": "services/calendar_service.py",
+      "blob_sha": "e8b0cb1eab2c43127ad07082886e51cd25e14e15",
+      "mode": "100644",
+      "size": 2171,
+      "status": "PASS"
+    },
+    {
+      "path": "services/factory.py",
+      "blob_sha": "8d29e3fcb096f88ee9c5f9ad7ef8385996175f6c",
+      "mode": "100644",
+      "size": 766,
+      "status": "PASS"
+    },
+    {
       "path": "standards/ACCESSIBILITY_STANDARD.json",
       "blob_sha": "f944aa440b10672586cf45cc8c7ed1bf82828e67",
       "mode": "100644",
@@ -210,9 +287,9 @@
     },
     {
       "path": "standards/ERROR_HANDLING_STANDARD.json",
-      "blob_sha": "713fd62649d18ca4539d4c0a92e353ef3feeca1a",
+      "blob_sha": "764a2338b6a4211e90a712b381ca33fbb42e8397",
       "mode": "100644",
-      "size": 642,
+      "size": 999,
       "status": "PASS"
     },
     {
@@ -259,7 +336,7 @@
     },
     {
       "path": "standards/STANDARD_INDEX.json",
-      "blob_sha": "e4c8c1682901d1b10642e1b2ca3a9fddde7517ec",
+      "blob_sha": "2caeaf24b44235a9b9db108b95f7157b2b49df66",
       "mode": "100644",
       "size": 1385,
       "status": "PASS"
@@ -286,6 +363,41 @@
       "status": "PASS"
     },
     {
+      "path": "storage/__init__.py",
+      "blob_sha": "030ee1762ea7b3422a74afe4649cfced073c1f75",
+      "mode": "100644",
+      "size": 56,
+      "status": "PASS"
+    },
+    {
+      "path": "storage/backup.py",
+      "blob_sha": "0a262906b9118c3b349727f591b3ed9d33b56b7c",
+      "mode": "100644",
+      "size": 4724,
+      "status": "PASS"
+    },
+    {
+      "path": "storage/database.py",
+      "blob_sha": "78fc5eff7f4288992dc51e88e4f1ae06efb73e80",
+      "mode": "100644",
+      "size": 2726,
+      "status": "PASS"
+    },
+    {
+      "path": "storage/migrations.py",
+      "blob_sha": "40bc9f79f842c614ebca5fab2a5659bf825ad664",
+      "mode": "100644",
+      "size": 4950,
+      "status": "PASS"
+    },
+    {
+      "path": "storage/repository.py",
+      "blob_sha": "86f3ce994e9ae1c38212468ec3bb915f560bcb36",
+      "mode": "100644",
+      "size": 6638,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_error_handling.py",
       "blob_sha": "db216e0006a39ae3af2baaf34c5c010b3e9c8340",
       "mode": "100644",
@@ -297,6 +409,27 @@
       "blob_sha": "5d6bf47b9241f22271ee787e3bbbeb7cbdadda54",
       "mode": "100644",
       "size": 3357,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i004_calendar_core.py",
+      "blob_sha": "afdad5c92bf63496f3b0a6b87a026f64c3fa299d",
+      "mode": "100644",
+      "size": 7874,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i004_factory.py",
+      "blob_sha": "9eae398fb7ac4f8e2cf2d74d5410c005418ff806",
+      "mode": "100644",
+      "size": 1223,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i004_fault_injection.py",
+      "blob_sha": "0d412322bee70ef1cdc70b5cad3602ec290c28f9",
+      "mode": "100644",
+      "size": 3348,
       "status": "PASS"
     },
     {
@@ -336,9 +469,9 @@
     },
     {
       "path": "tools/autopilot/autopilot.py",
-      "blob_sha": "12f50c3fe134a47934e623ecdf8251613c7af03f",
+      "blob_sha": "8edb987fa8f2bd6369a513016cf4e3b0ab97070d",
       "mode": "100644",
-      "size": 850,
+      "size": 2048,
       "status": "PASS"
     },
     {
@@ -357,9 +490,16 @@
     },
     {
       "path": "tools/autopilot/i003_validator.py",
-      "blob_sha": "398e825d6b1b400453bd528736e309aa476f93c5",
+      "blob_sha": "16fc70214f541e61615ff3ac6663e175af274aa1",
       "mode": "100644",
-      "size": 4291,
+      "size": 4514,
+      "status": "PASS"
+    },
+    {
+      "path": "tools/autopilot/i004_validator.py",
+      "blob_sha": "945db4d42b9eb7f72eef2e262234ae5131946e5e",
+      "mode": "100644",
+      "size": 7163,
       "status": "PASS"
     },
     {

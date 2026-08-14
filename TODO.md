@@ -114,3 +114,22 @@ I002: Manifest-/Evidence-Kette, kryptografisches Repository-Inventar und Remote-
 - [ ] SQLite-Schema und Migrationen
 - [ ] Service-API ohne GUI-Abhängigkeit
 - [ ] erst danach erste Kalenderoberfläche
+
+## I004 — Kalender-Domainkern + SQLite-Persistenz
+- [x] Domainmodell und Invarianten
+- [x] SQLite-Schema und fünf Markierungstypen
+- [x] UTC-Persistenz mit erhaltener IANA-Zeitzone
+- [x] hashgebundene Migrationen
+- [x] automatisches Vor-Migrations-Backup
+- [x] Repository und Service-API
+- [x] Optimistic Locking und Soft Delete
+- [x] atomisches Backup und Restore
+- [x] Crash-/Rollback- und Fault-Injection-Tests
+- [x] historische Gate-Kette I002 → I003 → I004
+
+## I005 — Nächster logischer Schritt
+- [ ] Kalender-GUI ausschließlich über CalendarService
+- [ ] Tag-, Woche-, Monat- und Jahransicht
+- [ ] fünf Markierungen sichtbar und editierbar
+- [ ] Design-Tokens, flexible Schrift und Ampelstatus verwenden
+- [ ] automatisierte GUI- und Barrierefreiheitsmatrix

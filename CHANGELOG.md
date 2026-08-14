@@ -29,3 +29,15 @@
 - Fault-Injection-Matrix mit Schutz vor realen Nutzerdaten eingeführt
 - detailliertes maschinen- und laienlesbares Startfeedback ergänzt
 - zweistufige Remote-Qualifikation mit automatischer Verifikation des Evidence-Commits eingeführt
+
+## 0.4.0-dev.1 — I004
+- GUI-unabhängigen Kalender-Domainkern eingeführt
+- SQLite-Persistenz mit Constraints, Foreign Keys, WAL und Transaktionen ergänzt
+- UTC-Zeitpersistenz und IANA-Zeitzonenvertrag ergänzt
+- fünf editierbare Markierungstypen als Datenmodell eingeführt
+- hashgebundene Migrationen mit automatischem Vor-Migrations-Backup eingeführt
+- Optimistic Locking und Soft Delete ergänzt
+- atomisches, SHA-256-validierbares Backup/Restore mit WAL-Schutz ergänzt
+- modularen Kalender-Fehlerkatalog und globale Fehlercode-Eindeutigkeit ergänzt
+- Autopilot um historische Pflichtgates erweitert
+- zweistufige I004-Remotequalifikation ergänzt

@@ -46,7 +46,12 @@
     "fault_injection_required": true,
     "safe_recovery_required": true,
     "real_workspace_probe_required": true,
-    "runtime_user_feedback_required": true
+    "runtime_user_feedback_required": true,
+    "calendar_domain_contract_required": true,
+    "sqlite_migration_history_required": true,
+    "calendar_backup_restore_required": true,
+    "gui_service_boundary_required": true,
+    "historical_gate_chain_required": true
   },
   "definition_of_ready": [
     "ziel_eindeutig",
@@ -65,8 +70,8 @@
     "remote_verifikation_pass"
   ],
   "foundation": {
-    "current_iteration": "I003",
-    "current_checkpoint": "C003-KLICK-START-ORCHESTRATOR",
-    "version": "0.3.0-dev.1"
+    "current_iteration": "I004",
+    "current_checkpoint": "C004-KALENDER-DOMAIN-SQLITE",
+    "version": "0.4.0-dev.1"
   }
 }

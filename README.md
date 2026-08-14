@@ -171,3 +171,18 @@ I003: Klick-&-Start-Orchestrator als testbare Zustandsmaschine mit Vorprüfung, 
 
 ### Nächster logischer Schritt
 I004: Kalender-Domainkern und SQLite-Persistenzschicht zunächst GUI-unabhängig entwickeln und qualifizieren.
+
+## I004 — Kalender-Domainkern + SQLite-Persistenz
+- Version: `0.4.0-dev.1`
+- GUI-unabhängiges Kalender-Domainmodell mit verbindlichen Invarianten
+- SQLite mit Foreign Keys, WAL, FULL-Synchronisierung und Transaktionen
+- Zeitpunkte kanonisch UTC, IANA-Zeitzone separat erhalten
+- fünf editierbare Markierungstypen als Stammdaten
+- hashgebundene unveränderliche Migrationen mit Vor-Migrations-Backup
+- Optimistic Locking und Soft Delete
+- atomisches Backup/Restore mit SHA-256, Kandidatenprüfung und WAL-Schutz
+- modulare, projektweit validierte Fehlerkataloge
+- GUI darf ausschließlich die qualifizierte `CalendarService`-API verwenden
+
+### Nächster logischer Schritt
+I005: Kalender-GUI mit Tag-, Woche-, Monat- und Jahransicht auf dem qualifizierten I004-Service aufbauen.

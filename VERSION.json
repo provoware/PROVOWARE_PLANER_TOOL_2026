@@ -2,11 +2,11 @@
   "schema_version": 1,
   "project_id": "PROVOWARE-PLANER-2026",
   "project_name": "PROVOWARE PLANER TOOL 2026",
-  "version": "0.3.0-dev.1",
+  "version": "0.4.0-dev.1",
   "phase": "foundation",
-  "iteration": "I003",
-  "checkpoint": "C003-KLICK-START-ORCHESTRATOR",
-  "build_revision": 3,
+  "iteration": "I004",
+  "checkpoint": "C004-KALENDER-DOMAIN-SQLITE",
+  "build_revision": 4,
   "release_channel": "development",
   "lineage_id": "PROVOWARE-PLANER-2026-LINEAGE-001"
 }

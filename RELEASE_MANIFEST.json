@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "manifest_type": "RELEASE",
-  "version": "0.3.0-dev.1",
-  "iteration": "I003",
+  "version": "0.4.0-dev.1",
+  "iteration": "I004",
   "state": "NOT_BUILT",
-  "reason": "I003 ist noch Entwicklungsstand; ein freigegebenes Endnutzer-Releasepaket existiert nicht."
+  "reason": "I004 ist noch Entwicklungsstand; ein freigegebenes Endnutzer-Releasepaket existiert nicht."
 }
