@@ -119,6 +119,7 @@ def restore_backup(
     *,
     expected_sha256: str | None = None,
     expected_target_sha256: str | None = None,
+    precheck: Callable[[Path], None] | None = None,
     postcheck: Callable[[Path], None] | None = None,
 ) -> None:
     """Einziger physischer Restorekern.
@@ -135,6 +136,8 @@ def restore_backup(
         raise RestoreRejectedError("CAL-RESTORE-HASH-001: Sicherungs-Hash stimmt nicht")
     _validate_sqlite(backup)
     _verify_target_precondition(target, expected_target_sha256)
+    if precheck is not None:
+        precheck(target)
 
     target.parent.mkdir(parents=True, exist_ok=True)
     candidate = target.with_suffix(target.suffix + ".restore-candidate")
