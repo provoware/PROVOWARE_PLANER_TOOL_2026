@@ -10,8 +10,8 @@
   "entries": [
     {
       "path": ".github/workflows/foundation-qualifikation.yml",
-      "sha256": "4d5b02359c9613c8d0c45557e624ba4535ebf4aeae40a8f593e61950a3722cc6",
-      "size": 2012,
+      "sha256": "717aa553c6a59e1d49f5aea27a3013a151b048ca15566b0e2bcdd21934a39ee3",
+      "size": 5375,
       "status": "PASS"
     },
     {
@@ -112,7 +112,7 @@
     },
     {
       "path": "BUILD_MANIFEST.json",
-      "sha256": "9eefc31c9c70adeb7ed085591555ac754567ee90b5dcdd027b0cfe3f9bfe21c7",
+      "sha256": "5e2b81a831cb86bba71abe660bc210fb6fb633eafa40b0ea602575d05cbe0f2a",
       "size": 9154,
       "status": "PASS"
     },
@@ -136,7 +136,7 @@
     },
     {
       "path": "MANIFEST_INDEX.json",
-      "sha256": "f119ad0ffeff196ee8229f4ff69773f2d792161dbd359954310bf760692acd30",
+      "sha256": "48ad0c083426ca070cf2437b18b6dc68934d8129d80e8b526406975af324d050",
       "size": 814,
       "status": "PASS"
     },
