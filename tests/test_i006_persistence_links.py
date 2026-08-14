@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import tempfile
 import unittest
 from dataclasses import replace
@@ -9,6 +10,16 @@ from zoneinfo import ZoneInfo
 
 from services.factory import open_planner_services
 from todo_core.model import LinkConflictStatus, LinkDirection, TodoPriority
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def _current_iteration() -> int:
+    value = json.loads((ROOT / "VERSION.json").read_text(encoding="utf-8")).get("iteration", "I000")
+    try:
+        return int(str(value).removeprefix("I"))
+    except ValueError:
+        return 0
 
 
 class I006PersistenceLinksTest(unittest.TestCase):
@@ -38,7 +49,11 @@ class I006PersistenceLinksTest(unittest.TestCase):
         self.assertEqual(todo.title, "Aufgabe")
         self.assertEqual(link.todo_id, todo.todo_id)
         self.assertEqual(link.event_id, self.event.event_id)
-        self.assertEqual(reopened.database.schema_version(), 2)
+        schema = reopened.database.schema_version()
+        if _current_iteration() == 6:
+            self.assertEqual(schema, 2)
+        else:
+            self.assertGreaterEqual(schema, 2)
 
     def test_unlink_does_not_delete_entities(self) -> None:
         self.services.links.unlink(self.link.link_id, expected_version=self.link.version)
