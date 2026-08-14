@@ -117,6 +117,8 @@
     "LETZTER_STARTBERICHT.json"
   ],
   "generated_package_files": ["PAKETMANIFEST.json", "PAKET_INVENTAR.json"],
+  "runtime_compatibility_inventory": "SHA256_DATEI_INVENTAR.json",
+  "runtime_compatibility_profiles": ["PROJEKTKERN", "NUTZER", "ENTWICKLER"],
   "safety": {
     "user_profile_is_default": true,
     "unclassified_repository_path_blocks_build": true,
