@@ -129,13 +129,19 @@
     "restore_single_physical_core_required": true,
     "restore_precheck_commit_postcheck_required": true,
     "restore_rollback_on_postcheck_failure_required": true,
-    "backup_workspace_boundary_required": true
+    "backup_workspace_boundary_required": true,
+    "restore_execution_persistent_intent_required": true,
+    "restore_execution_exclusive_lease_required": true,
+    "restore_execution_pre_restore_snapshot_required": true,
+    "restore_execution_startup_crash_recovery_required": true,
+    "restore_execution_planner_write_guard_required": true,
+    "restore_execution_hard_exit_after_replace_test_required": true
   },
   "definition_of_ready": ["ziel_eindeutig", "risiko_bewertet", "schnittstellen_bekannt", "tests_geplant", "baseline_pass", "iterationsplan_vollstaendig", "repository_delta_deklariert"],
   "definition_of_done": ["implementierung_pass", "zieltests_pass", "regression_pass", "standards_pass", "repository_inventar_pass", "dokumentation_pass", "remote_verifikation_pass", "prozessmetriken_erfasst"],
   "foundation": {
-    "current_iteration": "I015",
-    "current_checkpoint": "C015-BACKUP-RESTOREPLAN",
-    "version": "0.15.0-dev.1"
+    "current_iteration": "I016",
+    "current_checkpoint": "C016-RESTORE-EXECUTION-SAFETY",
+    "version": "0.16.0-dev.1"
   }
 }
