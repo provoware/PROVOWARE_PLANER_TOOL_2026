@@ -21,11 +21,12 @@ class I012DiagnosticsServiceTest(unittest.TestCase):
     def tearDown(self) -> None:
         self.temp.cleanup()
 
-    def service(self) -> DiagnosticsService:
+    def service(self, *, backup_dir: Path | None = None) -> DiagnosticsService:
         return DiagnosticsService(
             self.services.database,
             self.services.journal,
             workspace=self.workspace,
+            backup_dir=backup_dir,
         )
 
     def test_dashboard_snapshot_has_five_required_areas_and_no_data_write(self) -> None:
@@ -62,15 +63,16 @@ class I012DiagnosticsServiceTest(unittest.TestCase):
         self.assertIn("erfolgreich", item.summary)
 
     def test_valid_backup_is_green_and_hash_tamper_is_detected(self) -> None:
-        backup_dir = self.workspace / "backups"
+        backup_dir = self.workspace / "isolierte_backups"
         backup = backup_dir / "manual.sqlite3"
         create_backup(self.services.database, backup)
-        item = self.service().snapshot().item("BACKUP")
+        service = self.service(backup_dir=backup_dir)
+        item = service.snapshot().item("BACKUP")
         self.assertEqual(item.state, DiagnosisState.READY)
 
         with backup.open("ab") as handle:
             handle.write(b"tamper")
-        item = self.service().snapshot().item("BACKUP")
+        item = service.snapshot().item("BACKUP")
         self.assertEqual(item.state, DiagnosisState.BLOCKED)
         self.assertIn("Keine vorhandene Sicherung", item.summary)
 
