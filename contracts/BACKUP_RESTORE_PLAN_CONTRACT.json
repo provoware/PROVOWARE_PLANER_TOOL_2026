@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "contract_id": "PROVOWARE-BACKUP-RESTORE-PLAN",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "scope": "I015",
+  "physical_restore_core": "storage.backup.restore_backup",
+  "parallel_restore_path_forbidden": true,
+  "candidate_qualification": {
+    "read_only": true,
+    "backup_root_boundary_required": true,
+    "regular_file_required": true,
+    "manifest_required": true,
+    "backup_sha256_required": true,
+    "manifest_sha256_required": true,
+    "manifest_size_match_required": true,
+    "sqlite_quick_check_required": true,
+    "schema_version_required": 4
+  },
+  "restore_plan": {
+    "immutable": true,
+    "canonical_sha256_required": true,
+    "binds": [
+      "backup_path",
+      "backup_sha256",
+      "backup_size",
+      "manifest_path",
+      "manifest_sha256",
+      "backup_schema_version",
+      "target_path",
+      "target_existed",
+      "target_sha256",
+      "target_size",
+      "prepared_at"
+    ]
+  },
+  "commit_protocol": ["PRECHECK", "COMMIT", "POSTCHECK"],
+  "precheck": {
+    "plan_hash_required": true,
+    "candidate_requalification_required": true,
+    "backup_unchanged_required": true,
+    "manifest_unchanged_required": true,
+    "target_unchanged_required": true
+  },
+  "postcheck": {
+    "restored_hash_equals_planned_backup_required": true,
+    "sqlite_quick_check_required": true,
+    "schema_version_required": 4,
+    "rollback_on_failure_required": true
+  },
+  "transport_boundary": {
+    "backup_files_in_code_packages_forbidden": true,
+    "restore_candidates_in_code_packages_forbidden": true,
+    "pre_restore_copies_in_code_packages_forbidden": true,
+    "workspace_database_in_code_packages_forbidden": true
+  },
+  "gui_execution_in_i015": false,
+  "schema_migration_in_i015": false
+}
