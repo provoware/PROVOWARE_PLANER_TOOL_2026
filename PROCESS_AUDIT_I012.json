@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "audit_id": "PROVOWARE-I012-PROCESS-AUDIT",
+  "source_iteration": "I012",
+  "source_main_commit": "f2e12bde3f4a6e3d8cd490018fb5e101819d281b",
+  "assessment": {
+    "overall_quality": "HOCH",
+    "precision": "HOCH_MIT_PROZESSLUECKEN",
+    "efficiency": "MITTEL_BIS_HOCH",
+    "main_issue": "Fehler wurden korrekt blockiert, aber teilweise erst nach unnötig teuren CI-Schritten erkannt."
+  },
+  "observed_remote_runs": {
+    "failed_before_success": 2,
+    "successful_primary_qualification": 1,
+    "successful_exact_sha_second_pass": 1,
+    "successful_main_postcheck": 1,
+    "total": 5
+  },
+  "avoidable_failures": [
+    {
+      "run_id": 31801663826,
+      "class": "STATIC_CONTRACT_TOKEN",
+      "finding": "I012-Validator verlangte einen sichtbaren GUI-Begriff, der erst nach Runtime-Setup geprüft wurde.",
+      "new_prevention": "P0_STATIC prüft Validator-/Quelltextverträge vor apt/pip."
+    },
+    {
+      "run_id": 31801747130,
+      "class": "DOCUMENTATION_CONTRACT",
+      "finding": "Zwei exakte README-Überschriften stoppten erst nach bereits bestandenen Zieltests und Matrizen.",
+      "new_prevention": "Stabile README-Abschnittsmarker werden in P0_STATIC geprüft."
+    }
+  ],
+  "precision_findings": [
+    {
+      "id": "P-001",
+      "severity": "HIGH",
+      "finding": "Repository-Soll wurde im Qualifikationslauf aus dem aktuellen Arbeitsbaum erzeugt und danach geprüft.",
+      "risk": "Ungeplante Dateien können sich selbst in das neue Soll aufnehmen.",
+      "remedy": "BASELINE_PLUS_DECLARED_DELTA"
+    },
+    {
+      "id": "P-002",
+      "severity": "MEDIUM",
+      "finding": "Exakte README-Überschriften dienten als Strukturvertrag.",
+      "risk": "Semantisch korrekte Dokumentation kann durch reine Umbenennung unnötig scheitern.",
+      "remedy": "STABLE_SECTION_MARKERS"
+    },
+    {
+      "id": "P-003",
+      "severity": "MEDIUM",
+      "finding": "Qualifikationsbericht im Repository attestiert den fachlichen Kandidaten vor dem Evidence-Overlay, während der finale Exact-SHA-Nachweis im Artefakt liegt.",
+      "risk": "Subject- und Evidence-Commit können für Leser ohne Modellkenntnis verwechselt werden.",
+      "remedy": "EXPLICIT_QUALIFICATION_SUBJECT_AND_EVIDENCE_OVERLAY_SEMANTICS"
+    }
+  ],
+  "efficiency_findings": [
+    {
+      "id": "E-001",
+      "finding": "apt/pip/Qt wurden vor billigen Strukturprüfungen eingerichtet.",
+      "remedy": "STATIC_FIRST"
+    },
+    {
+      "id": "E-002",
+      "finding": "Standard-/Historienprüfungen wurden über Einzelsteps und Autopilot teilweise redundant ausgeführt.",
+      "remedy": "ONE_GATE_ONE_EXECUTION_PER_PASS"
+    },
+    {
+      "id": "E-003",
+      "finding": "Keine Branch-concurrency blockierte veraltete parallele CI-Läufe.",
+      "remedy": "CONCURRENCY_CANCEL_IN_PROGRESS"
+    },
+    {
+      "id": "E-004",
+      "finding": "PySide6 wurde ohne setup-python pip cache installiert.",
+      "remedy": "LOCKFILE_BOUND_PIP_CACHE"
+    }
+  ],
+  "target_state_i013": {
+    "avoidable_failed_remote_runs_target": 0,
+    "static_failure_before_runtime_setup_target": true,
+    "duplicate_gate_executions_per_pass_target": 0,
+    "unplanned_repository_paths_target": 0,
+    "exact_sha_second_pass_preserved": true,
+    "main_postcheck_preserved": true
+  }
+}
