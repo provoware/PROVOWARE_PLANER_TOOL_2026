@@ -67,6 +67,13 @@ def load(path: str) -> dict:
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 
+def _iteration_number(value: object) -> int:
+    try:
+        return int(str(value).removeprefix("I"))
+    except ValueError:
+        return -1
+
+
 def validate() -> dict:
     errors: list[str] = []
     files = {
@@ -79,22 +86,22 @@ def validate() -> dict:
 
     version = load("VERSION.json")
     contract = load("PROJECT_CONTRACT.json")
-    status = load("PROJEKTSTATUS.json")
     start_standard = load("standards/START_STANDARD.json")
     catalog = load("errors/FEHLERKATALOG.json")
 
-    if version.get("iteration") != "I003" or version.get("version") != "0.3.0-dev.1":
-        errors.append("I003_VERSION_NICHT_PROMOVIERT")
-    if contract.get("foundation", {}).get("current_iteration") != "I003":
-        errors.append("I003_VERTRAG_NICHT_PROMOVIERT")
-    if status.get("iteration") != "I003":
-        errors.append("I003_STATUS_NICHT_PROMOVIERT")
+    current_iteration = _iteration_number(version.get("iteration"))
+    if current_iteration < 3:
+        errors.append("I003_GATE_NOCH_NICHT_ERREICHT")
+    if current_iteration == 3 and version.get("version") != "0.3.0-dev.1":
+        errors.append("I003_VERSION_FUER_I003_FALSCH")
 
     development = contract.get("development", {})
     for field in (
         "deterministic_start_state_machine_required",
         "fault_injection_required",
         "safe_recovery_required",
+        "real_workspace_probe_required",
+        "runtime_user_feedback_required",
     ):
         if development.get(field) is not True:
             errors.append(f"I003_VERTRAG_FELD_FEHLT: {field}")
@@ -122,6 +129,7 @@ def validate() -> dict:
         "repository_files": len(files),
         "runtime_steps": len(REQUIRED_STEPS),
         "fault_scenarios": len(REQUIRED_FAULTS),
+        "current_iteration": current_iteration,
     }
 
 
@@ -130,6 +138,7 @@ def main() -> int:
     print(f"I003-VALIDATOR: {result['status']}")
     print(f"Runtime-Schritte: {result['runtime_steps']}")
     print(f"Pflicht-Faults: {result['fault_scenarios']}")
+    print(f"Aktuelle Iteration: I{result['current_iteration']:03d}")
     for error in result["errors"]:
         print(f"FEHLER: {error}")
     print("MASCHINENLESBAR:", json.dumps(result, ensure_ascii=False, sort_keys=True))
