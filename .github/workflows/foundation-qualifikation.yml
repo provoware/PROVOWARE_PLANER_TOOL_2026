@@ -25,9 +25,17 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
 
       - name: P0 statische Vorprüfung ohne Runtime-Setup
         run: python3 tools/autopilot/preflight.py
+
+      - name: Sollbestand aus Baseline und Iterationsplan materialisieren
+        run: |
+          python3 tools/autopilot/candidate_inventory.py --write-manifest
+          python3 tools/autopilot/manifest_builder.py --write
+          python3 tools/autopilot/manifest_builder.py --check
+          python3 tools/autopilot/standard_validator.py
 
       - name: Python 3.12 mit Lockdatei-Cache bereitstellen
         uses: actions/setup-python@v5
