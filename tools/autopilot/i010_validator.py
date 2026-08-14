@@ -142,6 +142,7 @@ def validate() -> dict:
             errors.append(f"I010_GUI_BESTANDTEIL_FEHLT: {token}")
 
     runtime = "NOT_RUN"
+    schema = 0
     try:
         from services.factory import open_planner_services
         from services.resolution_service import ResolutionService
@@ -152,6 +153,7 @@ def validate() -> dict:
 
         with tempfile.TemporaryDirectory(prefix="provoware-i010-validator-") as temp:
             services = open_planner_services(Path(temp) / "planer.sqlite3")
+            schema = services.database.schema_version()
             zone = ZoneInfo("Europe/Berlin")
             start = datetime(2026, 8, 14, 15, 0, tzinfo=zone)
             end = start + timedelta(hours=1)
@@ -187,6 +189,11 @@ def validate() -> dict:
         errors.append(f"I010_RUNTIME_FEHLER: {type(exc).__name__}: {exc}")
         runtime = "FAIL"
 
+    if current == 10 and schema != 3:
+        errors.append(f"I010_SCHEMA_VERSION_FALSCH: {schema}")
+    elif current > 10 and schema < 3:
+        errors.append(f"I010_HISTORISCHE_SCHEMA_BASIS_FEHLT: {schema}")
+
     expected_chain = ["I002", "I003", "I004", "I005", "I006", "I007", "I008", "I009", "I010"]
     if contract.get("qualification", {}).get("historical_gate_chain") != expected_chain:
         errors.append("I010_HISTORISCHE_KETTE_FALSCH")
@@ -195,7 +202,7 @@ def validate() -> dict:
         "status": "PASS" if not errors else "FAIL",
         "errors": errors,
         "repository_files": len(files),
-        "schema_version": 3,
+        "schema_version": schema,
         "runtime": runtime,
     }
 

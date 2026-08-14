@@ -44,7 +44,11 @@ class I009ThreeWaySyncTest(unittest.TestCase):
         baselines = self.services.sync.baselines(self.link.link_id)
         self.assertEqual({item.field_id for item in baselines}, {"TITLE", "DESCRIPTION", "START_AT", "DUE_END"})
         self.assertTrue(all(len(item.baseline_sha256) == 64 for item in baselines))
-        self.assertEqual(self.services.database.schema_version(), 3)
+        self.assertGreaterEqual(
+            self.services.database.schema_version(),
+            3,
+            "I009 benötigt mindestens Schema 3; additive spätere Migrationen sind zulässig.",
+        )
 
     def test_todo_only_change_commits_to_calendar_and_receipt(self) -> None:
         changed = self.services.todos.update_todo(
