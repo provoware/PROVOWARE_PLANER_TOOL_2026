@@ -69,7 +69,7 @@ class CalendarRepository:
         return event
 
     def get(self, event_id: str, *, include_deleted: bool = False) -> CalendarEvent:
-        with self.database.connect() as connection:
+        with self.database.session() as connection:
             sql = "SELECT * FROM calendar_events WHERE event_id = ?"
             params: list[object] = [event_id]
             if not include_deleted:
@@ -130,7 +130,7 @@ class CalendarRepository:
                 )
 
     def list_between(self, start: datetime, end: datetime) -> list[CalendarEvent]:
-        with self.database.connect() as connection:
+        with self.database.session() as connection:
             rows = connection.execute(
                 """
                 SELECT * FROM calendar_events
@@ -144,7 +144,7 @@ class CalendarRepository:
         return [_event(row) for row in rows]
 
     def marker_types(self) -> list[MarkerType]:
-        with self.database.connect() as connection:
+        with self.database.session() as connection:
             rows = connection.execute(
                 "SELECT * FROM marker_types ORDER BY sort_order"
             ).fetchall()
