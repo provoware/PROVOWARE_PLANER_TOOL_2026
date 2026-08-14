@@ -3,10 +3,10 @@
 Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungswerkzeug für Linux. Der Planner wird als wartbarer modularer Monolith entwickelt und autonom qualifiziert.
 
 ## 1. Projektstatus
-- **Version:** `0.11.0-dev.1`
-- **Iteration:** `I011`
-- **Checkpoint:** `C011-SYNC-JOURNAL-RECOVERY`
-- **Status:** `QUALIFIZIERT / GRÜN`
+- **Version:** `0.12.0-dev.1`
+- **Iteration:** `I012`
+- **Checkpoint:** `C012-DIAGNOSE-DASHBOARD`
+- **Status:** `IN_ARBEIT / GELB` bis zur vollständigen I012-Remotequalifikation
 - **Zielplattform:** Linux, insbesondere Ubuntu-/Kubuntu-Derivate
 - **Betrieb:** lokal und offline-first
 - **Technische Nutzerabnahme:** nicht Bestandteil der Pflicht-Freigabekette
@@ -24,13 +24,10 @@ Tag, Woche, Monat und Jahr; Termine und fünf editierbare Markierungen.
 Aufgaben, Status, Priorität, Fälligkeit, Unteraufgaben, Fortschritt und sichere Kalender-Verknüpfungen.
 
 ### Synchronisation
-I009 führt Feld-Baselines, Drei-Wege-Vergleich, atomare SyncPlans und Audit-Receipts ein. I010 ergänzt die explizite, hashgebundene Konfliktentscheidung über neue ResolutionPlans. I011 ergänzt ein ausschließlich lesendes Synchronisationsjournal sowie neue, hashgebundene RecoveryPlans.
+I009 führt Feld-Baselines, Drei-Wege-Vergleich, atomare SyncPlans und Audit-Receipts ein. I010 ergänzt die explizite, hashgebundene Konfliktentscheidung über ResolutionPlans. I011 ergänzt ein read-only Synchronisationsjournal und stale-sichere RecoveryPlans.
 
-### Synchronisationsjournal
-Neue I011-Transaktionen speichern gemeinsam mit dem Audit-Receipt einen unveränderlichen Vorher-/Nachher-Snapshot. Ältere I009/I010-Receipts bleiben gültige Nachweise, besitzen aber keine erfundenen historischen Werte und sind deshalb nicht automatisch wiederherstellbar.
-
-### Dashboard und Diagnose
-Die zentrale Dashboard-/Diagnosezentrale folgt in I012. Bis dahin bleiben Start-, Datenbank-, Synchronisations- und Journaldiagnosen in ihren qualifizierten Fachmodulen.
+### Diagnose- und Recovery-Zentrale
+I012 bündelt fünf vorhandene Nachweisbereiche in einer gemeinsamen read-only Oberfläche: Startzustand, SQLite-Integrität, Journal-Integrität, Backup-Nachweise und Recovery-Blockaden. Die Zentrale besitzt keinen eigenen Reparatur-, Restore-, Sync- oder Recovery-Commit-Pfad.
 
 ## 4. Oberfläche und globale Gestaltung
 Die Oberfläche verwendet zentrale Designregeln, skalierbare Schrift, Tastaturnavigation und textliche Statusaussagen. Farbe allein trägt keine Bedeutung.
@@ -40,15 +37,19 @@ Die Oberfläche verwendet zentrale Designregeln, skalierbare Schrift, Tastaturna
 - ▲ **GELB – EINGESCHRÄNKT**
 - ● **ROT – BLOCKIERT**
 
+Gelb bedeutet in I012 auch: ein optionaler Nachweis fehlt oder ein RecoveryPlan wird absichtlich sicher blockiert. Rot ist für echte Integritäts-, Manipulations- oder Lesefehler reserviert.
+
 ## 6. Klick-&-Start
 Der Start-Orchestrator prüft Betriebssystem, Runtime, Programmdateien, Manifeste, Konfiguration, Workspace, Datenbank, Migrationen, Recovery, Module und GUI. Relevante Aktionen folgen `PRECHECK → AKTION → POSTCHECK`.
 
+I012 speichert den ohnehin erzeugten Startbericht standardmäßig atomar als `LETZTER_STARTBERICHT.json` im Arbeitsbereich. Die Diagnosezentrale liest diesen Nachweis nur.
+
 ## 7. Daten und Sicherheit
-SQLite arbeitet mit Foreign Keys, WAL, `synchronous=FULL`, Transaktionen, hashgebundenen Migrationen und Vor-Migrations-Sicherungen. I011 führt Migration `0004_sync_journal_snapshots.sql` ein und hebt das Datenbankschema auf Version 4.
+SQLite arbeitet mit Foreign Keys, WAL, `synchronous=FULL`, Transaktionen, hashgebundenen Migrationen und Vor-Migrations-Sicherungen. Das Datenbankschema bleibt in I012 unverändert auf Version 4; I012 führt bewusst keine neue Migration ein.
 
-Ein neuer Journal-Snapshot wird innerhalb derselben `BEGIN IMMEDIATE`-Transaktion wie Nutzdaten, Baselines, Linkfortschreibung und Audit-Receipt geschrieben. Ein Crash darf deshalb weder ein Receipt ohne Snapshot noch einen Snapshot ohne zugehörigen Commit hinterlassen.
+Die Datenbankdiagnose öffnet die aktive SQLite-Datei mit `mode=ro`, setzt `PRAGMA query_only=ON` und führt `quick_check` aus. Backup-Kandidaten werden ebenso ausschließlich lesend auf SQLite-Integrität, Manifest und SHA-256 geprüft.
 
-Ein RecoveryPlan darf historische Werte niemals frei aus dem Journal zurückschreiben. Ein historischer Zielwert muss im aktuellen Datenstand auf mindestens einer Seite beweisbar vorhanden sein und über die bestehende Link-Richtung durch denselben I009-Transaktionskern übertragen werden können. Andernfalls bleibt der Plan blockiert.
+Ein RecoveryPlan darf historische Werte niemals frei aus dem Journal zurückschreiben. I012 zeigt lediglich neu berechnete I011-Recovery-Vorschauen und deren Blockierungsgründe an; ausgeführt wird nichts.
 
 ## 8. Globale Standards
 Verbindliche Standards liegen unter `standards/` und sind über `standards/STANDARD_INDEX.json` registriert. Der Vorrang lautet `PROVOWARE_GLOBAL_STANDARD → PROJECT_CONTRACT → Modulvertrag → konkrete Konfiguration`.
@@ -57,7 +58,7 @@ Verbindliche Standards liegen unter `standards/` und sind über `standards/STAND
 `REPOSITORY_MANIFEST.json` ist das Soll-Inventar des vollständigen Entwicklungsbaums. Jede Iteration prüft fehlende und unerwartete Dateien, Projekt-/Versionskonsistenz, Manifeste, SHA-256-Nachweise und relevante Dateimodi.
 
 ## 10. Autonomer Entwicklungs- und Prüfautopilot
-`tools/autopilot/autopilot.py qualifizieren` führt globale Standards und alle historischen Pflichtgates bis zur aktuellen Iteration aus. `FAIL` und `NOT_RUN` blockieren Freigaben. Die Remoteprüfung endet mit einem exakten Evidence-SHA-Zweitpass.
+`tools/autopilot/autopilot.py qualifizieren` führt globale Standards und alle historischen Pflichtgates bis zur aktuellen Iteration aus. `FAIL` und `NOT_RUN` blockieren Freigaben. I012 ergänzt das `I012-DIAGNOSE-DASHBOARD-GATE`.
 
 ## 11. Historische Entwicklung
 - **I002:** Manifest-/Evidence-Kette und Remote-Tree-Receipt.
@@ -70,12 +71,13 @@ Verbindliche Standards liegen unter `standards/` und sind über `standards/STAND
 - **I009:** Feld-Baselines, Drei-Wege-Vergleich, atomarer SyncPlan und Audit-Receipt.
 - **I010:** Synchronisations-Control-GUI und immutable ResolutionPlan.
 - **I011:** read-only Journal, hashgebundene Vorher-/Nachher-Snapshots und stale-sichere RecoveryPlans.
+- **I012:** read-only Diagnose-/Recovery-Zentrale mit Start-, Datenbank-, Journal-, Backup- und Recovery-Nachweisen.
 
 ## 12. Kalender↔Todo-Kopplungsvertrag
 Todo und Termin bleiben eigenständige Objekte. Die Kopplung ist ein versionierter Soft-Link. Physische Endpunktlöschung ist geschützt; Entkoppeln löscht keine Nutzdaten.
 
-## 13. Read-only Synchronisationsvorschau
-`SynchronizationPreviewService` bleibt als reine Diagnoseebene ohne Schreibschnittstelle erhalten. Sie wird durch I009–I011 nicht ersetzt.
+## 13. Read-only Diagnoseprinzip
+Die Diagnosezentrale ist Beobachter, nicht Reparaturinstanz. Sie darf keine Migration ausführen, kein Backup wiederherstellen, keinen Sync committen, keinen RecoveryPlan committen und keine Nutzdaten verändern. Für risikobehaftete Aktionen bleiben ausschließlich die bereits qualifizierten Fachservices zuständig.
 
 ## 14. Feld-Baseline und Drei-Wege-Vergleich
 Für `TITLE`, `DESCRIPTION`, `START_AT` und `DUE_END` werden typisierte kanonische Werte und SHA-256-Feldzustände verwendet. `BOTH_DIFFERENT`, fehlende Baselines und getrennte Endpunkte bleiben fail-closed. `due_at ↔ end_at` bleibt semantisch prüfpflichtig.
@@ -84,15 +86,13 @@ Für `TITLE`, `DESCRIPTION`, `START_AT` und `DUE_END` werden typisierte kanonisc
 Der verbindliche Schreibpfad bleibt:
 `PRECHECK → atomarer COMMIT → POSTCHECK → Audit-Receipt → quick_check`.
 
-I010 verändert einen erkannten SyncPlan nicht, sondern erzeugt einen neuen ResolutionPlan. I011 verändert weder alte Receipts noch alte Entscheidungen, sondern erzeugt bei einer zulässigen Recovery einen neuen immutable RecoveryPlan. Jeder neue Plan bindet Quellnachweis, aktuellen Plan, aktuelle Objektversionen und aktuelle Feld-Hashes.
+I012 fügt diesem Pfad keinen neuen Schreiber hinzu. Die Recovery-Diagnose verwendet ausschließlich `build_recovery()` als Vorschau und zeigt `READY` beziehungsweise sichere Blockaden an.
 
 ## 16. Aktueller Checkpoint
-**C011 — SYNC-JOURNAL-RECOVERY.** Implementiert werden das read-only Synchronisationsjournal, Migration 0004, atomare Snapshot-Nachweise, Integritätsprüfung alter und neuer Receipts, Vorher-/Nachher-Diff, immutable RecoveryPlans sowie eigene Fault-/Crash- und GUI-Matrizen. I011 ist vollständig qualifiziert; der Evidence-SHA-Zweitpass bleibt die verbindliche Promotionsvoraussetzung für `main`.
+**C012 — DIAGNOSE-DASHBOARD.** Implementiert sind `DiagnosticsService`, Diagnose-ViewModel, Qt-Diagnosezentrale, `Ctrl+Shift+D`-Integration, standardmäßig gespeicherter letzter Startbericht, Service-/GUI-Zieltests und eine 35er Offscreen-Matrix.
 
-Alte I009/I010-Receipts ohne Snapshot werden ausdrücklich als `LEGACY_NO_SNAPSHOT` dargestellt: auditierbar, aber nicht automatisch recoverbar. Manipulierte Receipt-/Snapshot-Daten werden als `TAMPERED` hart blockiert.
+## 17. Qualifikationsziel
+Vor Promotion nach `main` müssen I002→I012, I012-Zieltests, die 35er Diagnose-GUI-Matrix, die bestehenden Todo-/Kalender-/Sync-/Crashregressionen, die komplette Unit-Suite, Standards, Repository-Inventar, Remote-Tree und ein exakter read-only Evidence-SHA-Zweitpass erfolgreich sein.
 
-## 17. Nächster logischer Schritt
-Nach erfolgreicher I011-Qualifikation: **I012 — Dashboard + Diagnose-/Recovery-Zentrale.** Dort sollen Journal-Integrität, Datenbankzustand, Sicherungsstatus, Startdiagnose und blockierte RecoveryPläne read-only zusammengeführt werden.
-
-## 18. Weiterführende Verbesserung
-Die Diagnosezentrale soll niemals einen zweiten Reparaturpfad eröffnen. Sie darf nur qualifizierte Fachservices aufrufen und sollte jeden risikobehafteten Vorgang über einen neuen, unveränderlichen Plan mit PRECHECK und nachvollziehbarem Receipt freigeben.
+## 18. Nächster logischer Schritt
+Nach vollständig qualifiziertem I012: **I013 — immutable Backup-/RestorePlan mit Kandidatenqualifikation.** Die bestehende Backup-/Restore-Implementierung soll dabei wiederverwendet werden; Vorschau und tatsächliche Wiederherstellung bleiben strikt getrennt.
