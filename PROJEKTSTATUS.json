@@ -3,14 +3,14 @@
   "project_name": "PROVOWARE PLANER TOOL 2026",
   "project_id": "PROVOWARE-PLANER-2026",
   "repository": "provoware/PROVOWARE_PLANER_TOOL_2026",
-  "version": "0.7.0-dev.1",
+  "version": "0.8.0-dev.1",
   "phase": "FOUNDATION",
-  "iteration": "I007",
-  "checkpoint": "C007-TODO-GUI-VIEWMODEL",
-  "status": "QUALIFIZIERT",
-  "ampel": "GRUEN",
+  "iteration": "I008",
+  "checkpoint": "C008-SYNC-CONFLICT-PREVIEW",
+  "status": "IN_ARBEIT",
+  "ampel": "GELB",
   "planning_percent": 100,
-  "implementation_percent": 62,
+  "implementation_percent": 68,
   "qualification_percent": 93,
   "release_readiness_percent": 18,
   "mandatory_user_testing": false,
@@ -26,6 +26,6 @@
     "I006-TODO-DOMAIN-LINK",
     "I007-TODO-GUI-VIEWMODEL"
   ],
-  "next_logical_step": "I008 Kalender↔Todo-Synchronisations- und Konfliktauflösungsvertrag",
-  "improvement_recommendation": "I008 mit reiner Synchronisationsvorschau beginnen; BOTH_CHANGED ohne explizite verlustfreie Regel blockieren"
+  "next_logical_step": "I008 Remote-Qualifikation der read-only Synchronisationsvorschau",
+  "improvement_recommendation": "Nach I008 Feld-Baseline oder Feld-Hashes einführen, bevor echte Synchronisationsschreibvorgänge erlaubt werden"
 }
