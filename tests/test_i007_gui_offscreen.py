@@ -143,6 +143,23 @@ class I007TodoGuiOffscreenTest(unittest.TestCase):
         finally:
             reopened.close()
 
+    def test_invalid_gui_settings_fall_back_to_defaults(self) -> None:
+        settings = self.workspace / "todo_gui_settings.json"
+        settings.write_text('{"schema_version": 1, "font_scale_percent": null}', encoding="utf-8")
+        reopened = TodoWindow(
+            self.services.todos,
+            self.services.links,
+            self.services.calendar,
+            repo_root=ROOT,
+            workspace=self.workspace,
+            timezone_name="Europe/Berlin",
+        )
+        try:
+            self.assertEqual(reopened.view_model.mode, TodoListMode.TODAY)
+            self.assertEqual(reopened.view_model.font_scale_percent, 100)
+        finally:
+            reopened.close()
+
 
 if __name__ == "__main__":
     unittest.main()

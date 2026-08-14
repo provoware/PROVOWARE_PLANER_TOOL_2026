@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 from datetime import datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -27,16 +26,9 @@ from services.todo_service import TodoCalendarLinkService, TodoService
 from todo_core.model import TodoStatus
 from ui.design import DesignSystem, DesignTokens
 from ui.todo_dialogs import LinkDialog, TodoDialog
+from ui.todo_settings import MODE_TEXT, TODO_SETTINGS_SCHEMA_VERSION, TodoGuiSettings
 from viewmodel.todo_query import STATUS_TEXT, TodoListMode
 from viewmodel.todo_viewmodel import TodoViewModel
-
-MODE_TEXT = {
-    TodoListMode.TODAY: "Heute",
-    TodoListMode.THIS_WEEK: "Diese Woche",
-    TodoListMode.OVERDUE: "Überfällig",
-    TodoListMode.WITHOUT_DATE: "Ohne Datum",
-    TodoListMode.DONE: "Erledigt",
-}
 
 
 class TodoWindow(QMainWindow):
@@ -235,29 +227,21 @@ class TodoWindow(QMainWindow):
             self.addAction(action)
 
     def _load_settings(self) -> None:
-        if not self._settings_path.is_file():
+        settings = TodoGuiSettings.load(
+            self._settings_path,
+            valid_font_scales=self.tokens.font_scales,
+        )
+        if settings is None:
             return
-        try:
-            data = json.loads(self._settings_path.read_text(encoding="utf-8"))
-            scale = int(data.get("font_scale_percent", 100))
-            if scale in self.tokens.font_scales:
-                self.view_model.font_scale_percent = scale
-            mode = data.get("todo_view_mode")
-            if mode:
-                self.view_model.mode = TodoListMode(mode)
-        except Exception:
-            pass
+        self.view_model.font_scale_percent = settings.font_scale_percent
+        self.view_model.mode = TodoListMode(settings.todo_view_mode)
 
     def _save_settings(self) -> None:
-        data = {
-            "schema_version": 1,
-            "font_scale_percent": self.view_model.font_scale_percent,
-            "todo_view_mode": self.view_model.mode.value,
-        }
-        self._settings_path.parent.mkdir(parents=True, exist_ok=True)
-        temp = self._settings_path.with_suffix(".tmp")
-        temp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        temp.replace(self._settings_path)
+        TodoGuiSettings(
+            schema_version=TODO_SETTINGS_SCHEMA_VERSION,
+            font_scale_percent=self.view_model.font_scale_percent,
+            todo_view_mode=self.view_model.mode.value,
+        ).save(self._settings_path)
 
     def closeEvent(self, event) -> None:
         self._save_settings()

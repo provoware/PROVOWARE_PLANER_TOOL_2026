@@ -67,6 +67,26 @@ class I015RestorePlanTest(unittest.TestCase):
         self.assertEqual(result.state, CandidateState.BLOCKED)
         self.assertIn("RESTORE-CANDIDATE-HASH-001", result.reason)
 
+    def test_malformed_manifest_fields_are_blocked_without_crash(self) -> None:
+        manifest = self.backup.with_suffix(self.backup.suffix + ".json")
+        valid = json.loads(manifest.read_text(encoding="utf-8"))
+        invalid_documents = (
+            [valid],
+            {**valid, "schema_version": 2},
+            {**valid, "created_at": "2026-01-01T12:00:00"},
+            {**valid, "created_at": "kein-zeitpunkt"},
+            {**valid, "size": None},
+            {**valid, "size": "not-a-number"},
+            {**valid, "source": ""},
+        )
+
+        for document in invalid_documents:
+            with self.subTest(document=document):
+                manifest.write_text(json.dumps(document), encoding="utf-8")
+                result = self.restore.qualify_candidate(self.backup)
+                self.assertEqual(result.state, CandidateState.BLOCKED)
+                self.assertIn("RESTORE-CANDIDATE-003", result.reason)
+
     def test_restore_plan_is_frozen_and_hash_bound(self) -> None:
         plan = self.restore.prepare_restore(self.backup)
         self.assertTrue(plan.verify_hash())
