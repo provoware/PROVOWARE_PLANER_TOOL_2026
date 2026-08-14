@@ -22,7 +22,7 @@
 - [ ] `main` mit verbindlichen Statuschecks schützen
 - [ ] Release-/Evidence-Commits signieren
 
-## I002 bis I010 — qualifizierte Basis
+## I002 bis I011 — qualifizierte Basis
 - [x] I002 Manifest + Evidence Hardening
 - [x] I003 Klick-&-Start-Orchestrator
 - [x] I004 Kalender-Domainkern + SQLite
@@ -32,27 +32,27 @@
 - [x] I008 read-only Synchronisationsvorschau
 - [x] I009 Feld-Baseline + transaktionaler SyncPlan
 - [x] I010 Sync-Control-GUI + immutable ResolutionPlan
-- [x] I002 → I003 → I004 → I005 → I006 → I007 → I008 → I009 → I010 historisch qualifiziert
+- [x] I011 Synchronisationsjournal + sichere Recovery
+- [x] I002 → I003 → I004 → I005 → I006 → I007 → I008 → I009 → I010 → I011 historisch qualifiziert
 
-## I011 — Synchronisationsjournal + sichere Recovery
-- [x] Migration 0004 für hashgebundene Journal-Snapshots
-- [x] neue Snapshots atomar mit Audit-Receipt und Sync-Commit schreiben
-- [x] alte Receipts ohne Snapshot als `LEGACY_NO_SNAPSHOT` erhalten
-- [x] Receipt- und Snapshot-Hash bei jedem Journal-Lesezugriff verifizieren
-- [x] read-only JournalQuery und ViewModel
-- [x] Vorher-/Nachher-Feldvergleich in der GUI
-- [x] immutable RecoveryPlan mit Source-Receipt-, Snapshot- und Current-SyncPlan-Hash
-- [x] kein freies Zurückschreiben historischer Werte
-- [x] historische Zielwerte nur über aktuell beweisbare Endpoint-Werte übertragen
-- [x] Link-Richtung und DUE_END-Semantik bleiben bindend
-- [x] Stale-/Manipulationsschutz
-- [x] Recovery nutzt denselben I009-Transaktionskern
-- [x] Fault-/echte Crash-Matrix für Snapshotphase
-- [x] 35er Offscreen-Journal-GUI-Matrix
-- [x] zweistufige Remotequalifikation PASS
-- [x] I011-Stand nach zweistufiger Evidence-Prüfung per Fast-Forward nach `main` promoviert und auf `main` nachqualifiziert
+## I012 — Dashboard + Diagnose-/Recovery-Zentrale
+- [x] fünf read-only Diagnosebereiche definieren
+- [x] Datenbankprüfung über SQLite `mode=ro` + `query_only`
+- [x] Journal-Integrität über bestehenden I011-Service bündeln
+- [x] Backup-Dateien read-only auf SQLite-Integrität, Manifest und SHA-256 prüfen
+- [x] RecoveryPlan-Varianten nur lesend neu berechnen und Blockaden anzeigen
+- [x] fehlende optionale Nachweise als GELB statt Fehler darstellen
+- [x] Manipulations-/Integritätsverletzungen ROT blockieren
+- [x] GUI mit Symbol + Klartext statt Farbsignal allein
+- [x] Diagnosezentrale über `Ctrl+Shift+D` integrieren
+- [x] letzten Startbericht standardmäßig atomar im Arbeitsbereich speichern
+- [x] Service-/GUI-Zieltests und 35er Offscreen-Matrix
+- [x] keine Restore-, Sync-, Recovery- oder SQL-Write-Funktion in der Diagnosezentrale
+- [ ] vollständige Remotequalifikation PASS
+- [ ] Evidence-SHA read-only zweitprüfen
+- [ ] finalen Evidence-Commit per Fast-Forward nach `main` promoten und dort nachqualifizieren
 
-## I012 — nach I011
-- [ ] Dashboard + Diagnose-/Recovery-Zentrale
-- [ ] Journal-Integrität, Backup-Status, Datenbankprüfung und Startzustand read-only bündeln
-- [ ] keine neue parallele Reparatur-/Schreiblogik
+## I013 — nach I012
+- [ ] immutable Backup-/RestorePlan mit Kandidatenqualifikation
+- [ ] Restore-Vorschau strikt von tatsächlicher Ausführung trennen
+- [ ] vorhandenen qualifizierten Backup-/Restore-Kern wiederverwenden; kein paralleler Restore-Pfad
