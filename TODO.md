@@ -48,9 +48,8 @@
 - [x] letzten Startbericht standardmäßig atomar im Arbeitsbereich speichern
 - [x] Service-/GUI-Zieltests und 35er Offscreen-Matrix
 - [x] keine Restore-, Sync-, Recovery- oder SQL-Write-Funktion in der Diagnosezentrale
-- [ ] vollständige Remotequalifikation PASS
-- [ ] Evidence-SHA read-only zweitprüfen
-- [ ] finalen Evidence-Commit per Fast-Forward nach `main` promoten und dort nachqualifizieren
+
+Der Freigabestatus von I012 wird ausschließlich maschinenlesbar in `PROJEKTSTATUS.json`, `QUALIFICATION_REPORT.json` und `REMOTE_TREE_RECEIPT.json` geführt. Dadurch erzeugt die spätere Evidence-/`main`-Promotion keinen selbstwidersprüchlichen TODO-Zustand.
 
 ## I013 — nach I012
 - [ ] immutable Backup-/RestorePlan mit Kandidatenqualifikation
