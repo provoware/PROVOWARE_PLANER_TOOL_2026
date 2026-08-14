@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "state": "ATTESTED",
-  "subject_commit": "d12e7e4def7dfff0eb23d085111a8d352c5a6ea0",
-  "subject_tree": "a71cc1a533ac41ecd19f7211de28f68a5e0e79bb",
-  "entry_count": 188,
+  "subject_commit": "3896ba0c9ff269f5369fb60fc83365ab5682cf25",
+  "subject_tree": "42e342bb37bbc3f4de6c9d0ac9caac3cf02285f1",
+  "entry_count": 200,
   "subject_tree_entries": [
     {
       "path": ".github/workflows/foundation-qualifikation.yml",
@@ -83,6 +83,13 @@
       "status": "PASS"
     },
     {
+      "path": ".github/workflows/i012-qualifikation.yml",
+      "blob_sha": "866d9c13b4348b91be6e1654f8ca08f9407f1925",
+      "mode": "100644",
+      "size": 15595,
+      "status": "PASS"
+    },
+    {
       "path": "BUILD_MANIFEST.json",
       "blob_sha": "63c04e7d14497d6a9ab57b46b5b03ea2fad31ce8",
       "mode": "100644",
@@ -91,9 +98,9 @@
     },
     {
       "path": "CHANGELOG.md",
-      "blob_sha": "007a435c8067d4a3028c715cd9885c3b4804f044",
+      "blob_sha": "e0e498a9adf16894fdef92701879c8aa02c084d2",
       "mode": "100644",
-      "size": 2403,
+      "size": 3302,
       "status": "PASS"
     },
     {
@@ -105,37 +112,37 @@
     },
     {
       "path": "MANIFEST_INDEX.json",
-      "blob_sha": "ee82e999cd2fb4ec5de5cf1fca30ee6299c9058f",
+      "blob_sha": "6ab74c025c3142f43cd9a794aeba141f63141f1c",
       "mode": "100644",
       "size": 813,
       "status": "PASS"
     },
     {
       "path": "PROJECT_CONTRACT.json",
-      "blob_sha": "763b30f2fbb67439f7731df6b3ca50cc17d088fd",
+      "blob_sha": "a7515cc72b44db125a30c7ebc321758a54fe3687",
       "mode": "100644",
-      "size": 4745,
+      "size": 5065,
       "status": "PASS"
     },
     {
       "path": "PROJEKTSTATUS.json",
-      "blob_sha": "2d3545a28dc04bd4c94fed01253331d61b71be34",
+      "blob_sha": "b26c1bf4bc55648090a00b081d95cb70ce590264",
       "mode": "100644",
-      "size": 1250,
+      "size": 1268,
       "status": "PASS"
     },
     {
       "path": "QUALIFICATION_REPORT.json",
-      "blob_sha": "7e09de5e11485665f52ee1b14b6ba47a91d663e1",
+      "blob_sha": "4e754f0f056dd93daf918b5c061f237ec72c6322",
       "mode": "100644",
       "size": 1209,
       "status": "PASS"
     },
     {
       "path": "README.md",
-      "blob_sha": "8703c402feffaac55ef7b8da9af23da5aa3e1b49",
+      "blob_sha": "7c1b68b2e02d56a5e59b92eb8cf6ad476fb3d89b",
       "mode": "100644",
-      "size": 7273,
+      "size": 7359,
       "status": "PASS"
     },
     {
@@ -147,7 +154,7 @@
     },
     {
       "path": "REMOTE_TREE_RECEIPT.json",
-      "blob_sha": "33786a1e0baf7346543fcd0ce506f44ab5e218c5",
+      "blob_sha": "824016085a42ce0a14ba04ec3e772d37be29ed1b",
       "mode": "100644",
       "size": 35780,
       "status": "PASS"
@@ -161,30 +168,30 @@
     },
     {
       "path": "SHA256_DATEI_INVENTAR.json",
-      "blob_sha": "1cfc1427dbb0d121246b74db8efe4ed8a4be132a",
+      "blob_sha": "66270ffdc36bd2b7e1eace7073eaa13bb9e87ad4",
       "mode": "100644",
       "size": 34903,
       "status": "PASS"
     },
     {
       "path": "SOURCE_MANIFEST.json",
-      "blob_sha": "b9337a7c1e8bfffde13ef6b57f19708f72f3f827",
+      "blob_sha": "b7ca78e50bf0b38a778614bf5e38cf74e8ac1442",
       "mode": "100644",
       "size": 31682,
       "status": "PASS"
     },
     {
       "path": "TODO.md",
-      "blob_sha": "678ac6d6768f850b4b80babbc7d1b17ae8b7bee4",
+      "blob_sha": "2c68c9b249d72d0727b8c24f056a6dfc54021c4f",
       "mode": "100644",
-      "size": 2791,
+      "size": 2963,
       "status": "PASS"
     },
     {
       "path": "VERSION.json",
-      "blob_sha": "1164ee692d948d0d079b966a6b0d6acefe0c652f",
+      "blob_sha": "e258fb2e5ca533e43d6ae5828b15ff74e2d548f2",
       "mode": "100644",
-      "size": 351,
+      "size": 348,
       "status": "PASS"
     },
     {
@@ -220,6 +227,13 @@
       "blob_sha": "c746cf9f396b71ea5c98868a00d7e12de0f57f18",
       "mode": "100644",
       "size": 1262,
+      "status": "PASS"
+    },
+    {
+      "path": "contracts/DIAGNOSTICS_DASHBOARD_CONTRACT.json",
+      "blob_sha": "4dc764ae45a0b92fa7d6b9196a1e6ec6e97d18e3",
+      "mode": "100644",
+      "size": 1630,
       "status": "PASS"
     },
     {
@@ -269,6 +283,20 @@
       "blob_sha": "6159d00be181f2f9b6bbca1a13599eb6a9a9ff88",
       "mode": "100644",
       "size": 1735,
+      "status": "PASS"
+    },
+    {
+      "path": "diagnostics_core/__init__.py",
+      "blob_sha": "95fc5a6e1aa290eb74a1a76d62ebce2dce295688",
+      "mode": "100644",
+      "size": 215,
+      "status": "PASS"
+    },
+    {
+      "path": "diagnostics_core/model.py",
+      "blob_sha": "b488a2a7381dafc7b528386151f4ddbc900566c4",
+      "mode": "100644",
+      "size": 1296,
       "status": "PASS"
     },
     {
@@ -339,6 +367,13 @@
       "blob_sha": "dcb9ab78afda98a45d0d0f79a1439119042d69fe",
       "mode": "100644",
       "size": 2983,
+      "status": "PASS"
+    },
+    {
+      "path": "docs/I012_DIAGNOSE_DASHBOARD.md",
+      "blob_sha": "20efa5663a3bc6102c21df225909ea0e4a853491",
+      "mode": "100644",
+      "size": 2033,
       "status": "PASS"
     },
     {
@@ -493,6 +528,13 @@
       "blob_sha": "4d8ba7b9d3fce67978116a6d3cc7de88c0df5ee4",
       "mode": "100644",
       "size": 2626,
+      "status": "PASS"
+    },
+    {
+      "path": "services/diagnostics_service.py",
+      "blob_sha": "7ecbad73b9fa4fb58d1b8c4ccf110c4c72c593f9",
+      "mode": "100644",
+      "size": 11280,
       "status": "PASS"
     },
     {
@@ -951,6 +993,20 @@
       "status": "PASS"
     },
     {
+      "path": "tests/test_i012_diagnostics_gui.py",
+      "blob_sha": "f7ca4596cc59105a97cb89031a39ed135b9275a3",
+      "mode": "100644",
+      "size": 2382,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i012_diagnostics_service.py",
+      "blob_sha": "498c21e240bfa82c1a1a122feeffc310ee2e10c2",
+      "mode": "100644",
+      "size": 3522,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_manifest_builder.py",
       "blob_sha": "5871f8c4c30b6af4551f91c186872e609b6b67f4",
       "mode": "100644",
@@ -1015,9 +1071,9 @@
     },
     {
       "path": "tools/autopilot/autopilot.py",
-      "blob_sha": "5616e996c39ed4bc53218c53b46804136dcdc8ee",
+      "blob_sha": "9280eb08d4dc5a1e93470e60b5bc023de67b1f28",
       "mode": "100644",
-      "size": 3086,
+      "size": 3233,
       "status": "PASS"
     },
     {
@@ -1098,6 +1154,13 @@
       "status": "PASS"
     },
     {
+      "path": "tools/autopilot/i012_validator.py",
+      "blob_sha": "d8034825f45f64162142adaca0c5826b91f28039",
+      "mode": "100644",
+      "size": 6476,
+      "status": "PASS"
+    },
+    {
       "path": "tools/autopilot/manifest_builder.py",
       "blob_sha": "7e9f981602aa7443c4ab7921e04be7a6ae0862aa",
       "mode": "100644",
@@ -1168,10 +1231,17 @@
       "status": "PASS"
     },
     {
+      "path": "tools/i012_diagnostics_gui_matrix.py",
+      "blob_sha": "73e02e7adf13faf7dbb9a506ab6a35f27b9ffd76",
+      "mode": "100644",
+      "size": 2945,
+      "status": "PASS"
+    },
+    {
       "path": "tools/start_gui.py",
-      "blob_sha": "3beb11008fefdef060b0b93696d24222d788ae51",
+      "blob_sha": "dda6af5760c65cbd2fa14570e654045a98d19567",
       "mode": "100755",
-      "size": 3259,
+      "size": 3498,
       "status": "PASS"
     },
     {
@@ -1217,6 +1287,13 @@
       "status": "PASS"
     },
     {
+      "path": "ui/diagnostics_window.py",
+      "blob_sha": "0d182cbc310327bd3dca9263355bf0a23ad13564",
+      "mode": "100644",
+      "size": 4493,
+      "status": "PASS"
+    },
+    {
       "path": "ui/dialogs.py",
       "blob_sha": "959351c41592ed5ea62d505d450f196979ca9568",
       "mode": "100644",
@@ -1225,9 +1302,9 @@
     },
     {
       "path": "ui/planner_integration.py",
-      "blob_sha": "22764bd5e186c5a3114da33e6790091f920c8e82",
+      "blob_sha": "26a1417fbbfc25ea529497e802b6b155b31dbba4",
       "mode": "100644",
-      "size": 3550,
+      "size": 4765,
       "status": "PASS"
     },
     {
@@ -1277,6 +1354,13 @@
       "blob_sha": "da3beeae211dbf835bef76b2eaf86dec55a881c2",
       "mode": "100644",
       "size": 2852,
+      "status": "PASS"
+    },
+    {
+      "path": "viewmodel/diagnostics_viewmodel.py",
+      "blob_sha": "2f6431c6916db163095c2ea7d63ccbe728dc263f",
+      "mode": "100644",
+      "size": 1406,
       "status": "PASS"
     },
     {

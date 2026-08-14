@@ -6,7 +6,7 @@ Privates, portables und vollständig offline ausgerichtetes Ein-Nutzer-Planungsw
 - **Version:** `0.12.0-dev.1`
 - **Iteration:** `I012`
 - **Checkpoint:** `C012-DIAGNOSE-DASHBOARD`
-- **Status:** `IN_ARBEIT / GELB` bis zur vollständigen I012-Remotequalifikation
+- **Status:** `QUALIFIZIERT / GRÜN`
 - **Zielplattform:** Linux, insbesondere Ubuntu-/Kubuntu-Derivate
 - **Betrieb:** lokal und offline-first
 - **Technische Nutzerabnahme:** nicht Bestandteil der Pflicht-Freigabekette
