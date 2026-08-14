@@ -31,14 +31,16 @@ class I012DiagnosticsServiceTest(unittest.TestCase):
     def test_dashboard_snapshot_has_five_required_areas_and_no_data_write(self) -> None:
         todo = self.services.todos.create_todo(title="Unverändert")
         before = self.services.todos.get_todo(todo.todo_id)
+        receipts_before = len(self.services.journal.list_records())
         snapshot = self.service().snapshot()
         after = self.services.todos.get_todo(todo.todo_id)
+        receipts_after = len(self.services.journal.list_records())
         self.assertEqual(
             {item.item_id for item in snapshot.items},
             {"START", "DATABASE", "JOURNAL", "BACKUP", "RECOVERY"},
         )
         self.assertEqual(before, after)
-        self.assertEqual(self.services.sync.receipt_count_for_all(), 0)
+        self.assertEqual(receipts_before, receipts_after)
 
     def test_database_check_is_read_only_and_ready(self) -> None:
         item = self.service().snapshot().item("DATABASE")
