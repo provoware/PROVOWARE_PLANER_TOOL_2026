@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "catalog_id": "SYNC_HISTORY_FEHLERKATALOG",
+  "iteration": "I011",
+  "errors": [
+    {
+      "code": "SYNC-HISTORY-001",
+      "title": "Journal-Snapshot nicht lesbar",
+      "user_message": "Der gespeicherte Vorher-/Nachher-Nachweis ist nicht sicher lesbar. Es wird nichts wiederhergestellt.",
+      "severity": "BLOCKIERT"
+    },
+    {
+      "code": "SYNC-HISTORY-404",
+      "title": "Journalnachweis nicht gefunden",
+      "user_message": "Der ausgewählte Synchronisationsnachweis wurde nicht gefunden.",
+      "severity": "BLOCKIERT"
+    },
+    {
+      "code": "SYNC-HISTORY-POSTCHECK-001",
+      "title": "Journal-Snapshot nach Commit inkonsistent",
+      "user_message": "Der neue Journalnachweis konnte nicht vollständig bestätigt werden. Die Transaktion wird zurückgerollt.",
+      "severity": "BLOCKIERT"
+    },
+    {
+      "code": "RECOVERY-STALE-001",
+      "title": "Quell-Receipt verändert",
+      "user_message": "Der ausgewählte historische Nachweis stimmt nicht mehr mit der geprüften Version überein.",
+      "severity": "BLOCKIERT"
+    },
+    {
+      "code": "RECOVERY-STALE-002",
+      "title": "Quell-Snapshot verändert",
+      "user_message": "Der gespeicherte Vorher-/Nachher-Snapshot hat sich seit der Prüfung verändert.",
+      "severity": "BLOCKIERT"
+    },
+    {
+      "code": "RECOVERY-STALE-003",
+      "title": "Aktueller Datenstand verändert",
+      "user_message": "Todo, Kalender oder Link wurden nach der Recovery-Vorschau verändert. Bitte neu prüfen.",
+      "severity": "BLOCKIERT"
+    },
+    {
+      "code": "RECOVERY-TAMPER-004",
+      "title": "RecoveryPlan nicht autoritativ",
+      "user_message": "Der RecoveryPlan stimmt nicht mit dem aktuell neu berechneten Plan überein. Es wird nichts geschrieben.",
+      "severity": "BLOCKIERT"
+    },
+    {
+      "code": "RECOVERY-BLOCKED-005",
+      "title": "Recovery bleibt blockiert",
+      "user_message": "Die Wiederholung/Wiederherstellung ist mit dem aktuellen Datenstand nicht sicher ausführbar.",
+      "severity": "BLOCKIERT"
+    },
+    {
+      "code": "SYNC-HISTORY-UI-001",
+      "title": "Kein Journalnachweis ausgewählt",
+      "user_message": "Wählen Sie zuerst einen Journalnachweis aus.",
+      "severity": "HINWEIS"
+    },
+    {
+      "code": "SYNC-HISTORY-UI-002",
+      "title": "RecoveryPlan noch nicht geprüft",
+      "user_message": "Prüfen Sie zuerst ausdrücklich den neuen RecoveryPlan. Es wurde nichts ausgeführt.",
+      "severity": "HINWEIS"
+    }
+  ]
+}

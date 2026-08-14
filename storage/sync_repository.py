@@ -10,6 +10,7 @@ from sync_core.canonical import canonical_hash, canonical_json, payload_hash
 from sync_core.errors import SyncBaselineError, SyncPlanBlockedError, SyncPostcheckError, SyncStalePlanError
 from sync_core.faults import trigger
 from sync_core.fields import SYNC_FIELD_SPECS
+from sync_core.history import snapshot_hash, snapshot_payload
 from sync_core.model import PlanFieldAction, SyncAuditReceipt, SyncBaseline, SyncPlan
 from todo_core.model import LinkDirection
 
@@ -126,15 +127,25 @@ class SyncRepository:
             ).fetchall()
         return tuple(
             SyncBaseline(
-                link_id=row["link_id"], field_id=row["field_id"], baseline_json=row["baseline_json"],
-                baseline_sha256=row["baseline_sha256"], version=int(row["version"]),
+                link_id=row["link_id"],
+                field_id=row["field_id"],
+                baseline_json=row["baseline_json"],
+                baseline_sha256=row["baseline_sha256"],
+                version=int(row["version"]),
             )
             for row in rows
         )
 
     @staticmethod
-    def _update_entity(connection, table: str, id_column: str, entity_id: str, expected_version: int,
-                       values: dict[str, object], timestamp: str) -> int:
+    def _update_entity(
+        connection,
+        table: str,
+        id_column: str,
+        entity_id: str,
+        expected_version: int,
+        values: dict[str, object],
+        timestamp: str,
+    ) -> int:
         if not values:
             return expected_version
         assignments = [f"{column}=?" for column in values]
@@ -152,6 +163,7 @@ class SyncRepository:
         if not plan.write_permitted:
             raise SyncPlanBlockedError(f"SYNC-PLAN-001: Plan ist nicht schreibbar: {plan.blocking_reason}")
         timestamp = now.astimezone(timezone.utc).isoformat()
+
         with self.database.transaction() as connection:
             snapshot = self._snapshot(connection, plan.link_id)
             if snapshot.detached:
@@ -187,11 +199,22 @@ class SyncRepository:
                     raise SyncPlanBlockedError(f"SYNC-PLAN-002: Feld {spec.field_id} ist nicht commitfähig")
 
             todo_after = self._update_entity(
-                connection, "todos", "todo_id", snapshot.todo_id, snapshot.todo_version, todo_updates, timestamp
+                connection,
+                "todos",
+                "todo_id",
+                snapshot.todo_id,
+                snapshot.todo_version,
+                todo_updates,
+                timestamp,
             )
             event_after = self._update_entity(
-                connection, "calendar_events", "event_id", snapshot.event_id, snapshot.event_version,
-                event_updates, timestamp
+                connection,
+                "calendar_events",
+                "event_id",
+                snapshot.event_id,
+                snapshot.event_version,
+                event_updates,
+                timestamp,
             )
             trigger("SYNC_AFTER_ENTITY_WRITE")
 
@@ -253,7 +276,12 @@ class SyncRepository:
                 "fields": fields_payload,
                 "created_at": timestamp,
             }
-            encoded_payload = json.dumps(receipt_payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+            encoded_payload = json.dumps(
+                receipt_payload,
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            )
             receipt_digest = payload_hash(receipt_payload)
             receipt_id = str(uuid4())
             trigger("SYNC_BEFORE_RECEIPT")
@@ -264,27 +292,91 @@ class SyncRepository:
                    link_version_before,link_version_after,payload_json,created_at
                    ) VALUES (?,?,?,?,?,'COMMITTED',?,?,?,?,?,?,?,?)""",
                 (
-                    receipt_id, plan.link_id, plan.plan_id, plan.precondition_sha256, receipt_digest,
-                    snapshot.todo_version, todo_after, snapshot.event_version, event_after,
-                    snapshot.link_version, link_after, encoded_payload, timestamp,
+                    receipt_id,
+                    plan.link_id,
+                    plan.plan_id,
+                    plan.precondition_sha256,
+                    receipt_digest,
+                    snapshot.todo_version,
+                    todo_after,
+                    snapshot.event_version,
+                    event_after,
+                    snapshot.link_version,
+                    link_after,
+                    encoded_payload,
+                    timestamp,
                 ),
             )
-            trigger("SYNC_AFTER_RECEIPT_BEFORE_COMMIT")
 
             verify = self._snapshot(connection, plan.link_id)
-            if verify.todo_version != todo_after or verify.event_version != event_after or verify.link_version != link_after:
+            if (
+                verify.todo_version != todo_after
+                or verify.event_version != event_after
+                or verify.link_version != link_after
+            ):
                 raise SyncPostcheckError("SYNC-POSTCHECK-003: Versions-POSTCHECK fehlgeschlagen")
             for spec in SYNC_FIELD_SPECS:
                 digest = canonical_hash(verify.todo_values[spec.field_id])
                 if digest != canonical_hash(verify.calendar_values[spec.field_id]):
                     raise SyncPostcheckError(f"SYNC-POSTCHECK-004: Endwerte {spec.field_id} divergieren")
                 if verify.baseline_hashes.get(spec.field_id) != digest:
-                    raise SyncPostcheckError(f"SYNC-POSTCHECK-005: Baseline {spec.field_id} entspricht nicht dem Endwert")
+                    raise SyncPostcheckError(
+                        f"SYNC-POSTCHECK-005: Baseline {spec.field_id} entspricht nicht dem Endwert"
+                    )
             receipt_row = connection.execute(
-                "SELECT receipt_sha256 FROM sync_audit_receipts WHERE receipt_id=?", (receipt_id,)
+                "SELECT receipt_sha256 FROM sync_audit_receipts WHERE receipt_id=?",
+                (receipt_id,),
             ).fetchone()
             if receipt_row is None or receipt_row["receipt_sha256"] != receipt_digest:
                 raise SyncPostcheckError("SYNC-POSTCHECK-006: Audit-Receipt fehlt oder ist inkonsistent")
+
+            before_json = json.dumps(
+                snapshot_payload(
+                    receipt_id=receipt_id,
+                    receipt_sha256=receipt_digest,
+                    link_id=plan.link_id,
+                    todo_values=snapshot.todo_values,
+                    calendar_values=snapshot.calendar_values,
+                    baseline_hashes=snapshot.baseline_hashes,
+                    todo_version=snapshot.todo_version,
+                    event_version=snapshot.event_version,
+                    link_version=snapshot.link_version,
+                ),
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            )
+            after_json = json.dumps(
+                snapshot_payload(
+                    receipt_id=receipt_id,
+                    receipt_sha256=receipt_digest,
+                    link_id=plan.link_id,
+                    todo_values=verify.todo_values,
+                    calendar_values=verify.calendar_values,
+                    baseline_hashes=verify.baseline_hashes,
+                    todo_version=verify.todo_version,
+                    event_version=verify.event_version,
+                    link_version=verify.link_version,
+                ),
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            )
+            history_digest = snapshot_hash(before_json, after_json, receipt_digest)
+            connection.execute(
+                """INSERT INTO sync_history_snapshots(
+                   receipt_id,link_id,snapshot_sha256,before_json,after_json,created_at
+                   ) VALUES (?,?,?,?,?,?)""",
+                (receipt_id, plan.link_id, history_digest, before_json, after_json, timestamp),
+            )
+            history_row = connection.execute(
+                "SELECT snapshot_sha256 FROM sync_history_snapshots WHERE receipt_id=?",
+                (receipt_id,),
+            ).fetchone()
+            if history_row is None or history_row["snapshot_sha256"] != history_digest:
+                raise SyncPostcheckError("SYNC-HISTORY-POSTCHECK-001: Journal-Snapshot fehlt oder ist inkonsistent")
+            trigger("SYNC_AFTER_HISTORY_SNAPSHOT")
+            trigger("SYNC_AFTER_RECEIPT_BEFORE_COMMIT")
 
         return SyncAuditReceipt(
             receipt_id=receipt_id,
@@ -304,9 +396,12 @@ class SyncRepository:
 
     def receipt_count(self, link_id: str) -> int:
         with self.database.session() as connection:
-            return int(connection.execute(
-                "SELECT COUNT(*) FROM sync_audit_receipts WHERE link_id=?", (link_id,)
-            ).fetchone()[0])
+            return int(
+                connection.execute(
+                    "SELECT COUNT(*) FROM sync_audit_receipts WHERE link_id=?",
+                    (link_id,),
+                ).fetchone()[0]
+            )
 
     def receipt_hashes(self, link_id: str) -> tuple[str, ...]:
         with self.database.session() as connection:

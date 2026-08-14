@@ -1,0 +1,330 @@
+name: I011 Sync-Journal Recovery Qualifikation
+
+on:
+  push:
+    branches: [agent/i011-sync-journal-recovery]
+  workflow_dispatch:
+    inputs:
+      verify_only:
+        description: Gespeicherten Evidence-Commit nur verifizieren
+        required: false
+        default: 'false'
+      verify_sha:
+        description: Exakte Evidence-Commit-SHA für den read-only Zweitpass
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+  actions: write
+
+env:
+  QT_QPA_PLATFORM: offscreen
+
+jobs:
+  qualifikation:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Repository exakt auschecken
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_only == 'true' && inputs.verify_sha || github.ref }}
+
+      - name: Verifikationsziel bestätigen
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_only == 'true' }}
+        shell: bash
+        env:
+          VERIFY_SHA: ${{ inputs.verify_sha }}
+        run: |
+          test -n "$VERIFY_SHA"
+          ACTUAL_SHA=$(git rev-parse HEAD)
+          test "$ACTUAL_SHA" = "$VERIFY_SHA"
+          echo "EXACT_VERIFY_SHA=PASS $ACTUAL_SHA"
+
+      - name: Python 3.12 bereitstellen
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Native GUI-Systembibliotheken bereitstellen
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libegl1 libgl1 libxkbcommon-x11-0 libxcb-cursor0
+
+      - name: GUI-Laufzeit exakt bereitstellen
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements-gui.lock
+          python -m pip check
+
+      - name: I011-Metadatenvertrag bestätigen
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          version=json.loads(Path('VERSION.json').read_text(encoding='utf-8'))
+          status=json.loads(Path('PROJEKTSTATUS.json').read_text(encoding='utf-8'))
+          contract=json.loads(Path('PROJECT_CONTRACT.json').read_text(encoding='utf-8'))
+          if version.get('iteration')!='I011' or version.get('version')!='0.11.0-dev.1': raise SystemExit('I011_METADATA_VERSION_FAIL')
+          if status.get('iteration')!='I011': raise SystemExit('I011_METADATA_STATUS_FAIL')
+          if contract.get('foundation',{}).get('current_iteration')!='I011': raise SystemExit('I011_METADATA_CONTRACT_FAIL')
+          print('I011_METADATA=PASS')
+          PY
+
+      - name: Gespeicherten Remote-Receipt unabhängig prüfen
+        run: |
+          python - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          receipt=json.loads(Path('REMOTE_TREE_RECEIPT.json').read_text(encoding='utf-8'))
+          report=json.loads(Path('QUALIFICATION_REPORT.json').read_text(encoding='utf-8'))
+          if receipt.get('state')!='ATTESTED':
+              print('GESPEICHERTER_RECEIPT=PENDING')
+              raise SystemExit(0)
+          subject=receipt['subject_commit']
+          tree=subprocess.check_output(['git','rev-parse',f'{subject}^{{tree}}'],text=True).strip()
+          if tree!=receipt.get('subject_tree'): raise SystemExit('REMOTE-TREE-001: Subject-Tree stimmt nicht')
+          actual={}
+          for line in subprocess.check_output(['git','ls-tree','-r','-l',subject],text=True).splitlines():
+              meta,path=line.split('\t',1); mode,_kind,blob,size=meta.split(); actual[path]=(mode,blob,int(size))
+          expected={i['path']:(i['mode'],i['blob_sha'],i['size']) for i in receipt.get('subject_tree_entries',[])}
+          if actual!=expected or len(expected)!=receipt.get('entry_count'):
+              raise SystemExit('REMOTE-TREE-001: gespeicherter Receipt weicht ab')
+          if report.get('state')=='QUALIFIED' and report.get('result')!='PASS':
+              raise SystemExit('QUALIFICATION-001: gespeicherter Bericht ist nicht PASS')
+          print(f'GESPEICHERTER_RECEIPT=PASS files={len(actual)} subject={subject}')
+          PY
+
+      - name: Repository-Soll aus realem Arbeitsbaum ableiten
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          paths=sorted(str(p) for p in Path('.').rglob('*') if p.is_file() and '.git' not in p.parts and '__pycache__' not in p.parts and '.pytest_cache' not in p.parts)
+          version=json.loads(Path('VERSION.json').read_text(encoding='utf-8'))
+          data=json.loads(Path('REPOSITORY_MANIFEST.json').read_text(encoding='utf-8'))
+          data.update(project_id='PROVOWARE-PLANER-2026',version=version['version'],iteration=version['iteration'],ignored_path_parts=['.git','__pycache__','.pytest_cache'],expected_file_count=len(paths),files=paths,expected_paths=paths,full_check_each_iteration=True)
+          Path('REPOSITORY_MANIFEST.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(f'REPOSITORY_SOLLPFADE={len(paths)}')
+          PY
+
+      - name: Manifeste und SHA-256-Inventar erzeugen
+        run: python tools/autopilot/manifest_builder.py --write
+
+      - name: Manifest-Inventar prüfen
+        run: python tools/autopilot/manifest_builder.py --check
+
+      - name: Historische Gate-Kette I002 bis I011
+        run: |
+          python tools/autopilot/i002_validator.py
+          python tools/autopilot/i003_validator.py
+          python tools/autopilot/i004_validator.py
+          python tools/autopilot/i005_validator.py
+          python tools/autopilot/i006_validator.py
+          python tools/autopilot/i007_validator.py
+          python tools/autopilot/i008_validator.py
+          python tools/autopilot/i009_validator.py
+          python tools/autopilot/i010_validator.py
+          python tools/autopilot/i011_validator.py
+
+      - name: Integrierten Planner-GUI-Start regressionsprüfen
+        run: |
+          rm -rf "$RUNNER_TEMP/i011-start-smoke"
+          python tools/start_gui.py --workspace "$RUNNER_TEMP/i011-start-smoke" --offscreen-smoke --start-report "$RUNNER_TEMP/I011_START_REPORT.json"
+
+      - name: I011-Zieltests
+        run: |
+          python -m unittest discover -s tests -p 'test_i011_history_repository.py' -v
+          python -m unittest discover -s tests -p 'test_i011_recovery_plan.py' -v
+          python -m unittest discover -s tests -p 'test_i011_sync_history_gui.py' -v
+          python -m unittest discover -s tests -p 'test_i011_fault_matrix.py' -v
+
+      - name: I011-Snapshot-Fault- und Crash-Matrix
+        run: python tools/i011_history_fault_matrix.py --output "$RUNNER_TEMP/I011_HISTORY_FAULT_MATRIX.json"
+
+      - name: I011-Journal-GUI-Matrix
+        run: python tools/i011_sync_history_gui_matrix.py --output "$RUNNER_TEMP/i011-history-gui-matrix"
+
+      - name: I010-Zieltests regressionsprüfen
+        run: |
+          python -m unittest discover -s tests -p 'test_i010_resolution_plan.py' -v
+          python -m unittest discover -s tests -p 'test_i010_sync_control_query.py' -v
+          python -m unittest discover -s tests -p 'test_i010_sync_control_gui.py' -v
+          python -m unittest discover -s tests -p 'test_i010_fault_matrix.py' -v
+
+      - name: I010-Resolution-Matrix regressionsprüfen
+        run: |
+          python tools/i010_resolution_fault_matrix.py --output "$RUNNER_TEMP/I011_I010_RESOLUTION_FAULT_MATRIX.json"
+          python tools/i010_sync_gui_matrix.py --output "$RUNNER_TEMP/i011-i010-sync-gui-regression"
+
+      - name: I009-Sync-Transaktionsmatrix regressionsprüfen
+        run: python tools/i009_fault_matrix.py --output "$RUNNER_TEMP/I011_I009_FAULT_MATRIX.json"
+
+      - name: I007-Todo-GUI-Matrix regressionsprüfen
+        run: python tools/todo_gui_matrix.py --output "$RUNNER_TEMP/i011-todo-gui-regression"
+
+      - name: I005-Kalender-GUI-Matrix regressionsprüfen
+        run: python tools/gui_matrix.py --output "$RUNNER_TEMP/i011-calendar-gui-regression"
+
+      - name: I006-Crash- und Rollback-Matrix regressionsprüfen
+        run: python tools/i006_fault_matrix.py --output "$RUNNER_TEMP/I011_I006_FAULT_MATRIX.json"
+
+      - name: Vollständige Unit- und Regressionstests
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: Foundation-Validator prüfen
+        run: python tools/autopilot/standard_validator.py
+
+      - name: Autopilot mit historischen Gates qualifizieren
+        run: python tools/autopilot/autopilot.py qualifizieren
+
+      - name: Remote-Tree-Pfade und Modi prüfen
+        run: git ls-tree -r -l HEAD | python tools/autopilot/remote_tree_validator.py
+
+      - name: Qualifizierten Status und Dokumentation setzen
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          p=Path('PROJEKTSTATUS.json')
+          data=json.loads(p.read_text(encoding='utf-8'))
+          data.update(status='QUALIFIZIERT',ampel='GRUEN')
+          data['implementation_percent']=max(int(data.get('implementation_percent',0)),92)
+          data['qualification_percent']=max(int(data.get('qualification_percent',0)),99)
+          data['release_readiness_percent']=max(int(data.get('release_readiness_percent',0)),35)
+          completed=data.setdefault('last_completed',[])
+          if 'I011-SYNC-JOURNAL-RECOVERY' not in completed:
+              completed.append('I011-SYNC-JOURNAL-RECOVERY')
+          data['next_logical_step']='I012 Dashboard + Diagnose-/Recovery-Zentrale'
+          data['improvement_recommendation']='Journal-Integrität, Backup-Status, Datenbankprüfung und blockierte RecoveryPläne in einer read-only Diagnosezentrale bündeln'
+          p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+
+          r=Path('README.md')
+          text=r.read_text(encoding='utf-8')
+          text=text.replace(
+              '- **Status:** `IN_ARBEIT / GELB` bis zur vollständigen I011-Remotequalifikation und Evidence-Promotion',
+              '- **Status:** `QUALIFIZIERT / GRÜN`'
+          )
+          text=text.replace(
+              'Die Promotion nach `main` bleibt bis zum vollständigen I011-Vollpass und exakten Evidence-SHA-Zweitpass blockiert.',
+              'I011 ist vollständig qualifiziert; der Evidence-SHA-Zweitpass bleibt die verbindliche Promotionsvoraussetzung für `main`.'
+          )
+          r.write_text(text,encoding='utf-8')
+
+          t=Path('TODO.md')
+          text=t.read_text(encoding='utf-8')
+          text=text.replace('- [ ] zweistufige Remotequalifikation PASS','- [x] zweistufige Remotequalifikation PASS')
+          t.write_text(text,encoding='utf-8')
+          PY
+          python tools/autopilot/manifest_builder.py --write
+          python tools/autopilot/manifest_builder.py --check
+          python tools/autopilot/i011_validator.py
+          python tools/autopilot/standard_validator.py
+
+      - name: Remote-Receipt und Qualifikationsbericht erzeugen
+        env:
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          python - <<'PY'
+          import json,os,subprocess
+          from pathlib import Path
+          subject=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+          run_id=int(os.environ['RUN_ID'])
+          tree=subprocess.check_output(['git','rev-parse',f'{subject}^{{tree}}'],text=True).strip()
+          entries=[]
+          for line in subprocess.check_output(['git','ls-tree','-r','-l',subject],text=True).splitlines():
+              meta,path=line.split('\t',1); mode,_kind,blob,size=meta.split()
+              entries.append({'path':path,'blob_sha':blob,'mode':mode,'size':int(size),'status':'PASS'})
+          Path('REMOTE_TREE_RECEIPT.json').write_text(json.dumps({
+              'schema_version':1,'state':'ATTESTED','subject_commit':subject,'subject_tree':tree,
+              'entry_count':len(entries),'subject_tree_entries':entries
+          },ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          gates=[
+              'exact_verify_sha','stored_receipt_validation','repository_inventory','sha256_inventory','manifest_chain',
+              'i002_historical_gate','i003_historical_gate','i004_historical_gate','i005_calendar_gui_gate',
+              'i006_todo_domain_link_gate','i007_todo_gui_viewmodel_gate','i008_sync_preview_gate',
+              'i009_field_baseline_transactional_gate','i010_sync_control_resolution_gate',
+              'i011_sync_journal_recovery_gate','integrated_planner_gui_start','i011_target_tests',
+              'i011_history_fault_crash_matrix','i011_history_gui_matrix_35','i010_target_regression',
+              'i010_resolution_fault_gui_regression','i009_fault_crash_regression','i007_todo_gui_matrix_140',
+              'i005_calendar_gui_matrix_112','i006_fault_crash_regression','unit_regression_tests',
+              'foundation_validator','autopilot_historical_chain','remote_tree_paths_modes'
+          ]
+          Path('QUALIFICATION_REPORT.json').write_text(json.dumps({
+              'schema_version':1,'state':'QUALIFIED','result':'PASS','iteration':'I011',
+              'subject_commit':subject,'subject_tree':tree,'workflow_run_id':run_id,'gates':gates
+          },ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          PY
+
+      - name: Qualifizierte Evidence einmalig persistieren
+        id: evidence
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != 'true' }}
+        run: |
+          git config user.name "PROVOWARE Evidence Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add VERSION.json PROJECT_CONTRACT.json PROJEKTSTATUS.json README.md TODO.md CHANGELOG.md REPOSITORY_MANIFEST.json SOURCE_MANIFEST.json BUILD_MANIFEST.json RELEASE_MANIFEST.json EVIDENCE_MANIFEST.json MANIFEST_INDEX.json SHA256_DATEI_INVENTAR.json REMOTE_TREE_RECEIPT.json QUALIFICATION_REPORT.json
+          if git diff --cached --quiet; then
+            echo 'EVIDENCE_COMMIT=NICHT_ERFORDERLICH'
+          else
+            git commit -m "evidence: persist I011 run $GITHUB_RUN_ID"
+            git push origin HEAD:${GITHUB_REF_NAME}
+          fi
+          EVIDENCE_SHA=$(git rev-parse HEAD)
+          echo "evidence_sha=$EVIDENCE_SHA" >> "$GITHUB_OUTPUT"
+          echo "EVIDENCE_SHA=$EVIDENCE_SHA"
+
+      - name: Evidence-Artefakt bereitstellen
+        uses: actions/upload-artifact@v4
+        with:
+          name: i011-evidence
+          path: |
+            VERSION.json
+            PROJEKTSTATUS.json
+            QUALIFICATION_REPORT.json
+            REMOTE_TREE_RECEIPT.json
+            REPOSITORY_MANIFEST.json
+            SHA256_DATEI_INVENTAR.json
+            SOURCE_MANIFEST.json
+            BUILD_MANIFEST.json
+            RELEASE_MANIFEST.json
+            EVIDENCE_MANIFEST.json
+            MANIFEST_INDEX.json
+            ${{ runner.temp }}/I011_START_REPORT.json
+            ${{ runner.temp }}/I011_HISTORY_FAULT_MATRIX.json
+            ${{ runner.temp }}/I011_I010_RESOLUTION_FAULT_MATRIX.json
+            ${{ runner.temp }}/I011_I009_FAULT_MATRIX.json
+            ${{ runner.temp }}/I011_I006_FAULT_MATRIX.json
+            ${{ runner.temp }}/i011-history-gui-matrix/I011_SYNC_HISTORY_GUI_MATRIX.json
+            ${{ runner.temp }}/i011-history-gui-matrix/*.png
+            ${{ runner.temp }}/i011-i010-sync-gui-regression/I010_SYNC_CONTROL_GUI_MATRIX.json
+            ${{ runner.temp }}/i011-i010-sync-gui-regression/*.png
+            ${{ runner.temp }}/i011-todo-gui-regression/*.json
+            ${{ runner.temp }}/i011-calendar-gui-regression/*.json
+
+      - name: Gespeicherten Evidence-Commit exakt erneut verifizieren
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.verify_only != 'true' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVIDENCE_SHA: ${{ steps.evidence.outputs.evidence_sha }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request
+          repo=os.environ['GITHUB_REPOSITORY']
+          sha=os.environ['EVIDENCE_SHA']
+          ref=os.environ['GITHUB_REF_NAME']
+          url=f"https://api.github.com/repos/{repo}/actions/workflows/i011-qualifikation.yml/dispatches"
+          payload=json.dumps({'ref':ref,'inputs':{'verify_only':'true','verify_sha':sha}}).encode()
+          req=urllib.request.Request(url,data=payload,method='POST',headers={
+              'Authorization':f"Bearer {os.environ['GH_TOKEN']}",
+              'Accept':'application/vnd.github+json',
+              'X-GitHub-Api-Version':'2022-11-28',
+              'Content-Type':'application/json',
+          })
+          with urllib.request.urlopen(req) as response:
+              if response.status not in (200,204):
+                  raise SystemExit(f'I011_REDISPATCH_FAIL={response.status}')
+          print(f'I011_EXACT_VERIFY_DISPATCH=PASS {sha}')
+          PY

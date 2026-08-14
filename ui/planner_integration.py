@@ -8,6 +8,7 @@ from PySide6.QtWidgets import QMainWindow
 from services.factory import PlannerServices
 from services.resolution_service import ResolutionService
 from ui.sync_control_window import SyncControlWindow
+from ui.sync_history_window import SyncHistoryWindow
 from ui.todo_window import TodoWindow
 
 
@@ -65,4 +66,26 @@ def attach_todo_module(
     menu.addAction(sync_action)
     calendar_window.addAction(sync_action)
     setattr(calendar_window, "_provoware_sync_control_action", sync_action)
+
+    history_action = QAction("Synchronisationsjournal öffnen", calendar_window)
+    history_action.setShortcut(QKeySequence("Ctrl+Shift+H"))
+    history_action.setToolTip(
+        "Zeigt unveränderliche Sync-/Resolution-Receipts mit Vorher-/Nachher-Nachweisen. "
+        "Alte Entscheidungen werden niemals still erneut ausgeführt."
+    )
+
+    def open_sync_history() -> None:
+        existing = getattr(calendar_window, "_provoware_sync_history_window", None)
+        if existing is None:
+            existing = SyncHistoryWindow(services.journal, repo_root=repo_root)
+            setattr(calendar_window, "_provoware_sync_history_window", existing)
+        existing.refresh()
+        existing.show()
+        existing.raise_()
+        existing.activateWindow()
+
+    history_action.triggered.connect(open_sync_history)
+    menu.addAction(history_action)
+    calendar_window.addAction(history_action)
+    setattr(calendar_window, "_provoware_sync_history_action", history_action)
     return action

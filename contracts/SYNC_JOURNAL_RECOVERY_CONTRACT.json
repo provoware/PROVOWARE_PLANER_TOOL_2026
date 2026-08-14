@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "contract_id": "PROVOWARE-SYNC-JOURNAL-RECOVERY-I011",
+  "iteration": "I011",
+  "status": "VERBINDLICH",
+  "mode": "IMMUTABLE_JOURNAL_HASH_BOUND_RECOVERY",
+  "architecture": {
+    "schema_version": 4,
+    "journal_query_read_only": true,
+    "receipt_hash_revalidation_required": true,
+    "snapshot_hash_revalidation_required": true,
+    "legacy_receipts_remain_valid": true,
+    "legacy_values_must_not_be_invented": true,
+    "before_after_snapshot_required_for_new_commits": true,
+    "snapshot_same_transaction_as_receipt": true,
+    "recovery_plan_new_object_required": true,
+    "source_receipt_hash_required": true,
+    "source_snapshot_hash_required": true,
+    "current_syncplan_hash_required": true,
+    "recovery_plan_deterministic": true,
+    "same_i009_transaction_core_required": true,
+    "precheck_required": true,
+    "postcheck_required": true,
+    "new_receipt_after_recovery_required": true,
+    "fault_crash_matrix_required": true,
+    "gui_matrix_required": true
+  },
+  "recovery_modes": [
+    "NACHHER_ERNEUT_ANWENDEN",
+    "VORHER_WIEDERHERSTELLEN"
+  ],
+  "safety": {
+    "no_historical_auto_replay": true,
+    "no_free_historical_value_write": true,
+    "target_must_exist_on_current_endpoint": true,
+    "direction_contract_still_applies": true,
+    "due_end_semantic_review_still_applies": true,
+    "divergent_historical_state_not_auto_reconstructed": true,
+    "stale_current_state_hard_block": true,
+    "tampered_receipt_hard_block": true,
+    "tampered_snapshot_hard_block": true,
+    "tampered_recovery_plan_hard_block": true,
+    "no_partial_commit": true,
+    "no_silent_legacy_backfill": true
+  },
+  "journal_columns": [
+    "Zeitpunkt",
+    "Art",
+    "Verknüpfung",
+    "Integrität",
+    "Recovery",
+    "Versionen",
+    "Receipt-SHA-256",
+    "Plan-ID",
+    "Receipt-ID"
+  ],
+  "qualification": {
+    "historical_gate_chain": [
+      "I002",
+      "I003",
+      "I004",
+      "I005",
+      "I006",
+      "I007",
+      "I008",
+      "I009",
+      "I010",
+      "I011"
+    ],
+    "full_regression_required": true,
+    "exact_evidence_second_pass_required": true,
+    "main_post_qualification_required": true
+  }
+}

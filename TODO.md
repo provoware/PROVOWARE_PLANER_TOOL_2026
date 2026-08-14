@@ -19,90 +19,40 @@
 - [x] kompletten Repository-Inhalt gegen das Soll-Inventar prüfen
 - [x] lokale und Remote-Prüfung voneinander trennen
 - [ ] Repository-Sichtbarkeit auf privat stellen
+- [ ] `main` mit verbindlichen Statuschecks schützen
+- [ ] Release-/Evidence-Commits signieren
 
-## I002 — Manifest + Evidence Hardening
-- [x] Manifest-Builder und SHA-256-Inventar
-- [x] Remote-Tree-Validator und zweistufige Remote-Prüfung
+## I002 bis I010 — qualifizierte Basis
+- [x] I002 Manifest + Evidence Hardening
+- [x] I003 Klick-&-Start-Orchestrator
+- [x] I004 Kalender-Domainkern + SQLite
+- [x] I005 Kalender-GUI + ViewModel
+- [x] I006 Todo-Domain + Kalender↔Todo-Soft-Link
+- [x] I007 Todo-GUI + ViewModel
+- [x] I008 read-only Synchronisationsvorschau
+- [x] I009 Feld-Baseline + transaktionaler SyncPlan
+- [x] I010 Sync-Control-GUI + immutable ResolutionPlan
+- [x] I002 → I003 → I004 → I005 → I006 → I007 → I008 → I009 → I010 historisch qualifiziert
 
-## I003 — Klick-&-Start-Orchestrator
-- [x] deterministische Startzustände
-- [x] PRECHECK → AKTION → POSTCHECK
-- [x] Workspace-, SQLite-, Recovery- und Fault-Prüfung
-
-## I004 — Kalender-Domainkern + SQLite-Persistenz
-- [x] Domainmodell, Migration 0001, Markierungen, Optimistic Locking, Soft Delete und Backup/Restore
-
-## I005 — Kalender-GUI + ViewModel
-- [x] CalendarQueryService und CalendarViewModel
-- [x] Tag / Woche / Monat / Jahr
-- [x] Design-Tokens, Barrierefreiheit, 112er Offscreen-Matrix und Neustartpersistenz
-
-## I006 — Todo-Domainkern + Kalender↔Todo-Kopplungsvertrag
-- [x] Todo-Domainmodell und Migration 0002
-- [x] Unteraufgaben, Soft Delete, Optimistic Locking und Soft-Link
-- [x] Konflikterkennung, kein kaskadierendes Löschen, Crash-/Rollback-Matrix
-
-## I007 — Todo-GUI + Todo-ViewModel
-- [x] TodoQueryService und TodoViewModel
-- [x] fünf Todo-Ansichten, Bearbeitung, Verknüpfung und Konflikterklärung
-- [x] Tastatur, Accessible Names, High Contrast und sieben Schriftstufen
-- [x] 140er Todo-GUI-Matrix, I005-/I006-Regression und Evidence-Zweitpass
-- [x] I002 → I003 → I004 → I005 → I006 → I007 vollständig PASS und nach `main` promotet
-
-## I008 — Synchronisations- und Konfliktvorschau
-- [x] Synchronisationsvertrag auf Feldebene
-- [x] `SynchronizationPreviewService` ohne Schreibschnittstelle
-- [x] Titel, Beschreibung und Startzeit als gerichtete Vorschaukandidaten
-- [x] Fälligkeit↔Terminende nur semantisch/manuell
-- [x] `BOTH_CHANGED`, `DETACHED` und abweichende `CLEAN`-Basis hart blockiert
-- [x] Vorschau verändert weder Link noch Nutzdaten
-- [x] Schema 2, Zieltests, Vollregression, 140er/112er GUI-Matrizen
-- [x] exakter I008-Evidence-SHA-Zweitpass PASS
-- [x] I002 → I003 → I004 → I005 → I006 → I007 → I008 vollständig PASS
-- [x] qualifizierten I008-Evidence-Commit nach `main` promotet
-
-## I009 — Feld-Baseline / Feld-Hashes + transaktionaler Synchronisationsplan
-- [x] Migration 0003 für `sync_field_baselines` und `sync_audit_receipts`
-- [x] kanonische typisierte Feldserialisierung und SHA-256
-- [x] Feld-Baseline nur bei beweisbar identischen Ausgangswerten bindbar
-- [x] bestehende Links ohne beweisbare Baseline fail-closed blockieren
-- [x] Drei-Wege-Zustände `UNCHANGED / TODO_ONLY / CALENDAR_ONLY / BOTH_SAME / BOTH_DIFFERENT / BASELINE_MISSING`
-- [x] disjunkte Objekt-`BOTH_CHANGED`-Änderungen feldweise verlustfrei planbar
-- [x] `BOTH_DIFFERENT` als harter Gesamtplan-Blocker
-- [x] `due_at ↔ end_at` weiterhin manuell prüfpflichtig
-- [x] deterministische Plan-ID und `precondition_sha256`
-- [x] exakte Todo-/Termin-/Link-Versionen im PRECHECK
-- [x] exakte Baseline-/Todo-/Kalender-Hashes je Feld im PRECHECK
-- [x] atomare Nutzdaten-, Baseline-, Link- und Receipt-Transaktion
-- [x] POSTCHECK vor Commit plus SQLite-`quick_check`
-- [x] hashgebundenes Audit-Receipt
-- [x] Fault-Injection nach Nutzdaten/Baseline/Receipt-Phasen
-- [x] echter Prozessabbruch innerhalb offener Sync-Transaktion
-- [x] I008-Historienvalidator für Schema 3 vorwärtskompatibel gehärtet
-- [x] I009-Validator und Autopilot-Gate angelegt
-- [x] I009-Zieltests und Fault-Matrix remote PASS
-- [x] vollständige Unit-/Regressionstests PASS
-- [x] 140er Todo-GUI- und 112er Kalender-GUI-Regression PASS
-- [x] I002 → I003 → I004 → I005 → I006 → I007 → I008 → I009 vollständig PASS
-- [ ] exakter I009-Evidence-SHA-Zweitpass PASS
-- [ ] qualifizierten I009-Evidence-Commit nach `main` promoten
-
-## I010 — Nach erfolgreichem I009
-- [ ] Synchronisations-Control-GUI auf `SyncPlan` und `SyncAuditReceipt`
-- [ ] Feldzustand, Quelle/Ziel, Hashstatus, Grund und erwartete Version verständlich anzeigen
-- [ ] `BOTH_DIFFERENT` ausschließlich explizit manuell entscheiden
-- [ ] GUI darf weder SQL noch eigene Konfliktlogik enthalten
-
-
-## I010 – Synchronisations-Control-GUI
-
-- [x] SyncControlQuery read-only
-- [x] SyncControlViewModel
-- [x] Feldtabelle mit 9 Nachweisspalten + Entscheidung
-- [x] immutable ResolutionPlan
-- [x] explizite BOTH_DIFFERENT-Entscheidung
+## I011 — Synchronisationsjournal + sichere Recovery
+- [x] Migration 0004 für hashgebundene Journal-Snapshots
+- [x] neue Snapshots atomar mit Audit-Receipt und Sync-Commit schreiben
+- [x] alte Receipts ohne Snapshot als `LEGACY_NO_SNAPSHOT` erhalten
+- [x] Receipt- und Snapshot-Hash bei jedem Journal-Lesezugriff verifizieren
+- [x] read-only JournalQuery und ViewModel
+- [x] Vorher-/Nachher-Feldvergleich in der GUI
+- [x] immutable RecoveryPlan mit Source-Receipt-, Snapshot- und Current-SyncPlan-Hash
+- [x] kein freies Zurückschreiben historischer Werte
+- [x] historische Zielwerte nur über aktuell beweisbare Endpoint-Werte übertragen
+- [x] Link-Richtung und DUE_END-Semantik bleiben bindend
 - [x] Stale-/Manipulationsschutz
-- [x] atomarer I009-Commitkern wiederverwendet
-- [x] Audit-Receipt-Bindung
-- [x] Fault-/Crash-Matrix
-- [x] Offscreen-GUI-Matrix
+- [x] Recovery nutzt denselben I009-Transaktionskern
+- [x] Fault-/echte Crash-Matrix für Snapshotphase
+- [x] 35er Offscreen-Journal-GUI-Matrix
+- [ ] zweistufige Remotequalifikation PASS
+- [ ] finalen Evidence-Commit nach `main` fast-forward promoten
+
+## I012 — nach I011
+- [ ] Dashboard + Diagnose-/Recovery-Zentrale
+- [ ] Journal-Integrität, Backup-Status, Datenbankprüfung und Startzustand read-only bündeln
+- [ ] keine neue parallele Reparatur-/Schreiblogik

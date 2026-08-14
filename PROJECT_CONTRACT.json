@@ -93,7 +93,17 @@
     "sync_resolution_explicit_choice_required": true,
     "sync_resolution_default_block_required": true,
     "sync_resolution_no_heuristic_required": true,
-    "sync_resolution_fault_matrix_required": true
+    "sync_resolution_fault_matrix_required": true,
+    "sync_journal_read_only_required": true,
+    "sync_history_snapshot_hash_required": true,
+    "sync_history_snapshot_same_transaction_required": true,
+    "sync_legacy_receipt_no_backfill_required": true,
+    "sync_recovery_plan_immutable_required": true,
+    "sync_recovery_current_state_hash_required": true,
+    "sync_recovery_no_historical_replay_required": true,
+    "sync_recovery_same_transaction_core_required": true,
+    "sync_history_gui_required": true,
+    "sync_history_fault_matrix_required": true
   },
   "definition_of_ready": [
     "ziel_eindeutig",
@@ -112,8 +122,8 @@
     "remote_verifikation_pass"
   ],
   "foundation": {
-    "current_iteration": "I010",
-    "current_checkpoint": "C010-SYNC-CONTROL-GUI-RESOLUTION",
-    "version": "0.10.0-dev.1"
+    "current_iteration": "I011",
+    "current_checkpoint": "C011-SYNC-JOURNAL-RECOVERY",
+    "version": "0.11.0-dev.1"
   }
 }

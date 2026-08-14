@@ -46,7 +46,10 @@ def repository_files() -> set[str]:
     return {
         str(path.relative_to(ROOT))
         for path in ROOT.rglob("*")
-        if path.is_file() and ".git" not in path.parts and "__pycache__" not in path.parts and ".pytest_cache" not in path.parts
+        if path.is_file()
+        and ".git" not in path.parts
+        and "__pycache__" not in path.parts
+        and ".pytest_cache" not in path.parts
     }
 
 
@@ -89,20 +92,38 @@ def validate() -> dict:
     if architecture.get("schema_version") != 3:
         errors.append("I009_SCHEMA_VERTRAG_FALSCH")
 
-    expected_states = {"UNCHANGED", "TODO_ONLY", "CALENDAR_ONLY", "BOTH_SAME", "BOTH_DIFFERENT", "BASELINE_MISSING"}
+    expected_states = {
+        "UNCHANGED",
+        "TODO_ONLY",
+        "CALENDAR_ONLY",
+        "BOTH_SAME",
+        "BOTH_DIFFERENT",
+        "BASELINE_MISSING",
+    }
     if set(contract.get("field_states", [])) != expected_states:
         errors.append("I009_DREI_WEGE_ZUSTAENDE_UNVOLLSTAENDIG")
     safety = contract.get("safety", {})
     for key in (
-        "both_different_hard_block", "detached_hard_block", "missing_baseline_hard_block",
-        "due_end_manual_review", "no_cascade_delete", "optimistic_locking",
-        "fault_injection_requires_explicit_enable", "process_crash_rollback_required",
+        "both_different_hard_block",
+        "detached_hard_block",
+        "missing_baseline_hard_block",
+        "due_end_manual_review",
+        "no_cascade_delete",
+        "optimistic_locking",
+        "fault_injection_requires_explicit_enable",
+        "process_crash_rollback_required",
     ):
         if safety.get(key) is not True:
             errors.append(f"I009_SICHERHEITSREGEL_FEHLT: {key}")
 
     migration = (ROOT / "migrations/0003_sync_field_baseline.sql").read_text(encoding="utf-8")
-    for token in ("sync_field_baselines", "sync_audit_receipts", "baseline_sha256", "receipt_sha256", "ON DELETE RESTRICT"):
+    for token in (
+        "sync_field_baselines",
+        "sync_audit_receipts",
+        "baseline_sha256",
+        "receipt_sha256",
+        "ON DELETE RESTRICT",
+    ):
         if token not in migration:
             errors.append(f"I009_MIGRATION_BESTANDTEIL_FEHLT: {token}")
     if "ON DELETE CASCADE" in migration:
@@ -110,9 +131,15 @@ def validate() -> dict:
 
     repository_source = (ROOT / "storage/sync_repository.py").read_text(encoding="utf-8")
     for token in (
-        "SYNC_AFTER_ENTITY_WRITE", "SYNC_AFTER_BASELINE_WRITE", "SYNC_BEFORE_RECEIPT",
-        "SYNC_AFTER_RECEIPT_BEFORE_COMMIT", "receipt_sha256", "baseline_sha256",
-        "expected_todo_version", "expected_event_version", "expected_link_version",
+        "SYNC_AFTER_ENTITY_WRITE",
+        "SYNC_AFTER_BASELINE_WRITE",
+        "SYNC_BEFORE_RECEIPT",
+        "SYNC_AFTER_RECEIPT_BEFORE_COMMIT",
+        "receipt_sha256",
+        "baseline_sha256",
+        "expected_todo_version",
+        "expected_event_version",
+        "expected_link_version",
     ):
         if token not in repository_source:
             errors.append(f"I009_REPOSITORY_HAERTUNG_FEHLT: {token}")
@@ -141,21 +168,38 @@ def validate() -> dict:
             zone = ZoneInfo("Europe/Berlin")
             start = datetime(2026, 8, 14, 10, 0, tzinfo=zone)
             end = start + timedelta(hours=1)
-            todo = services.todos.create_todo(title="Basis", description="Basis", start_at=start, due_at=end)
-            event = services.calendar.create_event(
-                title="Basis", description="Basis", start_at=start, end_at=end, timezone_name="Europe/Berlin"
+            todo = services.todos.create_todo(
+                title="Basis", description="Basis", start_at=start, due_at=end
             )
-            link = services.links.create_link(todo.todo_id, event.event_id, direction=LinkDirection.BIDIRECTIONAL)
+            event = services.calendar.create_event(
+                title="Basis",
+                description="Basis",
+                start_at=start,
+                end_at=end,
+                timezone_name="Europe/Berlin",
+            )
+            link = services.links.create_link(
+                todo.todo_id,
+                event.event_id,
+                direction=LinkDirection.BIDIRECTIONAL,
+            )
             services.sync.initialize_baseline(link.link_id)
-            todo2 = services.todos.update_todo(replace(todo, title="Todo"), expected_version=todo.version)
-            event2 = services.calendar.update_event(replace(event, description="Kalender"), expected_version=event.version)
+            todo2 = services.todos.update_todo(
+                replace(todo, title="Todo"), expected_version=todo.version
+            )
+            event2 = services.calendar.update_event(
+                replace(event, description="Kalender"), expected_version=event.version
+            )
             if services.links.preview_conflict(link.link_id).value != "BOTH_CHANGED":
                 errors.append("I009_RUNTIME_OBJEKTKONFLIKT_ERWARTET")
             plan = services.sync.plan(link.link_id)
             states = {field.field_id: field.state for field in plan.fields}
             if plan.state is not SyncPlanState.READY:
                 errors.append(f"I009_RUNTIME_DISJUNKTER_PLAN_NICHT_READY: {plan.state.value}")
-            if states.get("TITLE") is not FieldChangeState.TODO_ONLY or states.get("DESCRIPTION") is not FieldChangeState.CALENDAR_ONLY:
+            if (
+                states.get("TITLE") is not FieldChangeState.TODO_ONLY
+                or states.get("DESCRIPTION") is not FieldChangeState.CALENDAR_ONLY
+            ):
                 errors.append("I009_RUNTIME_FELDWEISE_TRENNUNG_FEHLT")
             receipt = services.sync.commit(plan)
             if services.calendar.get_event(event.event_id).title != todo2.title:
@@ -170,8 +214,11 @@ def validate() -> dict:
         errors.append(f"I009_RUNTIME_FEHLER: {type(exc).__name__}: {exc}")
         runtime = "FAIL"
 
-    if schema != 3:
+    if current == 9 and schema != 3:
         errors.append(f"I009_SCHEMA_VERSION_FALSCH: {schema}")
+    elif current > 9 and schema < 3:
+        errors.append(f"I009_HISTORISCHE_SCHEMA_BASIS_FEHLT: {schema}")
+
     expected_chain = ["I002", "I003", "I004", "I005", "I006", "I007", "I008", "I009"]
     if contract.get("qualification", {}).get("historical_gate_chain") != expected_chain:
         errors.append("I009_HISTORISCHE_KETTE_FALSCH")
