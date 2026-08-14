@@ -21,6 +21,7 @@ from i010_validator import validate as validate_i010
 from i011_validator import validate as validate_i011
 from i012_validator import validate as validate_i012
 from i013_validator import validate as validate_i013
+from i014_validator import validate as validate_i014
 from standard_validator import print_result, validate_repository
 
 
@@ -76,6 +77,7 @@ def main() -> int:
         (11, "I011-SYNC-JOURNAL-RECOVERY-GATE", validate_i011),
         (12, "I012-DIAGNOSE-DASHBOARD-GATE", validate_i012),
         (13, "I013-ENTWICKLUNGSAUTOPILOT-V2-GATE", validate_i013),
+        (14, "I014-TRANSPORTPROFILE-TRENNUNG-GATE", validate_i014),
     ]
     for minimum, name, validator in validators:
         if current < minimum:
