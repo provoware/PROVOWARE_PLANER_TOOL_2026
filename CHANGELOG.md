@@ -61,3 +61,8 @@
 - Plan-Tamper, Backup-/Manifest-Tamper, Stale-Zielzustand sowie Exception-/Prozessabbruch-Szenarien werden automatisiert geprüft.
 - Backup-/Restore-Domainkern wird als Runtime benötigt, Sicherungsdaten selbst bleiben aus allen Code-Transportprofilen ausgeschlossen.
 - Keine Datenbankmigration; Schema bleibt Version 4.
+
+## 0.16.0-dev.1 — I016
+- Persistenter Restore-Intent und exklusive Restore-Lease.
+- Crash-Recovery nach hartem Prozessabbruch direkt nach Datenbanktausch.
+- Planner-Schreibguard während Restore.

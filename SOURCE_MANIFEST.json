@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "manifest_type": "SOURCE",
-  "version": "0.15.0-dev.1",
-  "iteration": "I015",
+  "version": "0.16.0-dev.1",
+  "iteration": "I016",
   "entries": [
     {
       "path": ".gitignore",
@@ -12,14 +12,14 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "b42a28f63abc3901762adc1efd45fb4900a0fa06f01f236be0373dcd898bc013",
-      "size": 3712,
+      "sha256": "582719e4995d1730fd7e7a54e532c0f9d99c15d0a3ac4b323ae799adda29d4c1",
+      "size": 3911,
       "status": "PASS"
     },
     {
       "path": "ITERATION_PLAN.json",
-      "sha256": "754f2c1c6dc3319bb991a98f16fbc3279d6a4019307e9618697b09d384f0b457",
-      "size": 4305,
+      "sha256": "2e2002880a38550d73cab506284aea924c94bd899771032bec8eeef46c2fd7da",
+      "size": 4616,
       "status": "PASS"
     },
     {
@@ -36,44 +36,50 @@
     },
     {
       "path": "PROJECT_CONTRACT.json",
-      "sha256": "8239f4cf5316cd844174ead92c9c514284d65d3a7877944bf628c56ecff5f354",
-      "size": 6426,
+      "sha256": "86b231dbc414b00e9ce1ba92745c17d87e3480850fce490ec8608761517d4f1d",
+      "size": 6799,
       "status": "PASS"
     },
     {
       "path": "PROJEKTSTATUS.json",
-      "sha256": "52d12d8fe8c1f7d69bd4e7eecb21053eac50253ee4559fa50bf3ce5e035e2f07",
-      "size": 1438,
+      "sha256": "7e29edd175a5247e07a0c703454d16d3b8ab7e7faebf948d4590a8891c2c1e3c",
+      "size": 1451,
       "status": "PASS"
     },
     {
       "path": "README.md",
-      "sha256": "3e7c90435bad9375ba55e8b5991c0dd61d7e20857aac7ca2ee3aece30df171ff",
-      "size": 6334,
+      "sha256": "5fbacfed22df0b38d5725328b1418cdc54ef54be5602194c6e30c25ab1c77572",
+      "size": 6635,
       "status": "PASS"
     },
     {
       "path": "REPOSITORY_MANIFEST.json",
-      "sha256": "1b6fbfa2aaf9f388bc389f77358aa06859ec7140fbe76b1d45ae5bd618b2ca65",
-      "size": 18370,
+      "sha256": "e3340dca66b0f0a793b6c178ad3b07a150e2d0a105b3bf0211335a51f478dcb2",
+      "size": 19508,
       "status": "PASS"
     },
     {
       "path": "TODO.md",
-      "sha256": "44babd9cfaee6b691030783eff540081e141784579117cf32e43781f797beb19",
-      "size": 3482,
+      "sha256": "79d5a2445008253f0ec69d73ddf48a06beb328020bd060288cb349e3ebd645a8",
+      "size": 3591,
       "status": "PASS"
     },
     {
       "path": "VERSION.json",
-      "sha256": "a4f3631b20eeea8445dc7468cb9fbbb5fe26b548fd3454bf33a925cabae4765a",
-      "size": 348,
+      "sha256": "d3ffbe187e590f44d041cef8a1eb668d692c55f64ef1e0e72e8e7e17c00e687e",
+      "size": 354,
       "status": "PASS"
     },
     {
       "path": "backup_core/__init__.py",
       "sha256": "c1e1ed0decff9f778bfba9e4f189feaddb64c178dfed185003244f1d64f9d01d",
       "size": 173,
+      "status": "PASS"
+    },
+    {
+      "path": "backup_core/execution.py",
+      "sha256": "ec957abfa5c10edbfc6414b4d672211b414548a30d314435913c76fe80c94fb9",
+      "size": 5596,
       "status": "PASS"
     },
     {
@@ -137,6 +143,12 @@
       "status": "PASS"
     },
     {
+      "path": "contracts/RESTORE_EXECUTION_SAFETY_CONTRACT.json",
+      "sha256": "54d8fe85619d96bbcd9e7b4e099a0e4a1311b1ab8ef3fd1f1887c0cbbeca66f1",
+      "size": 2585,
+      "status": "PASS"
+    },
+    {
       "path": "contracts/SYNC_CONFLICT_CONTRACT.json",
       "sha256": "d5f5aa8a3aa410a74caf0ad31d708e93fa1ea32b574c884591b18e609394f83f",
       "size": 2823,
@@ -174,8 +186,8 @@
     },
     {
       "path": "contracts/TRANSPORT_PROFILE_CONTRACT.json",
-      "sha256": "77e906bde48565128118a24b95e9521040c577b27905992d902628ad4f18358a",
-      "size": 3349,
+      "sha256": "a67b4526c50e3291d0f92cbc3c8f54571940ff4b78b1a678270218f039ad28ad",
+      "size": 3489,
       "status": "PASS"
     },
     {
@@ -275,6 +287,12 @@
       "status": "PASS"
     },
     {
+      "path": "docs/I016_RESTORE_EXECUTION_SAFETY.md",
+      "sha256": "a798dfea46b8613c00417bfe2b479a1f21080356dbd23155068f4be6f75d6281",
+      "size": 1317,
+      "status": "PASS"
+    },
+    {
       "path": "errors/BACKUP_RESTORE_FEHLERKATALOG.json",
       "sha256": "8a710f694591b7e283ad8d617d399e966d31c959c8f73efa93b2e2aebc188484",
       "size": 1527,
@@ -302,6 +320,12 @@
       "path": "errors/KALENDER_GUI_FEHLERKATALOG.json",
       "sha256": "3ba9db31fdc57167b6e37901d96d2e64efe6f17f2dcf85a89f4255c16abc7301",
       "size": 3270,
+      "status": "PASS"
+    },
+    {
+      "path": "errors/RESTORE_EXECUTION_FEHLERKATALOG.json",
+      "sha256": "f1e6c7a4279f7e0a84d55a10c2df0e74cbc5c8a3c46a14281e0821f55afc9370",
+      "size": 1720,
       "status": "PASS"
     },
     {
@@ -401,6 +425,12 @@
       "status": "PASS"
     },
     {
+      "path": "runtime/restore_recovery.py",
+      "sha256": "cb15687770ab385f01aa872feddb49e1734a2b9c520cba6ff0afc8596fa34758",
+      "size": 1049,
+      "status": "PASS"
+    },
+    {
       "path": "runtime/ui_tokens.json",
       "sha256": "fc30d6dec6116029403de9a5ea06021095f543d304e2e388a07a4727c021bd28",
       "size": 440,
@@ -440,6 +470,12 @@
       "path": "services/resolution_service.py",
       "sha256": "0fa395ceceee6a1da3e6abdd649319925b0f7440937060357a11b746d00b7de3",
       "size": 8480,
+      "status": "PASS"
+    },
+    {
+      "path": "services/restore_execution_service.py",
+      "sha256": "9638d93a1abe34de11741ec26685e12b9d37e732914dad9ed5ea8dc735d21e75",
+      "size": 16848,
       "status": "PASS"
     },
     {
@@ -539,9 +575,15 @@
       "status": "PASS"
     },
     {
+      "path": "standards/RESTORE_EXECUTION_STANDARD.json",
+      "sha256": "e2c548d08a7358cd499a60ea446cce292a9fb8ce020b910ce82e2b7ca7615c87",
+      "size": 757,
+      "status": "PASS"
+    },
+    {
       "path": "standards/STANDARD_INDEX.json",
-      "sha256": "6db1e516727abd028797e19131920a64caf71688e9e869e95fbb1e5af91ec9f3",
-      "size": 1700,
+      "sha256": "f076e3f7b45636469e6072df107348364ffc7b8b0d5da67813b94de900997c3b",
+      "size": 1816,
       "status": "PASS"
     },
     {
@@ -582,8 +624,8 @@
     },
     {
       "path": "storage/database.py",
-      "sha256": "a1a6f30bad3787dd570ee7db313a247daeff3f69ffe06d14542f4e161e45e79f",
-      "size": 2726,
+      "sha256": "b7da603ae403e3bd000f1caf2e74565bf39fd73911fa5ff03c026a1674ca4592",
+      "size": 3082,
       "status": "PASS"
     },
     {
@@ -602,6 +644,12 @@
       "path": "storage/repository.py",
       "sha256": "62cbf983252d2d25d1aa249b6ffcdf8b112246bf3ec064ae6743e71abb3c8465",
       "size": 7807,
+      "status": "PASS"
+    },
+    {
+      "path": "storage/restore_guard.py",
+      "sha256": "ab766b5de496460655af8dbef3c8cadc05888a997cfb88759969be9e10c8364f",
+      "size": 6143,
       "status": "PASS"
     },
     {
@@ -887,6 +935,18 @@
       "status": "PASS"
     },
     {
+      "path": "tests/test_i016_restore_crash_recovery.py",
+      "sha256": "ecca86a1e5aaeaa6b62eedc887f39527d3b3c4b22f7e540bfd5bb7b1787391df",
+      "size": 4755,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i016_restore_execution.py",
+      "sha256": "8259a988285f97c129ce270462273332d32e5aa28c5f60c64892bb2ae8ab007f",
+      "size": 5562,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_manifest_builder.py",
       "sha256": "6ca11491249f577e370ad416ff3a8505e863bc74a5a29b6420a76c8d9a3d4596",
       "size": 567,
@@ -942,8 +1002,8 @@
     },
     {
       "path": "tools/autopilot/autopilot.py",
-      "sha256": "ceb25c0dff9fd4e1378c34b55292c1e2d812131e7a79e93da4852cda2bee7ff4",
-      "size": 4537,
+      "sha256": "7fb17e8b1533a7dbc40c150ccc975d9a6ef7571e66dfdd475ea9559f16b83cc9",
+      "size": 4657,
       "status": "PASS"
     },
     {
@@ -1043,6 +1103,12 @@
       "status": "PASS"
     },
     {
+      "path": "tools/autopilot/i016_validator.py",
+      "sha256": "e2449f151d18e6d35e11ad97d628d62c8a79432e973ddad0bc8b961865ec50e2",
+      "size": 6682,
+      "status": "PASS"
+    },
+    {
       "path": "tools/autopilot/manifest_builder.py",
       "sha256": "0da145ecc8a629b581462dd360c7c64c689785d125178aa5b3171adfe336898c",
       "size": 5336,
@@ -1121,6 +1187,12 @@
       "status": "PASS"
     },
     {
+      "path": "tools/i016_restore_crash_matrix.py",
+      "sha256": "7bd5dae0b6bdc832def057746794d9bdd8741a21ccee689f1f8b9cf1ac477494",
+      "size": 2171,
+      "status": "PASS"
+    },
+    {
       "path": "tools/package_transport.py",
       "sha256": "ba7d86b8d97c3097dee0bb8178f1d0f76bc8622f4032dbca5957e242729c67a3",
       "size": 10520,
@@ -1128,14 +1200,14 @@
     },
     {
       "path": "tools/start_gui.py",
-      "sha256": "9a87a801de7a0b602b50b74124313386ceea7de475755c56a576b371ab2c1e5a",
-      "size": 3498,
+      "sha256": "5285dc4a4fa0f90fc03a50db1bd63254df11b24d8aa7974b88375f6fcdd7092d",
+      "size": 3991,
       "status": "PASS"
     },
     {
       "path": "tools/start_orchestrator.py",
-      "sha256": "72e8055a454bc3117f0a675d0073a36500e807be351ed407e3a76b3c45034857",
-      "size": 2391,
+      "sha256": "463b4ca1813f883de08c5b990f372a749eadb0684b0ef45a86133e0e625ec86d",
+      "size": 2929,
       "status": "PASS"
     },
     {
@@ -1277,5 +1349,5 @@
       "status": "PASS"
     }
   ],
-  "count": 212
+  "count": 224
 }

@@ -65,3 +65,6 @@
 - [ ] Vorschau, Risikoanzeige, explizite Bestätigung und Ausführung klar trennen
 - [ ] keine direkte GUI-Nutzung von SQL, Dateiaustausch oder `storage.backup.restore_backup()`
 - [ ] später optional: persistentes Restore-Intent für Crashnachweis nach atomarem Austausch
+
+- [x] I016 Restore Execution Safety qualifiziert
+- [ ] I017 Restore-Control-GUI auf RestoreExecutionService

@@ -89,3 +89,7 @@ Nach qualifiziertem I016: **I017 — Restore-Control-GUI**. Sie darf ausschließ
 <!-- PROVOWARE:SECTION:IMPROVEMENT -->
 ## 18. Weiterführende Verbesserung
 Vor einer Stable-Linie bleiben Repository-Sichtbarkeit, Branch-Schutz für `main` und signierte Release-/Evidence-Commits offen. Die Restore-Oberfläche wird erst auf den qualifizierten I016-Pfad gesetzt.
+
+## I016 Restore Execution Safety
+
+Persistenter Restore-Intent, exklusive Lease und automatische Crash-Recovery vor dem normalen Programmstart. Der physische Restorekern aus I015 bleibt unverändert.

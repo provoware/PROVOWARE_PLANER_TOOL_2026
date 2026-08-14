@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "manifest_type": "BUILD",
-  "version": "0.15.0-dev.1",
-  "iteration": "I015",
+  "version": "0.16.0-dev.1",
+  "iteration": "I016",
   "entries": [
     {
       "path": ".github/workflows/foundation-qualifikation.yml",
-      "sha256": "54b0997e42bfbe74e642b62708ddde3b482f8ed16287930c01be951530337cb0",
-      "size": 1558,
+      "sha256": "4d5b02359c9613c8d0c45557e624ba4535ebf4aeae40a8f593e61950a3722cc6",
+      "size": 2012,
       "status": "PASS"
     },
     {
@@ -95,6 +95,12 @@
       "status": "PASS"
     },
     {
+      "path": ".github/workflows/i016-qualifikation.yml",
+      "sha256": "2d09f9089e71544142d6fa725928b5db09b252d39f83d70ef5fdbd5dbfa85f4c",
+      "size": 14303,
+      "status": "PASS"
+    },
+    {
       "path": "runtime/__init__.py",
       "sha256": "d076fad1ed584bed0bb7dbd6ee0c4d40140239e59d7e1826864710f248d75415",
       "size": 43,
@@ -125,6 +131,12 @@
       "status": "PASS"
     },
     {
+      "path": "runtime/restore_recovery.py",
+      "sha256": "cb15687770ab385f01aa872feddb49e1734a2b9c520cba6ff0afc8596fa34758",
+      "size": 1049,
+      "status": "PASS"
+    },
+    {
       "path": "runtime/ui_tokens.json",
       "sha256": "fc30d6dec6116029403de9a5ea06021095f543d304e2e388a07a4727c021bd28",
       "size": 440,
@@ -138,8 +150,8 @@
     },
     {
       "path": "tools/autopilot/autopilot.py",
-      "sha256": "ceb25c0dff9fd4e1378c34b55292c1e2d812131e7a79e93da4852cda2bee7ff4",
-      "size": 4537,
+      "sha256": "7fb17e8b1533a7dbc40c150ccc975d9a6ef7571e66dfdd475ea9559f16b83cc9",
+      "size": 4657,
       "status": "PASS"
     },
     {
@@ -239,6 +251,12 @@
       "status": "PASS"
     },
     {
+      "path": "tools/autopilot/i016_validator.py",
+      "sha256": "e2449f151d18e6d35e11ad97d628d62c8a79432e973ddad0bc8b961865ec50e2",
+      "size": 6682,
+      "status": "PASS"
+    },
+    {
       "path": "tools/autopilot/manifest_builder.py",
       "sha256": "0da145ecc8a629b581462dd360c7c64c689785d125178aa5b3171adfe336898c",
       "size": 5336,
@@ -264,10 +282,10 @@
     },
     {
       "path": "tools/start_orchestrator.py",
-      "sha256": "72e8055a454bc3117f0a675d0073a36500e807be351ed407e3a76b3c45034857",
-      "size": 2391,
+      "sha256": "463b4ca1813f883de08c5b990f372a749eadb0684b0ef45a86133e0e625ec86d",
+      "size": 2929,
       "status": "PASS"
     }
   ],
-  "count": 44
+  "count": 47
 }

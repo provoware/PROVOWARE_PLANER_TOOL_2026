@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "manifest_type": "EVIDENCE",
-  "version": "0.15.0-dev.1",
-  "iteration": "I015",
+  "version": "0.16.0-dev.1",
+  "iteration": "I016",
   "attestation_model": "subject_commit_plus_evidence_overlay",
   "entries": [
     {
@@ -39,6 +39,12 @@
       "path": "errors/KALENDER_GUI_FEHLERKATALOG.json",
       "sha256": "3ba9db31fdc57167b6e37901d96d2e64efe6f17f2dcf85a89f4255c16abc7301",
       "size": 3270,
+      "status": "PASS"
+    },
+    {
+      "path": "errors/RESTORE_EXECUTION_FEHLERKATALOG.json",
+      "sha256": "f1e6c7a4279f7e0a84d55a10c2df0e74cbc5c8a3c46a14281e0821f55afc9370",
+      "size": 1720,
       "status": "PASS"
     },
     {
@@ -300,6 +306,18 @@
       "status": "PASS"
     },
     {
+      "path": "tests/test_i016_restore_crash_recovery.py",
+      "sha256": "ecca86a1e5aaeaa6b62eedc887f39527d3b3c4b22f7e540bfd5bb7b1787391df",
+      "size": 4755,
+      "status": "PASS"
+    },
+    {
+      "path": "tests/test_i016_restore_execution.py",
+      "sha256": "8259a988285f97c129ce270462273332d32e5aa28c5f60c64892bb2ae8ab007f",
+      "size": 5562,
+      "status": "PASS"
+    },
+    {
       "path": "tests/test_manifest_builder.py",
       "sha256": "6ca11491249f577e370ad416ff3a8505e863bc74a5a29b6420a76c8d9a3d4596",
       "size": 567,
@@ -318,7 +336,7 @@
       "status": "PASS"
     }
   ],
-  "count": 52,
+  "count": 55,
   "remote_receipt": "REMOTE_TREE_RECEIPT.json",
   "qualification_report": "QUALIFICATION_REPORT.json"
 }
