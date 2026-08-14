@@ -1,0 +1,35 @@
+{
+  "standard_id": "PROVOWARE-TRANSPORT",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "objective": "Programm, Entwicklerbasis, Evidence und Nutzdaten/Sicherungen technisch und transportseitig eindeutig trennen.",
+  "profiles": ["PROJEKTKERN", "NUTZER", "ENTWICKLER", "EVIDENCE"],
+  "default_profile": "NUTZER",
+  "rules": {
+    "every_repository_file_requires_exact_transport_class": true,
+    "user_package_must_be_runtime_complete": true,
+    "developer_files_forbidden_in_user_package": true,
+    "evidence_forbidden_in_user_package": true,
+    "evidence_forbidden_in_developer_package": true,
+    "user_data_forbidden_in_all_code_packages": true,
+    "backup_data_forbidden_in_all_code_packages": true,
+    "workspace_reports_forbidden_in_all_code_packages": true,
+    "package_manifest_required": true,
+    "package_sha256_inventory_required": true,
+    "deterministic_zip_required": true,
+    "default_build_must_not_be_full_repository": true,
+    "fresh_unpack_smoke_required_for_user_package": true,
+    "backup_transport_requires_separate_product_backup_contract": true
+  },
+  "package_integrity": {
+    "manifest": "PAKETMANIFEST.json",
+    "inventory": "PAKET_INVENTAR.json",
+    "hash": "SHA-256",
+    "inventory_self_reference_forbidden": true
+  },
+  "workspace_policy": {
+    "preferred_backup_folder": "backups",
+    "repository_backup_folder_forbidden": true,
+    "source_package_may_never_discover_untracked_workspace_files": true
+  }
+}
