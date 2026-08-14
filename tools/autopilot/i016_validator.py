@@ -69,6 +69,9 @@ def validate() -> dict:
         errors.append("I016_RESTOREKERN_UNVERAENDERT_REGEL_FEHLT")
     if contract.get("execution_states") != ["PREPARED", "COMMITTING", "VERIFIED", "CLOSED"]:
         errors.append("I016_INTENT_ZUSTAENDE_FALSCH")
+    intent_contract = contract.get("intent", {})
+    if intent_contract.get("approved_plan_sha256_required") is not True or intent_contract.get("execution_plan_sha256_required") is not True:
+        errors.append("I016_DOPPELTE_PLANBINDUNG_FEHLT")
     if standard.get("standard_id") != "PROVOWARE-RESTORE-EXECUTION" or standard.get("version") != "1.0.0":
         errors.append("I016_STANDARD_FALSCH")
 
@@ -86,7 +89,8 @@ def validate() -> dict:
         "acquire_restore_lease",
         "_prove_no_writer",
         "_create_sqlite_snapshot",
-        "self.restore_service.commit_restore(plan)",
+        "execution_plan = self.restore_service.prepare_restore",
+        "self.restore_service.commit_restore(execution_plan)",
         "restore_backup(snapshot",
         "recover_pending",
         "logical_database_sha256",
@@ -105,7 +109,7 @@ def validate() -> dict:
         errors.append("I016_START_RECOVERY_ZU_SPAET")
 
     never = transport.get("never_transport_globs", [])
-    for token in ("**/.provoware_restore/**", "RESTORE_INTENT.json", "RESTORE_LEASE.json", "PRE_RESTORE_SNAPSHOT.sqlite3"):
+    for token in (".provoware_restore/**", "**/.provoware_restore/**", "RESTORE_INTENT.json", "RESTORE_LEASE.json", "PRE_RESTORE_SNAPSHOT.sqlite3"):
         if token not in never:
             errors.append(f"I016_TRANSPORTSCHUTZ_FEHLT: {token}")
 
