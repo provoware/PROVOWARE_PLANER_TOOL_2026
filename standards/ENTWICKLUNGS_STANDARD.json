@@ -1,0 +1,61 @@
+{
+  "standard_id": "PROVOWARE-DEVELOPMENT",
+  "version": "2.0.0",
+  "status": "VERBINDLICH",
+  "objective": "Entwicklungsarbeit mit maximaler Präzision, minimalen vermeidbaren Schleifen und evidenzbasierter Freigabe ausführen.",
+  "phases": [
+    "ERMITTLUNG",
+    "PLANUNG",
+    "UMSETZUNG",
+    "VORPRUEFUNG",
+    "ZIELVALIDIERUNG",
+    "REGRESSION",
+    "EVIDENCE",
+    "PROMOTION",
+    "OPTIMIERUNG"
+  ],
+  "rules": {
+    "baseline_identity_before_change_required": true,
+    "machine_readable_iteration_plan_required": true,
+    "explicit_repository_delta_required": true,
+    "risk_classification_required": true,
+    "acceptance_criteria_ids_required": true,
+    "static_preflight_before_runtime_dependency_install_required": true,
+    "fail_fast_cost_order_required": true,
+    "duplicate_gate_execution_within_same_pass_forbidden": true,
+    "candidate_inventory_must_derive_from_baseline_plus_declared_delta": true,
+    "candidate_inventory_must_not_derive_from_current_tree_alone": true,
+    "workflow_activation_after_candidate_assembly_required": true,
+    "stale_ci_runs_should_be_cancelled": true,
+    "runtime_dependencies_only_after_static_preflight": true,
+    "exact_sha_second_pass_required_for_qualification": true,
+    "second_pass_repository_write_forbidden": true,
+    "fast_forward_promotion_required": true,
+    "force_promotion_forbidden": true,
+    "post_promotion_independent_check_required": true,
+    "validation_timing_and_failure_stage_evidence_required": true,
+    "manual_user_technical_acceptance_required": false
+  },
+  "cost_order": [
+    "P0_STATIC",
+    "P1_PLAN_AND_TARGET",
+    "P2_RUNTIME_TARGET",
+    "P3_REGRESSION",
+    "P4_EVIDENCE",
+    "P5_PROMOTION"
+  ],
+  "risk_classes": {
+    "NIEDRIG": "Dokumentation oder rein additive, nicht ausführbare Metadatenänderung",
+    "MITTEL": "Anwendungslogik ohne Datenmigration, Recovery, Security oder Releasepfad",
+    "HOCH": "Persistenz, Migration, Recovery, Synchronisation, Startpfad, CI, Evidence oder Releasevertrag"
+  },
+  "optimization_metrics": [
+    "avoidable_failed_remote_runs",
+    "duplicate_gate_executions",
+    "static_failure_detected_before_runtime_setup",
+    "qualification_wall_clock_seconds",
+    "full_regression_executions_per_pass",
+    "exact_sha_rechecks",
+    "unplanned_repository_paths"
+  ]
+}
