@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "contract_id": "PROVOWARE-TODO-DOMAIN-LINK",
+  "version": "1.0.0",
+  "status": "VERBINDLICH",
+  "iteration": "I006",
+  "todo": {
+    "statuses": ["OPEN", "IN_PROGRESS", "WAITING", "DONE", "CANCELLED"],
+    "priorities": ["LOW", "NORMAL", "HIGH", "URGENT"],
+    "progress_range": [0, 100],
+    "start_due_supported": true,
+    "subtasks_via_parent_id": true,
+    "soft_delete_required": true,
+    "optimistic_locking_required": true
+  },
+  "calendar_link": {
+    "own_identity_required": true,
+    "soft_link_required": true,
+    "automatic_payload_sync_in_i006": false,
+    "directions": ["TODO_TO_CALENDAR", "CALENDAR_TO_TODO", "BIDIRECTIONAL", "MANUAL"],
+    "conflict_states": ["CLEAN", "TODO_CHANGED", "CALENDAR_CHANGED", "BOTH_CHANGED", "DETACHED"],
+    "todo_delete_must_not_delete_event": true,
+    "event_delete_must_not_delete_todo": true,
+    "entity_delete_must_not_delete_link": true,
+    "physical_endpoint_delete_restricted": true,
+    "unlink_must_not_delete_entities": true,
+    "version_snapshots_required": true
+  },
+  "database": {
+    "migration_version": 2,
+    "on_delete_cascade_forbidden": true,
+    "link_endpoint_on_delete": "RESTRICT",
+    "todo_parent_on_delete": "SET NULL",
+    "foreign_keys_required": true,
+    "wal_required": true,
+    "transactional_writes_required": true
+  },
+  "fault_matrix": {
+    "required": true,
+    "scenarios": [
+      "todo_insert_exception_before_commit",
+      "link_insert_exception_before_commit",
+      "todo_soft_delete_exception_before_commit",
+      "process_exit_before_commit"
+    ]
+  },
+  "architecture": {
+    "todo_gui_in_i006": false,
+    "domain_must_not_import_qt": true,
+    "service_repository_boundary_required": true
+  },
+  "qualification": {
+    "historical_gate_chain": ["I002", "I003", "I004", "I005", "I006"],
+    "restart_persistence_required": true,
+    "exact_evidence_sha_second_pass_required": true,
+    "moving_branch_ref_for_second_pass_forbidden": true
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "catalog_id": "PROVOWARE-TODO-FEHLERKATALOG",
+  "errors": [
+    {"code":"TODO-DOMAIN-001","text":"Interne Aufgaben-ID fehlt.","action":"Aufgabe nicht speichern."},
+    {"code":"TODO-DOMAIN-002","text":"Aufgabentitel ist leer oder zu lang.","action":"Titel korrigieren."},
+    {"code":"TODO-DOMAIN-003","text":"Fortschritt liegt außerhalb 0 bis 100 Prozent.","action":"Fortschritt korrigieren."},
+    {"code":"TODO-DOMAIN-004","text":"Ein Aufgabenzeitpunkt besitzt keine Zeitzone.","action":"Zeitangabe eindeutig machen."},
+    {"code":"TODO-DOMAIN-005","text":"Fälligkeit liegt vor dem Start.","action":"Datumswerte korrigieren."},
+    {"code":"TODO-DOMAIN-006","text":"Aufgabe verweist auf sich selbst als Unteraufgabe.","action":"Elternaufgabe korrigieren."},
+    {"code":"TODO-DOMAIN-007","text":"Ungültige Aufgaben-Version.","action":"Änderung blockieren."},
+    {"code":"TODO-DOMAIN-008","text":"Erledigte Aufgabe besitzt nicht 100 Prozent Fortschritt.","action":"Status oder Fortschritt korrigieren."},
+    {"code":"TODO-NOTFOUND-001","text":"Aufgabe wurde nicht gefunden oder ist gelöscht.","action":"Ansicht neu laden."},
+    {"code":"TODO-CONFLICT-001","text":"Aufgabe oder Link wurde zwischenzeitlich geändert.","action":"Aktuellen Stand neu laden und Änderung erneut prüfen."},
+    {"code":"TODO-LINK-DOMAIN-001","text":"Kopplungs-IDs fehlen.","action":"Kopplung blockieren."},
+    {"code":"TODO-LINK-DOMAIN-002","text":"Ungültige Kopplungs-Version.","action":"Kopplung blockieren."},
+    {"code":"TODO-LINK-DOMAIN-003","text":"Kopplungszeit besitzt keine Zeitzone.","action":"Zeitangabe korrigieren."},
+    {"code":"TODO-LINK-NOTFOUND-001","text":"Kalender-Todo-Kopplung wurde nicht gefunden.","action":"Kopplungsliste neu laden."},
+    {"code":"TODO-LINK-DUP-001","text":"Diese aktive Todo-Termin-Kopplung existiert bereits.","action":"Vorhandene Kopplung verwenden."},
+    {"code":"TODO-LINK-FK-001","text":"Todo oder Termin der Kopplung existiert nicht.","action":"Endpunkte prüfen."},
+    {"code":"TODO-FAULT-001","text":"Kontrollierter Testabbruch wurde ausgelöst.","action":"Transaktion zurückrollen und Zustand nachprüfen."}
+  ]
+}
