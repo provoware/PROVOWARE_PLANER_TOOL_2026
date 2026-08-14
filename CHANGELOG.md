@@ -30,46 +30,34 @@
 
 ## 0.10.0-dev.1 — I010
 - SyncControlQuery/ViewModel und Synchronisations-Control-GUI.
-- Neuer immutable ResolutionPlan; `TODO_WERT`, `KALENDER_WERT`, `BLOCKIERT_LASSEN` ausschließlich für `BOTH_DIFFERENT`.
-- Source-Plan-SHA, Stale-/Manipulationsschutz und Wiederverwendung des I009-Commitkerns.
+- Neuer immutable ResolutionPlan und explizite Konfliktentscheidungen.
 
 ## 0.11.0-dev.1 — I011
-- Migration `0004_sync_journal_snapshots.sql` ergänzt atomare, hashgebundene Vorher-/Nachher-Snapshots für neue Sync-/Resolution-/Recovery-Receipts.
-- Ältere I009/I010-Receipts bleiben unverändert auditierbar und werden ohne erfundene Snapshots als `LEGACY_NO_SNAPSHOT` gekennzeichnet.
-- Read-only Synchronisationsjournal mit Integritätsstatus, Feld-Diff und Recovery-Verfügbarkeit ergänzt.
-- Neuer immutable `RecoveryPlan` bindet Source-Receipt, Source-Snapshot, aktuellen SyncPlan, Precondition, Versionen und Feld-Hashes.
-- Historische Werte werden nie frei zurückgeschrieben; Recovery darf nur aktuell beweisbar vorhandene Zielwerte über den bestehenden I009-Transaktionskern übertragen.
-- Snapshot-Manipulation, stale Current-State, divergente historische Zustände, Richtungsverstöße und DUE_END-Schreibbedarf blockieren fail-closed.
-- Eigene Snapshot-Fault-/Crash-Matrix und 35er Journal-GUI-Matrix ergänzt.
+- Migration 0004, hashgebundene Vorher-/Nachher-Snapshots, read-only Synchronisationsjournal und RecoveryPlan.
+- Snapshot-Manipulation, stale Current-State und divergente historische Zustände blockieren fail-closed.
 
 ## 0.12.0-dev.1 — I012
-- Read-only Diagnose-/Recovery-Zentrale mit fünf Bereichen: Startzustand, SQLite-Integrität, Journal-Integrität, Backup-Nachweise und Recovery-Blockaden.
-- Datenbank- und Backup-Prüfung verwendet explizit SQLite `mode=ro` und `PRAGMA query_only=ON`.
-- Backup-Kandidaten werden zusätzlich gegen Manifest und SHA-256 geprüft; Manipulation wird sichtbar blockiert.
-- Recovery-Diagnose verwendet ausschließlich neue I011-`RecoveryPlan`-Vorschauen und führt keinen Commit aus.
-- Diagnose-GUI über `Ctrl+Shift+D` integriert; Symbol + Klartext bleiben verpflichtend, Farbe allein trägt keine Bedeutung.
-- StartOrchestrator-Bericht wird standardmäßig atomar als `LETZTER_STARTBERICHT.json` im Arbeitsbereich gespeichert.
-- I012-Service-/GUI-Zieltests, Autopilot-Gate und 35er Offscreen-Diagnosematrix ergänzt.
+- Read-only Diagnose-/Recovery-Zentrale mit Startzustand, SQLite-, Journal-, Backup- und Recovery-Prüfung.
 - Keine neue Datenbankmigration; Schema bleibt Version 4.
 
 ## 0.13.0-dev.1 — I013
-- Entwicklungsarbeit anhand der realen I012-Qualifikation auf Effizienz, Präzision und unnötige Remote-Schleifen auditiert.
-- Verbindlichen `PROVOWARE-DEVELOPMENT 2.0.0` mit `Ermittlung → Planung → P0 Static → Zielprüfung → Runtime → Regression → Evidence → Promotion → Optimierung` eingeführt.
-- `ITERATION_PLAN.json` bindet Baseline-Commit/-Tree, Risikoklasse, acht Akzeptanzkriterien und explizite `add`/`modify`/`delete`-Differenz.
-- Kandidateninventar berechnet das Repository-Soll aus qualifizierter Baseline plus deklarierter Differenz; ungeplante Pfade blockieren.
-- P0-Preflight prüft JSON, Python-Syntax, Metadaten, Standardindex, Dokumentationsmarker, Pipelinevertrag und Dateidifferenz vor apt/pip/Qt.
-- Dokumentationsstandard auf stabile semantische README-Marker umgestellt; exakter Überschriftentext ist nicht mehr Maschinenvertrag.
-- Autopilot führt historische Gates pro Pass genau einmal aus und schreibt optionale Laufzeit-Evidence.
-- CI-Referenzpipeline erhält Concurrency-Abbruch für veraltete Läufe, Lockdatei-gebundenen pip-Cache und Static-first-Reihenfolge.
+- Entwicklungsautopilot V2 mit Static-first, maschinenlesbarem Iterationsplan, planbasiertem Inventar, Gate-Deduplizierung und Exact-SHA-Promotion.
 
 ## 0.14.0-dev.1 — I014
-- Repository und normale Weitergabe technisch getrennt: vollständige Entwicklungsbasis bleibt auditierbar, Standardtransport ist jetzt das reduzierte `NUTZER`-Profil.
-- Vier eindeutige Transportklassen eingeführt: `PRODUKTKERN`, `NUTZERDOKU`, `ENTWICKLUNG`, `EVIDENCE`.
-- Vier Profile eingeführt: `PROJEKTKERN`, `NUTZER`, `ENTWICKLER`, `EVIDENCE`; Evidence wird weder in Nutzer- noch Entwicklerpakete gemischt.
-- SQLite-Nutzdaten, Sicherungen, Restore-Kandidaten, Workspaces, Logs, Caches und temporäre Dateien sind in allen Code-Transportprofilen hart ausgeschlossen.
-- `.gitignore` ergänzt als zweite Schutzschicht gegen versehentliches Einchecken lokaler Nutzdaten/Sicherungen.
-- Deterministischer profilbasierter ZIP-Builder mit festen Zeitstempeln, sortierten Pfaden und normalisierten Dateimodi eingeführt.
-- Jedes Paket erhält `PAKETMANIFEST.json` und `PAKET_INVENTAR.json`; lauffähige Profile zusätzlich ein paketbezogenes kompatibles `SHA256_DATEI_INVENTAR.json`.
-- Paketbau bezieht seine Quelldateien ausschließlich aus dem registrierten Repository-Soll; ungetrackte lokale Arbeits-/Backupdaten werden nicht entdeckt oder eingesammelt.
-- Fresh-Unpack-Nutzerstart, Profilgrenzen und byte-identischer Doppelbau werden als I014-Pflichtgates qualifiziert.
+- Entwicklungsrepository und normale Weitergabe technisch getrennt.
+- `PROJEKTKERN`, `NUTZER`, `ENTWICKLER`, `EVIDENCE` als getrennte Profile eingeführt.
+- Nutzdaten, Sicherungen, Restore-Kandidaten, Logs und temporäre Dateien sind in Code-Transportprofilen ausgeschlossen.
+- Deterministischer profilbasierter ZIP-Builder, Paketmanifest/-inventar und Fresh-Unpack-Startprüfung eingeführt.
+- Keine Datenbankmigration; Schema bleibt Version 4.
+
+## 0.15.0-dev.1 — I015
+- Verbindlichen `PROVOWARE-BACKUP-RESTORE 1.0.0` und `BACKUP_RESTORE_PLAN_CONTRACT` eingeführt.
+- Backup-Kandidaten werden ausschließlich read-only innerhalb des expliziten Backup-Bereichs gegen Manifest, SHA-256, Größe, SQLite `quick_check` und Schema 4 qualifiziert.
+- Neuer immutable `RestorePlan` bindet Backup, Manifest und den aktiven Zielzustand in einen kanonischen SHA-256-Planhash.
+- Zielzustandsbindung umfasst Hauptdatenbank und WAL, damit nach Planerstellung erfolgte SQLite-Änderungen auch vor einem Checkpoint als stale erkannt werden.
+- `storage.backup.restore_backup()` bleibt der einzige physische Dateiaustauschpfad; `RestoreService` besitzt keine eigene Replace-/Copy-Implementierung.
+- Physischer Restorekern um letzten read-only Precheck und rollbackfähigen Postcheck erweitert.
+- Fehler vor Schreibzugriff verändern nichts; Fehler nach atomarem Austausch stellen über den bestehenden Pre-Restore-Rollbackpfad den vorherigen Zustand wieder her.
+- Plan-Tamper, Backup-/Manifest-Tamper, Stale-Zielzustand sowie Exception-/Prozessabbruch-Szenarien werden automatisiert geprüft.
+- Backup-/Restore-Domainkern wird als Runtime benötigt, Sicherungsdaten selbst bleiben aus allen Code-Transportprofilen ausgeschlossen.
 - Keine Datenbankmigration; Schema bleibt Version 4.
